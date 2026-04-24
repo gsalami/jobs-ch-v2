@@ -15,3 +15,11 @@ Open <http://localhost:8000>.
 ```bash
 node scripts/validate-dashboard.js
 ```
+
+## Brand assets
+
+Logos are stored locally in `assets/brand/` and were sourced from the official sites:
+
+- einstAIn: https://einstain.ch/
+- Angestellte Schweiz: https://angestellte.ch/frontend/img/svg/logo-de.svg
+- Kuble: https://www.kuble.com/en

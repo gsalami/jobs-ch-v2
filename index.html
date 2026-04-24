@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KI-Exposition nach Beruf - Schweiz (Eloundou et al.)</title>
   <meta name="description" content="Interaktive Karte: Welche Schweizer Berufe sind durch KI exponiert? 72 Berufe bewertet mit dem wissenschaftlich validierten Eloundou-Mass (Science 2024) - mit Medianlöhnen in CHF und Beschäftigtenzahlen aus BFS-Daten.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#127464;&#127469;</text></svg>">
+  <link rel="icon" href="assets/brand/einstain-icon.png" type="image/png">
   <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -70,28 +70,38 @@
     .site-logo {
       display: inline-flex;
       align-items: center;
-      gap: 0.45rem;
       color: #fff;
       text-decoration: none;
-      font-size: 1.35rem;
-      letter-spacing: -0.02em;
-      font-weight: 500;
     }
 
-    .site-logo strong {
-      font-weight: 850;
+    .site-logo img {
+      display: block;
+      width: min(178px, 48vw);
+      height: auto;
     }
 
-    .brand-mark {
-      width: 31px;
-      height: 31px;
-      border-radius: 50%;
-      display: inline-grid;
-      place-items: center;
+    .site-logo--footer img {
+      width: 148px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      font-size: 0.78rem;
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.76);
+      text-decoration: none;
+      transition: color 0.18s;
+    }
+
+    .nav-links a:hover {
       color: #fff;
-      font-size: 1.5rem;
-      line-height: 1;
-      text-shadow: 0 0 10px rgba(255,255,255,0.35);
     }
 
     .hero-grid {
@@ -157,6 +167,34 @@
       gap: 0.8rem;
       align-items: center;
       margin-top: 1.9rem;
+    }
+
+    .hero-proof {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 1.1rem;
+      max-width: 640px;
+    }
+
+    .hero-proof a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 31px;
+      padding: 0.34rem 0.62rem;
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 999px;
+      color: #dfe7ff;
+      background: rgba(255,255,255,0.045);
+      text-decoration: none;
+      font-size: 0.72rem;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .hero-proof a:hover {
+      border-color: rgba(47,99,255,0.65);
+      background: rgba(47,99,255,0.13);
     }
 
     .cta-btn {
@@ -958,34 +996,47 @@
 
     .contact-band {
       max-width: 1280px;
-      margin: 4rem auto 0;
-      padding: 3rem 2rem;
+      margin: 4.5rem auto 0;
+      padding: 3.2rem 2rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 2rem;
+      gap: 0;
       border-top: 1px solid #fff;
       border-bottom: 1px solid #07162f;
+      background:
+        linear-gradient(90deg, rgba(47,99,255,0.08), transparent 36%, rgba(255,91,0,0.06));
     }
 
     .contact-card {
-      padding-left: 2rem;
+      padding: 0 2.4rem;
       border-left: 1px solid rgba(255,255,255,0.9);
     }
 
     .contact-logo {
-      min-height: 52px;
+      min-height: 70px;
       display: flex;
       align-items: center;
-      color: #fff;
-      font-size: 2.2rem;
-      font-weight: 850;
-      letter-spacing: -0.04em;
       margin-bottom: 1.15rem;
     }
 
-    .contact-logo.small {
-      font-size: 1.55rem;
-      letter-spacing: -0.02em;
+    .contact-logo a {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .contact-logo img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-height: 58px;
+    }
+
+    .contact-logo .logo-angestellte {
+      width: min(240px, 72vw);
+    }
+
+    .contact-logo .logo-kuble {
+      width: min(212px, 72vw);
     }
 
     .contact-line {
@@ -994,6 +1045,16 @@
       line-height: 1.55;
       margin-top: 0.65rem;
       font-size: 0.98rem;
+    }
+
+    .contact-line a {
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.28);
+    }
+
+    .contact-line a:hover {
+      border-bottom-color: #ff5b00;
     }
 
     footer {
@@ -1020,9 +1081,39 @@
     .footer-initiators {
       display: flex;
       justify-content: flex-end;
-      gap: 1rem;
+      gap: 1.15rem;
       align-items: center;
       font-weight: 800;
+    }
+
+    .footer-initiators > span {
+      font-size: 0.74rem;
+      letter-spacing: 0.02em;
+    }
+
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      opacity: 0.96;
+      transition: opacity 0.18s;
+    }
+
+    .footer-brand:hover {
+      opacity: 1;
+    }
+
+    .footer-brand img {
+      display: block;
+      width: auto;
+      height: auto;
+    }
+
+    .footer-brand--angestellte img {
+      width: 132px;
+    }
+
+    .footer-brand--kuble img {
+      width: 132px;
     }
 
     footer a { color: #fff; text-decoration: none; }
@@ -1037,8 +1128,11 @@
         width: 100vw;
         padding: 1.2rem 1rem 3rem;
       }
-      .site-logo {
-        font-size: 1.1rem;
+      .site-logo img {
+        width: min(144px, 58vw);
+      }
+      .nav-links {
+        display: none;
       }
       .hero-grid {
         width: 100%;
@@ -1074,6 +1168,12 @@
         max-width: 358px;
         gap: 0.65rem;
       }
+      .hero-proof {
+        max-width: 358px;
+      }
+      .hero-proof a {
+        white-space: normal;
+      }
       .cta-btn {
         width: 100%;
       }
@@ -1107,9 +1207,29 @@
       .contact-band, .footer-inner {
         grid-template-columns: 1fr;
       }
+      .contact-band {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        gap: 2rem;
+      }
+      .contact-card {
+        padding: 0 0 0 1rem;
+      }
+      .contact-logo {
+        min-height: 54px;
+      }
+      .contact-logo .logo-angestellte {
+        width: min(215px, 72vw);
+      }
+      .contact-logo .logo-kuble {
+        width: min(190px, 72vw);
+      }
       .footer-center, .footer-initiators {
         text-align: left;
         justify-content: flex-start;
+      }
+      .footer-initiators {
+        flex-wrap: wrap;
       }
     }
   </style>
@@ -1119,9 +1239,13 @@
 <header>
   <nav class="site-nav" aria-label="Hauptnavigation">
     <a class="site-logo" href="#top" aria-label="einstAIn">
-      <span class="brand-mark" aria-hidden="true">*</span>
-      <span>einst<strong>AI</strong>n</span>
+      <img src="assets/brand/einstain-logo-white.svg" alt="einstAIn">
     </a>
+    <div class="nav-links" aria-label="Seitennavigation">
+      <a href="#dashboard">Dashboard</a>
+      <a href="#about">Methodik</a>
+      <a href="#sources">Quellen</a>
+    </div>
   </nav>
   <div class="hero-grid" id="top">
     <div class="hero-copy">
@@ -1137,6 +1261,11 @@
       <div class="hero-actions">
         <a class="cta-btn" href="#dashboard">Zum Dashboard</a>
         <a class="cta-btn" href="#about">Methodik prüfen</a>
+      </div>
+      <div class="hero-proof" aria-label="Verwendete Quellen">
+        <a href="https://www.science.org/doi/10.1126/science.adj0998" target="_blank" rel="noopener noreferrer">Science: Eloundou et al.</a>
+        <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb/loehne-erwerbseinkommen-arbeitskosten.html" target="_blank" rel="noopener noreferrer">BFS Löhne</a>
+        <a href="https://www.ilo.org/publications/international-standard-classification-occupations-2008-isco-08-structure" target="_blank" rel="noopener noreferrer">ISCO/SOC Mapping</a>
       </div>
     </div>
     <div class="hero-visual" aria-hidden="true">
@@ -1320,7 +1449,7 @@
     </div>
   </div>
 
-  <div class="source-index" aria-label="Alle Quellen und lokale Prüfdaten">
+  <div class="source-index" id="sources" aria-label="Alle Quellen und lokale Prüfdaten">
     <div class="source-index-card">
       <h3>Peer-reviewed Paper</h3>
       <p>Definition des LLM-Expositionsmasses und wissenschaftlicher Kontext.</p>
@@ -1473,28 +1602,39 @@
 
 <section class="contact-band" aria-label="Kontakt">
   <div class="contact-card">
-    <div class="contact-logo small">Angestellte Schweiz</div>
-    <div class="contact-line">alexander.belaz@angestellte.ch</div>
+    <div class="contact-logo">
+      <a href="https://angestellte.ch/" target="_blank" rel="noopener noreferrer" aria-label="Angestellte Schweiz">
+        <img class="logo-angestellte" src="assets/brand/angestellte-schweiz-logo-white.svg" alt="Angestellte Schweiz">
+      </a>
+    </div>
+    <div class="contact-line"><a href="mailto:alexander.belaz@angestellte.ch">alexander.belaz@angestellte.ch</a></div>
     <div class="contact-line">Martin-Disteli-Strasse 9<br>Postfach 234 4601 Olten</div>
   </div>
   <div class="contact-card">
-    <div class="contact-logo">kuble</div>
-    <div class="contact-line">roger.oberholzer@kuble.com</div>
+    <div class="contact-logo">
+      <a href="https://www.kuble.com/en" target="_blank" rel="noopener noreferrer" aria-label="Kuble - House of Intelligence">
+        <img class="logo-kuble" src="assets/brand/kuble-house-logo-white.svg" alt="Kuble - House of Intelligence">
+      </a>
+    </div>
+    <div class="contact-line"><a href="mailto:roger.oberholzer@kuble.com">roger.oberholzer@kuble.com</a></div>
     <div class="contact-line">Räffelstrasse 26<br>8045 Zürich</div>
   </div>
 </section>
 
 <footer>
   <div class="footer-inner">
-    <a class="site-logo" href="#top" aria-label="einstAIn">
-      <span class="brand-mark" aria-hidden="true">*</span>
-      <span>einst<strong>AI</strong>n</span>
+    <a class="site-logo site-logo--footer" href="#top" aria-label="einstAIn">
+      <img src="assets/brand/einstain-logo-white.svg" alt="einstAIn">
     </a>
     <div class="footer-center">© 2026. All rights reserved.</div>
     <div class="footer-initiators">
-      <span>Initiators</span>
-      <span>Angestellte Schweiz</span>
-      <span>kuble</span>
+      <span>Initiatoren</span>
+      <a class="footer-brand footer-brand--angestellte" href="https://angestellte.ch/" target="_blank" rel="noopener noreferrer" aria-label="Angestellte Schweiz">
+        <img src="assets/brand/angestellte-schweiz-logo-white.svg" alt="Angestellte Schweiz">
+      </a>
+      <a class="footer-brand footer-brand--kuble" href="https://www.kuble.com/en" target="_blank" rel="noopener noreferrer" aria-label="Kuble - House of Intelligence">
+        <img src="assets/brand/kuble-house-logo-white.svg" alt="Kuble - House of Intelligence">
+      </a>
     </div>
   </div>
 </footer>
