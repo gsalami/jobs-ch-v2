@@ -383,6 +383,129 @@
       box-shadow: inset 0 0 0 1px rgba(47,99,255,0.2);
     }
 
+    .today-method-panel {
+      max-width: 1280px;
+      margin: -0.3rem auto 1.4rem;
+      padding: 0 2rem;
+    }
+
+    .today-method-inner {
+      background: #05070d;
+      border: 1px solid #1d2743;
+      border-radius: 4px;
+      padding: 1.05rem;
+    }
+
+    .today-method-head {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto;
+      gap: 1rem;
+      align-items: start;
+      margin-bottom: 0.9rem;
+    }
+
+    .today-method-head h3 {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .today-method-head p {
+      color: #bfc6dd;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      font-weight: 600;
+    }
+
+    .today-method-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(72px, 1fr));
+      gap: 0.45rem;
+      min-width: 260px;
+    }
+
+    .today-method-stat {
+      background: #0b1020;
+      border: 1px solid #26345b;
+      border-radius: 4px;
+      padding: 0.55rem;
+    }
+
+    .today-method-stat strong {
+      display: block;
+      color: #fff;
+      font-size: 1rem;
+      line-height: 1;
+      margin-bottom: 0.22rem;
+    }
+
+    .today-method-stat span {
+      color: #8f98b8;
+      font-size: 0.68rem;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    .today-method-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0.55rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .today-method-step {
+      border: 1px solid #202844;
+      background: #080b13;
+      border-radius: 4px;
+      padding: 0.7rem;
+    }
+
+    .today-method-step b {
+      display: block;
+      color: #8ba4ff;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.28rem;
+    }
+
+    .today-method-step p {
+      color: #c9d0e4;
+      font-size: 0.74rem;
+      line-height: 1.45;
+      font-weight: 600;
+    }
+
+    .today-formula {
+      background: #02040a;
+      border: 1px solid #18213c;
+      border-radius: 4px;
+      padding: 0.75rem;
+      color: #a78bfa;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.73rem;
+      line-height: 1.7;
+      overflow-x: auto;
+      margin-bottom: 0.75rem;
+    }
+
+    .today-method-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .today-method-links a {
+      color: #dbe5ff;
+      border: 1px solid #26345b;
+      background: rgba(47,99,255,0.1);
+      border-radius: 999px;
+      padding: 0.32rem 0.62rem;
+      font-size: 0.72rem;
+      text-decoration: none;
+      font-weight: 750;
+    }
+
     .controls {
       display: flex;
       flex-wrap: wrap;
@@ -1333,6 +1456,19 @@
         min-width: 0;
         grid-template-columns: 1fr;
       }
+      .today-method-panel {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      .today-method-head {
+        grid-template-columns: 1fr;
+      }
+      .today-method-stats {
+        min-width: 0;
+      }
+      .today-method-grid {
+        grid-template-columns: 1fr;
+      }
       #detail-panel { width: 100%; }
       .controls input { width: 140px; }
       .pipeline, .method-example {
@@ -1441,6 +1577,59 @@
     </button>
   </div>
 </div>
+
+<section class="today-method-panel" id="today-method-panel" hidden aria-label="Methodik der Heute-2026-Ansicht">
+  <div class="today-method-inner">
+    <div class="today-method-head">
+      <div>
+        <div class="framework-kicker">So wurde die neue Ansicht berechnet</div>
+        <h3>Konservative 2026-Heuristik, keine neue Science-Replikation</h3>
+        <p>
+          Die 2026-Sicht startet bei den originalen Eloundou-Beta-Werten und prüft nur, wo heutige KI-Fähigkeiten frühere E2-Aufgaben näher an E1 rücken oder einzelne E0-Aufgaben zu E2 machen. Adoption wird nicht in den Hauptscore gemischt, sondern separat ausgewiesen.
+        </p>
+      </div>
+      <div class="today-method-stats" aria-label="Heute-2026-Kernergebnisse">
+        <div class="today-method-stat"><strong>112</strong><span>repräsentative Aufgaben reannotiert</span></div>
+        <div class="today-method-stat"><strong>8</strong><span>Sensitivitätsszenarien</span></div>
+        <div class="today-method-stat"><strong>21</strong><span>Berufe Score 8-10 technisch</span></div>
+      </div>
+    </div>
+    <div class="today-method-grid">
+      <div class="today-method-step">
+        <b>1. Basis</b>
+        <p>Science 2024 bleibt unverändert: beta_2024 aus Eloundou et al., übertragen auf Schweizer Berufe via SOC/ISCO-Mapping.</p>
+      </div>
+      <div class="today-method-step">
+        <b>2. Reannotation</b>
+        <p>Pro Berufsfeld wurden 8 Aufgaben geprüft: E0 bleibt E0, E0 wird E2, E2 wird E1, E1 bleibt E1 oder E2 bleibt E2.</p>
+      </div>
+      <div class="today-method-step">
+        <b>3. Technik</b>
+        <p>Long Context, Agenten/Tools, Multimodalität und wenige Berufs-Overrides werden nur addiert, wenn sie Doppelzählung vermeiden.</p>
+      </div>
+      <div class="today-method-step">
+        <b>4. Caps</b>
+        <p>Caps begrenzen Werte bei physischer Arbeit, Regulierung, Haftung, Patientenkontakt, Sicherheitsverantwortung oder Beziehungsarbeit.</p>
+      </div>
+      <div class="today-method-step">
+        <b>5. Unsicherheit</b>
+        <p>Jeder Beruf erhält Confidence, Unsicherheitsgründe und eine Szenario-Spannweite aus konservativen, strengen und aggressiveren Annahmen.</p>
+      </div>
+    </div>
+    <div class="today-formula">
+      technical_beta_2026 = min(cap / 10, beta_2024 + long_context + agentic_tools + multimodal + role_override)<br>
+      technical_score_2026 = round(technical_beta_2026 x 10)<br>
+      adoption_adjusted_beta_2026 = min(cap / 10, technical_beta_2026 + adoption)
+    </div>
+    <div class="today-method-links">
+      <a href="docs/ai-exposure-framework-2026.html" target="_blank" rel="noopener noreferrer">Methodenpapier</a>
+      <a href="data/today-scores-2026.json" target="_blank" rel="noopener noreferrer">Scores JSON</a>
+      <a href="data/scenario-summary-2026.csv" target="_blank" rel="noopener noreferrer">Sensitivität CSV</a>
+      <a href="data/reannotation-sample-2026.csv" target="_blank" rel="noopener noreferrer">Mini-Reannotation</a>
+      <a href="data/mapping-2026.csv" target="_blank" rel="noopener noreferrer">Mapping</a>
+    </div>
+  </div>
+</section>
 
 <div class="highlights-bar">
   <div class="hl-card hl-red">
@@ -2065,6 +2254,7 @@ function setFramework(name) {
   document.getElementById("framework-title").textContent = FRAMEWORK_COPY[activeFramework].title;
   document.getElementById("framework-desc").textContent = FRAMEWORK_COPY[activeFramework].desc;
   document.getElementById("legend-label").textContent = `${activeFrameworkLabel()} Score:`;
+  document.getElementById("today-method-panel").hidden = activeFramework !== "today";
   applyFilters();
   if (selectedDetail) showDetail(selectedDetail);
 }
