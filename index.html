@@ -12,59 +12,252 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0c0c14;
-      color: #e8e8f0;
+      background: #000;
+      color: #fff;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     header {
-      padding: 2rem 2rem 1rem;
-      max-width: 1400px;
+      position: relative;
+      min-height: 760px;
+      padding: 2.25rem clamp(1.25rem, 5vw, 4.5rem) 4rem;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 70% 42%, rgba(44, 97, 255, 0.18), transparent 34%),
+        radial-gradient(circle at 20% 35%, rgba(0, 55, 120, 0.22), transparent 45%),
+        linear-gradient(180deg, #000 0%, #00101f 52%, #000 100%);
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      inset: -7% -5% 0;
+      background-image:
+        linear-gradient(118deg, transparent 0 14%, rgba(37, 88, 255, 0.16) 14.2% 14.45%, transparent 14.65% 100%),
+        linear-gradient(28deg, transparent 0 21%, rgba(37, 88, 255, 0.13) 21.2% 21.45%, transparent 21.65% 100%),
+        radial-gradient(circle at 10% 22%, rgba(48, 91, 255, 0.42) 0 8px, transparent 9px),
+        radial-gradient(circle at 32% 13%, rgba(48, 91, 255, 0.34) 0 6px, transparent 7px),
+        radial-gradient(circle at 51% 39%, rgba(48, 91, 255, 0.32) 0 10px, transparent 11px),
+        radial-gradient(circle at 72% 24%, rgba(48, 91, 255, 0.36) 0 7px, transparent 8px),
+        radial-gradient(circle at 91% 37%, rgba(48, 91, 255, 0.28) 0 8px, transparent 9px),
+        radial-gradient(circle at 18% 72%, rgba(48, 91, 255, 0.24) 0 5px, transparent 6px),
+        radial-gradient(circle at 64% 76%, rgba(48, 91, 255, 0.2) 0 8px, transparent 9px);
+      background-size: 420px 240px, 360px 220px, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+      opacity: 0.72;
+      pointer-events: none;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 180px;
+      background: linear-gradient(180deg, transparent, #000 78%);
+      pointer-events: none;
+    }
+
+    .site-nav {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1280px;
       margin: 0 auto;
     }
 
+    .site-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+      font-weight: 500;
+    }
+
+    .site-logo strong {
+      font-weight: 850;
+    }
+
+    .brand-mark {
+      width: 31px;
+      height: 31px;
+      border-radius: 50%;
+      display: inline-grid;
+      place-items: center;
+      color: #fff;
+      font-size: 1.5rem;
+      line-height: 1;
+      text-shadow: 0 0 10px rgba(255,255,255,0.35);
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 2;
+      max-width: 1280px;
+      min-height: 620px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(320px, 0.95fr) minmax(360px, 0.85fr);
+      gap: clamp(2rem, 6vw, 5rem);
+      align-items: center;
+      padding-top: 3.5rem;
+    }
+
+    .hero-copy {
+      max-width: 610px;
+      min-width: 0;
+    }
+
     .eyebrow {
-      font-size: 0.7rem;
+      font-size: 0.82rem;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #7c7c9a;
-      margin-bottom: 0.4rem;
+      letter-spacing: 0.14em;
+      color: #8ba4ff;
+      margin-bottom: 1.1rem;
+      font-weight: 800;
     }
 
     h1 {
-      font-size: clamp(1.4rem, 4vw, 2.6rem);
-      font-weight: 700;
-      line-height: 1.15;
-      background: linear-gradient(135deg, #fff 40%, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 0.6rem;
+      font-size: clamp(2.4rem, 5.4vw, 4.8rem);
+      font-weight: 500;
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      color: #fff;
+      margin-bottom: 1.55rem;
+      max-width: 790px;
+      overflow-wrap: break-word;
+    }
+
+    h1 strong {
+      color: #2f63ff;
+      font-weight: 850;
+      letter-spacing: -0.04em;
     }
 
     .subtitle {
-      font-size: 1rem;
-      color: #9090b0;
-      max-width: 700px;
-      line-height: 1.5;
-      margin-bottom: 1.5rem;
+      font-size: clamp(1rem, 1.35vw, 1.15rem);
+      color: #fff;
+      max-width: 620px;
+      line-height: 1.62;
+      margin-bottom: 1.7rem;
+      font-weight: 600;
+      overflow-wrap: break-word;
     }
 
-    .subtitle a { color: #a78bfa; text-decoration: none; }
+    .subtitle a { color: #fff; text-decoration: underline; text-decoration-color: #2f63ff; text-underline-offset: 4px; }
     .subtitle a:hover { text-decoration: underline; }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+      margin-top: 1.9rem;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 45px;
+      padding: 0.68rem 1rem;
+      border: 2px solid #ff5b00;
+      border-radius: 4px;
+      color: #fff;
+      background: transparent;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 850;
+      transition: background 0.18s, border-color 0.18s;
+    }
+
+    .cta-btn:hover {
+      background: rgba(255,91,0,0.14);
+      border-color: #ff7a29;
+    }
 
     .method-badge {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      background: rgba(167,139,250,0.12);
-      border: 1px solid rgba(167,139,250,0.3);
-      color: #a78bfa;
-      padding: 0.3rem 0.7rem;
-      border-radius: 6px;
-      font-size: 0.75rem;
+      background: rgba(47,99,255,0.13);
+      border: 1px solid rgba(47,99,255,0.35);
+      color: #a9bbff;
+      padding: 0.38rem 0.72rem;
+      border-radius: 999px;
+      font-size: 0.76rem;
       font-weight: 600;
       margin-bottom: 1rem;
+    }
+
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 520px;
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      width: min(540px, 90vw);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, transparent 57%, rgba(255,255,255,0.9) 57.25% 57.75%, transparent 58%),
+        repeating-conic-gradient(from 15deg, rgba(255,255,255,0.85) 0 1.4deg, transparent 1.6deg 8deg);
+      opacity: 0.55;
+      filter: drop-shadow(0 0 24px rgba(47,99,255,0.25));
+    }
+
+    .hero-visual img {
+      position: relative;
+      width: min(470px, 82vw);
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.14), 0 35px 90px rgba(0,0,0,0.55);
+    }
+
+    main {
+      background: #000;
+      position: relative;
+      z-index: 1;
+    }
+
+    .dashboard-intro {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 4rem 2rem 1.25rem;
+      display: grid;
+      grid-template-columns: minmax(280px, 0.8fr) minmax(260px, 1fr);
+      gap: 2rem;
+      align-items: end;
+    }
+
+    .dashboard-intro h2 {
+      color: #fff;
+      font-size: clamp(1.85rem, 3vw, 3rem);
+      line-height: 1.12;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+    }
+
+    .dashboard-intro h2 strong {
+      color: #2f63ff;
+      font-weight: 850;
+    }
+
+    .dashboard-intro p {
+      color: #d6d6e6;
+      line-height: 1.62;
+      font-size: 1rem;
+      font-weight: 600;
     }
 
     .controls {
@@ -72,16 +265,16 @@
       flex-wrap: wrap;
       gap: 0.75rem;
       padding: 0 2rem 1.25rem;
-      max-width: 1400px;
+      max-width: 1280px;
       margin: 0 auto;
     }
 
     .controls select, .controls input {
-      background: #16161f;
-      border: 1px solid #2a2a3a;
-      color: #e8e8f0;
-      padding: 0.5rem 0.85rem;
-      border-radius: 8px;
+      background: #05070d;
+      border: 1px solid #1d2743;
+      color: #fff;
+      padding: 0.68rem 0.9rem;
+      border-radius: 4px;
       font-size: 0.85rem;
       cursor: pointer;
       outline: none;
@@ -90,7 +283,7 @@
 
     .controls select:hover, .controls input:hover,
     .controls select:focus, .controls input:focus {
-      border-color: #5555aa;
+      border-color: #2f63ff;
     }
 
     .controls input {
@@ -102,7 +295,7 @@
       gap: 1.25rem;
       align-items: center;
       padding: 0 2rem 1rem;
-      max-width: 1400px;
+      max-width: 1280px;
       margin: 0 auto;
       flex-wrap: wrap;
     }
@@ -123,13 +316,15 @@
 
     #treemap-container {
       padding: 0 2rem 2rem;
-      max-width: 1400px;
+      max-width: 1280px;
       margin: 0 auto;
     }
 
     #treemap svg {
-      border-radius: 12px;
+      border-radius: 4px;
       overflow: hidden;
+      background: #03060c;
+      border: 1px solid #101b34;
     }
 
     .cell {
@@ -156,9 +351,9 @@
     /* Tooltip */
     #tooltip {
       position: fixed;
-      background: #1a1a2e;
-      border: 1px solid #3a3a5a;
-      border-radius: 10px;
+      background: #05070d;
+      border: 1px solid #2f63ff;
+      border-radius: 4px;
       padding: 0.85rem 1rem;
       pointer-events: none;
       font-size: 0.83rem;
@@ -205,7 +400,7 @@
       width: 400px;
       height: 100vh;
       background: #12121e;
-      border-left: 1px solid #2a2a3a;
+      border-left: 1px solid #2f63ff;
       padding: 2rem 1.5rem;
       overflow-y: auto;
       z-index: 500;
@@ -301,7 +496,7 @@
 
     #detail-panel .dp-stat {
       background: #1a1a2e;
-      border-radius: 8px;
+      border-radius: 4px;
       padding: 0.75rem;
     }
 
@@ -326,10 +521,10 @@
     }
 
     #detail-panel .dp-note {
-      background: #151521;
+      background: #05070d;
       border: 1px solid #2a2a3a;
       border-left: 3px solid #a78bfa;
-      border-radius: 8px;
+      border-radius: 4px;
       padding: 0.75rem;
       margin-bottom: 1rem;
       font-size: 0.82rem;
@@ -340,9 +535,9 @@
     #detail-panel .dp-note strong { color: #e8e8f0; }
 
     #detail-panel .dp-beta {
-      background: #16141a;
+      background: #05070d;
       border: 1px solid #2a2a3a;
-      border-radius: 8px;
+      border-radius: 4px;
       padding: 0.75rem;
       margin-bottom: 1rem;
       font-size: 0.82rem;
@@ -372,7 +567,7 @@
     #list-view {
       display: none;
       padding: 0 2rem 2rem;
-      max-width: 1400px;
+      max-width: 1280px;
       margin: 0 auto;
     }
 
@@ -381,15 +576,15 @@
       align-items: center;
       gap: 1rem;
       padding: 0.75rem 1rem;
-      border-radius: 8px;
-      background: #12121e;
+      border-radius: 4px;
+      background: #05070d;
       margin-bottom: 0.5rem;
       cursor: pointer;
       transition: background 0.15s;
       border: 1px solid #1e1e2e;
     }
 
-    .list-item:hover { background: #1a1a2e; }
+    .list-item:hover { background: #091122; }
 
     .list-score {
       width: 36px; height: 36px;
@@ -412,16 +607,16 @@
       display: flex;
       gap: 0.5rem;
       padding: 0 2rem 1rem;
-      max-width: 1400px;
+      max-width: 1280px;
       margin: 0 auto;
     }
 
     .view-btn {
       background: #16161f;
-      border: 1px solid #2a2a3a;
+      border: 1px solid #1d2743;
       color: #9090b0;
       padding: 0.4rem 0.9rem;
-      border-radius: 7px;
+      border-radius: 4px;
       font-size: 0.8rem;
       cursor: pointer;
       transition: all 0.2s;
@@ -429,7 +624,7 @@
 
     .view-btn.active {
       background: #2a2a4a;
-      border-color: #5555aa;
+      border-color: #2f63ff;
       color: #fff;
     }
 
@@ -439,12 +634,12 @@
       flex-wrap: wrap;
       gap: 0.75rem;
       padding: 0 2rem 1.5rem;
-      max-width: 1400px;
+      max-width: 1280px;
       margin: 0 auto;
     }
 
     .hl-card {
-      border-radius: 10px;
+      border-radius: 4px;
       padding: 0.85rem 1.1rem;
       border: 1px solid;
       flex: 1;
@@ -466,14 +661,14 @@
 
     .hl-label span { opacity: 0.65; font-size: 0.72rem; }
 
-    .hl-red { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.3); color: #ef4444; }
-    .hl-orange { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.3); color: #f59e0b; }
-    .hl-green { background: rgba(34,197,94,0.1); border-color: rgba(34,197,94,0.3); color: #22c55e; }
-    .hl-neutral { background: #12121e; border-color: #2a2a3a; color: #e8e8f0; }
+    .hl-red { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.35); color: #ef4444; }
+    .hl-orange { background: rgba(255,91,0,0.08); border-color: rgba(255,91,0,0.45); color: #ff6b18; }
+    .hl-green { background: rgba(34,197,94,0.08); border-color: rgba(34,197,94,0.35); color: #22c55e; }
+    .hl-neutral { background: #05070d; border-color: #1d2743; color: #fff; }
 
     .hl-insight {
-      background: #12121e;
-      border-color: #2a2a3a;
+      background: #05070d;
+      border-color: #1d2743;
       flex: 2;
       min-width: 220px;
       display: flex;
@@ -490,15 +685,15 @@
 
     /* About section */
     #about {
-      max-width: 1400px;
+      max-width: 1280px;
       margin: 0 auto;
-      padding: 2rem;
-      border-top: 1px solid #1e1e2e;
+      padding: 4rem 2rem 2rem;
+      border-top: 1px solid #07162f;
     }
 
     #about h2 {
       font-size: 1.1rem;
-      color: #9090b0;
+      color: #fff;
       margin-bottom: 1.25rem;
       display: flex;
       align-items: center;
@@ -513,9 +708,9 @@
     }
 
     .source-card {
-      background: #12121e;
-      border: 1px solid #1e1e2e;
-      border-radius: 10px;
+      background: #05070d;
+      border: 1px solid #1d2743;
+      border-radius: 4px;
       padding: 1rem 1.25rem;
     }
 
@@ -534,7 +729,7 @@
     }
 
     .source-card a {
-      color: #8888cc;
+      color: #8ba4ff;
       font-size: 0.78rem;
       text-decoration: none;
       display: block;
@@ -751,26 +946,149 @@
     }
 
     .disclaimer {
-      background: #16141a;
-      border: 1px solid #2a1a2e;
-      border-radius: 10px;
+      background: #05070d;
+      border: 1px solid #1d2743;
+      border-left: 3px solid #ff5b00;
+      border-radius: 4px;
       padding: 1rem 1.25rem;
       font-size: 0.82rem;
-      color: #7070a0;
+      color: #aeb3c5;
       line-height: 1.6;
     }
 
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      font-size: 0.78rem;
-      color: #4a4a6a;
+    .contact-band {
+      max-width: 1280px;
+      margin: 4rem auto 0;
+      padding: 3rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      border-top: 1px solid #fff;
+      border-bottom: 1px solid #07162f;
     }
 
-    footer a { color: #a78bfa; text-decoration: none; }
+    .contact-card {
+      padding-left: 2rem;
+      border-left: 1px solid rgba(255,255,255,0.9);
+    }
+
+    .contact-logo {
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      color: #fff;
+      font-size: 2.2rem;
+      font-weight: 850;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.15rem;
+    }
+
+    .contact-logo.small {
+      font-size: 1.55rem;
+      letter-spacing: -0.02em;
+    }
+
+    .contact-line {
+      color: #fff;
+      font-weight: 650;
+      line-height: 1.55;
+      margin-top: 0.65rem;
+      font-size: 0.98rem;
+    }
+
+    footer {
+      padding: 2.2rem clamp(1.25rem, 5vw, 4.5rem);
+      font-size: 0.78rem;
+      color: #fff;
+      background: #000;
+    }
+
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .footer-center {
+      font-weight: 750;
+      text-align: center;
+    }
+
+    .footer-initiators {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      align-items: center;
+      font-weight: 800;
+    }
+
+    footer a { color: #fff; text-decoration: none; }
 
     @media (max-width: 640px) {
       header, .controls, .legend, #treemap-container, #list-view, #about, .view-toggle, .highlights-bar {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      header {
+        min-height: auto;
+        width: 100vw;
+        padding: 1.2rem 1rem 3rem;
+      }
+      .site-logo {
+        font-size: 1.1rem;
+      }
+      .hero-grid {
+        width: 100%;
+        max-width: 100%;
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding-top: 3rem;
+        gap: 2rem;
+      }
+      .hero-copy {
+        width: 100%;
+        max-width: 358px;
+      }
+      h1 {
+        max-width: 100%;
+        font-size: clamp(1.85rem, 8.6vw, 2.15rem);
+        line-height: 1.08;
+        letter-spacing: -0.04em;
+      }
+      .eyebrow {
+        font-size: 0.74rem;
+        letter-spacing: 0.12em;
+      }
+      .subtitle {
+        max-width: 358px;
+        font-size: 0.96rem;
+        line-height: 1.55;
+      }
+      .hero-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 100%;
+        max-width: 358px;
+        gap: 0.65rem;
+      }
+      .cta-btn {
+        width: 100%;
+      }
+      .hero-visual {
+        min-height: 360px;
+        overflow: hidden;
+      }
+      .hero-visual::before {
+        width: min(390px, 104vw);
+      }
+      .hero-visual img {
+        width: min(340px, 88vw);
+      }
+      .dashboard-intro {
+        grid-template-columns: 1fr;
         padding-left: 1rem;
         padding-right: 1rem;
       }
@@ -786,23 +1104,55 @@
         bottom: -0.65rem;
         transform: translateX(50%);
       }
+      .contact-band, .footer-inner {
+        grid-template-columns: 1fr;
+      }
+      .footer-center, .footer-initiators {
+        text-align: left;
+        justify-content: flex-start;
+      }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="eyebrow">Arbeitsmarkt & Künstliche Intelligenz</div>
-  <h1>KI-Exposition nach Beruf - Schweiz</h1>
-  <div class="method-badge">Eloundou et al. (2024) - Science - Peer-reviewed</div>
-  <p class="subtitle">
-    Welche Schweizer Berufe sind durch LLMs (Large Language Models) exponiert?
-    72 Berufe bewertet mit dem wissenschaftlich validierten
-    <a href="https://www.science.org/doi/10.1126/science.adj0998" target="_blank" rel="noopener noreferrer">Expositionsmass von Eloundou et al.</a>,
-    publiziert in <em>Science</em> (2024). Mit Medianlöhnen aus der BFS-Lohnstrukturerhebung
-    und Beschäftigtenzahlen aus der SAKE.
-  </p>
+  <nav class="site-nav" aria-label="Hauptnavigation">
+    <a class="site-logo" href="#top" aria-label="einstAIn">
+      <span class="brand-mark" aria-hidden="true">*</span>
+      <span>einst<strong>AI</strong>n</span>
+    </a>
+  </nav>
+  <div class="hero-grid" id="top">
+    <div class="hero-copy">
+      <div class="eyebrow">Arbeitsmarkt & Künstliche Intelligenz</div>
+      <h1>KI-Exposition<br>nach Beruf - <strong>Schweiz</strong></h1>
+      <div class="method-badge">Eloundou et al. (2024) - Science - Peer-reviewed</div>
+      <p class="subtitle">
+        Welche Schweizer Berufe sind durch LLMs exponiert?
+        72 Berufe bewertet mit dem wissenschaftlich validierten
+        <a href="https://www.science.org/doi/10.1126/science.adj0998" target="_blank" rel="noopener noreferrer">Expositionsmass von Eloundou et al.</a>,
+        kombiniert mit BFS-Lohn- und Beschäftigungsdaten.
+      </p>
+      <div class="hero-actions">
+        <a class="cta-btn" href="#dashboard">Zum Dashboard</a>
+        <a class="cta-btn" href="#about">Methodik prüfen</a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <img src="assets/future-work-hero.png" alt="">
+    </div>
+  </div>
 </header>
+
+<main id="dashboard">
+<section class="dashboard-intro">
+  <h2>Analysen, Trends & <strong>Insights</strong></h2>
+  <p>
+    Das Dashboard zeigt, wo Sprachmodelle berufliche Aufgaben beschleunigen können.
+    Der Score misst LLM-Exposition, nicht Jobverlust, und macht die zugrunde liegenden Quellen transparent prüfbar.
+  </p>
+</section>
 
 <div class="highlights-bar">
   <div class="hl-card hl-red">
@@ -1119,9 +1469,34 @@
 
     </div>
 </section>
+</main>
+
+<section class="contact-band" aria-label="Kontakt">
+  <div class="contact-card">
+    <div class="contact-logo small">Angestellte Schweiz</div>
+    <div class="contact-line">alexander.belaz@angestellte.ch</div>
+    <div class="contact-line">Martin-Disteli-Strasse 9<br>Postfach 234 4601 Olten</div>
+  </div>
+  <div class="contact-card">
+    <div class="contact-logo">kuble</div>
+    <div class="contact-line">roger.oberholzer@kuble.com</div>
+    <div class="contact-line">Räffelstrasse 26<br>8045 Zürich</div>
+  </div>
+</section>
 
 <footer>
-  Eloundou et al. (2024), <em>Science</em> | BFS-Daten | <a href="https://gu.kuble.com/jobs/">US-Version (342 Berufe)</a> | April 2026
+  <div class="footer-inner">
+    <a class="site-logo" href="#top" aria-label="einstAIn">
+      <span class="brand-mark" aria-hidden="true">*</span>
+      <span>einst<strong>AI</strong>n</span>
+    </a>
+    <div class="footer-center">© 2026. All rights reserved.</div>
+    <div class="footer-initiators">
+      <span>Initiators</span>
+      <span>Angestellte Schweiz</span>
+      <span>kuble</span>
+    </div>
+  </div>
 </footer>
 
 <script>
