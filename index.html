@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KI-Exposition nach Beruf - Schweiz (Eloundou et al.)</title>
+  <meta name="description" content="Interaktive Karte: Welche Schweizer Berufe sind durch KI exponiert? 72 Berufe bewertet mit dem wissenschaftlich validierten Eloundou-Mass (Science 2024) - mit Medianlöhnen in CHF und Beschäftigtenzahlen aus BFS-Daten.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#127464;&#127469;</text></svg>">
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0c0c14;
+      color: #e8e8f0;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 2rem 2rem 1rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #7c7c9a;
+      margin-bottom: 0.4rem;
+    }
+
+    h1 {
+      font-size: clamp(1.4rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.15;
+      background: linear-gradient(135deg, #fff 40%, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.6rem;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #9090b0;
+      max-width: 700px;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+
+    .subtitle a { color: #a78bfa; text-decoration: none; }
+    .subtitle a:hover { text-decoration: underline; }
+
+    .method-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(167,139,250,0.12);
+      border: 1px solid rgba(167,139,250,0.3);
+      color: #a78bfa;
+      padding: 0.3rem 0.7rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding: 0 2rem 1.25rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .controls select, .controls input {
+      background: #16161f;
+      border: 1px solid #2a2a3a;
+      color: #e8e8f0;
+      padding: 0.5rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .controls select:hover, .controls input:hover,
+    .controls select:focus, .controls input:focus {
+      border-color: #5555aa;
+    }
+
+    .controls input {
+      width: 200px;
+    }
+
+    .legend {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+      padding: 0 2rem 1rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      color: #9090b0;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+
+    #treemap-container {
+      padding: 0 2rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    #treemap svg {
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .cell {
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .cell:hover { opacity: 0.85; }
+
+    .cell-label {
+      font-size: 11px;
+      fill: rgba(255,255,255,0.9);
+      pointer-events: none;
+      font-weight: 600;
+    }
+
+    .cell-score {
+      font-size: 14px;
+      fill: rgba(255,255,255,0.7);
+      pointer-events: none;
+      font-weight: 700;
+    }
+
+    /* Tooltip */
+    #tooltip {
+      position: fixed;
+      background: #1a1a2e;
+      border: 1px solid #3a3a5a;
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      pointer-events: none;
+      font-size: 0.83rem;
+      max-width: 280px;
+      display: none;
+      z-index: 1000;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    }
+
+    #tooltip .tt-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    #tooltip .tt-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.2rem;
+      color: #b0b0cc;
+    }
+
+    #tooltip .tt-val {
+      color: #e8e8f0;
+      font-weight: 600;
+    }
+
+    #tooltip .tt-score {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Detail panel */
+    #detail-panel {
+      display: none;
+      position: fixed;
+      top: 0; right: 0;
+      width: 400px;
+      height: 100vh;
+      background: #12121e;
+      border-left: 1px solid #2a2a3a;
+      padding: 2rem 1.5rem;
+      overflow-y: auto;
+      z-index: 500;
+      box-shadow: -10px 0 40px rgba(0,0,0,0.6);
+    }
+
+    #detail-panel .close-btn {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: #2a2a3a;
+      border: none;
+      color: #e8e8f0;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    #detail-panel h2 {
+      font-size: 1.3rem;
+      margin-bottom: 0.25rem;
+      padding-right: 2.5rem;
+    }
+
+    #detail-panel .dp-cat {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #7c7c9a;
+      margin-bottom: 1.2rem;
+    }
+
+    #detail-panel .dp-score-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 1.2rem;
+    }
+
+    #detail-panel .dp-score-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+
+    #detail-panel .dp-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin: -0.4rem 0 1rem;
+    }
+
+    .confidence-badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 0.22rem 0.55rem;
+      border: 1px solid;
+      font-size: 0.72rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .confidence-high {
+      color: #22c55e;
+      background: rgba(34,197,94,0.11);
+      border-color: rgba(34,197,94,0.28);
+    }
+
+    .confidence-medium {
+      color: #f59e0b;
+      background: rgba(245,158,11,0.11);
+      border-color: rgba(245,158,11,0.28);
+    }
+
+    .confidence-scope {
+      color: #a78bfa;
+      background: rgba(167,139,250,0.12);
+      border-color: rgba(167,139,250,0.3);
+    }
+
+    #detail-panel .dp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1.2rem;
+    }
+
+    #detail-panel .dp-stat {
+      background: #1a1a2e;
+      border-radius: 8px;
+      padding: 0.75rem;
+    }
+
+    #detail-panel .dp-stat-label {
+      font-size: 0.7rem;
+      color: #7c7c9a;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.25rem;
+    }
+
+    #detail-panel .dp-stat-value {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    #detail-panel .dp-rationale {
+      font-size: 0.88rem;
+      color: #b0b0cc;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    #detail-panel .dp-note {
+      background: #151521;
+      border: 1px solid #2a2a3a;
+      border-left: 3px solid #a78bfa;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      font-size: 0.82rem;
+      color: #b0b0cc;
+      line-height: 1.55;
+    }
+
+    #detail-panel .dp-note strong { color: #e8e8f0; }
+
+    #detail-panel .dp-beta {
+      background: #16141a;
+      border: 1px solid #2a2a3a;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      font-size: 0.82rem;
+      color: #9090b0;
+    }
+
+    #detail-panel .dp-beta strong { color: #a78bfa; }
+
+    #detail-panel .dp-sources {
+      font-size: 0.75rem;
+      color: #5a5a7a;
+      border-top: 1px solid #2a2a3a;
+      padding-top: 0.75rem;
+    }
+
+    #detail-panel .dp-link {
+      display: inline-block;
+      margin-top: 0.75rem;
+      font-size: 0.8rem;
+      color: #8888cc;
+      text-decoration: none;
+    }
+
+    #detail-panel .dp-link:hover { color: #aaaaff; }
+
+    /* List view */
+    #list-view {
+      display: none;
+      padding: 0 2rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      background: #12121e;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      transition: background 0.15s;
+      border: 1px solid #1e1e2e;
+    }
+
+    .list-item:hover { background: #1a1a2e; }
+
+    .list-score {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .list-main { flex: 1; min-width: 0; }
+    .list-title { font-weight: 600; flex: 1; }
+    .list-cat { font-size: 0.75rem; color: #7c7c9a; }
+    .list-pay { font-size: 0.85rem; color: #9090b0; flex-shrink: 0; }
+    .list-confidence { margin-left: 0.4rem; font-size: 0.68rem; vertical-align: 1px; }
+
+    .view-toggle {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0 2rem 1rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .view-btn {
+      background: #16161f;
+      border: 1px solid #2a2a3a;
+      color: #9090b0;
+      padding: 0.4rem 0.9rem;
+      border-radius: 7px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .view-btn.active {
+      background: #2a2a4a;
+      border-color: #5555aa;
+      color: #fff;
+    }
+
+    /* Highlights */
+    .highlights-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding: 0 2rem 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hl-card {
+      border-radius: 10px;
+      padding: 0.85rem 1.1rem;
+      border: 1px solid;
+      flex: 1;
+      min-width: 140px;
+    }
+
+    .hl-num {
+      font-size: 1.6rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 0.25rem;
+    }
+
+    .hl-label {
+      font-size: 0.78rem;
+      line-height: 1.4;
+      opacity: 0.8;
+    }
+
+    .hl-label span { opacity: 0.65; font-size: 0.72rem; }
+
+    .hl-red { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.3); color: #ef4444; }
+    .hl-orange { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.3); color: #f59e0b; }
+    .hl-green { background: rgba(34,197,94,0.1); border-color: rgba(34,197,94,0.3); color: #22c55e; }
+    .hl-neutral { background: #12121e; border-color: #2a2a3a; color: #e8e8f0; }
+
+    .hl-insight {
+      background: #12121e;
+      border-color: #2a2a3a;
+      flex: 2;
+      min-width: 220px;
+      display: flex;
+      align-items: center;
+    }
+
+    .hl-insight-text {
+      font-size: 0.83rem;
+      color: #b0b0cc;
+      line-height: 1.5;
+    }
+
+    .hl-insight-text strong { color: #e8e8f0; }
+
+    /* About section */
+    #about {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+      border-top: 1px solid #1e1e2e;
+    }
+
+    #about h2 {
+      font-size: 1.1rem;
+      color: #9090b0;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .source-card {
+      background: #12121e;
+      border: 1px solid #1e1e2e;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+    }
+
+    .source-card h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #7c7c9a;
+      margin-bottom: 0.4rem;
+    }
+
+    .source-card p {
+      font-size: 0.85rem;
+      color: #b0b0cc;
+      line-height: 1.5;
+    }
+
+    .source-card a {
+      color: #8888cc;
+      font-size: 0.78rem;
+      text-decoration: none;
+      display: block;
+      margin-top: 0.4rem;
+    }
+
+    .method-visual {
+      background: #10101b;
+      border: 1px solid #25253a;
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .method-image-card {
+      background: #10101b;
+      border: 1px solid #25253a;
+      border-radius: 12px;
+      padding: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .method-image-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .method-image-caption {
+      margin-top: 0.65rem;
+      color: #9090b0;
+      font-size: 0.78rem;
+      line-height: 1.45;
+    }
+
+    .method-visual h3 {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #a78bfa;
+      margin-bottom: 0.85rem;
+    }
+
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(140px, 1fr));
+      gap: 0.75rem;
+      align-items: stretch;
+      margin-bottom: 1rem;
+    }
+
+    .pipeline-step {
+      position: relative;
+      min-height: 145px;
+      background: #151521;
+      border: 1px solid #2a2a3a;
+      border-radius: 10px;
+      padding: 0.85rem;
+    }
+
+    .pipeline-step:not(:last-child)::after {
+      content: ">";
+      position: absolute;
+      right: -0.58rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #5a5a7a;
+      font-weight: 800;
+      z-index: 2;
+    }
+
+    .pipeline-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: rgba(167,139,250,0.18);
+      color: #c4b5fd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.76rem;
+      font-weight: 800;
+      margin-bottom: 0.55rem;
+    }
+
+    .pipeline-title {
+      font-size: 0.92rem;
+      font-weight: 750;
+      color: #e8e8f0;
+      margin-bottom: 0.35rem;
+    }
+
+    .pipeline-text {
+      font-size: 0.78rem;
+      color: #a9a9c6;
+      line-height: 1.45;
+    }
+
+    .pipeline-formula {
+      display: inline-block;
+      margin-top: 0.5rem;
+      color: #f59e0b;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .method-example {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 0.85rem;
+      align-items: stretch;
+    }
+
+    .example-card, .audit-card {
+      background: #0c0c14;
+      border: 1px solid #202033;
+      border-radius: 10px;
+      padding: 0.95rem;
+    }
+
+    .example-card h4, .audit-card h4 {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #7c7c9a;
+      margin-bottom: 0.5rem;
+    }
+
+    .calc-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      align-items: center;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: #d8d8ef;
+      font-size: 0.82rem;
+      line-height: 1.7;
+    }
+
+    .calc-chip {
+      display: inline-flex;
+      border-radius: 7px;
+      padding: 0.16rem 0.42rem;
+      background: #1a1a2e;
+      border: 1px solid #2a2a3a;
+      color: #c4b5fd;
+      font-weight: 700;
+    }
+
+    .source-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.75rem;
+    }
+
+    .source-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.28rem;
+      border-radius: 999px;
+      padding: 0.3rem 0.62rem;
+      background: #16161f;
+      border: 1px solid #2a2a3a;
+      color: #aaaaff;
+      font-size: 0.76rem;
+      text-decoration: none;
+    }
+
+    .audit-card ul {
+      margin: 0.4rem 0 0 1.1rem;
+      color: #b0b0cc;
+      font-size: 0.8rem;
+      line-height: 1.65;
+    }
+
+    .source-index {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 0.75rem;
+      margin: 1rem 0 1.5rem;
+    }
+
+    .source-index-card {
+      background: #12121e;
+      border: 1px solid #1e1e2e;
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+    }
+
+    .source-index-card h3 {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #7c7c9a;
+      margin-bottom: 0.35rem;
+    }
+
+    .source-index-card p {
+      font-size: 0.8rem;
+      color: #b0b0cc;
+      line-height: 1.45;
+      margin-bottom: 0.45rem;
+    }
+
+    .source-index-card a {
+      color: #8888cc;
+      font-size: 0.76rem;
+      text-decoration: none;
+      display: block;
+      margin-top: 0.3rem;
+    }
+
+    .disclaimer {
+      background: #16141a;
+      border: 1px solid #2a1a2e;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      font-size: 0.82rem;
+      color: #7070a0;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.78rem;
+      color: #4a4a6a;
+    }
+
+    footer a { color: #a78bfa; text-decoration: none; }
+
+    @media (max-width: 640px) {
+      header, .controls, .legend, #treemap-container, #list-view, #about, .view-toggle, .highlights-bar {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      #detail-panel { width: 100%; }
+      .controls input { width: 140px; }
+      .pipeline, .method-example {
+        grid-template-columns: 1fr;
+      }
+      .pipeline-step:not(:last-child)::after {
+        content: "v";
+        right: 50%;
+        top: auto;
+        bottom: -0.65rem;
+        transform: translateX(50%);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Arbeitsmarkt & Künstliche Intelligenz</div>
+  <h1>KI-Exposition nach Beruf - Schweiz</h1>
+  <div class="method-badge">Eloundou et al. (2024) - Science - Peer-reviewed</div>
+  <p class="subtitle">
+    Welche Schweizer Berufe sind durch LLMs (Large Language Models) exponiert?
+    72 Berufe bewertet mit dem wissenschaftlich validierten
+    <a href="https://www.science.org/doi/10.1126/science.adj0998" target="_blank" rel="noopener noreferrer">Expositionsmass von Eloundou et al.</a>,
+    publiziert in <em>Science</em> (2024). Mit Medianlöhnen aus der BFS-Lohnstrukturerhebung
+    und Beschäftigtenzahlen aus der SAKE.
+  </p>
+</header>
+
+<div class="highlights-bar">
+  <div class="hl-card hl-red">
+    <div class="hl-num" id="metric-high">-</div>
+    <div class="hl-label">Beruf mit sehr hoher LLM-Exposition<br><span>(Score 8-10)</span></div>
+  </div>
+  <div class="hl-card hl-orange">
+    <div class="hl-num" id="metric-medium">-</div>
+    <div class="hl-label">Berufe mit mittlerer Exposition<br><span>(Score 5-7; 6-7 = deutlich)</span></div>
+  </div>
+  <div class="hl-card hl-green">
+    <div class="hl-num" id="metric-low">-</div>
+    <div class="hl-label">Berufe mit niedriger Exposition<br><span>(Score 0-4)</span></div>
+  </div>
+  <div class="hl-card hl-neutral">
+    <div class="hl-num" id="metric-weighted">-</div>
+    <div class="hl-label">Gewichtete Exposition<br><span>nach Beschäftigten</span></div>
+  </div>
+  <div class="hl-card hl-neutral">
+    <div class="hl-num" id="metric-pay">-</div>
+    <div class="hl-label">Lohnspanne<br><span>Medianlöhne CH 2022</span></div>
+  </div>
+  <div class="hl-card hl-insight">
+    <div class="hl-insight-text">Am stärksten exponiert: <strong>Softwareentwickler/-in, Sysadmin, Data Scientist, KI-Ingenieur/-in</strong> - kognitive, textbasierte Berufe</div>
+  </div>
+  <div class="hl-card hl-insight">
+    <div class="hl-insight-text">Am wenigsten exponiert: <strong>Maurer/-in, Maler/-in, Sanitärinstallateur/-in, Elektriker/-in</strong> - physische Präsenz unersetzbar</div>
+  </div>
+</div>
+
+<div class="controls">
+  <input type="text" id="search" placeholder="Beruf suchen..." oninput="applyFilters()">
+  <select id="catFilter" onchange="applyFilters()">
+    <option value="">Alle Branchen</option>
+    <option value="finanzen-recht">Finanzen & Recht</option>
+    <option value="it-tech">IT & Technologie</option>
+    <option value="gesundheit">Gesundheit & Pflege</option>
+    <option value="bildung">Bildung & Forschung</option>
+    <option value="handwerk-bau">Handwerk & Bau</option>
+    <option value="verwaltung">Verwaltung & Administration</option>
+    <option value="verkauf-handel">Verkauf & Handel</option>
+    <option value="transport-logistik">Transport & Logistik</option>
+    <option value="gastronomie-tourismus">Gastronomie & Tourismus</option>
+    <option value="landwirtschaft">Landwirtschaft & Natur</option>
+    <option value="kunst-medien">Kunst, Design & Medien</option>
+    <option value="ingenieurwesen">Ingenieurwesen</option>
+    <option value="soziales">Soziales & Beratung</option>
+    <option value="sicherheit">Sicherheit & Schutz</option>
+  </select>
+  <select id="mappingFilter" onchange="applyFilters()">
+    <option value="">Alle Mappings</option>
+    <option value="review">Plausibilisierung nötig</option>
+    <option value="high">Solides Mapping</option>
+  </select>
+  <select id="sortBy" onchange="applyFilters()">
+    <option value="exposure-desc">LLM-Exposition (hoch -> tief)</option>
+    <option value="exposure-asc">LLM-Exposition (tief -> hoch)</option>
+    <option value="pay-desc">Lohn (hoch -> tief)</option>
+    <option value="jobs-desc">Beschäftigte (meiste -> wenigste)</option>
+  </select>
+</div>
+
+<div class="legend">
+  <span style="font-size:0.78rem;color:#7c7c9a;margin-right:0.25rem;">LLM-Exposition:</span>
+  <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div> Niedrig (0-4)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div> Mittel (5-7)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div> Sehr hoch (8-10)</div>
+  <span style="margin-left:auto;font-size:0.75rem;color:#5a5a7a;">Grösse = Anzahl Beschäftigte in CH</span>
+</div>
+
+<div class="view-toggle">
+  <button class="view-btn active" onclick="setView('treemap')" id="btn-treemap">Treemap</button>
+  <button class="view-btn" onclick="setView('list')" id="btn-list">Liste</button>
+</div>
+
+<div id="treemap-container">
+  <svg id="treemap"></svg>
+</div>
+
+<div id="list-view"></div>
+
+<!-- Tooltip -->
+<div id="tooltip"></div>
+
+<!-- Detail Panel -->
+<div id="detail-panel">
+  <button class="close-btn" onclick="closePanel()">&#10005;</button>
+  <div id="detail-content"></div>
+</div>
+
+<!-- Über diese Daten -->
+<section id="about">
+  <h2>Über diese Daten</h2>
+
+  <figure class="method-image-card">
+    <img src="assets/score-method-infographic.png" alt="Infografik: So entsteht der KI-Expositionsscore von Eloundou-Beta-Score über SOC-Bereinigung, ISCO-08-Mapping und BFS-Daten zum Dashboard-Score">
+    <figcaption class="method-image-caption">
+      Visueller Überblick über die Berechnung: Eloundou-Beta-Score, SOC/ISCO-Mapping, Schweizer Berufszuordnung mit BFS-Daten und Rundung auf den Dashboard-Score.
+    </figcaption>
+  </figure>
+
+  <div class="method-visual" aria-label="Methodik-Illustration: Von Eloundou-Daten über Mapping und Schweizer Daten zum Dashboard-Score">
+    <h3>Prüfpfad: von Quelle zu Score</h3>
+    <div class="pipeline">
+      <div class="pipeline-step">
+        <div class="pipeline-num">1</div>
+        <div class="pipeline-title">Eloundou-Score</div>
+        <div class="pipeline-text">Aus `occ_level.csv`: O*NET-SOC Berufscode, Titel und `dv_rating_beta` als LLM-Exposition.</div>
+        <span class="pipeline-formula">β = E1 + 0.5 x E2</span>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-num">2</div>
+        <div class="pipeline-title">SOC vereinheitlichen</div>
+        <div class="pipeline-text">O*NET-SOC ist feiner als SOC-2010. Der Suffix wird entfernt; mehrere Einträge werden gemittelt.</div>
+        <span class="pipeline-formula">15-1252.00 -> 15-1252</span>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-num">3</div>
+        <div class="pipeline-title">ISCO mappen</div>
+        <div class="pipeline-text">Über den BLS-Crosswalk wird SOC-2010 auf ISCO-08 übersetzt; Mehrfachtreffer werden gemittelt.</div>
+        <span class="pipeline-formula">SOC -> ISCO-08</span>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-num">4</div>
+        <div class="pipeline-title">CH-Beruf zuordnen</div>
+        <div class="pipeline-text">ISCO-08 wird auf die Schweizer Berufsbezeichnung im Dashboard gelegt und mit BFS-Lohn/Beschäftigung kombiniert.</div>
+        <span class="pipeline-formula">ISCO + BFS -> Beruf</span>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-num">5</div>
+        <div class="pipeline-title">Dashboard-Score</div>
+        <div class="pipeline-text">Der Beta-Wert bleibt in den Details sichtbar; für die Treemap wird auf 0-10 gerundet.</div>
+        <span class="pipeline-formula">Score = round(β x 10)</span>
+      </div>
+    </div>
+
+    <div class="method-example">
+      <div class="example-card">
+        <h4>Beispiel: Softwareentwickler/-in</h4>
+        <div class="calc-row">
+          <span class="calc-chip">Software Developers β 0.87</span>
+          <span>+</span>
+          <span class="calc-chip">Computer Programmers β 0.95</span>
+          <span>-> Mittelwert</span>
+          <span class="calc-chip">β 0.9092</span>
+          <span>-></span>
+          <span class="calc-chip">round(9.092)</span>
+          <span>=</span>
+          <span class="calc-chip">9/10</span>
+        </div>
+        <div class="source-links">
+          <a class="source-pill" href="https://github.com/openai/GPTs-are-GPTs/blob/main/data/occ_level.csv" target="_blank" rel="noopener noreferrer">OpenAI `occ_level.csv`</a>
+          <a class="source-pill" href="Files%20for%20CC/eloundou_mapping_results.json">Lokales Mapping-JSON</a>
+          <a class="source-pill" href="scripts/validate-dashboard.js">Validierungsscript</a>
+        </div>
+      </div>
+      <div class="audit-card">
+        <h4>So kann man es prüfen</h4>
+        <ul>
+          <li>Beta-Wert im Detailpanel mit `Files for CC/eloundou_mapping_results.json` vergleichen.</li>
+          <li>Score kontrollieren: `round(beta x 10)` muss dem angezeigten Wert entsprechen.</li>
+          <li>Bei Berufen mit Badge "Plausibilisierung" die konkrete Tätigkeitsmischung prüfen.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="source-index" aria-label="Alle Quellen und lokale Prüfdaten">
+    <div class="source-index-card">
+      <h3>Peer-reviewed Paper</h3>
+      <p>Definition des LLM-Expositionsmasses und wissenschaftlicher Kontext.</p>
+      <a href="https://www.science.org/doi/10.1126/science.adj0998" target="_blank" rel="noopener noreferrer">Eloundou et al. (2024), Science</a>
+      <a href="https://openai.com/index/gpts-are-gpts/" target="_blank" rel="noopener noreferrer">OpenAI Projektseite</a>
+    </div>
+    <div class="source-index-card">
+      <h3>Expositionsdaten</h3>
+      <p>Berufsebene mit O*NET-SOC-Code und `dv_rating_beta`.</p>
+      <a href="https://github.com/openai/GPTs-are-GPTs" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+      <a href="https://github.com/openai/GPTs-are-GPTs/blob/main/data/occ_level.csv" target="_blank" rel="noopener noreferrer">`data/occ_level.csv`</a>
+      <a href="Files%20for%20CC/occ_level.csv">Lokale Kopie `occ_level.csv`</a>
+    </div>
+    <div class="source-index-card">
+      <h3>Berufscode-Mapping</h3>
+      <p>Übersetzung von SOC-2010 auf ISCO-08 via BLS.</p>
+      <a href="https://www.bls.gov/soc/soccrosswalks.htm" target="_blank" rel="noopener noreferrer">BLS Crosswalk-Übersicht</a>
+      <a href="https://www.bls.gov/soc/isco_soc_crosswalk.xls" target="_blank" rel="noopener noreferrer">BLS `isco_soc_crosswalk.xls`</a>
+      <a href="Files%20for%20CC/isco_soc_crosswalk.xls">Lokale Kopie Crosswalk</a>
+    </div>
+    <div class="source-index-card">
+      <h3>Schweizer Arbeitsmarkt</h3>
+      <p>Beschäftigte und Kontext zu Aufgabenprofilen aus BFS/SAKE.</p>
+      <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb.html" target="_blank" rel="noopener noreferrer">BFS Arbeit und Erwerb</a>
+      <a href="https://www.swissstats.bfs.admin.ch/data/webviewer/appId/ch.admin.bfs.swissstat/article/issue240323012200-01/package" target="_blank" rel="noopener noreferrer">BFS/SAKE Aufgaben und Digitalisierung 2022</a>
+    </div>
+    <div class="source-index-card">
+      <h3>Medianlöhne</h3>
+      <p>BFS Lohnstrukturerhebung als Basis der Lohnangaben.</p>
+      <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb/loehne-erwerbseinkommen-arbeitskosten/lohnstruktur.html" target="_blank" rel="noopener noreferrer">BFS Lohnstruktur</a>
+    </div>
+    <div class="source-index-card">
+      <h3>Dashboard-Prüfdaten</h3>
+      <p>Lokale Arbeitsdateien für Mapping, Anleitung und automatisierte Checks.</p>
+      <a href="Files%20for%20CC/eloundou_mapping_results.json">Mapping-Ergebnis JSON</a>
+      <a href="Files%20for%20CC/anleitung-eloundou-scores-integration.txt">Integrationsanleitung</a>
+      <a href="scripts/validate-dashboard.js">Validierungsscript</a>
+    </div>
+  </div>
+
+  <div class="source-grid">
+    <div class="source-card">
+      <h3>LLM-Exposition (Beta-Score)</h3>
+      <p>Eloundou, T. et al. (2024). "GPTs are GPTs: Labor market impact potential of LLMs." <em>Science</em>, 384, 1306-1308.<br><br>
+      Das Beta-Mass bewertet pro Beruf, inwieweit LLMs die Erledigungszeit von Aufgaben um mindestens 50% reduzieren können. Formel: Beta = E1 + 0.5 x E2. Mapping von O*NET-SOC auf ISCO-08 via BLS-Crosswalk.</p>
+      <a href="https://www.science.org/doi/10.1126/science.adj0998" target="_blank" rel="noopener noreferrer">-> Science (2024)</a>
+      <a href="https://github.com/openai/GPTs-are-GPTs" target="_blank" rel="noopener noreferrer">-> Datensatz (GitHub)</a>
+    </div>
+    <div class="source-card">
+      <h3>Beschäftigte</h3>
+      <p>Bundesamt für Statistik (BFS)<br>Schweizerische Arbeitskräfteerhebung (SAKE) 2023<br>Erwerbstätige nach Beruf (ISCO-08)</p>
+      <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb.html" target="_blank" rel="noopener noreferrer">-> bfs.admin.ch</a>
+    </div>
+    <div class="source-card">
+      <h3>Medianlöhne</h3>
+      <p>BFS Lohnstrukturerhebung (LSE) 2022<br>Bruttolohn, Vollzeit, Median in CHF/Jahr<br>(Monatslohn x 13)</p>
+      <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb/loehne-erwerbseinkommen-arbeitskosten/lohnstruktur.html" target="_blank" rel="noopener noreferrer">-> BFS Lohnstruktur</a>
+    </div>
+    <div class="source-card">
+      <h3>SOC-ISCO Mapping</h3>
+      <p>Bureau of Labor Statistics (BLS)<br>ISCO-08 to SOC 2010 Crosswalk (2015)<br>Aggregation: O*NET-SOC -> SOC-2010 -> ISCO-08 -> CH-Berufe</p>
+      <a href="https://www.bls.gov/soc/isco_soc_crosswalk.xls" target="_blank" rel="noopener noreferrer">-> BLS Crosswalk</a>
+    </div>
+  </div>
+  <div class="disclaimer">
+    <strong>Wichtiger Hinweis:</strong> Das Eloundou-Mass erfasst spezifisch die <strong>LLM-Exposition</strong> - also inwieweit Sprachmodelle (wie GPT-4, Claude) die Aufgaben eines Berufs beschleunigen können. Es misst <em>nicht</em> allgemeine Automatisierung durch Robotik, autonomes Fahren oder physische KI-Systeme. Deshalb haben z.B. Lastwagenfahrer/-innen oder Lagerfachleute niedrige Scores, obwohl sie durch andere Technologien potenziell betroffen sind. Ein hoher Score bedeutet vor allem: hoher möglicher Produktivitätshebel durch LLMs, nicht automatisch Ersetzbarkeit oder Jobverlust. Die Beschäftigungs- und Lohndaten basieren auf BFS-Erhebungen und sind Näherungswerte. Diese Visualisierung ersetzt keine professionelle Berufsberatung.
+  </div>
+
+  <div class="source-card" style="margin-top:1.25rem;border-color:rgba(245,158,11,0.28);">
+    <h3 style="color:#f59e0b;">So sollte man die Scores lesen</h3>
+    <ul style="margin:0.5rem 0 0 1.2rem;color:#b0b0cc;line-height:1.8;font-size:0.85rem;">
+      <li><strong>Mapping ist eine Annäherung:</strong> Schweizer Berufsbezeichnungen decken nicht immer exakt einen O*NET- oder ISCO-Beruf ab. Je nach konkretem Tätigkeitsprofil kann die Exposition höher oder tiefer liegen.</li>
+      <li><strong>Die 0-10-Skala ist gerundet:</strong> Der präzisere β-Wert wird in den Details angezeigt. Rundungen nahe einer Kategoriengrenze sollten nicht überinterpretiert werden.</li>
+      <li><strong>"Sehr hoch" ist bewusst streng:</strong> Nur Score 8-10 wird rot markiert. Berufe mit 6 oder 7 sind trotzdem deutlich LLM-exponiert und verdienen Aufmerksamkeit.</li>
+      <li><strong>Heikle Zuordnungen sind kommentiert:</strong> Bei Berufen wie Logistik, Recht oder Koch/Köchin hängt der Score stark davon ab, ob administrative, analytische oder physische Aufgaben dominieren.</li>
+    </ul>
+  </div>
+
+  <!-- Methodik-Erklärung -->
+  <div style="margin-top:2rem;">
+    <h2 style="font-size:1.1rem;color:#9090b0;margin-bottom:1.25rem;display:flex;align-items:center;gap:0.5rem;">Wie wird der Score berechnet?</h2>
+
+    <div class="source-card" style="margin-bottom:1.25rem;">
+      <h3>Das Eloundou-Verfahren in 4 Schritten</h3>
+      <p style="margin-bottom:0.8rem;">
+        Eloundou et al. haben für ihren <em>Science</em>-Artikel (2024) <strong>jeden der 923 US-Berufe</strong> aus der O*NET-Datenbank in seine Einzelaufgaben zerlegt.
+        Für jede Aufgabe wurde dann bewertet, ob ein LLM die Erledigungszeit um mindestens 50% reduzieren kann:
+      </p>
+      <div style="background:#0c0c14;border-radius:8px;padding:1rem;margin-bottom:0.8rem;font-family:monospace;font-size:0.85rem;color:#a78bfa;line-height:1.8;">
+        <strong style="color:#e8e8f0;">E1</strong> = Anteil der Aufgaben, die ein LLM <em>direkt</em> erledigen kann<br>
+        <strong style="color:#e8e8f0;">E2</strong> = Anteil der Aufgaben, die ein LLM <em>mit zusätzlichen Tools</em> erledigen kann<br>
+        <br>
+        <strong style="color:#f59e0b;font-size:1rem;">β = E1 + 0.5 × E2</strong><br>
+        <span style="color:#7c7c9a;font-size:0.78rem;">(Skala: 0.0 = keine Exposition, 1.0 = maximale Exposition)</span>
+      </div>
+      <p style="margin-bottom:0.8rem;">
+        Der Faktor <strong>0.5 bei E2</strong> berücksichtigt, dass Tool-unterstützte Automatisierung weniger unmittelbar ist als direkte LLM-Nutzung.
+        Beide Bewertungen (E1 und E2) wurden sowohl von <strong>menschlichen Experten</strong> als auch von <strong>GPT-4</strong> durchgeführt.
+        Dieses Dashboard verwendet die GPT-4-Bewertung (<code>dv_rating_beta</code>), da sie konsistenter ist und von der KOF-Studie der ETH Zürich als Referenzmass verwendet wird.
+      </p>
+      <p>
+        Für die Schweizer Version haben wir die US-Berufscodes (O*NET-SOC) über den offiziellen BLS-Crosswalk auf den internationalen Standard ISCO-08 gemappt
+        und dann den 72 Schweizer Berufen im Dashboard zugeordnet. Der β-Score (0.0-1.0) wurde mit × 10 auf die Dashboard-Skala (0-10) transformiert.
+      </p>
+    </div>
+
+    <div class="source-card" style="margin-bottom:1.25rem;border-color:rgba(167,139,250,0.3);">
+      <h3 style="color:#a78bfa;">Warum hat nur Softwareentwicklung einen Score von 9/10?</h3>
+      <p style="margin-bottom:0.8rem;">
+        Softwareentwickler/-innen haben mit einem <strong>β-Score von 0.91</strong> die höchste LLM-Exposition aller 72 Berufe in diesem Dashboard.
+        Das liegt daran, dass fast alle Teilaufgaben der Softwareentwicklung textbasiert sind und direkt von LLMs profitieren:
+      </p>
+      <ul style="margin:0 0 0.8rem 1.2rem;color:#b0b0cc;line-height:1.8;font-size:0.85rem;">
+        <li><strong>Code schreiben</strong> - LLMs generieren funktionierenden Code in allen gängigen Sprachen</li>
+        <li><strong>Debugging</strong> - Fehlermeldungen analysieren und Fixes vorschlagen</li>
+        <li><strong>Code Review</strong> - Qualität, Sicherheitslücken und Best Practices prüfen</li>
+        <li><strong>Dokumentation</strong> - Docstrings, READMEs, technische Spezifikationen</li>
+        <li><strong>Tests</strong> - Unit-Tests und Testfälle generieren</li>
+        <li><strong>Refactoring</strong> - Code umstrukturieren und optimieren</li>
+      </ul>
+      <p style="margin-bottom:0.8rem;">
+        Eloundou et al. aggregieren die Scores von <strong>"Software Developers" (β=0.87)</strong> und <strong>"Computer Programmers" (β=0.95)</strong>,
+        was den kombinierten Score von 0.91 ergibt.
+      </p>
+      <p>
+        <strong>Wichtig:</strong> Ein hoher Expositions-Score bedeutet nicht "der Beruf verschwindet".
+        Er bedeutet: <em>LLMs können die Produktivität in diesem Beruf massiv steigern.</em>
+        Softwareentwickler/-innen, die LLMs effektiv einsetzen, sind heute produktiver denn je - die Nachfrage nach Software steigt weiter.
+        Der Score misst Exposition, nicht Ersetzbarkeit.
+      </p>
+    </div>
+
+    <div class="source-card" style="margin-bottom:1.25rem;">
+      <h3>Was der Score nicht misst</h3>
+      <p>
+        Das Eloundou-Mass erfasst <strong>ausschliesslich LLM-Exposition</strong> - also ob Sprachmodelle wie GPT-4 oder Claude die Aufgaben beschleunigen können.
+        Es misst <em>nicht</em>:
+      </p>
+      <ul style="margin:0.5rem 0 0 1.2rem;color:#b0b0cc;line-height:1.8;font-size:0.85rem;">
+        <li><strong>Robotik & physische Automation</strong> - Deshalb haben Lagerfachleute (2/10) und Lastwagenfahrer/-innen (3/10) niedrige Scores, obwohl sie durch andere Technologien betroffen sein könnten</li>
+        <li><strong>Bild-KI</strong> (DALL-E, Midjourney) - Deshalb haben Grafiker/-innen nur 5/10, obwohl Bild-KI den Beruf stark verändert</li>
+        <li><strong>Autonomes Fahren</strong> - Nicht im Scope von Sprachmodellen</li>
+        <li><strong>Regulierung, gesellschaftliche Akzeptanz, Adoptionsgeschwindigkeit</strong></li>
+      </ul>
+    </div>
+
+    </div>
+</section>
+
+<footer>
+  Eloundou et al. (2024), <em>Science</em> | BFS-Daten | <a href="https://gu.kuble.com/jobs/">US-Version (342 Berufe)</a> | April 2026
+</footer>
+
+<script>
+const CATS = {
+  "finanzen-recht": "Finanzen & Recht",
+  "it-tech": "IT & Technologie",
+  "gesundheit": "Gesundheit & Pflege",
+  "bildung": "Bildung & Forschung",
+  "handwerk-bau": "Handwerk & Bau",
+  "verwaltung": "Verwaltung & Administration",
+  "verkauf-handel": "Verkauf & Handel",
+  "transport-logistik": "Transport & Logistik",
+  "gastronomie-tourismus": "Gastronomie & Tourismus",
+  "landwirtschaft": "Landwirtschaft & Natur",
+  "kunst-medien": "Kunst, Design & Medien",
+  "ingenieurwesen": "Ingenieurwesen",
+  "soziales": "Soziales & Beratung",
+  "sicherheit": "Sicherheit & Schutz"
+};
+
+function scoreColor(e) {
+  if (e >= 8) return "#ef4444";
+  if (e >= 5) return "#f59e0b";
+  return "#22c55e";
+}
+
+function scoreBg(e) {
+  if (e >= 8) return "rgba(239,68,68,0.18)";
+  if (e >= 5) return "rgba(245,158,11,0.18)";
+  return "rgba(34,197,94,0.18)";
+}
+
+function fmtPay(p) {
+  return "CHF " + p.toLocaleString("de-CH").replace(/,/g, "'");
+}
+
+function fmtJobs(j) {
+  if (j >= 1000) return Math.round(j/1000) + "'000";
+  return j.toString();
+}
+
+function fmtPayShort(p) {
+  return Math.round(p / 1000) + "k";
+}
+
+const MAPPING_CONFIDENCE = {
+  hoch: {
+    key: "hoch",
+    label: "Solides Mapping",
+    className: "confidence-high"
+  },
+  mittel: {
+    key: "mittel",
+    label: "Plausibilisierung",
+    className: "confidence-medium"
+  },
+  scope: {
+    key: "scope",
+    label: "Scope-Hinweis",
+    className: "confidence-scope"
+  }
+};
+
+function mappingConfidence(d) {
+  const key = d.mapping_confidence || (d.mapping_note ? "mittel" : "hoch");
+  return MAPPING_CONFIDENCE[key] || MAPPING_CONFIDENCE.hoch;
+}
+
+function updateHighlights() {
+  const high = DATA.filter(d => d.exposure >= 8).length;
+  const medium = DATA.filter(d => d.exposure >= 5 && d.exposure <= 7).length;
+  const low = DATA.filter(d => d.exposure <= 4).length;
+  const totalJobs = DATA.reduce((sum, d) => sum + d.jobs, 0);
+  const weighted = DATA.reduce((sum, d) => sum + d.jobs * d.exposure, 0) / totalJobs;
+  const pays = DATA.map(d => d.pay);
+
+  document.getElementById("metric-high").textContent = high;
+  document.getElementById("metric-medium").textContent = medium;
+  document.getElementById("metric-low").textContent = low;
+  document.getElementById("metric-weighted").textContent = weighted.toFixed(1) + "/10";
+  document.getElementById("metric-pay").textContent = "CHF " + fmtPayShort(Math.min(...pays)) + "-" + fmtPayShort(Math.max(...pays));
+}
+
+const DATA = [
+  // -- FINANZEN & RECHT --
+  {"title":"Buchhalter/-in","slug":"buchhalter-in","category":"finanzen-recht","pay":87000,"jobs":95000,"outlook":2,"outlook_desc":"Leicht wachsend","education":"EFZ KV / HF Treuhand","exposure":6,"beta":0.5683,"isco":"2411","exposure_rationale":"Das Eloundou-Mass zeigt moderate bis hohe LLM-Exposition: Textbasierte Buchhaltungsaufgaben wie Berichterstellung, Beleganalyse und Korrespondenz können durch LLMs beschleunigt werden. Reine Datenverarbeitungsaufgaben (Buchungen, Abstimmungen) profitieren weniger direkt von Sprachmodellen, sondern eher von spezialisierten Automatisierungstools.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4836"},
+  {"title":"Finanzberater/-in","slug":"finanzberater-in","category":"finanzen-recht","pay":118000,"jobs":42000,"outlook":3,"outlook_desc":"Leicht wachsend","education":"Bachelor / CFA","exposure":5,"beta":0.4808,"isco":"2412","exposure_rationale":"Mittlere LLM-Exposition: Analyseberichte, Kundenkorrespondenz und Research können durch LLMs unterstützt werden. Die persönliche Beratungsbeziehung und Vertrauenskomponente sind jedoch nicht durch Sprachmodelle ersetzbar. Hybride Modelle (Mensch + KI) werden zur Norm.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4844"},
+  {"title":"Steuerberater/-in","slug":"steuerberater-in","category":"finanzen-recht","pay":105000,"jobs":28000,"outlook":3,"outlook_desc":"Stabil","education":"Master / Steuerexperte","exposure":6,"beta":0.5683,"isco":"2411","exposure_rationale":"Hohe LLM-Exposition bei Textarbeit: Steuererklärungen, Gutachten, Gesetzesrecherche und Kundenkorrespondenz können durch LLMs stark beschleunigt werden. Komplexe internationale Strukturierungen und strategische Beratung erfordern weiterhin menschliches Urteilsvermögen.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4857"},
+  {"title":"Jurist/-in","slug":"jurist-in","category":"finanzen-recht","pay":130000,"jobs":35000,"outlook":2,"outlook_desc":"Stabil","education":"Master Rechtswissenschaften / Anwaltspatent","exposure":4,"beta":0.425,"isco":"2611","exposure_rationale":"Moderate LLM-Exposition: Legal Research und Vertragsanalyse profitieren stark von LLMs. Gerichtsverhandlungen, Mandantenbeziehungen und juristische Strategie bleiben menschlich. Der Score ist niedriger als erwartet, da viele juristische Aufgaben kontextsensitive menschliche Interaktion erfordern.","mapping_confidence":"mittel","mapping_note":"Der ISCO-/SOC-Mix für juristische Berufe ist relativ breit. Kanzlei-nahe Recherche- und Vertragsarbeit kann deutlich höher exponiert sein als gerichtliche, beratende oder verhandlungsorientierte Arbeit.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4898"},
+  {"title":"Treuhänder/-in","slug":"treuhaender-in","category":"finanzen-recht","pay":92000,"jobs":22000,"outlook":1,"outlook_desc":"Leicht rückläufig","education":"HF Treuhand / dipl. Treuhandexperte","exposure":6,"beta":0.5683,"isco":"2411","exposure_rationale":"Gleicher ISCO-Code wie Buchhalter/-in. Textbasierte Aufgaben (Korrespondenz, Berichte, Steuererklärungen) sind durch LLMs stark beschleunigbar. Die persönliche Mandatsbetreuung und Beratungsfunktion bleibt relevant.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4858"},
+  {"title":"Versicherungskaufmann/-frau","slug":"versicherungskaufmann","category":"finanzen-recht","pay":78000,"jobs":55000,"outlook":0,"outlook_desc":"Stabil","education":"EFZ KV / HF Versicherung","exposure":6,"beta":0.5614,"isco":"3321","exposure_rationale":"Mittlere bis hohe LLM-Exposition: Policen-Texte, Schadenskorrespondenz und Kundenanfragen können durch LLMs bearbeitet werden. Risikoanalyse und Vertriebsgespräche bleiben menschlich.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4855"},
+  {"title":"Anlageberater/-in (Private Banking)","slug":"anlageberater-in","category":"finanzen-recht","pay":145000,"jobs":18000,"outlook":1,"outlook_desc":"Leicht rückläufig","education":"Master / CFA / AZEK","exposure":5,"beta":0.4808,"isco":"2412","exposure_rationale":"Mittlere LLM-Exposition: Marktanalysen und Research-Reports können LLM-gestützt erstellt werden. Die High-Net-Worth-Kundenbeziehung und das persönliche Vertrauensverhältnis im Schweizer Private Banking sind nicht automatisierbar.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4844"},
+
+  // -- IT & TECHNOLOGIE --
+  {"title":"Softwareentwickler/-in","slug":"softwareentwickler-in","category":"it-tech","pay":115000,"jobs":88000,"outlook":12,"outlook_desc":"Stark wachsend","education":"Bachelor Informatik / HF Informatik","exposure":9,"beta":0.9092,"isco":"2512","exposure_rationale":"Höchste LLM-Exposition aller Berufe im Dashboard. Code-Generierung, Debugging, Dokumentation und Code-Review sind Kernkompetenzen von LLMs. Eloundou et al. stufen Softwareentwicklung als einen der am stärksten exponierten Berufe ein. Architekturentscheide und Systemdesign bleiben menschlich.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4969"},
+  {"title":"Data Scientist","slug":"data-scientist","category":"it-tech","pay":125000,"jobs":22000,"outlook":20,"outlook_desc":"Sehr stark wachsend","education":"Master Statistik / Data Science","exposure":7,"beta":0.6958,"isco":"2120","exposure_rationale":"Hohe LLM-Exposition: Code-Erstellung, statistische Analyse, Berichterstellung und Dateninterpretation können durch LLMs stark unterstützt werden. Die Problemformulierung und kreative Datenmodellierung bleiben menschlich.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4969"},
+  {"title":"Systemadministrator/-in","slug":"sysadmin","category":"it-tech","pay":98000,"jobs":32000,"outlook":5,"outlook_desc":"Wachsend","education":"EFZ Informatik / CCNA / AWS","exposure":7,"beta":0.7297,"isco":"2522","exposure_rationale":"Hohe LLM-Exposition: Scripting, Konfigurationsdokumentation, Troubleshooting-Recherche und Incident-Reports können durch LLMs beschleunigt werden. Physische Serverarbeit und Notfall-Reaktionen bleiben menschlich.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4969"},
+  {"title":"IT-Projektleiter/-in","slug":"it-projektleiter","category":"it-tech","pay":120000,"jobs":28000,"outlook":8,"outlook_desc":"Wachsend","education":"Bachelor / PMP / IPMA","exposure":5,"beta":0.5303,"isco":"1330","exposure_rationale":"Mittlere LLM-Exposition: Projektdokumentation, Statusberichte und Kommunikation können durch LLMs unterstützt werden. Stakeholder-Management, Konfliktlösung und Führung sind nicht automatisierbar.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4969"},
+  {"title":"Cybersecurity-Spezialist/-in","slug":"cybersecurity","category":"it-tech","pay":130000,"jobs":18000,"outlook":25,"outlook_desc":"Sehr stark wachsend","education":"Master / CISSP / CEH","exposure":7,"beta":0.6636,"isco":"2529","exposure_rationale":"Hohe LLM-Exposition: Bedrohungsanalyse, Security-Berichte, Policy-Erstellung und Code-Review profitieren stark von LLMs. Incident Response unter Zeitdruck und die Bewertung neuartiger Angriffsvektoren erfordern menschliches Urteil.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4969"},
+  {"title":"UX Designer/-in","slug":"ux-designer","category":"it-tech","pay":100000,"jobs":12000,"outlook":8,"outlook_desc":"Wachsend","education":"Bachelor Design / Zertifikat","exposure":5,"beta":0.5125,"isco":"2166","exposure_rationale":"Mittlere LLM-Exposition: Nutzerforschungs-Auswertungen, Copy-Writing und Dokumentation profitieren von LLMs. Das visuelle Design und die empathische Nutzerforschung sind weniger direkt durch Sprachmodelle betroffen.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4969"},
+  {"title":"KI-Ingenieur/-in","slug":"ki-ingenieur","category":"it-tech","pay":140000,"jobs":5000,"outlook":40,"outlook_desc":"Sehr stark wachsend","education":"Master Informatik / ML-Spezialisierung","exposure":7,"beta":0.6923,"isco":"2511","exposure_rationale":"Hohe LLM-Exposition: Code-Generierung, Paper-Analyse, Dokumentation und Experiment-Design werden durch LLMs beschleunigt. Das Eloundou-Mass zeigt, dass auch KI-Fachleute stark von LLMs profitieren - gerade weil ihre Arbeit textbasiert und technisch ist.","source_pay":"Schätzung 2024","source_jobs":"Schätzung BFS/IKT 2023","url":"https://www.berufsberatung.ch/dyn/show/4969"},
+
+  // -- GESUNDHEIT & PFLEGE --
+  {"title":"Arzt / Ärztin (Allgemein)","slug":"arzt-aerztin","category":"gesundheit","pay":180000,"jobs":38000,"outlook":5,"outlook_desc":"Wachsend","education":"Staatsexamen Medizin / FMH","exposure":4,"beta":0.4473,"isco":"2211","exposure_rationale":"Moderate LLM-Exposition: Medizinische Dokumentation, Fachliteratur-Recherche und Arztbriefe können durch LLMs unterstützt werden. Die klinische Untersuchung, Diagnosestellung am Patienten und ethische Entscheide sind nicht durch Sprachmodelle ersetzbar.","source_pay":"BFS LSE 2022 / FMH","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4964"},
+  {"title":"Zahnarzt / Zahnärztin","slug":"zahnarzt","category":"gesundheit","pay":165000,"jobs":15000,"outlook":3,"outlook_desc":"Stabil","education":"Staatsexamen Zahnmedizin","exposure":2,"beta":0.1589,"isco":"2261","exposure_rationale":"Niedrige LLM-Exposition: Die physische Natur der Zahnbehandlung macht sie kaum durch Sprachmodelle beeinflussbar. Befunddokumentation und Patientenkommunikation können leicht unterstützt werden, bilden aber nur einen kleinen Teil der Tätigkeit.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4964"},
+  {"title":"Pflegefachmann/-frau","slug":"pflegefachmann","category":"gesundheit","pay":75000,"jobs":180000,"outlook":8,"outlook_desc":"Stark wachsend","education":"HF Pflege / Bachelor Pflege","exposure":3,"beta":0.3428,"isco":"2221","exposure_rationale":"Niedrige bis moderate LLM-Exposition: Pflegedokumentation und Übergabeberichte können durch LLMs unterstützt werden. Die körperliche Pflege, emotionale Unterstützung und situative Einschätzung sind zutiefst menschlich und nicht durch Sprachmodelle ersetzbar.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4963"},
+  {"title":"Physiotherapeut/-in","slug":"physiotherapeut","category":"gesundheit","pay":80000,"jobs":22000,"outlook":6,"outlook_desc":"Wachsend","education":"Bachelor Physiotherapie","exposure":2,"beta":0.2257,"isco":"2264","exposure_rationale":"Niedrige LLM-Exposition: Physikalische Therapie erfordert haptisches Feedback und Körperarbeit. LLMs können bei Behandlungsplandokumentation helfen, aber die Kernarbeit ist physisch und interaktiv.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4963"},
+  {"title":"Apotheker/-in","slug":"apotheker-in","category":"gesundheit","pay":95000,"jobs":12000,"outlook":2,"outlook_desc":"Stabil","education":"Master Pharmazie / Staatsexamen","exposure":4,"beta":0.4286,"isco":"2262","exposure_rationale":"Moderate LLM-Exposition: Medikamenteninformationen, Wechselwirkungsanalysen und Patientenberatung auf Textbasis können durch LLMs unterstützt werden. Die physische Ausgabe und persönliche Beratung bleiben menschlich.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4963"},
+  {"title":"Psychiater/-in","slug":"psychiater-in","category":"gesundheit","pay":200000,"jobs":8000,"outlook":7,"outlook_desc":"Stark wachsend","education":"Staatsexamen Medizin / FMH Psychiatrie","exposure":5,"beta":0.4783,"isco":"2212","exposure_rationale":"Mittlere LLM-Exposition: Befundberichte, Fachliteratur und Dokumentation profitieren von LLMs. Die therapeutische Beziehung und psychiatrische Beurteilung sind essenziell menschlich. Höher als andere Ärzte, da der Beruf stärker textbasiert ist (Befundberichte, Gutachten).","source_pay":"BFS LSE 2022 / FMH","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4964"},
+  {"title":"Rettungssanitäter/-in","slug":"rettungssanitaeter","category":"gesundheit","pay":72000,"jobs":8000,"outlook":5,"outlook_desc":"Wachsend","education":"HF Rettungssanität","exposure":2,"beta":0.181,"isco":"3258","exposure_rationale":"Niedrige LLM-Exposition: Notfallmedizin erfordert schnelle physische Intervention in unstrukturierten Umgebungen. Protokollerstellung kann durch LLMs unterstützt werden, aber die Kerntätigkeit ist rein physisch und situativ.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4963"},
+
+  // -- BILDUNG & FORSCHUNG --
+  {"title":"Primarlehrer/-in","slug":"primarlehrer-in","category":"bildung","pay":82000,"jobs":55000,"outlook":3,"outlook_desc":"Stabil","education":"Bachelor Lehramt (PH)","exposure":3,"beta":0.2797,"isco":"2341","exposure_rationale":"Niedrige LLM-Exposition: Unterrichtsvorbereitung und Materialerstellung profitieren von LLMs. Die sozialpädagogische Funktion, Klassenführung und Vorbildrolle sind nicht automatisierbar.","source_pay":"BFS LSE 2022 / Kanton","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4966"},
+  {"title":"Gymnasiallehrer/-in","slug":"gymnasiallehrer-in","category":"bildung","pay":105000,"jobs":22000,"outlook":2,"outlook_desc":"Stabil","education":"Master + Pädagogische Ausbildung","exposure":3,"beta":0.3333,"isco":"2330","exposure_rationale":"Niedrige bis moderate LLM-Exposition: Prüfungserstellung, Unterrichtsmaterialien und Korrekturen können durch LLMs unterstützt werden. Die Lehrerpersönlichkeit und Interaktion mit Jugendlichen bleibt essenziell.","source_pay":"Kantone (bes. ZH)","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4966"},
+  {"title":"Hochschuldozent/-in","slug":"hochschuldozent","category":"bildung","pay":128000,"jobs":18000,"outlook":4,"outlook_desc":"Leicht wachsend","education":"Doktorat / Habilitation","exposure":5,"beta":0.4844,"isco":"2310","exposure_rationale":"Mittlere LLM-Exposition: Forschungsliteratur-Analyse, Paper-Entwürfe und Vorlesungsmaterialien profitieren stark von LLMs. Originäre Forschung, kritische Diskussion und Betreuung bleiben menschlich.","source_pay":"ETH/Uni Zürich Gehaltsbänder","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4966"},
+  {"title":"Kindergärtner/-in","slug":"kindergaertner-in","category":"bildung","pay":72000,"jobs":28000,"outlook":2,"outlook_desc":"Stabil","education":"Diploma PH","exposure":2,"beta":0.2301,"isco":"2342","exposure_rationale":"Niedrige LLM-Exposition: Frühkindliche Bildung basiert auf emotionaler Bindung, körperlicher Präsenz und spielerischem Lernen. Textbasierte Aufgaben bilden nur einen minimalen Anteil der Tätigkeit.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4966"},
+  {"title":"Berufsschullehrer/-in","slug":"berufsschullehrer","category":"bildung","pay":95000,"jobs":15000,"outlook":2,"outlook_desc":"Stabil","education":"Fachausbildung + CAS Berufsbildung","exposure":4,"beta":0.381,"isco":"2320","exposure_rationale":"Moderate LLM-Exposition: Theoretischer Unterricht und Prüfungen können LLM-gestützt vorbereitet werden. Die praktische Berufsausbildung und Werkstattarbeit sind nicht durch Sprachmodelle beeinflussbar.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4966"},
+
+  // -- HANDWERK & BAU --
+  {"title":"Elektriker/-in","slug":"elektriker-in","category":"handwerk-bau","pay":72000,"jobs":65000,"outlook":6,"outlook_desc":"Wachsend","education":"EFZ Elektroinstallateur","exposure":1,"beta":0.1282,"isco":"7411","exposure_rationale":"Sehr niedrige LLM-Exposition: Elektrische Installationen sind rein physische Arbeit. LLMs können bei Dokumentation und Normenrecherche minimal helfen, aber die Kerntätigkeit ist Handarbeit vor Ort.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4929"},
+  {"title":"Sanitärinstallateur/-in","slug":"sanitaer-installateur","category":"handwerk-bau","pay":68000,"jobs":35000,"outlook":4,"outlook_desc":"Leicht wachsend","education":"EFZ Sanitärinstallateur","exposure":1,"beta":0.0555,"isco":"7126","exposure_rationale":"Minimal LLM-Exposition: Einer der am wenigsten durch LLMs beeinflussbaren Berufe. Die Arbeit ist vollständig physisch, ortsbezogen und erfordert handwerkliches Geschick.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4929"},
+  {"title":"Maurer/-in","slug":"maurer-in","category":"handwerk-bau","pay":66000,"jobs":45000,"outlook":3,"outlook_desc":"Stabil","education":"EFZ Maurer","exposure":0,"beta":0.0192,"isco":"7112","exposure_rationale":"Praktisch keine LLM-Exposition: Der niedrigste Score im gesamten Dashboard. Mauern ist rein physische Arbeit ohne nennenswerte textbasierte Aufgabenkomponenten.","source_pay":"BFS LSE 2022 / LMV Bau","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4929"},
+  {"title":"Schreiner/-in","slug":"schreiner-in","category":"handwerk-bau","pay":65000,"jobs":28000,"outlook":2,"outlook_desc":"Stabil","education":"EFZ Schreiner","exposure":1,"beta":0.1444,"isco":"7115","exposure_rationale":"Sehr niedrige LLM-Exposition: Schreinerei ist überwiegend physische Handarbeit. Offertenerstellung und Kundenkommunikation können minimal von LLMs profitieren.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4929"},
+  {"title":"Maler/-in (Gebäude)","slug":"maler-in","category":"handwerk-bau","pay":62000,"jobs":22000,"outlook":1,"outlook_desc":"Stabil","education":"EFZ Maler","exposure":0,"beta":0.0421,"isco":"7131","exposure_rationale":"Praktisch keine LLM-Exposition: Gebäudemalerei ist rein physische Arbeit. Zweitniedrigster Score im Dashboard.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4929"},
+  {"title":"Zimmermann/-frau","slug":"zimmermann","category":"handwerk-bau","pay":68000,"jobs":18000,"outlook":4,"outlook_desc":"Leicht wachsend","education":"EFZ Zimmermann","exposure":1,"beta":0.1444,"isco":"7115","exposure_rationale":"Sehr niedrige LLM-Exposition: Holzbau ist dreidimensionale physische Arbeit. Planungsunterstützung durch LLMs ist marginal.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4929"},
+  {"title":"Heizungsinstallateur/-in","slug":"heizungsinstallateur","category":"handwerk-bau","pay":70000,"jobs":20000,"outlook":8,"outlook_desc":"Stark wachsend","education":"EFZ Heizungsinstallateur","exposure":3,"beta":0.2578,"isco":"7127","exposure_rationale":"Niedrige LLM-Exposition: Die Installation ist physische Arbeit. Etwas höher als andere Handwerksberufe, da technische Dokumentation und Regelwerke textbasiert sind.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4929"},
+
+  // -- VERWALTUNG & ADMINISTRATION --
+  {"title":"Sachbearbeiter/-in (Verwaltung)","slug":"sachbearbeiter-verwaltung","category":"verwaltung","pay":72000,"jobs":120000,"outlook":-2,"outlook_desc":"Leicht rückläufig","education":"EFZ KV / Verwaltungsausbildung","exposure":6,"beta":0.595,"isco":"4110","exposure_rationale":"Hohe LLM-Exposition: Standardkorrespondenz, Formularbearbeitung und Berichterstellung sind textbasierte Aufgaben, die stark von LLMs profitieren. Strukturierte Entscheide nach Regelwerk können ebenfalls unterstützt werden.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4879"},
+  {"title":"HR-Fachmann/-frau","slug":"hr-fachmann","category":"verwaltung","pay":88000,"jobs":45000,"outlook":2,"outlook_desc":"Stabil","education":"HR-Fachausweis / Bachelor HRM","exposure":5,"beta":0.4887,"isco":"2423","exposure_rationale":"Mittlere LLM-Exposition: Stellenausschreibungen, Arbeitsverträge, Personalreglement und Korrespondenz können durch LLMs erstellt werden. Personalentwicklung, Konfliktlösung und persönliche Gespräche bleiben menschlich.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4879"},
+  {"title":"Sekretär/-in","slug":"sekretaer-in","category":"verwaltung","pay":65000,"jobs":55000,"outlook":-3,"outlook_desc":"Rückläufig","education":"EFZ KV / Handelsmittelschule","exposure":6,"beta":0.6442,"isco":"4120","exposure_rationale":"Hohe LLM-Exposition: E-Mail-Korrespondenz, Protokollerstellung, Terminkoordination und Dokumentenmanagement sind stark textbasiert und durch LLMs beschleunigbar. Executive Assistants auf C-Level bleiben relevant für persönliche Koordination.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4879"},
+  {"title":"Zollbeamte/r","slug":"zollbeamter","category":"verwaltung","pay":80000,"jobs":4800,"outlook":0,"outlook_desc":"Stabil","education":"Berufsausbildung Zoll / EFZ","exposure":4,"beta":0.4021,"isco":"3351","exposure_rationale":"Moderate LLM-Exposition: Dokumentenprüfung und Regelwerk-Anwendung können textbasiert unterstützt werden. Physische Kontrollen und Verhöre bleiben menschlich.","source_pay":"EFV Bundesbesoldung","source_jobs":"Eidg. Zollverwaltung 2023","url":"https://www.berufsberatung.ch/dyn/show/4879"},
+
+  // -- VERKAUF & HANDEL --
+  {"title":"Detailhandelsfachmann/-frau","slug":"detailhandelsfachmann","category":"verkauf-handel","pay":58000,"jobs":220000,"outlook":-2,"outlook_desc":"Leicht rückläufig","education":"EFZ Detailhandel","exposure":4,"beta":0.4366,"isco":"5221","exposure_rationale":"Moderate LLM-Exposition: Produktbeschreibungen und Kundenkorrespondenz können durch LLMs unterstützt werden. Der physische Verkauf, Regalarbeit und direkte Kundenberatung vor Ort sind nicht durch Sprachmodelle ersetzbar.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4877"},
+  {"title":"Einkäufer/-in","slug":"einkaeufer-in","category":"verkauf-handel","pay":95000,"jobs":28000,"outlook":3,"outlook_desc":"Stabil","education":"Bachelor BWL / Einkäufer mit FA","exposure":5,"beta":0.4894,"isco":"3323","exposure_rationale":"Mittlere LLM-Exposition: Lieferantenkorrespondenz, Vertragsanalyse und Marktrecherche profitieren von LLMs. Strategische Verhandlungen und Lieferantenbeziehungen bleiben menschlich.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4877"},
+  {"title":"Filialleiter/-in (Detailhandel)","slug":"filialleiter","category":"verkauf-handel","pay":72000,"jobs":35000,"outlook":-1,"outlook_desc":"Leicht rückläufig","education":"EFZ Detailhandel + Berufserfahrung","exposure":5,"beta":0.4808,"isco":"1420","exposure_rationale":"Mittlere LLM-Exposition: Berichte, Personalplanung und Kommunikation können LLM-gestützt erfolgen. Personalführung, Kundenreklamationen und lokale Marktanpassungen bleiben menschlich.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4877"},
+  {"title":"Key Account Manager/-in","slug":"key-account-manager","category":"verkauf-handel","pay":112000,"jobs":18000,"outlook":3,"outlook_desc":"Stabil","education":"Bachelor / langjährige Erfahrung","exposure":5,"beta":0.5177,"isco":"2433","exposure_rationale":"Mittlere LLM-Exposition: Angebotstexte, Präsentationen und Kundenanalysen profitieren von LLMs. Die persönliche Vertrauensbeziehung und Verhandlungsführung im B2B-Bereich sind menschlich.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4877"},
+
+  // -- TRANSPORT & LOGISTIK --
+  {"title":"Lastwagenfahrer/-in","slug":"lastwagenfahrer","category":"transport-logistik","pay":62000,"jobs":85000,"outlook":-3,"outlook_desc":"Rückläufig","education":"Führerschein Kat. CE / Berufsausweis","exposure":3,"beta":0.2788,"isco":"8332","exposure_rationale":"Niedrige LLM-Exposition: Fahren ist eine physische Tätigkeit, die nicht durch Sprachmodelle beeinflusst wird. Frachtdokumentation kann minimal unterstützt werden. Wichtig: Das Eloundou-Mass erfasst keine Robotik oder autonomes Fahren - nur LLM-Exposition.","source_pay":"BFS LSE 2022 / GAV Transport","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4888"},
+  {"title":"Zugführer/-in (SBB)","slug":"zugfuehrer-sbb","category":"transport-logistik","pay":75000,"jobs":6500,"outlook":0,"outlook_desc":"Stabil","education":"Berufsprüfung Triebfahrzeugführer","exposure":3,"beta":0.2998,"isco":"8311","exposure_rationale":"Niedrige LLM-Exposition: Zugführung ist primär physisch und situativ. Fahrprotokollierung kann minimal von LLMs profitieren.","source_pay":"SBB Gehaltstabelle","source_jobs":"SBB 2023","url":"https://www.berufsberatung.ch/dyn/show/4888"},
+  {"title":"Pilot/-in","slug":"pilot-in","category":"transport-logistik","pay":185000,"jobs":3800,"outlook":2,"outlook_desc":"Stabil","education":"ATPL Lizenz / Ausbildung Airline","exposure":3,"beta":0.2955,"isco":"3153","exposure_rationale":"Niedrige LLM-Exposition: Fliegen erfordert räumliches Urteilsvermögen und situative Entscheide. Flugplanung und Briefings können durch LLMs unterstützt werden, machen aber nur einen kleinen Teil der Tätigkeit aus.","source_pay":"Branchendaten Swiss/Edelweiss","source_jobs":"Bazl/SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4888"},
+  {"title":"Logistiker/-in","slug":"logistiker-in","category":"transport-logistik","pay":68000,"jobs":55000,"outlook":3,"outlook_desc":"Stabil","education":"EFZ Logistik","exposure":5,"beta":0.4964,"isco":"4321","exposure_rationale":"Mittlere LLM-Exposition: Bestandsdokumentation, Lieferscheine und Koordination können textbasiert durch LLMs unterstützt werden. Physische Lagerarbeit und Warenhandling sind nicht betroffen.","mapping_confidence":"mittel","mapping_note":"Dieser Wert ist besonders tätigkeitsabhängig: Disposition, Bestandsführung und Dokumentation ziehen den Score nach oben; Warenhandling, Kommissionierung und Staplerarbeit wären eher wie Lagerfacharbeit niedriger einzustufen.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4888"},
+  {"title":"Lagerfachmann/-frau","slug":"lagerfachmann","category":"transport-logistik","pay":58000,"jobs":42000,"outlook":-2,"outlook_desc":"Leicht rückläufig","education":"EFZ Logistik","exposure":2,"beta":0.2266,"isco":"9333","exposure_rationale":"Niedrige LLM-Exposition: Das Eloundou-Mass zeigt, dass Lagerarbeit primär physisch ist und kaum durch Sprachmodelle beeinflusst wird. Lagerautomation (Robotik) ist eine andere Technologie als LLMs.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4888"},
+
+  // -- GASTRONOMIE & TOURISMUS --
+  {"title":"Koch / Köchin","slug":"koch-koechin","category":"gastronomie-tourismus","pay":62000,"jobs":58000,"outlook":2,"outlook_desc":"Stabil","education":"EFZ Koch","exposure":4,"beta":0.3865,"isco":"3434","exposure_rationale":"Moderate LLM-Exposition: Menüplanung, Rezeptentwicklung und Kalkulation können durch LLMs unterstützt werden. Das physische Kochen selbst ist nicht betroffen.","mapping_confidence":"mittel","mapping_note":"Der Score wirkt für Küchenarbeit eher hoch, erklärt sich aber über Planungs-, Rezept-, Kalkulations- und Dokumentationsanteile. In operativer Linienküche ohne Planungsverantwortung wäre die LLM-Exposition tiefer.","source_pay":"BFS LSE 2022 / L-GAV","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4876"},
+  {"title":"Restaurantfachmann/-frau","slug":"restaurantfachmann","category":"gastronomie-tourismus","pay":55000,"jobs":45000,"outlook":1,"outlook_desc":"Stabil","education":"EFZ Restauration","exposure":2,"beta":0.1567,"isco":"5131","exposure_rationale":"Niedrige LLM-Exposition: Service ist primär physisch und persönlich. Weinbeschreibungen und Menütexte können durch LLMs erstellt werden, bilden aber einen minimalen Anteil der Tätigkeit.","source_pay":"BFS LSE 2022 / L-GAV","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4876"},
+  {"title":"Hotelfachmann/-frau","slug":"hotelfachmann","category":"gastronomie-tourismus","pay":60000,"jobs":35000,"outlook":3,"outlook_desc":"Leicht wachsend","education":"EFZ Hotelfachmann / HF Hotellerie","exposure":5,"beta":0.4699,"isco":"1411","exposure_rationale":"Mittlere LLM-Exposition: Gästekommunikation, Angebotserstellung und Eventplanung können durch LLMs unterstützt werden. Persönliche Gäste-Betreuung und physische Servicearbeit bleiben menschlich.","source_pay":"BFS LSE 2022 / L-GAV","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4876"},
+  {"title":"Reisebuero","slug":"reisebuero","category":"gastronomie-tourismus","pay":58000,"jobs":8000,"outlook":-5,"outlook_desc":"Rückläufig","education":"EFZ Reisebuero / Tourismusausbildung","exposure":5,"beta":0.5189,"isco":"4221","exposure_rationale":"Mittlere LLM-Exposition: Reiseplanung, Angebotstexte und Kundenkorrespondenz profitieren von LLMs. Das Eloundou-Mass unterscheidet zwischen LLM-Exposition und allgemeiner Digitalisierung.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4876"},
+
+  // -- LANDWIRTSCHAFT & NATUR --
+  {"title":"Landwirt/-in","slug":"landwirt-in","category":"landwirtschaft","pay":55000,"jobs":145000,"outlook":-1,"outlook_desc":"Leicht rückläufig","education":"EFZ Landwirt / Meisterprüfung","exposure":1,"beta":0.1397,"isco":"6111","exposure_rationale":"Sehr niedrige LLM-Exposition: Landwirtschaft ist primär physische Arbeit im Freien. Präzisionslandwirtschaft nutzt Sensoren und GPS, nicht Sprachmodelle.","source_pay":"BFS LSE 2022 / SBV","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4948"},
+  {"title":"Forstwart/-in","slug":"forstwart-in","category":"landwirtschaft","pay":66000,"jobs":9000,"outlook":1,"outlook_desc":"Stabil","education":"EFZ Forstwart","exposure":2,"beta":0.1507,"isco":"6210","exposure_rationale":"Niedrige LLM-Exposition: Forstarbeit ist körperlich anspruchsvoll und in unstrukturierten Naturumgebungen. Textbasierte Aufgaben bilden nur einen minimalen Anteil.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4948"},
+  {"title":"Winzer/-in","slug":"winzer-in","category":"landwirtschaft","pay":58000,"jobs":4200,"outlook":0,"outlook_desc":"Stabil","education":"EFZ Winzer / Bachelor Önologie","exposure":1,"beta":0.1404,"isco":"6112","exposure_rationale":"Sehr niedrige LLM-Exposition: Weinbau ist physische und sensorische Arbeit. LLMs können bei Weintexten und Marketing helfen, aber die Kerntätigkeit ist Handarbeit.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4948"},
+  {"title":"Gärtner/-in","slug":"gaertner-in","category":"landwirtschaft","pay":60000,"jobs":22000,"outlook":2,"outlook_desc":"Stabil","education":"EFZ Gärtner","exposure":1,"beta":0.1385,"isco":"6113","exposure_rationale":"Sehr niedrige LLM-Exposition: Gartenarbeit und Pflanzenpflege sind rein physisch. Gartenplanung und Kundenkommunikation können minimal unterstützt werden.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4948"},
+  {"title":"Tierarzt / Tierärztin","slug":"tierarzt","category":"landwirtschaft","pay":95000,"jobs":5500,"outlook":4,"outlook_desc":"Leicht wachsend","education":"Staatsexamen Veterinärmedizin","exposure":3,"beta":0.2703,"isco":"2250","exposure_rationale":"Niedrige LLM-Exposition: Veterinärmedizin erfordert physische Untersuchung und Behandlung. Fachliteraturrecherche und Befundberichte können durch LLMs unterstützt werden.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4964"},
+
+  // -- KUNST, DESIGN & MEDIEN --
+  {"title":"Grafiker/-in","slug":"grafiker-in","category":"kunst-medien","pay":72000,"jobs":18000,"outlook":-2,"outlook_desc":"Leicht rückläufig","education":"Eidg. Fähigkeitszeugnis Grafik / Bachelor","exposure":5,"beta":0.5125,"isco":"2166","exposure_rationale":"Mittlere LLM-Exposition: Konzepttexte, Kundenbriefings und Projektkommunikation profitieren von LLMs. Das Eloundou-Mass misst nur LLM-Textfähigkeiten, nicht Bildgenerierung (DALL-E, Midjourney). Die tatsächliche Disruption durch Bild-KI ist höher als dieser Score zeigt.","mapping_confidence":"scope","mapping_note":"Der Score ist methodisch korrekt fürs LLM-Mass, unterschätzt aber wahrscheinlich die reale KI-Betroffenheit, weil Bildgenerierung und visuelle Workflows nicht Teil des Eloundou-Scores sind.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4897"},
+  {"title":"Journalist/-in","slug":"journalist-in","category":"kunst-medien","pay":78000,"jobs":12000,"outlook":-3,"outlook_desc":"Rückläufig","education":"MAZ / Bachelor Journalismus","exposure":6,"beta":0.6471,"isco":"2642","exposure_rationale":"Hohe LLM-Exposition: Nachrichtenartikel, Recherche-Zusammenfassungen und Texterstellung sind Kernkompetenzen von LLMs. Investigativer Journalismus, Interviews und politische Analyse erfordern weiterhin menschliches Urteilsvermögen.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4897"},
+  {"title":"PR-Fachmann/-frau","slug":"pr-fachmann","category":"kunst-medien","pay":88000,"jobs":9000,"outlook":2,"outlook_desc":"Stabil","education":"Bachelor Kommunikation / PR-Fachausweis","exposure":6,"beta":0.5909,"isco":"2432","exposure_rationale":"Hohe LLM-Exposition: Pressemitteilungen, Social-Media-Content und Kommunikationsstrategien können durch LLMs generiert werden. Krisenmanagement und persönliche Medienbeziehungen bleiben menschlich.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4897"},
+  {"title":"Fotograf/-in","slug":"fotograf-in","category":"kunst-medien","pay":65000,"jobs":6000,"outlook":-2,"outlook_desc":"Leicht rückläufig","education":"EFZ Fotograf / Bachelor","exposure":4,"beta":0.3854,"isco":"3431","exposure_rationale":"Moderate LLM-Exposition: Bildbeschreibungen, Portfolio-Texte und Kundenkorrespondenz können durch LLMs unterstützt werden. Die eigentliche Fotografie ist visuell-physisch. Wie bei Grafiker/-in: Bild-KI (nicht im Score erfasst) stellt eine zusätzliche Herausforderung dar.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4897"},
+  {"title":"Cutter/-in (Video/Film)","slug":"cutter-in","category":"kunst-medien","pay":72000,"jobs":4500,"outlook":0,"outlook_desc":"Stabil","education":"Bachelor Film / EFZ Mediamatiker","exposure":5,"beta":0.4529,"isco":"3521","exposure_rationale":"Mittlere LLM-Exposition: Skriptanalyse, Untertitelung und Projektdokumentation profitieren von LLMs. Visuelles Storytelling und künstlerische Schnittentscheide bleiben menschlich.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4897"},
+
+  // -- INGENIEURWESEN --
+  {"title":"Maschinenbauingenieur/-in","slug":"maschinenbauingenieur","category":"ingenieurwesen","pay":112000,"jobs":28000,"outlook":4,"outlook_desc":"Leicht wachsend","education":"Bachelor/Master Maschinenbau (ETH/EPFL)","exposure":5,"beta":0.4874,"isco":"2144","exposure_rationale":"Mittlere LLM-Exposition: Technische Berichte, Spezifikationen und Patentrecherche profitieren von LLMs. Die physikalische Auslegung und CAD-Arbeit sind nicht direkt durch Sprachmodelle betroffen.","source_pay":"BFS LSE 2022 / Swissem","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4938"},
+  {"title":"Elektroingenieur/-in","slug":"elektroingenieur","category":"ingenieurwesen","pay":115000,"jobs":22000,"outlook":6,"outlook_desc":"Wachsend","education":"Bachelor/Master Elektrotechnik","exposure":6,"beta":0.5625,"isco":"2151","exposure_rationale":"Mittlere bis hohe LLM-Exposition: Technische Dokumentation, Normenrecherche und Simulationsberichte können durch LLMs unterstützt werden. Schaltkreisdesign und Hardware-Tests sind nicht textbasiert.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4938"},
+  {"title":"Bauingenieur/-in","slug":"bauingenieur-in","category":"ingenieurwesen","pay":105000,"jobs":20000,"outlook":3,"outlook_desc":"Stabil","education":"Bachelor/Master Bauingenieurwesen","exposure":5,"beta":0.4821,"isco":"2142","exposure_rationale":"Mittlere LLM-Exposition: Berichte, Ausschreibungen und Normenrecherche profitieren von LLMs. Statikberechnungen und Baustellenkoordination sind nicht durch Sprachmodelle ersetzbar.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4938"},
+  {"title":"Chemieingenieur/-in","slug":"chemieingenieur","category":"ingenieurwesen","pay":118000,"jobs":12000,"outlook":4,"outlook_desc":"Leicht wachsend","education":"Master Chemieingenieurwesen (ETH)","exposure":5,"beta":0.4615,"isco":"2145","exposure_rationale":"Mittlere LLM-Exposition: Fachliteratur-Analyse, Patentrecherche und technische Berichte profitieren von LLMs. Laborarbeit und Prozessoptimierung sind physisch.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4938"},
+  {"title":"Umweltingenieur/-in","slug":"umweltingenieur","category":"ingenieurwesen","pay":100000,"jobs":9000,"outlook":8,"outlook_desc":"Stark wachsend","education":"Master Umweltingenieurwesen","exposure":6,"beta":0.5556,"isco":"2143","exposure_rationale":"Mittlere bis hohe LLM-Exposition: Umweltverträglichkeitsberichte, Regulierungsanalysen und Projektdokumentation sind stark textbasiert. Feldarbeit und Messungen bleiben physisch.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4938"},
+
+  // -- SOZIALES & BERATUNG --
+  {"title":"Sozialarbeiter/-in","slug":"sozialarbeiter-in","category":"soziales","pay":75000,"jobs":55000,"outlook":6,"outlook_desc":"Wachsend","education":"Bachelor Soziale Arbeit","exposure":3,"beta":0.2716,"isco":"2635","exposure_rationale":"Niedrige LLM-Exposition: Soziale Arbeit basiert auf menschlicher Beziehung und Vertrauen. Falldokumentation kann durch LLMs unterstützt werden, aber die Kerntätigkeit ist zwischenmenschlich.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4968"},
+  {"title":"Psychologe/-in","slug":"psychologe-in","category":"soziales","pay":95000,"jobs":18000,"outlook":7,"outlook_desc":"Stark wachsend","education":"Master Psychologie / PsyTh-Ausbildung","exposure":5,"beta":0.4716,"isco":"2634","exposure_rationale":"Mittlere LLM-Exposition: Diagnostische Berichte, Fachliteratur und Therapiedokumentation können durch LLMs unterstützt werden. Die therapeutische Beziehung und klinische Beurteilung sind zutiefst menschlich.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4968"},
+  {"title":"Kinderbetreuung (Krippe/Hort)","slug":"kinderbetreuung","category":"soziales","pay":62000,"jobs":42000,"outlook":5,"outlook_desc":"Wachsend","education":"EFZ FABE (Fachrichtung Kind)","exposure":1,"beta":0.1414,"isco":"5311","exposure_rationale":"Sehr niedrige LLM-Exposition: Kindliche Entwicklung, Bindungsbeziehungen und Fürsorge erfordern menschliche Wärme und physische Präsenz. Textbasierte Aufgaben sind minimal.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4968"},
+  {"title":"Schulischer Heilpädagoge/-in","slug":"heilpaedagoge","category":"soziales","pay":88000,"jobs":12000,"outlook":5,"outlook_desc":"Wachsend","education":"Master Sonderpädagogik","exposure":3,"beta":0.3375,"isco":"2352","exposure_rationale":"Niedrige bis moderate LLM-Exposition: Förderpläne und Berichte können durch LLMs unterstützt werden. Die individuelle Förderbeziehung und therapeutische Arbeit mit Kindern sind menschlich.","source_pay":"Kantone (BFS 2022)","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4968"},
+
+  // -- SICHERHEIT & SCHUTZ --
+  {"title":"Polizist/-in","slug":"polizist-in","category":"sicherheit","pay":85000,"jobs":18000,"outlook":2,"outlook_desc":"Stabil","education":"Ausbildung Polizei (kantonal)","exposure":3,"beta":0.31,"isco":"5412","exposure_rationale":"Niedrige LLM-Exposition: Polizeiarbeit erfordert physische Präsenz, Deeskalation und situative Entscheide. Rapporterstellung und Recherche können durch LLMs unterstützt werden.","source_pay":"Kantonspolizeien 2023","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4967"},
+  {"title":"Feuerwehrmann/-frau","slug":"feuerwehrmann","category":"sicherheit","pay":75000,"jobs":7500,"outlook":1,"outlook_desc":"Stabil","education":"Berufsfeuerwehr-Ausbildung","exposure":3,"beta":0.2777,"isco":"5411","exposure_rationale":"Niedrige LLM-Exposition: Feuerwehreinsätze sind physisch fordernd und erfordern spontane Entscheide in Extremsituationen. Einsatzprotokolle und Ausbildungsmaterial können durch LLMs unterstützt werden.","source_pay":"Berufsfeuerwehren CH 2023","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4967"},
+  {"title":"Sicherheitsbeauftragte/r","slug":"sicherheitsbeauftragter","category":"sicherheit","pay":68000,"jobs":22000,"outlook":2,"outlook_desc":"Stabil","education":"Berufsausweis Sicherheit","exposure":3,"beta":0.2881,"isco":"5414","exposure_rationale":"Niedrige LLM-Exposition: Physische Präsenz, Deeskalation und Interventionen sind die Kerntätigkeit. Sicherheitsberichte und Dokumentation können durch LLMs unterstützt werden.","source_pay":"BFS LSE 2022","source_jobs":"BFS SAKE 2023","url":"https://www.berufsberatung.ch/dyn/show/4967"}
+];
+
+let filteredData = [...DATA];
+let currentView = 'treemap';
+
+function applyFilters() {
+  const search = document.getElementById('search').value.toLowerCase();
+  const cat = document.getElementById('catFilter').value;
+  const mapping = document.getElementById('mappingFilter').value;
+  const sort = document.getElementById('sortBy').value;
+
+  filteredData = DATA.filter(d => {
+    if (cat && d.category !== cat) return false;
+    if (search && !d.title.toLowerCase().includes(search)) return false;
+    if (mapping === 'review' && mappingConfidence(d).key === 'hoch') return false;
+    if (mapping === 'high' && mappingConfidence(d).key !== 'hoch') return false;
+    return true;
+  });
+
+  const [field, dir] = sort.split('-');
+  filteredData.sort((a, b) => {
+    const av = a[field === 'exposure' ? 'exposure' : field === 'pay' ? 'pay' : 'jobs'];
+    const bv = b[field === 'exposure' ? 'exposure' : field === 'pay' ? 'pay' : 'jobs'];
+    return dir === 'desc' ? bv - av : av - bv;
+  });
+
+  if (currentView === 'treemap') renderTreemap();
+  else renderList();
+}
+
+function setView(v) {
+  currentView = v;
+  document.getElementById('treemap-container').style.display = v === 'treemap' ? 'block' : 'none';
+  document.getElementById('list-view').style.display = v === 'list' ? 'block' : 'none';
+  document.getElementById('btn-treemap').classList.toggle('active', v === 'treemap');
+  document.getElementById('btn-list').classList.toggle('active', v === 'list');
+  if (v === 'treemap') renderTreemap();
+  else renderList();
+}
+
+function showDetail(d) {
+  const panel = document.getElementById('detail-panel');
+  const content = document.getElementById('detail-content');
+  const color = scoreColor(d.exposure);
+  const bg = scoreBg(d.exposure);
+  const riskLabel = d.exposure >= 8 ? 'Sehr hohe Exposition' : d.exposure >= 5 ? 'Mittlere Exposition' : 'Niedrige Exposition';
+  const exactScore = d.beta * 10;
+  const confidence = mappingConfidence(d);
+
+  content.innerHTML = `
+    <h2>${d.title}</h2>
+    <div class="dp-cat">${CATS[d.category] || d.category}</div>
+    <div class="dp-badges">
+      <span class="confidence-badge ${confidence.className}">${confidence.label}</span>
+      <span class="confidence-badge confidence-scope">Exposition, nicht Jobverlust</span>
+    </div>
+    <div class="dp-score-badge" style="background:${bg};color:${color}">
+      ${d.exposure}/10
+      <span class="dp-score-label">${riskLabel}</span>
+    </div>
+    <div class="dp-beta">
+      Eloundou Beta-Score: <strong>${d.beta.toFixed(2)}</strong> (Skala 0.0-1.0)<br>
+      <span style="font-size:0.75rem">Dashboard-Score: ${exactScore.toFixed(1)} &rarr; gerundet ${d.exposure}/10</span><br>
+      <span style="font-size:0.75rem">ISCO-08: ${d.isco} | Quelle: Eloundou et al. (2024), <em>Science</em></span>
+    </div>
+    <div class="dp-grid">
+      <div class="dp-stat">
+        <div class="dp-stat-label">Medianlohn</div>
+        <div class="dp-stat-value">${fmtPay(d.pay)}</div>
+        <div style="font-size:0.7rem;color:#5a5a7a;margin-top:2px">${d.source_pay}</div>
+      </div>
+      <div class="dp-stat">
+        <div class="dp-stat-label">Beschäftigte CH</div>
+        <div class="dp-stat-value">~${fmtJobs(d.jobs)}</div>
+        <div style="font-size:0.7rem;color:#5a5a7a;margin-top:2px">${d.source_jobs}</div>
+      </div>
+      <div class="dp-stat">
+        <div class="dp-stat-label">Ausbildung</div>
+        <div class="dp-stat-value" style="font-size:0.85rem">${d.education}</div>
+      </div>
+      <div class="dp-stat">
+        <div class="dp-stat-label">Beschäftigungs-Outlook</div>
+        <div class="dp-stat-value" style="font-size:0.85rem;color:${d.outlook > 0 ? '#22c55e' : d.outlook < 0 ? '#ef4444' : '#9090b0'}">${d.outlook > 0 ? '+' : ''}${d.outlook}% - ${d.outlook_desc}</div>
+      </div>
+    </div>
+    <p style="font-size:0.8rem;color:#7c7c9a;margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.06em">LLM-Exposition - Einordnung</p>
+    <p class="dp-rationale">${d.exposure_rationale}</p>
+    ${d.mapping_note ? `<div class="dp-note"><strong>Plausibilisierung:</strong> ${d.mapping_note}</div>` : ''}
+    ${d.url ? `<a class="dp-link" href="${d.url}" target="_blank" rel="noopener noreferrer">-> Berufsprofil auf berufsberatung.ch</a>` : ''}
+    <div class="dp-sources">
+      Daten: ${d.source_pay} (Lohn) - ${d.source_jobs} (Beschäftigte) - LLM-Exposition: Eloundou et al. (2024), Science 384, 1306-1308
+    </div>
+  `;
+  panel.style.display = 'block';
+}
+
+function closePanel() {
+  document.getElementById('detail-panel').style.display = 'none';
+}
+
+// Treemap
+function renderTreemap() {
+  const container = document.getElementById('treemap-container');
+  const W = container.clientWidth;
+  const H = Math.max(500, Math.min(W * 0.65, 700));
+
+  const svg = d3.select('#treemap').attr('width', W).attr('height', H);
+  svg.selectAll('*').remove();
+
+  const root = d3.hierarchy({ children: filteredData })
+    .sum(d => d.jobs || 1)
+    .sort((a, b) => b.value - a.value);
+
+  d3.treemap().size([W, H]).padding(2).round(true)(root);
+
+  const tooltip = document.getElementById('tooltip');
+
+  const cell = svg.selectAll('g')
+    .data(root.leaves())
+    .join('g')
+    .attr('transform', d => `translate(${d.x0},${d.y0})`)
+    .attr('class', 'cell')
+    .on('click', (e, d) => showDetail(d.data))
+    .on('mousemove', (e, d) => {
+      tooltip.style.display = 'block';
+      tooltip.style.left = (e.clientX + 14) + 'px';
+      tooltip.style.top = (e.clientY - 10) + 'px';
+      const col = scoreColor(d.data.exposure);
+      tooltip.innerHTML = `
+        <div class="tt-title">${d.data.title}</div>
+        <span class="tt-score" style="background:${scoreBg(d.data.exposure)};color:${col}">LLM ${d.data.exposure}/10</span>
+        <div style="font-size:0.72rem;color:#a78bfa;margin-bottom:0.3rem">Beta: ${d.data.beta.toFixed(2)}</div>
+        <div class="tt-row"><span>Lohn</span><span class="tt-val">${fmtPay(d.data.pay)}/Jahr</span></div>
+        <div class="tt-row"><span>Beschäftigte</span><span class="tt-val">~${fmtJobs(d.data.jobs)}</span></div>
+        <div class="tt-row"><span>Ausbildung</span><span class="tt-val">${d.data.education}</span></div>
+        <div style="font-size:0.72rem;color:#5a5a7a;margin-top:0.4rem">Klicken für Details</div>
+      `;
+    })
+    .on('mouseleave', () => { tooltip.style.display = 'none'; });
+
+  cell.append('rect')
+    .attr('width', d => Math.max(0, d.x1 - d.x0))
+    .attr('height', d => Math.max(0, d.y1 - d.y0))
+    .attr('fill', d => scoreColor(d.data.exposure))
+    .attr('fill-opacity', 0.25)
+    .attr('rx', 4)
+    .attr('stroke', d => scoreColor(d.data.exposure))
+    .attr('stroke-opacity', 0.4)
+    .attr('stroke-width', 1);
+
+  cell.each(function(d) {
+    const w = d.x1 - d.x0;
+    const h = d.y1 - d.y0;
+    const g = d3.select(this);
+    if (w > 60 && h > 40) {
+      g.append('text')
+        .attr('class', 'cell-label')
+        .attr('x', 6).attr('y', 16)
+        .attr('width', w - 12)
+        .text(d.data.title.length > 22 && w < 120 ? d.data.title.substring(0, 18) + '\u2026' : d.data.title);
+    }
+    if (w > 50 && h > 55) {
+      g.append('text')
+        .attr('class', 'cell-score')
+        .attr('x', 6).attr('y', 34)
+        .attr('fill', scoreColor(d.data.exposure))
+        .text(d.data.exposure + '/10');
+    }
+  });
+}
+
+// List view
+function renderList() {
+  const container = document.getElementById('list-view');
+  container.innerHTML = filteredData.map(d => {
+    const confidence = mappingConfidence(d);
+    const confidenceBadge = confidence.key === 'hoch'
+      ? ''
+      : `<span class="confidence-badge ${confidence.className} list-confidence">${confidence.label}</span>`;
+
+    return `
+      <div class="list-item" onclick='showDetail(${JSON.stringify(d).replace(/'/g, "&#39;")})'>
+        <div class="list-score" style="background:${scoreBg(d.exposure)};color:${scoreColor(d.exposure)}">${d.exposure}</div>
+        <div class="list-main">
+          <div class="list-title">${d.title}${confidenceBadge}</div>
+          <div class="list-cat">${CATS[d.category] || d.category} | Beta: ${d.beta.toFixed(2)}</div>
+        </div>
+        <div class="list-pay">${fmtPay(d.pay)}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Init
+updateHighlights();
+applyFilters();
+window.addEventListener('resize', () => { if (currentView === 'treemap') renderTreemap(); });
+</script>
+</body>
+</html>

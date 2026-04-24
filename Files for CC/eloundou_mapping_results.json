@@ -1,0 +1,601 @@
+{
+  "mapped": [
+    {
+      "slug": "softwareentwickler-in",
+      "onet_codes": [
+        "15-1252.00",
+        "15-1251.00"
+      ],
+      "beta": 0.9092,
+      "score_10": 9,
+      "note": "Average of Software Developers + Computer Programmers"
+    },
+    {
+      "slug": "sysadmin",
+      "onet_codes": [
+        "15-1244.00"
+      ],
+      "beta": 0.7297,
+      "score_10": 7,
+      "note": "Direct match"
+    },
+    {
+      "slug": "data-scientist",
+      "isco_codes": [
+        "2120"
+      ],
+      "beta": 0.6958,
+      "score_10": 7
+    },
+    {
+      "slug": "ki-ingenieur",
+      "onet_codes": [
+        "15-1221.00",
+        "15-1211.00"
+      ],
+      "beta": 0.6923,
+      "score_10": 7,
+      "note": "Average of CS Research Scientists + Systems Analysts"
+    },
+    {
+      "slug": "cybersecurity",
+      "onet_codes": [
+        "15-1212.00",
+        "15-1299.05"
+      ],
+      "beta": 0.6636,
+      "score_10": 7,
+      "note": "Average of InfoSec Analysts + Engineers"
+    },
+    {
+      "slug": "journalist-in",
+      "isco_codes": [
+        "2642"
+      ],
+      "beta": 0.6471,
+      "score_10": 6
+    },
+    {
+      "slug": "sekretaer-in",
+      "isco_codes": [
+        "4120"
+      ],
+      "beta": 0.6442,
+      "score_10": 6
+    },
+    {
+      "slug": "sachbearbeiter-verwaltung",
+      "isco_codes": [
+        "4110"
+      ],
+      "beta": 0.595,
+      "score_10": 6
+    },
+    {
+      "slug": "pr-fachmann",
+      "isco_codes": [
+        "2432"
+      ],
+      "beta": 0.5909,
+      "score_10": 6
+    },
+    {
+      "slug": "buchhalter-in",
+      "isco_codes": [
+        "2411"
+      ],
+      "beta": 0.5683,
+      "score_10": 6
+    },
+    {
+      "slug": "steuerberater-in",
+      "isco_codes": [
+        "2411"
+      ],
+      "beta": 0.5683,
+      "score_10": 6
+    },
+    {
+      "slug": "treuhaender-in",
+      "isco_codes": [
+        "2411"
+      ],
+      "beta": 0.5683,
+      "score_10": 6
+    },
+    {
+      "slug": "elektroingenieur",
+      "isco_codes": [
+        "2151"
+      ],
+      "beta": 0.5625,
+      "score_10": 6
+    },
+    {
+      "slug": "versicherungskaufmann",
+      "isco_codes": [
+        "3321"
+      ],
+      "beta": 0.5614,
+      "score_10": 6
+    },
+    {
+      "slug": "umweltingenieur",
+      "isco_codes": [
+        "2143"
+      ],
+      "beta": 0.5556,
+      "score_10": 6
+    },
+    {
+      "slug": "it-projektleiter",
+      "isco_codes": [
+        "1330"
+      ],
+      "beta": 0.5303,
+      "score_10": 5
+    },
+    {
+      "slug": "reisebuero",
+      "isco_codes": [
+        "4221"
+      ],
+      "beta": 0.5189,
+      "score_10": 5
+    },
+    {
+      "slug": "key-account-manager",
+      "isco_codes": [
+        "2433"
+      ],
+      "beta": 0.5177,
+      "score_10": 5
+    },
+    {
+      "slug": "ux-designer",
+      "isco_codes": [
+        "2166"
+      ],
+      "beta": 0.5125,
+      "score_10": 5
+    },
+    {
+      "slug": "grafiker-in",
+      "isco_codes": [
+        "2166"
+      ],
+      "beta": 0.5125,
+      "score_10": 5
+    },
+    {
+      "slug": "logistiker-in",
+      "isco_codes": [
+        "4321",
+        "4322"
+      ],
+      "beta": 0.4964,
+      "score_10": 5
+    },
+    {
+      "slug": "einkaeufer-in",
+      "isco_codes": [
+        "3323"
+      ],
+      "beta": 0.4894,
+      "score_10": 5
+    },
+    {
+      "slug": "hr-fachmann",
+      "isco_codes": [
+        "2423"
+      ],
+      "beta": 0.4887,
+      "score_10": 5
+    },
+    {
+      "slug": "maschinenbauingenieur",
+      "isco_codes": [
+        "2144"
+      ],
+      "beta": 0.4874,
+      "score_10": 5
+    },
+    {
+      "slug": "hochschuldozent",
+      "isco_codes": [
+        "2310"
+      ],
+      "beta": 0.4844,
+      "score_10": 5
+    },
+    {
+      "slug": "bauingenieur-in",
+      "isco_codes": [
+        "2142"
+      ],
+      "beta": 0.4821,
+      "score_10": 5
+    },
+    {
+      "slug": "finanzberater-in",
+      "isco_codes": [
+        "2412"
+      ],
+      "beta": 0.4808,
+      "score_10": 5
+    },
+    {
+      "slug": "anlageberater-in",
+      "isco_codes": [
+        "2412"
+      ],
+      "beta": 0.4808,
+      "score_10": 5
+    },
+    {
+      "slug": "filialleiter",
+      "isco_codes": [
+        "1420"
+      ],
+      "beta": 0.4808,
+      "score_10": 5
+    },
+    {
+      "slug": "psychiater-in",
+      "onet_codes": [
+        "29-1223.00"
+      ],
+      "beta": 0.4783,
+      "score_10": 5,
+      "note": "Direct match"
+    },
+    {
+      "slug": "psychologe-in",
+      "isco_codes": [
+        "2634"
+      ],
+      "beta": 0.4716,
+      "score_10": 5
+    },
+    {
+      "slug": "hotelfachmann",
+      "isco_codes": [
+        "1411",
+        "4224"
+      ],
+      "beta": 0.4699,
+      "score_10": 5
+    },
+    {
+      "slug": "chemieingenieur",
+      "isco_codes": [
+        "2145"
+      ],
+      "beta": 0.4615,
+      "score_10": 5
+    },
+    {
+      "slug": "cutter-in",
+      "isco_codes": [
+        "3521"
+      ],
+      "beta": 0.4529,
+      "score_10": 5
+    },
+    {
+      "slug": "arzt-aerztin",
+      "onet_codes": [
+        "29-1215.00",
+        "29-1216.00"
+      ],
+      "beta": 0.4473,
+      "score_10": 4,
+      "note": "Average of Family + Internal Medicine"
+    },
+    {
+      "slug": "detailhandelsfachmann",
+      "isco_codes": [
+        "5221",
+        "5222",
+        "5223"
+      ],
+      "beta": 0.4366,
+      "score_10": 4
+    },
+    {
+      "slug": "apotheker-in",
+      "isco_codes": [
+        "2262"
+      ],
+      "beta": 0.4286,
+      "score_10": 4
+    },
+    {
+      "slug": "jurist-in",
+      "isco_codes": [
+        "2611"
+      ],
+      "beta": 0.425,
+      "score_10": 4
+    },
+    {
+      "slug": "zollbeamter",
+      "isco_codes": [
+        "3351"
+      ],
+      "beta": 0.4021,
+      "score_10": 4
+    },
+    {
+      "slug": "koch-koechin",
+      "isco_codes": [
+        "3434"
+      ],
+      "beta": 0.3865,
+      "score_10": 4
+    },
+    {
+      "slug": "fotograf-in",
+      "isco_codes": [
+        "3431"
+      ],
+      "beta": 0.3854,
+      "score_10": 4
+    },
+    {
+      "slug": "berufsschullehrer",
+      "isco_codes": [
+        "2320"
+      ],
+      "beta": 0.381,
+      "score_10": 4
+    },
+    {
+      "slug": "pflegefachmann",
+      "isco_codes": [
+        "2221"
+      ],
+      "beta": 0.3428,
+      "score_10": 3
+    },
+    {
+      "slug": "heilpaedagoge",
+      "isco_codes": [
+        "2352"
+      ],
+      "beta": 0.3375,
+      "score_10": 3
+    },
+    {
+      "slug": "gymnasiallehrer-in",
+      "isco_codes": [
+        "2330"
+      ],
+      "beta": 0.3333,
+      "score_10": 3
+    },
+    {
+      "slug": "polizist-in",
+      "isco_codes": [
+        "5412"
+      ],
+      "beta": 0.31,
+      "score_10": 3
+    },
+    {
+      "slug": "zugfuehrer-sbb",
+      "isco_codes": [
+        "8311"
+      ],
+      "beta": 0.2998,
+      "score_10": 3
+    },
+    {
+      "slug": "pilot-in",
+      "isco_codes": [
+        "3153"
+      ],
+      "beta": 0.2955,
+      "score_10": 3
+    },
+    {
+      "slug": "sicherheitsbeauftragter",
+      "isco_codes": [
+        "5414"
+      ],
+      "beta": 0.2881,
+      "score_10": 3
+    },
+    {
+      "slug": "primarlehrer-in",
+      "isco_codes": [
+        "2341",
+        "2342"
+      ],
+      "beta": 0.2797,
+      "score_10": 3
+    },
+    {
+      "slug": "lastwagenfahrer",
+      "isco_codes": [
+        "8332"
+      ],
+      "beta": 0.2788,
+      "score_10": 3
+    },
+    {
+      "slug": "feuerwehrmann",
+      "isco_codes": [
+        "5411"
+      ],
+      "beta": 0.2777,
+      "score_10": 3
+    },
+    {
+      "slug": "sozialarbeiter-in",
+      "isco_codes": [
+        "2635"
+      ],
+      "beta": 0.2716,
+      "score_10": 3
+    },
+    {
+      "slug": "tierarzt",
+      "isco_codes": [
+        "2250"
+      ],
+      "beta": 0.2703,
+      "score_10": 3
+    },
+    {
+      "slug": "heizungsinstallateur",
+      "isco_codes": [
+        "7127"
+      ],
+      "beta": 0.2578,
+      "score_10": 3
+    },
+    {
+      "slug": "kindergaertner-in",
+      "isco_codes": [
+        "2342"
+      ],
+      "beta": 0.2301,
+      "score_10": 2
+    },
+    {
+      "slug": "lagerfachmann",
+      "isco_codes": [
+        "9333",
+        "4321"
+      ],
+      "beta": 0.2266,
+      "score_10": 2
+    },
+    {
+      "slug": "physiotherapeut",
+      "isco_codes": [
+        "2264"
+      ],
+      "beta": 0.2257,
+      "score_10": 2
+    },
+    {
+      "slug": "rettungssanitaeter",
+      "onet_codes": [
+        "29-2043.00",
+        "29-2042.00"
+      ],
+      "beta": 0.181,
+      "score_10": 2,
+      "note": "Average of Paramedics + EMTs"
+    },
+    {
+      "slug": "zahnarzt",
+      "isco_codes": [
+        "2261"
+      ],
+      "beta": 0.1589,
+      "score_10": 2
+    },
+    {
+      "slug": "restaurantfachmann",
+      "isco_codes": [
+        "5131"
+      ],
+      "beta": 0.1567,
+      "score_10": 2
+    },
+    {
+      "slug": "forstwart-in",
+      "isco_codes": [
+        "6210"
+      ],
+      "beta": 0.1507,
+      "score_10": 2
+    },
+    {
+      "slug": "schreiner-in",
+      "isco_codes": [
+        "7115"
+      ],
+      "beta": 0.1444,
+      "score_10": 1
+    },
+    {
+      "slug": "zimmermann",
+      "isco_codes": [
+        "7115"
+      ],
+      "beta": 0.1444,
+      "score_10": 1
+    },
+    {
+      "slug": "kinderbetreuung",
+      "isco_codes": [
+        "5311"
+      ],
+      "beta": 0.1414,
+      "score_10": 1
+    },
+    {
+      "slug": "winzer-in",
+      "isco_codes": [
+        "6112"
+      ],
+      "beta": 0.1404,
+      "score_10": 1
+    },
+    {
+      "slug": "landwirt-in",
+      "isco_codes": [
+        "6111",
+        "6112",
+        "6113"
+      ],
+      "beta": 0.1397,
+      "score_10": 1
+    },
+    {
+      "slug": "gaertner-in",
+      "isco_codes": [
+        "6113"
+      ],
+      "beta": 0.1385,
+      "score_10": 1
+    },
+    {
+      "slug": "elektriker-in",
+      "isco_codes": [
+        "7411"
+      ],
+      "beta": 0.1282,
+      "score_10": 1
+    },
+    {
+      "slug": "sanitaer-installateur",
+      "isco_codes": [
+        "7126"
+      ],
+      "beta": 0.0555,
+      "score_10": 1
+    },
+    {
+      "slug": "maler-in",
+      "isco_codes": [
+        "7131"
+      ],
+      "beta": 0.0421,
+      "score_10": 0
+    },
+    {
+      "slug": "maurer-in",
+      "isco_codes": [
+        "7112"
+      ],
+      "beta": 0.0192,
+      "score_10": 0
+    }
+  ],
+  "missing": []
+}

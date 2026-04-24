@@ -1,0 +1,222 @@
+# Eloundou-Scores in das KI-Risiko-Dashboard integrieren
+
+## Ziel
+
+Die aktuellen KI-Expositions-Scores im Dashboard [gu.kuble.com/jobs-ch](https://gu.kuble.com/jobs-ch/) wurden mit Claude Sonnet generiert (LLM-Selbsteinschätzung, Skala 0–10). Diese Anleitung beschreibt, wie sie durch die **peer-reviewed Expositions-Scores von Eloundou et al. (2024)** ersetzt werden können — das gleiche Mass, das die KOF-Studie der ETH Zürich verwendet.
+
+### Warum?
+
+- **Wissenschaftlich validiert**: Publiziert in *Science* (2024), breit zitiert
+- **Systematische Methodik**: Basiert auf O\*NET-Task-Zerlegung, nicht auf LLM-"Meinung"
+- **Reproduzierbar**: Öffentlich verfügbare Daten und Methodik
+- **Vergleichbar**: Identisches Mass wie in der KOF-Studie → direkte Anschlussfähigkeit
+
+---
+
+## Übersicht der Datenquellen
+
+| Quelle | Was | Format | Link |
+|--------|-----|--------|------|
+| OpenAI GitHub | Eloundou-Expositions-Scores pro O\*NET-SOC-Code | CSV | [github.com/openai/GPTs-are-GPTs](https://github.com/openai/GPTs-are-GPTs) |
+| BLS Crosswalk | Mapping SOC-2010 → ISCO-08 | XLS | [bls.gov/soc/isco_soc_crosswalk.xls](https://www.bls.gov/soc/isco_soc_crosswalk.xls) |
+| IBS Crosswalk | Detaillierteres Mapping O\*NET-SOC → ISCO | PDF/CSV | [ibs.org.pl](https://ibs.org.pl/en/resources/occupation-classifications-crosswalks-from-onet-soc-to-isco/) |
+
+---
+
+## Schritt 1: Eloundou-Daten herunterladen
+
+**Datei:** `occ_level.csv` aus dem OpenAI-Repository
+
+```
+https://github.com/openai/GPTs-are-GPTs/blob/main/data/occ_level.csv
+```
+
+### Spaltenstruktur
+
+| Spalte | Bedeutung |
+|--------|-----------|
+| `O*NET-SOC Code` | Berufscode (z.B. `11-1011.00`) |
+| `Title` | Berufsbezeichnung (Englisch) |
+| `dv_rating_alpha` | GPT-4-Bewertung: nur E1 (direkte LLM-Exposition) |
+| `dv_rating_beta` | **← Diesen Score verwenden**: E1 + 0.5 × E2 |
+| `dv_rating_gamma` | GPT-4-Bewertung: E1 + E2 (inkl. Software-Tools) |
+| `human_rating_alpha` | Menschliche Bewertung: nur E1 |
+| `human_rating_beta` | Menschliche Bewertung: E1 + 0.5 × E2 |
+| `human_rating_gamma` | Menschliche Bewertung: E1 + E2 |
+
+### Welchen Score nehmen?
+
+Die KOF-Studie verwendet **`dv_rating_beta`** (β-Mass) — das ist die GPT-4-Bewertung mit der Formel:
+
+> **β = E1 + 0.5 × E2**
+
+- **E1** = Aufgaben, die ein LLM direkt erledigen kann (ohne zusätzliche Software)
+- **E2** = Aufgaben, die ein LLM mit zusätzlichen Tools/Software erledigen kann
+
+Der Wert liegt zwischen **0.0** (keine Exposition) und **1.0** (maximale Exposition).
+
+### Beispiele aus dem Datensatz
+
+| Beruf | β-Score |
+|-------|---------|
+| Chief Executives | 0.46 |
+| Chief Sustainability Officers | 0.56 |
+| General and Operations Managers | 0.48 |
+
+---
+
+## Schritt 2: SOC-Codes auf ISCO-08 mappen
+
+Die Eloundou-Scores verwenden das US-amerikanische **O\*NET-SOC-System**. Das Schweizer Dashboard braucht **ISCO-08-Codes** (internationaler Standard, in der Schweiz üblich).
+
+### 2a: BLS-Crosswalk herunterladen
+
+```
+https://www.bls.gov/soc/isco_soc_crosswalk.xls
+```
+
+Diese Excel-Datei enthält zwei Spaltenpaare:
+- `ISCO-08 Code` + `ISCO-08 Title`
+- `2010 SOC Code` + `2010 SOC Title`
+
+### 2b: O\*NET-SOC auf SOC-2010 reduzieren
+
+Die Eloundou-Daten verwenden **O\*NET-SOC-Codes** (z.B. `11-1011.03`), die granularer sind als SOC-2010 (z.B. `11-1011`). Für das Mapping:
+
+```
+O*NET-SOC: 11-1011.03  →  SOC-2010: 11-1011  (die letzten 3 Stellen nach dem Punkt abschneiden)
+```
+
+> **Achtung:** Wenn mehrere O\*NET-SOC-Codes auf denselben SOC-2010-Code fallen, den **Durchschnitt** der β-Scores bilden.
+
+### 2c: SOC-2010 → ISCO-08 anwenden
+
+Über den BLS-Crosswalk die SOC-2010-Codes auf ISCO-08 4-Steller mappen. Auch hier gilt: Bei Mehrfach-Zuordnungen den Durchschnitt bilden.
+
+---
+
+## Schritt 3: ISCO-08 auf die 100 Dashboard-Berufe mappen
+
+Das Dashboard enthält ca. 100 Schweizer Berufe mit deutschen Bezeichnungen. Für jeden Beruf muss der passende **ISCO-08 4-Steller** identifiziert werden.
+
+### Mapping-Tabelle erstellen
+
+Für jeden Beruf im Dashboard eine Zeile anlegen:
+
+| Dashboard-Beruf | ISCO-08 Code | ISCO-08 Titel (EN) | β-Score |
+|----------------|-------------|---------------------|---------|
+| Softwareentwickler/-in | 2512 | Software developers | 0.94 |
+| Buchhalter/-in | 2411 | Accountants | 0.96 |
+| Pflegefachmann/-frau | 2221 | Nursing professionals | ~0.15 |
+| Koch / Köchin | 3434 | Chefs | ~0.05 |
+| Lastwagenfahrer/-in | 8332 | Heavy truck drivers | ~0.02 |
+
+### Hilfsmittel für das Mapping
+
+- **berufsberatung.ch** → viele Berufe haben dort bereits ISCO-Zuordnungen
+- **BFS SAKE-Daten** → die Beschäftigtenzahlen im Dashboard stammen bereits aus BFS-Daten mit ISCO-Codes
+- **KOF-Studie kontaktieren**: Die Autoren (Kläui & Siegenthaler, ETH Zürich) haben dieses Mapping bereits für ihre Studie gemacht. Eine Anfrage lohnt sich.
+
+---
+
+## Schritt 4: Score-Transformation (0–1 → 0–10)
+
+Die Eloundou-Scores liegen auf einer Skala von 0.0 bis 1.0. Das Dashboard verwendet 0–10. Transformation:
+
+```
+Dashboard-Score = round(β × 10)
+```
+
+| β-Score (Eloundou) | Dashboard-Score |
+|--------------------|-----------------|
+| 0.00 | 0/10 |
+| 0.25 | 3/10 |
+| 0.50 | 5/10 |
+| 0.75 | 8/10 |
+| 0.96 | 10/10 |
+
+---
+
+## Schritt 5: Daten im Dashboard ersetzen
+
+Je nach technischer Umsetzung des Dashboards die neuen Scores in die Datenquelle einfügen. Vermutlich liegt eine JSON- oder CSV-Datei zugrunde, die pro Beruf den `exposure`-Wert enthält.
+
+### Erwartetes Datenformat (Beispiel)
+
+```json
+{
+  "beruf": "Softwareentwickler/-in",
+  "exposure": 9,
+  "exposure_source": "eloundou_beta",
+  "isco_code": "2512",
+  "beschaeftigte": 52000,
+  "medianlohn": 105000
+}
+```
+
+### Farbkategorien beibehalten
+
+Die aktuelle Farblogik (grün/gelb/rot) kann bestehen bleiben:
+
+| Score | Farbe | Kategorie |
+|-------|-------|-----------|
+| 0–4 | Grün | Niedrig |
+| 5–7 | Gelb/Orange | Mittel |
+| 8–10 | Rot | Hoch |
+
+---
+
+## Schritt 6: Quellenangabe im Dashboard aktualisieren
+
+Im Abschnitt "Über diese Daten → KI-Exposition" den Text ersetzen:
+
+**Aktuell:**
+> Berechnet mit Claude Sonnet (Anthropic), März 2026. Jeder Beruf wurde anhand seines Tätigkeitsprofils bewertet. Score 0 = kaum betroffen, 10 = starke Automatisierungsgefahr.
+
+**Neu:**
+> Basierend auf dem Expositionsmass (β) von Eloundou et al. (2024), publiziert in *Science*. Das Mass bewertet pro Beruf, inwieweit LLMs die Erledigungszeit von Aufgaben um ≥ 50 % reduzieren können. Mapping von SOC auf ISCO-08 via BLS-Crosswalk. Score 0 = keine Exposition, 10 = maximale Exposition.
+>
+> Quelle: Eloundou, T. et al. (2024). "GPTs are GPTs: Labor market impact potential of LLMs." *Science*, 384, 1306–1308.
+
+---
+
+## Schritt 7: Validierung & Plausibilitätsprüfung
+
+Nach der Integration prüfen, ob die neuen Scores plausibel sind. Erwartete Veränderungen gegenüber den aktuellen LLM-generierten Scores:
+
+| Beruf | Aktuell (Claude) | Erwartet (Eloundou) | Kommentar |
+|-------|-------------------|---------------------|-----------|
+| Softwareentwickler/-in | 6/10 | 9/10 | Deutlich höher — Eloundou sieht Programmierer als hochexponiert |
+| Lastwagenfahrer/-in | 7/10 | 1–2/10 | Deutlich tiefer — physischer Beruf, kaum LLM-exponiert |
+| Buchhalter/-in | 8/10 | 9–10/10 | Ähnlich oder leicht höher |
+| Pflegefachmann/-frau | 2/10 | 1–2/10 | Ähnlich |
+| Lagerfachmann/-frau | 8/10 | 2–3/10 | Deutlich tiefer — physische Logistik |
+
+> **Wichtig:** Grosse Abweichungen (wie bei Lastwagenfahrer oder Lagerfachleute) sind ein gutes Zeichen — sie zeigen, dass das LLM-generierte Mass systematisch verzerrt war, z.B. indem es KI-Exposition mit allgemeiner Automatisierung (Robotik, selbstfahrende Fahrzeuge) verwechselt hat.
+
+---
+
+## Optional: Zweites Mass (Handa et al. 2025)
+
+Die KOF-Studie verwendet zusätzlich ein Mass von **Handa et al. (2025)**, das auf der *tatsächlichen* LLM-Nutzung basiert (Analyse von Millionen Claude-Interaktionen). Dieses Mass könnte als zweite Perspektive im Dashboard ergänzt werden, ist aber noch nicht öffentlich als Datensatz verfügbar.
+
+---
+
+## Zusammenfassung des Workflows
+
+```
+1. occ_level.csv von GitHub herunterladen
+2. O*NET-SOC → SOC-2010 aggregieren (Punkt + Suffix abschneiden)
+3. isco_soc_crosswalk.xls herunterladen
+4. SOC-2010 → ISCO-08 mappen
+5. ISCO-08 → 100 CH-Berufe mappen (manuell oder via BFS-Zuordnung)
+6. β-Score × 10 → neuer Dashboard-Score
+7. Datenquelle im Dashboard aktualisieren
+8. Quellenangabe anpassen
+9. Plausibilitätsprüfung durchführen
+```
+
+---
+
+*Erstellt: April 2026*
+*Referenz: Eloundou et al. (2024), Science 384, 1306–1308 · KOF-Studie Nr. 186 (Kläui & Siegenthaler, 2025)*
