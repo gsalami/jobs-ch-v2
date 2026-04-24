@@ -16,6 +16,25 @@ Open <http://localhost:8000>.
 node scripts/validate-dashboard.js
 ```
 
+## Today 2026 framework
+
+The updated AI-exposure view is documented in:
+
+- `docs/ai-exposure-framework-2026.md`
+- `docs/ai-exposure-framework-2026.html`
+- `docs/ai-exposure-framework-2026.pdf`
+
+Regenerate the 2026 score files with:
+
+```bash
+node scripts/generate-today-scores.js
+```
+
+Outputs:
+
+- `data/today-scores-2026.json`
+- `data/today-scores-2026.csv`
+
 ## Brand assets
 
 Logos are stored locally in `assets/brand/` and were sourced from the official sites:

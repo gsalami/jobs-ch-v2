@@ -1643,7 +1643,12 @@
     </div>
     <div class="source-index-card">
       <h3>Heute-Framework</h3>
-      <p>Aktualisierung für moderne KI-Fähigkeiten: Long Context, Multimodalität, Agenten und Schweizer Adoption.</p>
+      <p>Aktualisierung für moderne KI-Fähigkeiten bis 24. April 2026: Long Context, Multimodalität, Agenten, Computer Use und Schweizer Adoption.</p>
+      <a href="docs/ai-exposure-framework-2026.html" target="_blank" rel="noopener noreferrer">Methodenpapier 2026</a>
+      <a href="data/today-scores-2026.json" target="_blank" rel="noopener noreferrer">Generierte Scores JSON</a>
+      <a href="data/today-scores-2026.csv" target="_blank" rel="noopener noreferrer">Generierte Scores CSV</a>
+      <a href="https://openai.com/index/introducing-gpt-5-5/" target="_blank" rel="noopener noreferrer">OpenAI GPT-5.5: Agentic Work</a>
+      <a href="https://openai.com/index/introducing-gpt-5-4/" target="_blank" rel="noopener noreferrer">OpenAI GPT-5.4: Computer Use</a>
       <a href="https://openai.com/index/gpt-4-1/" target="_blank" rel="noopener noreferrer">OpenAI GPT-4.1: Coding, Long Context, Agents</a>
       <a href="https://openai.com/index/hello-gpt-4o/" target="_blank" rel="noopener noreferrer">OpenAI GPT-4o: Text, Audio, Bild, Video</a>
       <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool" target="_blank" rel="noopener noreferrer">Anthropic Computer Use</a>
@@ -1662,8 +1667,12 @@
     </div>
     <div class="source-card">
       <h3>Zweite Sicht: Heute 2026</h3>
-      <p>Der Original-Score bleibt die Basis. Die aktualisierte Sicht addiert pro Berufsfeld kleine, nachvollziehbare Modifikatoren für vier seit der Publikation stärker gewordene Fähigkeiten: lange Dokumente/Codebasen, multimodale Inputs und Outputs, Agenten/Tool-Use sowie reale Prozessadoption. Physische Arbeit, Sicherheitsverantwortung und Beziehungsarbeit setzen Obergrenzen.</p>
+      <p>Der Original-Score bleibt die Basis. Die aktualisierte Sicht addiert pro Berufsfeld kleine, nachvollziehbare Modifikatoren für seit der Publikation stärker gewordene Fähigkeiten: lange Dokumente/Codebasen, multimodale Inputs und Outputs, Agenten/Tool-Use, Computer Use sowie reale Prozessadoption. Physische Arbeit, Sicherheitsverantwortung und Beziehungsarbeit setzen Obergrenzen.</p>
       <p style="margin-top:0.65rem"><strong>Formel:</strong> Heute-Beta = min(Cap, Original-Beta + Long-Context + Agentik + Multimodalität + Adoption + Berufs-Override). Heute-Score = round(Heute-Beta x 10).</p>
+      <a href="docs/ai-exposure-framework-2026.html" target="_blank" rel="noopener noreferrer">-> Methodenpapier 2026</a>
+      <a href="data/today-scores-2026.json" target="_blank" rel="noopener noreferrer">-> Neue Zahlen JSON</a>
+      <a href="https://openai.com/index/introducing-gpt-5-5/" target="_blank" rel="noopener noreferrer">-> OpenAI GPT-5.5</a>
+      <a href="https://openai.com/index/introducing-gpt-5-4/" target="_blank" rel="noopener noreferrer">-> OpenAI GPT-5.4</a>
       <a href="https://openai.com/index/gpt-4-1/" target="_blank" rel="noopener noreferrer">-> OpenAI GPT-4.1</a>
       <a href="https://openai.com/index/hello-gpt-4o/" target="_blank" rel="noopener noreferrer">-> OpenAI GPT-4o</a>
       <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool" target="_blank" rel="noopener noreferrer">-> Anthropic Computer Use</a>
@@ -1888,45 +1897,52 @@ const FRAMEWORK_COPY = {
   },
   today: {
     title: "Heute 2026: aktualisierte KI-Exposition",
-    desc: "Heuristische zweite Sicht: Original-Beta plus Modifikatoren für Long Context, multimodale KI, Agenten/Tool-Use und Schweizer Prozessadoption, mit Caps für physische, regulierte und beziehungsintensive Arbeit."
+    desc: "Zweite Sicht nach Methodenpapier vom 24. April 2026: Original-Beta plus Modifikatoren für Long Context, multimodale KI, Agenten/Tool-Use, Computer Use und Schweizer Prozessadoption, mit Caps für physische, regulierte und beziehungsintensive Arbeit."
   }
 };
 
 const TODAY_CATEGORY_FACTORS = {
-  "finanzen-recht": { longContext: 0.08, agentic: 0.06, multimodal: 0.00, adoption: 0.04, cap: 9, note: "lange Dokumente, Regulierung und Research" },
-  "it-tech": { longContext: 0.08, agentic: 0.12, multimodal: 0.02, adoption: 0.03, cap: 10, note: "Coding, Tool-Use und lange Codebasen" },
-  "gesundheit": { longContext: 0.06, agentic: 0.02, multimodal: 0.03, adoption: 0.02, cap: 6, note: "Dokumentation und Literatur, aber klinische Verantwortung bleibt beim Menschen" },
-  "bildung": { longContext: 0.06, agentic: 0.02, multimodal: 0.03, adoption: 0.02, cap: 6, note: "Materialerstellung, Feedback und Unterrichtsvorbereitung" },
-  "handwerk-bau": { longContext: 0.02, agentic: 0.01, multimodal: 0.01, adoption: 0.01, cap: 4, note: "physische Vor-Ort-Arbeit setzt eine enge Obergrenze" },
-  "verwaltung": { longContext: 0.10, agentic: 0.10, multimodal: 0.01, adoption: 0.06, cap: 9, note: "standardisierte Dokumente, Formulare und Workflows" },
-  "verkauf-handel": { longContext: 0.06, agentic: 0.07, multimodal: 0.02, adoption: 0.05, cap: 8, note: "Kundenkommunikation, Angebote und Backoffice-Prozesse" },
-  "transport-logistik": { longContext: 0.03, agentic: 0.03, multimodal: 0.01, adoption: 0.02, cap: 5, note: "Disposition und Dokumentation, aber physische Mobilität bleibt ausser Scope" },
-  "gastronomie-tourismus": { longContext: 0.04, agentic: 0.03, multimodal: 0.03, adoption: 0.04, cap: 7, note: "Planung, Kommunikation, Inhalte und Buchungsprozesse" },
-  "landwirtschaft": { longContext: 0.02, agentic: 0.01, multimodal: 0.02, adoption: 0.01, cap: 4, note: "Planung und Marketing, aber Feldarbeit bleibt physisch" },
-  "kunst-medien": { longContext: 0.08, agentic: 0.04, multimodal: 0.14, adoption: 0.03, cap: 9, note: "Text plus Bild-, Video- und Audio-Workflows" },
-  "ingenieurwesen": { longContext: 0.08, agentic: 0.04, multimodal: 0.04, adoption: 0.03, cap: 8, note: "technische Dokumente, Normen, Code und visuelle Analysen" },
-  "soziales": { longContext: 0.04, agentic: 0.02, multimodal: 0.01, adoption: 0.02, cap: 5, note: "Falldokumentation, aber Beziehung und Verantwortung bleiben zentral" },
-  "sicherheit": { longContext: 0.03, agentic: 0.02, multimodal: 0.01, adoption: 0.01, cap: 5, note: "Berichte und Recherche, aber Einsatzsituationen bleiben menschlich" }
+  "finanzen-recht": { longContext: 0.10, agentic: 0.07, multimodal: 0.02, adoption: 0.05, cap: 9, note: "lange Verträge, Dossiers, Regulierung, Research und Reports" },
+  "it-tech": { longContext: 0.09, agentic: 0.14, multimodal: 0.03, adoption: 0.05, cap: 10, note: "Coding-Agenten, Tool-Use, grosse Codebasen und IT-Workflows" },
+  "gesundheit": { longContext: 0.07, agentic: 0.03, multimodal: 0.04, adoption: 0.02, cap: 6, note: "Dokumentation, Fachliteratur und multimodaler Befundkontext, aber klinische Verantwortung bleibt begrenzend" },
+  "bildung": { longContext: 0.07, agentic: 0.03, multimodal: 0.04, adoption: 0.03, cap: 7, note: "Materialerstellung, Feedback, Research und Unterrichtsvorbereitung" },
+  "handwerk-bau": { longContext: 0.03, agentic: 0.02, multimodal: 0.01, adoption: 0.01, cap: 4, note: "Offerten, Planung und Dokumentation, aber physische Vor-Ort-Arbeit dominiert" },
+  "verwaltung": { longContext: 0.11, agentic: 0.14, multimodal: 0.02, adoption: 0.07, cap: 9, note: "standardisierte Dokumente, Formulare, E-Mail, Termine und Workflows" },
+  "verkauf-handel": { longContext: 0.07, agentic: 0.09, multimodal: 0.03, adoption: 0.05, cap: 8, note: "Kundenkommunikation, Angebote, CRM, Sortiments- und Backoffice-Arbeit" },
+  "transport-logistik": { longContext: 0.04, agentic: 0.04, multimodal: 0.02, adoption: 0.02, cap: 5, note: "Disposition, Planung und Dokumentation, aber physische Mobilität bleibt ausser Scope" },
+  "gastronomie-tourismus": { longContext: 0.05, agentic: 0.05, multimodal: 0.04, adoption: 0.04, cap: 7, note: "Buchung, Planung, Menüs, Kommunikation und Content" },
+  "landwirtschaft": { longContext: 0.03, agentic: 0.02, multimodal: 0.02, adoption: 0.01, cap: 4, note: "Beratung, Planung, Markt-/Wetterdaten und Marketing, aber Feldarbeit bleibt physisch" },
+  "kunst-medien": { longContext: 0.09, agentic: 0.06, multimodal: 0.16, adoption: 0.05, cap: 9, note: "Text plus Bild-, Video- und Audio-Workflows" },
+  "ingenieurwesen": { longContext: 0.09, agentic: 0.06, multimodal: 0.06, adoption: 0.04, cap: 8, note: "Normen, technische Dokumente, Code und visuelle Analysen" },
+  "soziales": { longContext: 0.05, agentic: 0.03, multimodal: 0.01, adoption: 0.02, cap: 5, note: "Falldokumentation und Research, aber Beziehung und Schutzauftrag bleiben zentral" },
+  "sicherheit": { longContext: 0.04, agentic: 0.03, multimodal: 0.02, adoption: 0.01, cap: 5, note: "Berichte, Recherche und Lagebilder, aber Einsatzsituationen bleiben menschlich" }
 };
 
 const TODAY_ROLE_OVERRIDES = {
-  "softwareentwickler-in": { delta: 0.03, label: "Coding-Agenten" },
-  "data-scientist": { delta: 0.05, label: "Datenanalyse-Agenten" },
-  "sysadmin": { delta: 0.03, label: "Tool-Use für IT-Betrieb" },
-  "cybersecurity": { delta: 0.06, label: "Security-Codeanalyse" },
-  "ki-ingenieur": { delta: 0.07, label: "KI-native Workflows" },
-  "jurist-in": { delta: 0.05, label: "Long-Context Legal Review" },
-  "steuerberater-in": { delta: 0.03, label: "Steuer-Research" },
-  "buchhalter-in": { delta: 0.04, label: "Beleg- und Report-Automation" },
-  "sachbearbeiter-verwaltung": { delta: 0.05, label: "Formular-Workflows" },
-  "sekretaer-in": { delta: 0.04, label: "E-Mail- und Kalenderagenten" },
-  "grafiker-in": { delta: 0.08, label: "Bildgenerierung" },
-  "fotograf-in": { delta: 0.08, label: "Bild-KI" },
-  "cutter-in": { delta: 0.07, label: "Video- und Untertitel-KI" },
-  "journalist-in": { delta: 0.03, label: "Recherche- und Redaktionsassistenten" },
-  "reisebuero": { delta: 0.05, label: "Reiseplanungs-Agenten" },
+  "softwareentwickler-in": { delta: 0.04, label: "Coding-Agenten und Repository-Kontext" },
+  "data-scientist": { delta: 0.06, label: "Datenanalyse-, Notebook- und Modellierungsagenten" },
+  "sysadmin": { delta: 0.04, label: "Tool-Use für IT-Betrieb und Runbooks" },
+  "cybersecurity": { delta: 0.07, label: "Security-Codeanalyse und Triage-Agenten" },
+  "ki-ingenieur": { delta: 0.08, label: "KI-native Workflows" },
+  "jurist-in": { delta: 0.06, label: "Long-Context Legal Review" },
+  "steuerberater-in": { delta: 0.04, label: "Steuer-Research und Mandatsdokumente" },
+  "buchhalter-in": { delta: 0.05, label: "Beleg-, Report- und Abstimmungsworkflows" },
+  "sachbearbeiter-verwaltung": { delta: 0.06, label: "Formular- und Prozessagenten" },
+  "sekretaer-in": { delta: 0.05, label: "E-Mail-, Kalender- und Dokumentenagenten" },
+  "grafiker-in": { delta: 0.09, label: "Bildgenerierung und visuelle Iteration" },
+  "fotograf-in": { delta: 0.09, label: "Bild-KI und Retusche" },
+  "cutter-in": { delta: 0.08, label: "Video-, Untertitel- und Schnittassistenz" },
+  "journalist-in": { delta: 0.04, label: "Recherche- und Redaktionsassistenz" },
+  "reisebuero": { delta: 0.06, label: "Reiseplanungs-Agenten" },
   "arzt-aerztin": { delta: 0.02, label: "medizinische Dokumentation" },
-  "apotheker-in": { delta: 0.02, label: "Interaktions- und Beratungsassistenz" }
+  "apotheker-in": { delta: 0.02, label: "Interaktions- und Beratungsassistenz" },
+  "ux-designer": { delta: 0.04, label: "Prototyping, Research-Synthese und UI-Text" },
+  "hr-fachmann": { delta: 0.03, label: "Recruiting-, Policy- und Interview-Workflows" },
+  "einkaeufer-in": { delta: 0.03, label: "Lieferantenrecherche und Angebotsvergleich" },
+  "hotelfachmann": { delta: 0.03, label: "Buchung, Gästekommunikation und Content" },
+  "hochschuldozent": { delta: 0.03, label: "Research, Materialerstellung und Feedback" },
+  "maschinenbauingenieur": { delta: 0.02, label: "technische Dokumentation und CAD-nahe Analyse" },
+  "elektroingenieur": { delta: 0.02, label: "technische Dokumentation, Code und Schaltplanprüfung" }
 };
 
 let activeFramework = "science";
