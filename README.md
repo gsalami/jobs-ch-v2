@@ -18,7 +18,9 @@ node scripts/validate-dashboard.js
 
 ## Today 2026 framework
 
-The updated AI-exposure view is documented in:
+The updated AI-exposure view is a conservative heuristic extension of the Science 2024 base values, not a full task-level replication. It separates technical exposure from adoption-adjusted exposure and includes sensitivity, uncertainty, mapping, and mini-reannotation artifacts.
+
+Documentation:
 
 - `docs/ai-exposure-framework-2026.md`
 - `docs/ai-exposure-framework-2026.html`
@@ -34,6 +36,11 @@ Outputs:
 
 - `data/today-scores-2026.json`
 - `data/today-scores-2026.csv`
+- `data/scenario-summary-2026.json`
+- `data/scenario-summary-2026.csv`
+- `data/reannotation-sample-2026.json`
+- `data/reannotation-sample-2026.csv`
+- `data/mapping-2026.csv`
 
 ## Brand assets
 

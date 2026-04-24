@@ -618,7 +618,7 @@
 
     .score-comparison {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
       gap: 0.6rem;
       margin-bottom: 1rem;
     }
@@ -648,6 +648,13 @@
       color: #7c7c9a;
       font-size: 0.72rem;
       font-weight: 700;
+    }
+
+    .score-mini-note {
+      font-size: 0.68rem;
+      color: #7c7c9a;
+      margin-top: 0.25rem;
+      line-height: 1.35;
     }
 
     #detail-panel .dp-grid {
@@ -1643,10 +1650,13 @@
     </div>
     <div class="source-index-card">
       <h3>Heute-Framework</h3>
-      <p>Aktualisierung für moderne KI-Fähigkeiten bis 24. April 2026: Long Context, Multimodalität, Agenten, Computer Use und Schweizer Adoption.</p>
+      <p>Konservative 2026-Heuristik bis 24. April 2026: technische Exposition getrennt von Adoption, mit Sensitivität, Unsicherheit, Mapping und Mini-Reannotation.</p>
       <a href="docs/ai-exposure-framework-2026.html" target="_blank" rel="noopener noreferrer">Methodenpapier 2026</a>
       <a href="data/today-scores-2026.json" target="_blank" rel="noopener noreferrer">Generierte Scores JSON</a>
       <a href="data/today-scores-2026.csv" target="_blank" rel="noopener noreferrer">Generierte Scores CSV</a>
+      <a href="data/scenario-summary-2026.json" target="_blank" rel="noopener noreferrer">Sensitivitätsszenarien JSON</a>
+      <a href="data/reannotation-sample-2026.csv" target="_blank" rel="noopener noreferrer">Mini-Reannotation CSV</a>
+      <a href="data/mapping-2026.csv" target="_blank" rel="noopener noreferrer">Mapping-Tabelle CSV</a>
       <a href="https://openai.com/index/introducing-gpt-5-5/" target="_blank" rel="noopener noreferrer">OpenAI GPT-5.5: Agentic Work</a>
       <a href="https://openai.com/index/introducing-gpt-5-4/" target="_blank" rel="noopener noreferrer">OpenAI GPT-5.4: Computer Use</a>
       <a href="https://openai.com/index/gpt-4-1/" target="_blank" rel="noopener noreferrer">OpenAI GPT-4.1: Coding, Long Context, Agents</a>
@@ -1667,10 +1677,13 @@
     </div>
     <div class="source-card">
       <h3>Zweite Sicht: Heute 2026</h3>
-      <p>Der Original-Score bleibt die Basis. Die aktualisierte Sicht addiert pro Berufsfeld kleine, nachvollziehbare Modifikatoren für seit der Publikation stärker gewordene Fähigkeiten: lange Dokumente/Codebasen, multimodale Inputs und Outputs, Agenten/Tool-Use, Computer Use sowie reale Prozessadoption. Physische Arbeit, Sicherheitsverantwortung und Beziehungsarbeit setzen Obergrenzen.</p>
-      <p style="margin-top:0.65rem"><strong>Formel:</strong> Heute-Beta = min(Cap, Original-Beta + Long-Context + Agentik + Multimodalität + Adoption + Berufs-Override). Heute-Score = round(Heute-Beta x 10).</p>
+      <p>Der Original-Score bleibt die Basis. Die 2026-Sicht ist keine neue wissenschaftliche Replikation, sondern eine konservative Dashboard-Heuristik. Die Hauptansicht zeigt technische Exposition; Adoption wird separat dokumentiert.</p>
+      <p style="margin-top:0.65rem"><strong>Technisch:</strong> Beta = min(Cap, Original-Beta + Long-Context + Agentik + Multimodalität + Berufs-Override).<br><strong>Adoptionsgewichtet:</strong> Beta = min(Cap, technische Beta + Adoption).</p>
       <a href="docs/ai-exposure-framework-2026.html" target="_blank" rel="noopener noreferrer">-> Methodenpapier 2026</a>
       <a href="data/today-scores-2026.json" target="_blank" rel="noopener noreferrer">-> Neue Zahlen JSON</a>
+      <a href="data/scenario-summary-2026.json" target="_blank" rel="noopener noreferrer">-> Sensitivität</a>
+      <a href="data/reannotation-sample-2026.csv" target="_blank" rel="noopener noreferrer">-> Mini-Reannotation</a>
+      <a href="data/mapping-2026.csv" target="_blank" rel="noopener noreferrer">-> Mapping-Tabelle</a>
       <a href="https://openai.com/index/introducing-gpt-5-5/" target="_blank" rel="noopener noreferrer">-> OpenAI GPT-5.5</a>
       <a href="https://openai.com/index/introducing-gpt-5-4/" target="_blank" rel="noopener noreferrer">-> OpenAI GPT-5.4</a>
       <a href="https://openai.com/index/gpt-4-1/" target="_blank" rel="noopener noreferrer">-> OpenAI GPT-4.1</a>
@@ -1896,8 +1909,8 @@ const FRAMEWORK_COPY = {
     desc: "Peer-reviewed Basiswert: Beta x 10, gerundet. Misst LLM-Exposition, nicht Automatisierung oder Jobverlust."
   },
   today: {
-    title: "Heute 2026: aktualisierte KI-Exposition",
-    desc: "Zweite Sicht nach Methodenpapier vom 24. April 2026: Original-Beta plus Modifikatoren für Long Context, multimodale KI, Agenten/Tool-Use, Computer Use und Schweizer Prozessadoption, mit Caps für physische, regulierte und beziehungsintensive Arbeit."
+    title: "Heute 2026: technische KI-Exposition",
+    desc: "Konservative 2026-Heuristik auf Basis der Science-2024-Werte. Die Hauptansicht zeigt technische Exposition ohne Adoption; Adoption, Sensitivität und Unsicherheit sind separat dokumentiert."
   }
 };
 
@@ -1945,6 +1958,23 @@ const TODAY_ROLE_OVERRIDES = {
   "elektroingenieur": { delta: 0.02, label: "technische Dokumentation, Code und Schaltplanprüfung" }
 };
 
+const TODAY_CONFIDENCE = {
+  "finanzen-recht": { key: "medium", label: "Mittlere 2026-Sicherheit", className: "confidence-medium", reasons: ["regulatorische Verantwortung", "Datenzugang"] },
+  "it-tech": { key: "high", label: "Hohe 2026-Sicherheit", className: "confidence-high", reasons: ["digitales Code-/Toolprofil"] },
+  "gesundheit": { key: "low", label: "Tiefe 2026-Sicherheit", className: "confidence-scope", reasons: ["klinische Verantwortung", "Patientenkontakt"] },
+  "bildung": { key: "medium", label: "Mittlere 2026-Sicherheit", className: "confidence-medium", reasons: ["Institutionen variieren", "Aufsicht"] },
+  "handwerk-bau": { key: "low", label: "Tiefe 2026-Sicherheit", className: "confidence-scope", reasons: ["physische Vor-Ort-Arbeit"] },
+  "verwaltung": { key: "high", label: "Hohe 2026-Sicherheit", className: "confidence-high", reasons: ["standardisierte digitale Prozesse"] },
+  "verkauf-handel": { key: "medium", label: "Mittlere 2026-Sicherheit", className: "confidence-medium", reasons: ["Organisationen variieren", "Kundenkontakt"] },
+  "transport-logistik": { key: "low", label: "Tiefe 2026-Sicherheit", className: "confidence-scope", reasons: ["physische Mobilität", "Sicherheit"] },
+  "gastronomie-tourismus": { key: "medium", label: "Mittlere 2026-Sicherheit", className: "confidence-medium", reasons: ["gemischtes physisches und digitales Profil"] },
+  "landwirtschaft": { key: "low", label: "Tiefe 2026-Sicherheit", className: "confidence-scope", reasons: ["Feldarbeit", "Robotik ausser Scope"] },
+  "kunst-medien": { key: "medium", label: "Mittlere 2026-Sicherheit", className: "confidence-medium", reasons: ["Auftrag, Rechte und Tools variieren"] },
+  "ingenieurwesen": { key: "medium", label: "Mittlere 2026-Sicherheit", className: "confidence-medium", reasons: ["Normen und Validierung"] },
+  "soziales": { key: "low", label: "Tiefe 2026-Sicherheit", className: "confidence-scope", reasons: ["Beziehungsarbeit", "Schutzauftrag"] },
+  "sicherheit": { key: "low", label: "Tiefe 2026-Sicherheit", className: "confidence-scope", reasons: ["Einsatzsituation", "Verantwortung"] }
+};
+
 let activeFramework = "science";
 
 function clamp(n, min, max) {
@@ -1957,30 +1987,58 @@ function todayComponents(d) {
   const parts = [
     { label: "Long Context", value: category.longContext },
     { label: "Agenten/Tools", value: category.agentic },
-    { label: "Multimodalität", value: category.multimodal },
-    { label: "Adoption", value: category.adoption }
+    { label: "Multimodalität", value: category.multimodal }
   ];
 
   if (override.delta) {
     parts.push({ label: override.label, value: override.delta });
   }
 
-  const delta = parts.reduce((sum, part) => sum + part.value, 0);
-  const rawBeta = d.beta + delta;
+  const technicalDelta = parts.reduce((sum, part) => sum + part.value, 0);
+  const rawBeta = d.beta + technicalDelta;
   const capBeta = Math.max(d.beta, category.cap / 10);
   const beta = clamp(rawBeta, d.beta, capBeta);
+  const adoptionRawBeta = beta + category.adoption;
+  const adoptionBeta = clamp(adoptionRawBeta, d.beta, capBeta);
+  const score = Math.round(beta * 10);
+  const adoptionScore = Math.round(adoptionBeta * 10);
 
   return {
     beta,
-    score: Math.round(beta * 10),
+    score,
+    adoptionBeta,
+    adoptionScore,
     rawBeta,
+    adoptionRawBeta,
     cap: category.cap,
     capApplied: rawBeta > capBeta,
-    delta,
-    scoreDelta: Math.round(beta * 10) - d.exposure,
+    adoptionCapApplied: adoptionRawBeta > capBeta,
+    delta: technicalDelta,
+    adoptionDelta: category.adoption,
+    scoreDelta: score - d.exposure,
+    adoptionScoreDelta: adoptionScore - d.exposure,
     parts,
+    adoptionPart: { label: "Adoption", value: category.adoption },
     note: category.note
   };
+}
+
+function todayConfidence(d) {
+  const base = TODAY_CONFIDENCE[d.category] || { key: "medium", label: "Mittlere 2026-Sicherheit", className: "confidence-medium", reasons: ["gemischtes Aufgabenprofil"] };
+  const reasons = [...base.reasons];
+  let key = base.key;
+  let label = base.label;
+  let className = base.className;
+  if (mappingConfidence(d).key === "mittel" && key === "high") {
+    key = "medium";
+    label = "Mittlere 2026-Sicherheit";
+    className = "confidence-medium";
+    reasons.push("Mapping grob");
+  } else if (mappingConfidence(d).key !== "hoch") {
+    reasons.push("Mapping oder Scope prüfen");
+  }
+  if (TODAY_ROLE_OVERRIDES[d.slug]) reasons.push("Berufs-Override sensitiv");
+  return { key, label, className, reasons: [...new Set(reasons)] };
 }
 
 function activeScore(d) {
@@ -1992,11 +2050,11 @@ function activeBeta(d) {
 }
 
 function activeFrameworkLabel() {
-  return activeFramework === "today" ? "Heute 2026" : "Science 2024";
+  return activeFramework === "today" ? "Technisch 2026" : "Science 2024";
 }
 
 function activeScoreTitle() {
-  return activeFramework === "today" ? "Heute-Score" : "LLM";
+  return activeFramework === "today" ? "Technisch" : "LLM";
 }
 
 function setFramework(name) {
@@ -2189,12 +2247,15 @@ function showDetail(d) {
   const riskLabel = score >= 8 ? 'Sehr hohe Exposition' : score >= 5 ? 'Mittlere Exposition' : 'Niedrige Exposition';
   const exactScore = beta * 10;
   const confidence = mappingConfidence(d);
+  const heuristicConfidence = todayConfidence(d);
   const todayDeltaLabel = today.scoreDelta > 0 ? `+${today.scoreDelta}` : today.scoreDelta.toString();
+  const adoptionDeltaLabel = today.adoptionScoreDelta > 0 ? `+${today.adoptionScoreDelta}` : today.adoptionScoreDelta.toString();
   const todayParts = today.parts
     .map(part => `${part.label} ${fmtSigned(part.value)}`)
     .join(' · ');
   const todayExplanation = activeFramework === "today"
-    ? `<div class="dp-note"><strong>Heute-Anpassung:</strong> ${today.note}. Modifikatoren: ${todayParts}. ${today.capApplied ? `Der Rohwert ${today.rawBeta.toFixed(2)} wird durch die berufliche Obergrenze bei ${today.cap}/10 begrenzt.` : `Der Rohwert ${today.rawBeta.toFixed(2)} bleibt unter der beruflichen Obergrenze von ${today.cap}/10.`}</div>`
+    ? `<div class="dp-note"><strong>2026-Heuristik:</strong> ${today.note}. Technische Modifikatoren: ${todayParts}. Adoption wird nicht in den Hauptscore gemischt, sondern separat als ${fmtSigned(today.adoptionDelta)} Beta-Punkte gezeigt. ${today.capApplied ? `Der technische Rohwert ${today.rawBeta.toFixed(2)} wird durch die berufliche Obergrenze bei ${today.cap}/10 begrenzt.` : `Der technische Rohwert ${today.rawBeta.toFixed(2)} bleibt unter der beruflichen Obergrenze von ${today.cap}/10.`}</div>
+       <div class="dp-note"><strong>Unsicherheit:</strong> ${heuristicConfidence.label}. Gründe: ${heuristicConfidence.reasons.join(", ")}.</div>`
     : "";
 
   content.innerHTML = `
@@ -2203,7 +2264,7 @@ function showDetail(d) {
     <div class="dp-badges">
       <span class="confidence-badge ${confidence.className}">${confidence.label}</span>
       <span class="confidence-badge confidence-scope">Exposition, nicht Jobverlust</span>
-      ${activeFramework === "today" ? '<span class="confidence-badge confidence-today">Heute 2026 Heuristik</span>' : ''}
+      ${activeFramework === "today" ? `<span class="confidence-badge confidence-today">Technisch 2026</span><span class="confidence-badge ${heuristicConfidence.className}">${heuristicConfidence.label}</span>` : ''}
     </div>
     <div class="dp-score-badge" style="background:${bg};color:${color}">
       ${score}/10
@@ -2216,15 +2277,20 @@ function showDetail(d) {
         <div style="font-size:0.72rem;color:#7c7c9a;margin-top:0.25rem">β ${d.beta.toFixed(2)}</div>
       </div>
       <div class="score-mini">
-        <div class="score-mini-label">Heute 2026</div>
+        <div class="score-mini-label">Technisch 2026</div>
         <div class="score-mini-value">${today.score}<span>/10 ${today.scoreDelta ? `(${todayDeltaLabel})` : ''}</span></div>
-        <div style="font-size:0.72rem;color:#7c7c9a;margin-top:0.25rem">β ${today.beta.toFixed(2)}</div>
+        <div class="score-mini-note">technisch · β ${today.beta.toFixed(2)}</div>
+      </div>
+      <div class="score-mini">
+        <div class="score-mini-label">+ Adoption</div>
+        <div class="score-mini-value">${today.adoptionScore}<span>/10 ${today.adoptionScoreDelta ? `(${adoptionDeltaLabel})` : ''}</span></div>
+        <div class="score-mini-note">separat · β ${today.adoptionBeta.toFixed(2)}</div>
       </div>
     </div>
     <div class="dp-beta">
       ${activeFramework === "today"
-        ? `Heute-Beta: <strong>${beta.toFixed(2)}</strong> (Original ${d.beta.toFixed(2)} + aktualisierte Modifikatoren)<br>
-          <span style="font-size:0.75rem">Heute-Score: ${exactScore.toFixed(1)} &rarr; gerundet ${score}/10 · Science-Basis ${d.exposure}/10</span>`
+        ? `Technische 2026-Beta: <strong>${beta.toFixed(2)}</strong> (Original ${d.beta.toFixed(2)} + technische Modifikatoren, ohne Adoption)<br>
+          <span style="font-size:0.75rem">Technischer Score: ${exactScore.toFixed(1)} &rarr; gerundet ${score}/10 · adoptionsgewichtet ${today.adoptionScore}/10 · Science-Basis ${d.exposure}/10</span>`
         : `Eloundou Beta-Score: <strong>${d.beta.toFixed(2)}</strong> (Skala 0.0-1.0)<br>
           <span style="font-size:0.75rem">Dashboard-Score: ${exactScore.toFixed(1)} &rarr; gerundet ${score}/10</span>`}<br>
       <span style="font-size:0.75rem">ISCO-08: ${d.isco} | Quelle: Eloundou et al. (2024), <em>Science</em></span>
@@ -2300,7 +2366,7 @@ function renderTreemap() {
       tooltip.innerHTML = `
         <div class="tt-title">${d.data.title}</div>
         <span class="tt-score" style="background:${scoreBg(score)};color:${col}">${activeScoreTitle()} ${score}/10</span>
-        <div style="font-size:0.72rem;color:#a78bfa;margin-bottom:0.3rem">Beta: ${beta.toFixed(2)}${activeFramework === "today" ? ` · Science ${d.data.exposure}/10 -> Heute ${today.score}/10` : ''}</div>
+        <div style="font-size:0.72rem;color:#a78bfa;margin-bottom:0.3rem">Beta: ${beta.toFixed(2)}${activeFramework === "today" ? ` · Science ${d.data.exposure}/10 -> technisch ${today.score}/10 · Adoption ${today.adoptionScore}/10` : ''}</div>
         <div class="tt-row"><span>Lohn</span><span class="tt-val">${fmtPay(d.data.pay)}/Jahr</span></div>
         <div class="tt-row"><span>Beschäftigte</span><span class="tt-val">~${fmtJobs(d.data.jobs)}</span></div>
         <div class="tt-row"><span>Ausbildung</span><span class="tt-val">${d.data.education}</span></div>
@@ -2355,7 +2421,7 @@ function renderList() {
       ? `<span class="confidence-badge confidence-today list-confidence">${today.scoreDelta > 0 ? '+' : ''}${today.scoreDelta} vs. 2024</span>`
       : '';
     const subline = activeFramework === "today"
-      ? `${CATS[d.category] || d.category} | Heute-Beta: ${beta.toFixed(2)} | Science: ${d.exposure}/10`
+      ? `${CATS[d.category] || d.category} | Technische Beta: ${beta.toFixed(2)} | Adoption: ${today.adoptionScore}/10 | Science: ${d.exposure}/10`
       : `${CATS[d.category] || d.category} | Beta: ${d.beta.toFixed(2)}`;
 
     return `

@@ -1,0 +1,1334 @@
+{
+  "generated_at": "2026-04-24",
+  "tasks": [
+    {
+      "category": "finanzen-recht",
+      "categoryLabel": "Finanzen & Recht",
+      "task": "Mehrere Vertragsversionen vergleichen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "long_context",
+      "rationale": "Lange Dokumente passen heute eher direkt in den Modellkontext."
+    },
+    {
+      "category": "finanzen-recht",
+      "categoryLabel": "Finanzen & Recht",
+      "task": "Mandantenbrief zu Steuerfrage vorbereiten",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Textarbeit war bereits direkt exponiert."
+    },
+    {
+      "category": "finanzen-recht",
+      "categoryLabel": "Finanzen & Recht",
+      "task": "Belege klassifizieren und Rueckfragen formulieren",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "agentic_tools",
+      "rationale": "Dokumenten- und Workflowtools reduzieren Tool-Reibung."
+    },
+    {
+      "category": "finanzen-recht",
+      "categoryLabel": "Finanzen & Recht",
+      "task": "Gerichtsstrategie festlegen",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "cap",
+      "rationale": "Verantwortung und Urteil bleiben ausserhalb."
+    },
+    {
+      "category": "finanzen-recht",
+      "categoryLabel": "Finanzen & Recht",
+      "task": "Regulatorische Neuerungen recherchieren",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "agentic_tools",
+      "rationale": "Rechercheagenten und Quellenarbeit sind reifer."
+    },
+    {
+      "category": "finanzen-recht",
+      "categoryLabel": "Finanzen & Recht",
+      "task": "Kundengespraech fuehren",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "social",
+      "rationale": "Vertrauen und Haftung bleiben menschlich."
+    },
+    {
+      "category": "finanzen-recht",
+      "categoryLabel": "Finanzen & Recht",
+      "task": "Due-Diligence-Dossier zusammenfassen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "long_context",
+      "rationale": "Lange Kontexte senken den Integrationsaufwand."
+    },
+    {
+      "category": "finanzen-recht",
+      "categoryLabel": "Finanzen & Recht",
+      "task": "Standardreport aus Transaktionen entwerfen",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Bereits text- und datenbasiert exponiert."
+    },
+    {
+      "category": "it-tech",
+      "categoryLabel": "IT & Technologie",
+      "task": "Bug in grosser Codebasis lokalisieren",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "long_context",
+      "rationale": "Repository-Kontext und Coding-Agenten machen die Aufgabe direkter erreichbar."
+    },
+    {
+      "category": "it-tech",
+      "categoryLabel": "IT & Technologie",
+      "task": "Unit-Tests fuer Modul schreiben",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Bereits direkt durch LLMs unterstuetzbar."
+    },
+    {
+      "category": "it-tech",
+      "categoryLabel": "IT & Technologie",
+      "task": "Deployment-Runbook ausfuehren",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "agentic_tools",
+      "rationale": "Tool-Use und Terminal-Agenten reduzieren E2-Reibung."
+    },
+    {
+      "category": "it-tech",
+      "categoryLabel": "IT & Technologie",
+      "task": "Physischen Server tauschen",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "physical",
+      "rationale": "Physische Arbeit bleibt ausser Scope."
+    },
+    {
+      "category": "it-tech",
+      "categoryLabel": "IT & Technologie",
+      "task": "Security Findings priorisieren",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "agentic_tools",
+      "rationale": "Codeanalyse und Triageagenten sind deutlich staerker."
+    },
+    {
+      "category": "it-tech",
+      "categoryLabel": "IT & Technologie",
+      "task": "Architekturentscheidung verantworten",
+      "oldLabel": "E0",
+      "newLabel": "E2",
+      "transition": "E0->E2",
+      "driver": "long_context",
+      "rationale": "KI kann Optionen vorbereiten, finale Verantwortung bleibt menschlich."
+    },
+    {
+      "category": "it-tech",
+      "categoryLabel": "IT & Technologie",
+      "task": "Datenpipeline dokumentieren",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Dokumentation war bereits exponiert."
+    },
+    {
+      "category": "it-tech",
+      "categoryLabel": "IT & Technologie",
+      "task": "UI-Prototyp aus Briefing erstellen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "multimodal",
+      "rationale": "Text-, Bild- und Codegenerierung wachsen zusammen."
+    },
+    {
+      "category": "gesundheit",
+      "categoryLabel": "Gesundheit & Pflege",
+      "task": "Arztbrief aus Notizen entwerfen",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Dokumentation war bereits exponiert."
+    },
+    {
+      "category": "gesundheit",
+      "categoryLabel": "Gesundheit & Pflege",
+      "task": "Befundbild sprachlich einordnen",
+      "oldLabel": "E2",
+      "newLabel": "E2",
+      "transition": "E2->E2",
+      "driver": "multimodal",
+      "rationale": "Multimodalitaet hilft, bleibt wegen Verantwortung aber Tool-gestuetzt."
+    },
+    {
+      "category": "gesundheit",
+      "categoryLabel": "Gesundheit & Pflege",
+      "task": "Patienten koerperlich untersuchen",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "physical",
+      "rationale": "Physische Untersuchung und Verantwortung bleiben menschlich."
+    },
+    {
+      "category": "gesundheit",
+      "categoryLabel": "Gesundheit & Pflege",
+      "task": "Fachliteratur zu Therapieoptionen zusammenfassen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "long_context",
+      "rationale": "Lange Kontexte verbessern Literaturarbeit."
+    },
+    {
+      "category": "gesundheit",
+      "categoryLabel": "Gesundheit & Pflege",
+      "task": "Pflegedokumentation strukturieren",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Text- und Formulararbeit bereits exponiert."
+    },
+    {
+      "category": "gesundheit",
+      "categoryLabel": "Gesundheit & Pflege",
+      "task": "Medikationsinteraktion vorpruefen",
+      "oldLabel": "E2",
+      "newLabel": "E2",
+      "transition": "E2->E2",
+      "driver": "agentic_tools",
+      "rationale": "Vorpruefung moeglich, finale Entscheidung reguliert."
+    },
+    {
+      "category": "gesundheit",
+      "categoryLabel": "Gesundheit & Pflege",
+      "task": "Notfalleinsatz durchfuehren",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "physical",
+      "rationale": "Zeitkritische physische Handlung bleibt ausser Scope."
+    },
+    {
+      "category": "gesundheit",
+      "categoryLabel": "Gesundheit & Pflege",
+      "task": "Patientenkommunikation empathisch fuehren",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "social",
+      "rationale": "Beziehungsarbeit begrenzt."
+    },
+    {
+      "category": "bildung",
+      "categoryLabel": "Bildung & Forschung",
+      "task": "Unterrichtsmaterial differenziert erstellen",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Direkte Text- und Materialarbeit."
+    },
+    {
+      "category": "bildung",
+      "categoryLabel": "Bildung & Forschung",
+      "task": "Schuelerarbeiten vorstrukturieren und Feedback entwerfen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "agentic_tools",
+      "rationale": "Workflownahe KI reduziert Aufwand."
+    },
+    {
+      "category": "bildung",
+      "categoryLabel": "Bildung & Forschung",
+      "task": "Klassenfuehrung im Unterricht",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "social",
+      "rationale": "Praesenz und Beziehung bleiben zentral."
+    },
+    {
+      "category": "bildung",
+      "categoryLabel": "Bildung & Forschung",
+      "task": "Forschungsstand aus vielen PDFs synthetisieren",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "long_context",
+      "rationale": "Long Context reduziert Recherchefriktion."
+    },
+    {
+      "category": "bildung",
+      "categoryLabel": "Bildung & Forschung",
+      "task": "Pruefung rechtsgueltig bewerten",
+      "oldLabel": "E0",
+      "newLabel": "E2",
+      "transition": "E0->E2",
+      "driver": "agentic_tools",
+      "rationale": "Assistenz moeglich, Verantwortung bleibt menschlich."
+    },
+    {
+      "category": "bildung",
+      "categoryLabel": "Bildung & Forschung",
+      "task": "Lernvideo und Quiz aus Thema erstellen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "multimodal",
+      "rationale": "Multimodale Erstellung ist deutlich naeher an direkt."
+    },
+    {
+      "category": "bildung",
+      "categoryLabel": "Bildung & Forschung",
+      "task": "Elterngespraech fuehren",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "social",
+      "rationale": "Beziehung und Kontext begrenzen."
+    },
+    {
+      "category": "bildung",
+      "categoryLabel": "Bildung & Forschung",
+      "task": "Vorlesungsskript aktualisieren",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Textarbeit bereits exponiert."
+    },
+    {
+      "category": "handwerk-bau",
+      "categoryLabel": "Handwerk & Bau",
+      "task": "Offerte aus Kundenangaben formulieren",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Text- und Kalkulationsvorbereitung."
+    },
+    {
+      "category": "handwerk-bau",
+      "categoryLabel": "Handwerk & Bau",
+      "task": "Baustellenfoto beschreiben",
+      "oldLabel": "E2",
+      "newLabel": "E2",
+      "transition": "E2->E2",
+      "driver": "multimodal",
+      "rationale": "Bildanalyse hilft, ersetzt Vor-Ort-Pruefung nicht."
+    },
+    {
+      "category": "handwerk-bau",
+      "categoryLabel": "Handwerk & Bau",
+      "task": "Leitung installieren",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "physical",
+      "rationale": "Physische Ausfuehrung bleibt ausser Scope."
+    },
+    {
+      "category": "handwerk-bau",
+      "categoryLabel": "Handwerk & Bau",
+      "task": "Materialliste aus Plan ableiten",
+      "oldLabel": "E2",
+      "newLabel": "E2",
+      "transition": "E2->E2",
+      "driver": "multimodal",
+      "rationale": "Assistenz moeglich, Plaene und Kontext bleiben limitiert."
+    },
+    {
+      "category": "handwerk-bau",
+      "categoryLabel": "Handwerk & Bau",
+      "task": "Sicherheitsprotokoll schreiben",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Dokumentation bereits exponiert."
+    },
+    {
+      "category": "handwerk-bau",
+      "categoryLabel": "Handwerk & Bau",
+      "task": "Mauerwerk erstellen",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "physical",
+      "rationale": "Koerperliche Arbeit dominiert."
+    },
+    {
+      "category": "handwerk-bau",
+      "categoryLabel": "Handwerk & Bau",
+      "task": "Normenstelle fuer Installation recherchieren",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "long_context",
+      "rationale": "Normenrecherche wird direkter erreichbar."
+    },
+    {
+      "category": "handwerk-bau",
+      "categoryLabel": "Handwerk & Bau",
+      "task": "Kundenberatung vor Ort",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "social",
+      "rationale": "Vor-Ort-Vertrauen und Messung begrenzen."
+    },
+    {
+      "category": "verwaltung",
+      "categoryLabel": "Verwaltung & Administration",
+      "task": "Formularfall pruefen und Antwort entwerfen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "agentic_tools",
+      "rationale": "Formular- und Registerworkflows sind agentenfaehiger."
+    },
+    {
+      "category": "verwaltung",
+      "categoryLabel": "Verwaltung & Administration",
+      "task": "E-Mail triagieren",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Bereits direkt exponiert."
+    },
+    {
+      "category": "verwaltung",
+      "categoryLabel": "Verwaltung & Administration",
+      "task": "Terminserie organisieren",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "agentic_tools",
+      "rationale": "Kalenderagenten machen Tool-Use direkter."
+    },
+    {
+      "category": "verwaltung",
+      "categoryLabel": "Verwaltung & Administration",
+      "task": "Rechtsverbindliche Verfuegung verantworten",
+      "oldLabel": "E0",
+      "newLabel": "E2",
+      "transition": "E0->E2",
+      "driver": "long_context",
+      "rationale": "Entwurf und Pruefung moeglich, Verantwortung bleibt."
+    },
+    {
+      "category": "verwaltung",
+      "categoryLabel": "Verwaltung & Administration",
+      "task": "Aktenstapel zusammenfassen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "long_context",
+      "rationale": "Lange Kontexte reduzieren Aktenfriktion."
+    },
+    {
+      "category": "verwaltung",
+      "categoryLabel": "Verwaltung & Administration",
+      "task": "Buergergespraech in Konfliktlage fuehren",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "social",
+      "rationale": "Soziale Situation begrenzt."
+    },
+    {
+      "category": "verwaltung",
+      "categoryLabel": "Verwaltung & Administration",
+      "task": "Protokoll aus Sitzung erstellen",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Textarbeit bereits exponiert."
+    },
+    {
+      "category": "verwaltung",
+      "categoryLabel": "Verwaltung & Administration",
+      "task": "Daten zwischen Fachsystemen abgleichen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "agentic_tools",
+      "rationale": "Computer-Use und Integrationen senken Aufwand."
+    },
+    {
+      "category": "verkauf-handel",
+      "categoryLabel": "Verkauf & Handel",
+      "task": "Angebot aus CRM-Daten vorbereiten",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "agentic_tools",
+      "rationale": "CRM-Agenten machen Aufgabe direkter."
+    },
+    {
+      "category": "verkauf-handel",
+      "categoryLabel": "Verkauf & Handel",
+      "task": "Produktbeschreibung schreiben",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Direkte Textarbeit."
+    },
+    {
+      "category": "verkauf-handel",
+      "categoryLabel": "Verkauf & Handel",
+      "task": "Preisverhandlung fuehren",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "social",
+      "rationale": "Beziehung und Strategie bleiben menschlich."
+    },
+    {
+      "category": "verkauf-handel",
+      "categoryLabel": "Verkauf & Handel",
+      "task": "Sortimentsanalyse aus Reports erstellen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "long_context",
+      "rationale": "Mehr Dokumente und Daten koennen verarbeitet werden."
+    },
+    {
+      "category": "verkauf-handel",
+      "categoryLabel": "Verkauf & Handel",
+      "task": "Ladenregal einraeumen",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "physical",
+      "rationale": "Physische Ausfuehrung."
+    },
+    {
+      "category": "verkauf-handel",
+      "categoryLabel": "Verkauf & Handel",
+      "task": "Kundenmail beantworten",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Bereits exponiert."
+    },
+    {
+      "category": "verkauf-handel",
+      "categoryLabel": "Verkauf & Handel",
+      "task": "Produktbild fuer Kampagne variieren",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "multimodal",
+      "rationale": "Bild-KI senkt Reibung."
+    },
+    {
+      "category": "verkauf-handel",
+      "categoryLabel": "Verkauf & Handel",
+      "task": "Lieferantenvergleich erstellen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "agentic_tools",
+      "rationale": "Recherche und Tabellenarbeit naeher an direkt."
+    },
+    {
+      "category": "transport-logistik",
+      "categoryLabel": "Transport & Logistik",
+      "task": "Tourenplan aus Auftraegen vorbereiten",
+      "oldLabel": "E2",
+      "newLabel": "E2",
+      "transition": "E2->E2",
+      "driver": "agentic_tools",
+      "rationale": "Planungsassistenz steigt, Kontext bleibt operativ."
+    },
+    {
+      "category": "transport-logistik",
+      "categoryLabel": "Transport & Logistik",
+      "task": "Fahrzeug sicher fuehren",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "physical",
+      "rationale": "Autonomes Fahren ausserhalb LLM-Scope."
+    },
+    {
+      "category": "transport-logistik",
+      "categoryLabel": "Transport & Logistik",
+      "task": "Frachtpapiere pruefen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "long_context",
+      "rationale": "Dokumentenabgleich wird direkter."
+    },
+    {
+      "category": "transport-logistik",
+      "categoryLabel": "Transport & Logistik",
+      "task": "Kundenstatusmeldung schreiben",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Textarbeit bereits exponiert."
+    },
+    {
+      "category": "transport-logistik",
+      "categoryLabel": "Transport & Logistik",
+      "task": "Lagerware bewegen",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "physical",
+      "rationale": "Physische Arbeit."
+    },
+    {
+      "category": "transport-logistik",
+      "categoryLabel": "Transport & Logistik",
+      "task": "Stoerungsmeldung triagieren",
+      "oldLabel": "E2",
+      "newLabel": "E2",
+      "transition": "E2->E2",
+      "driver": "agentic_tools",
+      "rationale": "Assistenz moeglich, Echtzeitkontext begrenzt."
+    },
+    {
+      "category": "transport-logistik",
+      "categoryLabel": "Transport & Logistik",
+      "task": "Schichtbericht erstellen",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Dokumentation."
+    },
+    {
+      "category": "transport-logistik",
+      "categoryLabel": "Transport & Logistik",
+      "task": "Sicherheitsentscheidung im Betrieb treffen",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "safety",
+      "rationale": "Verantwortung und Situation vor Ort."
+    },
+    {
+      "category": "gastronomie-tourismus",
+      "categoryLabel": "Gastronomie & Tourismus",
+      "task": "Reiseroute mit Praeferenzen planen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "agentic_tools",
+      "rationale": "Reiseagenten sind deutlich staerker."
+    },
+    {
+      "category": "gastronomie-tourismus",
+      "categoryLabel": "Gastronomie & Tourismus",
+      "task": "Menuebeschreibung schreiben",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Textarbeit."
+    },
+    {
+      "category": "gastronomie-tourismus",
+      "categoryLabel": "Gastronomie & Tourismus",
+      "task": "Speisen zubereiten",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "physical",
+      "rationale": "Physische Arbeit."
+    },
+    {
+      "category": "gastronomie-tourismus",
+      "categoryLabel": "Gastronomie & Tourismus",
+      "task": "Gästemail beantworten",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Direkt exponiert."
+    },
+    {
+      "category": "gastronomie-tourismus",
+      "categoryLabel": "Gastronomie & Tourismus",
+      "task": "Buchungsdaten abgleichen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "agentic_tools",
+      "rationale": "Tool-Use senkt Reibung."
+    },
+    {
+      "category": "gastronomie-tourismus",
+      "categoryLabel": "Gastronomie & Tourismus",
+      "task": "Beschwerdegespraech vor Ort fuehren",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "social",
+      "rationale": "Empathie und Situation begrenzen."
+    },
+    {
+      "category": "gastronomie-tourismus",
+      "categoryLabel": "Gastronomie & Tourismus",
+      "task": "Social-Media-Visual erstellen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "multimodal",
+      "rationale": "Multimodale Generierung direkter."
+    },
+    {
+      "category": "gastronomie-tourismus",
+      "categoryLabel": "Gastronomie & Tourismus",
+      "task": "Hygienekontrolle physisch durchfuehren",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "physical",
+      "rationale": "Vor-Ort-Pruefung."
+    },
+    {
+      "category": "landwirtschaft",
+      "categoryLabel": "Landwirtschaft & Natur",
+      "task": "Wetter- und Marktbericht zusammenfassen",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Text- und Datenarbeit."
+    },
+    {
+      "category": "landwirtschaft",
+      "categoryLabel": "Landwirtschaft & Natur",
+      "task": "Pflanzenbild grob einordnen",
+      "oldLabel": "E2",
+      "newLabel": "E2",
+      "transition": "E2->E2",
+      "driver": "multimodal",
+      "rationale": "Assistenz moeglich, Feldkontext begrenzt."
+    },
+    {
+      "category": "landwirtschaft",
+      "categoryLabel": "Landwirtschaft & Natur",
+      "task": "Ernte physisch einbringen",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "physical",
+      "rationale": "Physische Arbeit."
+    },
+    {
+      "category": "landwirtschaft",
+      "categoryLabel": "Landwirtschaft & Natur",
+      "task": "Foerderantrag vorbereiten",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "long_context",
+      "rationale": "Formulare und Regeln besser erreichbar."
+    },
+    {
+      "category": "landwirtschaft",
+      "categoryLabel": "Landwirtschaft & Natur",
+      "task": "Tier behandeln",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "physical",
+      "rationale": "Physische und fachliche Verantwortung."
+    },
+    {
+      "category": "landwirtschaft",
+      "categoryLabel": "Landwirtschaft & Natur",
+      "task": "Marketingtext fuer Hofladen schreiben",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Direkte Textarbeit."
+    },
+    {
+      "category": "landwirtschaft",
+      "categoryLabel": "Landwirtschaft & Natur",
+      "task": "Sensorwerte interpretieren",
+      "oldLabel": "E2",
+      "newLabel": "E2",
+      "transition": "E2->E2",
+      "driver": "agentic_tools",
+      "rationale": "Datenassistenz, aber Integration variiert."
+    },
+    {
+      "category": "landwirtschaft",
+      "categoryLabel": "Landwirtschaft & Natur",
+      "task": "Maschine warten",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "physical",
+      "rationale": "Vor-Ort-Arbeit."
+    },
+    {
+      "category": "kunst-medien",
+      "categoryLabel": "Kunst, Design & Medien",
+      "task": "Bildvarianten fuer Kampagne erzeugen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "multimodal",
+      "rationale": "Bildgenerierung ist deutlich direkter geworden."
+    },
+    {
+      "category": "kunst-medien",
+      "categoryLabel": "Kunst, Design & Medien",
+      "task": "Artikelentwurf schreiben",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Textarbeit."
+    },
+    {
+      "category": "kunst-medien",
+      "categoryLabel": "Kunst, Design & Medien",
+      "task": "Interview vor Ort fuehren",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "social",
+      "rationale": "Beziehung und Situation begrenzen."
+    },
+    {
+      "category": "kunst-medien",
+      "categoryLabel": "Kunst, Design & Medien",
+      "task": "Video transkribieren und schneiden lassen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "multimodal",
+      "rationale": "Video- und Untertiteltools naeher an direkt."
+    },
+    {
+      "category": "kunst-medien",
+      "categoryLabel": "Kunst, Design & Medien",
+      "task": "Markenstrategie entscheiden",
+      "oldLabel": "E0",
+      "newLabel": "E2",
+      "transition": "E0->E2",
+      "driver": "long_context",
+      "rationale": "Assistenz moeglich, Entscheidung menschlich."
+    },
+    {
+      "category": "kunst-medien",
+      "categoryLabel": "Kunst, Design & Medien",
+      "task": "Pressemitteilung variieren",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Direkte Textarbeit."
+    },
+    {
+      "category": "kunst-medien",
+      "categoryLabel": "Kunst, Design & Medien",
+      "task": "Foto retuschieren",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "multimodal",
+      "rationale": "Bild-KI senkt Tool-Reibung."
+    },
+    {
+      "category": "kunst-medien",
+      "categoryLabel": "Kunst, Design & Medien",
+      "task": "Rechte und Freigaben klaeren",
+      "oldLabel": "E0",
+      "newLabel": "E2",
+      "transition": "E0->E2",
+      "driver": "agentic_tools",
+      "rationale": "Vorbereitung moeglich, finale Klaerung bleibt."
+    },
+    {
+      "category": "ingenieurwesen",
+      "categoryLabel": "Ingenieurwesen",
+      "task": "Normen und Spezifikationen vergleichen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "long_context",
+      "rationale": "Lange technische Dokumente besser erreichbar."
+    },
+    {
+      "category": "ingenieurwesen",
+      "categoryLabel": "Ingenieurwesen",
+      "task": "Berechnungsbericht entwerfen",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Text- und Rechenassistenz."
+    },
+    {
+      "category": "ingenieurwesen",
+      "categoryLabel": "Ingenieurwesen",
+      "task": "Anlage vor Ort abnehmen",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "physical",
+      "rationale": "Physische Pruefung und Haftung."
+    },
+    {
+      "category": "ingenieurwesen",
+      "categoryLabel": "Ingenieurwesen",
+      "task": "CAD-Screenshot kommentieren",
+      "oldLabel": "E2",
+      "newLabel": "E2",
+      "transition": "E2->E2",
+      "driver": "multimodal",
+      "rationale": "Visuelle Assistenz, aber fachliche Validierung."
+    },
+    {
+      "category": "ingenieurwesen",
+      "categoryLabel": "Ingenieurwesen",
+      "task": "Python-Skript fuer Simulation schreiben",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Codearbeit bereits exponiert."
+    },
+    {
+      "category": "ingenieurwesen",
+      "categoryLabel": "Ingenieurwesen",
+      "task": "Technische Risikoanalyse vorbereiten",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "long_context",
+      "rationale": "Dokumenten- und Normenkontext hilft."
+    },
+    {
+      "category": "ingenieurwesen",
+      "categoryLabel": "Ingenieurwesen",
+      "task": "Bauleitung auf Baustelle",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "physical",
+      "rationale": "Vor-Ort-Koordination."
+    },
+    {
+      "category": "ingenieurwesen",
+      "categoryLabel": "Ingenieurwesen",
+      "task": "Messdaten plausibilisieren",
+      "oldLabel": "E2",
+      "newLabel": "E2",
+      "transition": "E2->E2",
+      "driver": "agentic_tools",
+      "rationale": "Assistenz, aber Validierung bleibt."
+    },
+    {
+      "category": "soziales",
+      "categoryLabel": "Soziales & Beratung",
+      "task": "Falldokumentation strukturieren",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Textarbeit."
+    },
+    {
+      "category": "soziales",
+      "categoryLabel": "Soziales & Beratung",
+      "task": "Hilfsangebote recherchieren",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "agentic_tools",
+      "rationale": "Rechercheagenten helfen."
+    },
+    {
+      "category": "soziales",
+      "categoryLabel": "Soziales & Beratung",
+      "task": "Krisengespraech fuehren",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "social",
+      "rationale": "Beziehung und Verantwortung zentral."
+    },
+    {
+      "category": "soziales",
+      "categoryLabel": "Soziales & Beratung",
+      "task": "Foerderplan entwerfen",
+      "oldLabel": "E2",
+      "newLabel": "E2",
+      "transition": "E2->E2",
+      "driver": "long_context",
+      "rationale": "Assistenz moeglich, Individualkontext begrenzt."
+    },
+    {
+      "category": "soziales",
+      "categoryLabel": "Soziales & Beratung",
+      "task": "Kind betreuen",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "physical",
+      "rationale": "Praesenz und Fuersorge."
+    },
+    {
+      "category": "soziales",
+      "categoryLabel": "Soziales & Beratung",
+      "task": "Bericht an Behoerde formulieren",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Dokumentation."
+    },
+    {
+      "category": "soziales",
+      "categoryLabel": "Soziales & Beratung",
+      "task": "Risikoabschaetzung verantworten",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "social",
+      "rationale": "Schutzauftrag und Urteil."
+    },
+    {
+      "category": "soziales",
+      "categoryLabel": "Soziales & Beratung",
+      "task": "Termine und Nachweise koordinieren",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "agentic_tools",
+      "rationale": "Administrative Agenten senken Reibung."
+    },
+    {
+      "category": "sicherheit",
+      "categoryLabel": "Sicherheit & Schutz",
+      "task": "Rapport aus Stichworten erstellen",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Textarbeit."
+    },
+    {
+      "category": "sicherheit",
+      "categoryLabel": "Sicherheit & Schutz",
+      "task": "Lagebild aus Meldungen zusammenfassen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "long_context",
+      "rationale": "Viele Meldungen koennen besser synthetisiert werden."
+    },
+    {
+      "category": "sicherheit",
+      "categoryLabel": "Sicherheit & Schutz",
+      "task": "Einsatz vor Ort fuehren",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "safety",
+      "rationale": "Verantwortung und physische Lage."
+    },
+    {
+      "category": "sicherheit",
+      "categoryLabel": "Sicherheit & Schutz",
+      "task": "Videoausschnitt beschreiben",
+      "oldLabel": "E2",
+      "newLabel": "E2",
+      "transition": "E2->E2",
+      "driver": "multimodal",
+      "rationale": "Assistenz, aber Beweiskraft und Kontext begrenzen."
+    },
+    {
+      "category": "sicherheit",
+      "categoryLabel": "Sicherheit & Schutz",
+      "task": "Deeskalationsgespraech fuehren",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "social",
+      "rationale": "Menschliche Praesenz zentral."
+    },
+    {
+      "category": "sicherheit",
+      "categoryLabel": "Sicherheit & Schutz",
+      "task": "Checkliste fuer Schulung erstellen",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Textarbeit."
+    },
+    {
+      "category": "sicherheit",
+      "categoryLabel": "Sicherheit & Schutz",
+      "task": "Zutrittsdaten pruefen",
+      "oldLabel": "E2",
+      "newLabel": "E2",
+      "transition": "E2->E2",
+      "driver": "agentic_tools",
+      "rationale": "Assistenz, aber Systeme und Berechtigungen variieren."
+    },
+    {
+      "category": "sicherheit",
+      "categoryLabel": "Sicherheit & Schutz",
+      "task": "Brandbekaempfung durchfuehren",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "physical",
+      "rationale": "Physische Einsatzarbeit."
+    }
+  ],
+  "summary": [
+    {
+      "category": "finanzen-recht",
+      "category_label": "Finanzen & Recht",
+      "tasks": 8,
+      "transitions": {
+        "E2->E1": 4,
+        "E1->E1": 2,
+        "E0->E0": 2
+      },
+      "e0_stays_e0": 2,
+      "e0_to_e2": 0,
+      "e2_to_e1": 4,
+      "e1_stays_e1": 2
+    },
+    {
+      "category": "it-tech",
+      "category_label": "IT & Technologie",
+      "tasks": 8,
+      "transitions": {
+        "E2->E1": 4,
+        "E1->E1": 2,
+        "E0->E0": 1,
+        "E0->E2": 1
+      },
+      "e0_stays_e0": 1,
+      "e0_to_e2": 1,
+      "e2_to_e1": 4,
+      "e1_stays_e1": 2
+    },
+    {
+      "category": "gesundheit",
+      "category_label": "Gesundheit & Pflege",
+      "tasks": 8,
+      "transitions": {
+        "E1->E1": 2,
+        "E2->E2": 2,
+        "E0->E0": 3,
+        "E2->E1": 1
+      },
+      "e0_stays_e0": 3,
+      "e0_to_e2": 0,
+      "e2_to_e1": 1,
+      "e1_stays_e1": 2
+    },
+    {
+      "category": "bildung",
+      "category_label": "Bildung & Forschung",
+      "tasks": 8,
+      "transitions": {
+        "E1->E1": 2,
+        "E2->E1": 3,
+        "E0->E0": 2,
+        "E0->E2": 1
+      },
+      "e0_stays_e0": 2,
+      "e0_to_e2": 1,
+      "e2_to_e1": 3,
+      "e1_stays_e1": 2
+    },
+    {
+      "category": "handwerk-bau",
+      "category_label": "Handwerk & Bau",
+      "tasks": 8,
+      "transitions": {
+        "E1->E1": 2,
+        "E2->E2": 2,
+        "E0->E0": 3,
+        "E2->E1": 1
+      },
+      "e0_stays_e0": 3,
+      "e0_to_e2": 0,
+      "e2_to_e1": 1,
+      "e1_stays_e1": 2
+    },
+    {
+      "category": "verwaltung",
+      "category_label": "Verwaltung & Administration",
+      "tasks": 8,
+      "transitions": {
+        "E2->E1": 4,
+        "E1->E1": 2,
+        "E0->E2": 1,
+        "E0->E0": 1
+      },
+      "e0_stays_e0": 1,
+      "e0_to_e2": 1,
+      "e2_to_e1": 4,
+      "e1_stays_e1": 2
+    },
+    {
+      "category": "verkauf-handel",
+      "category_label": "Verkauf & Handel",
+      "tasks": 8,
+      "transitions": {
+        "E2->E1": 4,
+        "E1->E1": 2,
+        "E0->E0": 2
+      },
+      "e0_stays_e0": 2,
+      "e0_to_e2": 0,
+      "e2_to_e1": 4,
+      "e1_stays_e1": 2
+    },
+    {
+      "category": "transport-logistik",
+      "category_label": "Transport & Logistik",
+      "tasks": 8,
+      "transitions": {
+        "E2->E2": 2,
+        "E0->E0": 3,
+        "E2->E1": 1,
+        "E1->E1": 2
+      },
+      "e0_stays_e0": 3,
+      "e0_to_e2": 0,
+      "e2_to_e1": 1,
+      "e1_stays_e1": 2
+    },
+    {
+      "category": "gastronomie-tourismus",
+      "category_label": "Gastronomie & Tourismus",
+      "tasks": 8,
+      "transitions": {
+        "E2->E1": 3,
+        "E1->E1": 2,
+        "E0->E0": 3
+      },
+      "e0_stays_e0": 3,
+      "e0_to_e2": 0,
+      "e2_to_e1": 3,
+      "e1_stays_e1": 2
+    },
+    {
+      "category": "landwirtschaft",
+      "category_label": "Landwirtschaft & Natur",
+      "tasks": 8,
+      "transitions": {
+        "E1->E1": 2,
+        "E2->E2": 2,
+        "E0->E0": 3,
+        "E2->E1": 1
+      },
+      "e0_stays_e0": 3,
+      "e0_to_e2": 0,
+      "e2_to_e1": 1,
+      "e1_stays_e1": 2
+    },
+    {
+      "category": "kunst-medien",
+      "category_label": "Kunst, Design & Medien",
+      "tasks": 8,
+      "transitions": {
+        "E2->E1": 3,
+        "E1->E1": 2,
+        "E0->E0": 1,
+        "E0->E2": 2
+      },
+      "e0_stays_e0": 1,
+      "e0_to_e2": 2,
+      "e2_to_e1": 3,
+      "e1_stays_e1": 2
+    },
+    {
+      "category": "ingenieurwesen",
+      "category_label": "Ingenieurwesen",
+      "tasks": 8,
+      "transitions": {
+        "E2->E1": 2,
+        "E1->E1": 2,
+        "E0->E0": 2,
+        "E2->E2": 2
+      },
+      "e0_stays_e0": 2,
+      "e0_to_e2": 0,
+      "e2_to_e1": 2,
+      "e1_stays_e1": 2
+    },
+    {
+      "category": "soziales",
+      "category_label": "Soziales & Beratung",
+      "tasks": 8,
+      "transitions": {
+        "E1->E1": 2,
+        "E2->E1": 2,
+        "E0->E0": 3,
+        "E2->E2": 1
+      },
+      "e0_stays_e0": 3,
+      "e0_to_e2": 0,
+      "e2_to_e1": 2,
+      "e1_stays_e1": 2
+    },
+    {
+      "category": "sicherheit",
+      "category_label": "Sicherheit & Schutz",
+      "tasks": 8,
+      "transitions": {
+        "E1->E1": 2,
+        "E2->E1": 1,
+        "E0->E0": 3,
+        "E2->E2": 2
+      },
+      "e0_stays_e0": 3,
+      "e0_to_e2": 0,
+      "e2_to_e1": 1,
+      "e1_stays_e1": 2
+    }
+  ]
+}

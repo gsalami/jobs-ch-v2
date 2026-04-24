@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>GPTs are GPTs, aktualisiert auf 2026</title>
+  <title>Konservative 2026-Heuristik</title>
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -169,92 +169,217 @@
       vertical-align: middle;
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">GPTs are GPTs, aktualisiert auf 2026</h1>
+<h1 class="title">Konservative 2026-Heuristik</h1>
 </header>
-<h1 id="gpts-are-gpts-aktualisiert-auf-2026">GPTs are GPTs, aktualisiert
-auf 2026</h1>
-<p><strong>Ein konservatives Framework zur Schätzung heutiger
-KI-Exposition in Schweizer Berufen</strong><br />
-Version 0.1, Stand 24. April 2026</p>
+<h1
+id="konservative-2026-heuristik-auf-basis-der-eloundou-et-al-2024-werte">Konservative
+2026-Heuristik auf Basis der Eloundou et al. 2024 Werte</h1>
+<p><strong>Heute-2026-Sicht als heuristische Erweiterung der
+Science-2024-Basis</strong><br />
+Version 0.2, Stand 24. April 2026</p>
 <h2 id="abstract">Abstract</h2>
-<p>Dieses Methodenpapier erweitert das Expositionsmass von Eloundou et
-al. (2024) für das Dashboard "KI-Exposition nach Beruf - Schweiz". Die
-Originalwerte bleiben die wissenschaftliche Basis: Sie messen, wie stark
-Aufgaben eines Berufs durch Sprachmodelle und LLM-gestützte Anwendungen
-zeitlich beschleunigt werden können. Seit der Publikation haben sich
-vier für Arbeit relevante KI-Fähigkeiten deutlich verschoben: sehr lange
-Kontextfenster, multimodale Ein- und Ausgaben, agentische Tool- und
-Computer-Nutzung sowie reale Prozessadoption in Unternehmen. Das hier
-definierte 2026-Framework addiert deshalb kleine, dokumentierte
-Modifikatoren auf den ursprünglichen Beta-Wert, begrenzt die Werte aber
-durch berufsfeldspezifische Caps. Das Resultat ist kein Jobverlust- oder
-Automatisierungsforecast, sondern eine zweite Sicht auf heutige
-Exposition.</p>
-<h2 id="1-ausgangspunkt">1. Ausgangspunkt</h2>
-<p>Eloundou et al. (2024) bewerten einzelne Arbeitsaufgaben danach, ob
-GPT-Systeme die Bearbeitungszeit substanziell reduzieren könnten. Die
-Supplementary Materials definieren insbesondere direkte Exposition durch
-ein LLM und zusätzliche Exposition durch LLM-gestützte Tools; für die
-aggregierte Kennzahl wird die Tool-Komponente schwächer gewichtet. Das
-Dashboard verwendet den daraus abgeleiteten Beta-Wert auf Berufsebene
-und transformiert ihn mit <code>round(beta x 10)</code> auf eine
-0-10-Skala.</p>
-<p>Für die Schweizer Visualisierung wurde dieser Berufswert über
-SOC/ISCO-Mapping auf 72 Schweizer Berufsprofile übertragen und mit
-BFS-Lohn- und Beschäftigungsdaten angereichert. Diese Basis bleibt
-unverändert, damit die Originalansicht weiterhin reproduzierbar ist.</p>
-<h2 id="2-warum-eine-zweite-sicht-nötig-ist">2. Warum eine zweite Sicht
-nötig ist</h2>
-<p>Die ursprüngliche Messung wurde mit der damaligen GPT-4-Perspektive
-vorgenommen. Für April 2026 ist die relevante Arbeitsrealität
-breiter:</p>
+<p>Dieses Dokument beschreibt keine neue wissenschaftliche Messung und
+keine Replikation von Eloundou et al. (2024). Es ist eine transparente,
+konservative Dashboard-Heuristik für die Frage: Wie plausibel verändert
+sich die KI-erreichbare Aufgabenoberfläche Schweizer Berufe, wenn man
+heutige Modellfähigkeiten auf die unveränderten Science-2024-Basiswerte
+legt?</p>
+<p>Die Originalwerte bleiben die wissenschaftliche Basis. Die 2026-Sicht
+trennt drei Ebenen:</p>
 <ol type="1">
-<li><strong>Long Context und Dokumentenarbeit.</strong> GPT-4.1 brachte
-2025 ein Kontextfenster bis 1 Million Tokens in die API; Google hatte
-Gemini 1.5 Pro mit 1 Million Tokens bereits 2024 breit kommuniziert.
-GPT-5.4 und GPT-5.5 verschieben die praktische Nützlichkeit für lange
-Dokumente, Codebasen, Research und komplexe Deliverables weiter.</li>
-<li><strong>Agenten und Computer Use.</strong> Anthropic dokumentiert
-Computer Use als Tooling für Screenshot-, Maus- und Tastaturinteraktion.
-OpenAI beschreibt GPT-5.4 als Modell mit nativen
-Computer-Use-Fähigkeiten und GPT-5.5 als System, das über Tools hinweg
-komplexe Aufgaben fortführen kann.</li>
-<li><strong>Multimodalität.</strong> GPT-4o hat Text, Audio, Bild und
-Video in ein einheitlicheres Echtzeitmodell gebracht. Für Medien-,
-Design-, Bildungs-, Medizin- und Ingenieurarbeit ist deshalb nicht nur
-Text, sondern auch Bild-, Audio-, Video- und Dokumentverständnis
-relevant.</li>
-<li><strong>Adoption in der Schweiz.</strong> Der Microsoft Work Trend
-Index 2025 meldet für Schweizer Organisationen eine hohe Agenten- und
-Prozessadoption. Das erhöht nicht die technische Fähigkeit eines
-Modells, aber die Wahrscheinlichkeit, dass exponierte Aufgaben
-tatsächlich mit KI-Systemen bearbeitet werden.</li>
+<li><strong>Science 2024:</strong> Originaler Eloundou-basierter
+Beta-Score.</li>
+<li><strong>Technische Exposition 2026:</strong> Heuristische
+Erweiterung für Long Context, Agenten/Tool-Use, Multimodalität und klar
+begründete Berufs-Overrides.</li>
+<li><strong>Adoptionsgewichtete Exposition 2026:</strong> Separater
+Zusatz für organisatorische Diffusion in der Schweiz.</li>
 </ol>
-<h2 id="3-definition-des-2026-scores">3. Definition des 2026-Scores</h2>
-<p>Für jeden Beruf <code>i</code> im Berufsfeld <code>c</code> gilt:</p>
-<pre class="text"><code>beta_2026_i = min(cap_c / 10,
-                  beta_2024_i
-                  + long_context_c
-                  + agentic_tools_c
-                  + multimodal_c
-                  + adoption_c
-                  + role_override_i)
+<p>Ein hoher Score bedeutet nicht Jobverlust. Er bedeutet, dass ein
+grösserer Teil der Aufgaben durch moderne KI-Systeme unterstützt,
+beschleunigt, vorbereitet, geprüft, dokumentiert oder teilweise
+ausgeführt werden kann.</p>
+<h2 id="1-abgrenzung-zur-originalstudie">1. Abgrenzung zur
+Originalstudie</h2>
+<p>Eloundou et al. bewerten Aufgaben auf Task-Ebene anhand einer
+Expositionsrubrik mit E0, E1, E2 und E3. Das Dashboard nutzt die daraus
+abgeleiteten Berufswerte und bildet
+<code>score_2024 = round(beta_2024 x 10)</code>.</p>
+<p>Die 2026-Version macht <strong>keine vollständige neue
+O*NET-Task-Annotation</strong>. Sie ist deshalb:</p>
+<ul>
+<li>keine neue wissenschaftliche Punktschätzung,</li>
+<li>kein Automatisierungs- oder Jobverlustforecast,</li>
+<li>keine Aussage zur tatsächlichen Nutzung in einem konkreten
+Unternehmen,</li>
+<li>sondern ein nachvollziehbares Szenario für heutige technische
+Exposition.</li>
+</ul>
+<h2 id="2-regel-gegen-doppelzählung">2. Regel gegen Doppelzählung</h2>
+<p>Ein Teil heutiger Fähigkeiten war im Originalframework bereits
+angelegt, insbesondere LLM-gestützte Software, Recherche,
+Organisationswissen und visuelle Fähigkeiten als Tool- oder E3-nahe
+Exposition. Deshalb werden Modifikatoren nicht pauschal als neue
+Fähigkeiten addiert.</p>
+<p><strong>Regel:</strong> Ein Modifikator wird nur dort angesetzt, wo
+plausibel ist, dass 2026 eine frühere E0-Aufgabe zu E2 geworden ist oder
+eine frühere E2-Aufgabe faktisch näher an E1 gerückt ist.</p>
+<p>Beispiele:</p>
+<ul>
+<li>Ein langer Vertragsvergleich war früher eher E2, weil Tooling und
+Kontextfenster begrenzten; heute kann er näher an E1 liegen.</li>
+<li>Ein physischer Patientenkontakt bleibt E0, auch wenn Dokumentation
+und Befundvorbereitung stärker exponiert sind.</li>
+<li>Bildgenerierung erhöht Medien- und Designexposition, aber nicht
+automatisch die Exposition handwerklicher Vor-Ort-Arbeit.</li>
+</ul>
+<h2 id="3-formeln">3. Formeln</h2>
+<p>Die Hauptansicht des Dashboards zeigt technische Exposition ohne
+Adoption:</p>
+<pre class="text"><code>technical_beta_2026_i =
+  min(cap_c / 10,
+      beta_2024_i
+      + long_context_c
+      + agentic_tools_c
+      + multimodal_c
+      + role_override_i)
 
-score_2026_i = round(beta_2026_i x 10)
-delta_i      = score_2026_i - score_2024_i</code></pre>
-<p><code>beta_2024_i</code> und <code>score_2024_i</code> stammen aus
-der bestehenden Eloundou-basierten Dashboard-Datenbasis. Die vier
-Kategorie-Modifikatoren sind bewusst klein gehalten. Sie sind keine neue
-Task-Annotation aller O*NET-Aufgaben, sondern eine konservative,
-nachvollziehbare Aktualisierung für heutige KI-Fähigkeiten.
-<code>cap_c</code> verhindert, dass physische Präsenz, Regulierung,
-Verantwortung oder Beziehungsarbeit durch reine Modellfortschritte
-überzeichnet werden.</p>
-<h2 id="4-kategorie-modifikatoren">4. Kategorie-Modifikatoren</h2>
+technical_score_2026_i = round(technical_beta_2026_i x 10)</code></pre>
+<p>Adoption wird separat ausgewiesen:</p>
+<pre class="text"><code>adoption_adjusted_beta_2026_i =
+  min(cap_c / 10,
+      technical_beta_2026_i + adoption_c)
+
+adoption_adjusted_score_2026_i =
+  round(adoption_adjusted_beta_2026_i x 10)</code></pre>
+<p>Damit bleiben technische Leistungsfähigkeit und reale
+Nutzung/Diffusion getrennt.</p>
+<h2 id="4-mini-reannotation">4. Mini-Reannotation</h2>
+<p>Zur Plausibilisierung wurde eine kleine systematische Reannotation
+erstellt. Sie ersetzt keine Vollreplikation, kalibriert aber die
+Richtung der Modifikatoren.</p>
+<ul>
+<li>14 Berufsfelder</li>
+<li>8 repräsentative Aufgaben je Berufsfeld</li>
+<li>112 Aufgaben insgesamt</li>
+<li>Labels: E0, E1, E2</li>
+<li>explizite Transitionen: E0 bleibt E0, E0 wird E2, E2 wird E1, E1
+bleibt E1, E2 bleibt E2</li>
+</ul>
+<p>Gesamtergebnis der Stichprobe:</p>
+<table>
+<thead>
+<tr>
+<th>Transition</th>
+<th style="text-align: right;">Anzahl</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E2 -&gt; E1</td>
+<td style="text-align: right;">34</td>
+</tr>
+<tr>
+<td>E1 -&gt; E1</td>
+<td style="text-align: right;">28</td>
+</tr>
+<tr>
+<td>E0 -&gt; E0</td>
+<td style="text-align: right;">32</td>
+</tr>
+<tr>
+<td>E2 -&gt; E2</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr>
+<td>E0 -&gt; E2</td>
+<td style="text-align: right;">5</td>
+</tr>
+</tbody>
+</table>
+<p>Interpretation: Der wichtigste 2026-Effekt ist nicht, dass alle nicht
+exponierten Aufgaben plötzlich exponiert werden. Der häufigste Effekt
+ist, dass frühere toolabhängige E2-Aufgaben durch Long Context, Agenten,
+Computer Use und multimodale Systeme näher an direkte Nutzbarkeit
+rücken.</p>
+<p>Die vollständige Stichprobe liegt in:</p>
+<ul>
+<li><code>data/reannotation-sample-2026.csv</code></li>
+<li><code>data/reannotation-sample-2026.json</code></li>
+</ul>
+<h2 id="5-modifikatoren">5. Modifikatoren</h2>
+<p>Die Modifikatoren sind Beta-Punkte. Sie werden durch die
+Mini-Reannotation, die ursprüngliche E-Logik und die heutigen
+Primärquellen plausibilisiert.</p>
 <table>
 <thead>
 <tr>
@@ -262,9 +387,8 @@ Verantwortung oder Beziehungsarbeit durch reine Modellfortschritte
 <th style="text-align: right;">Long Context</th>
 <th style="text-align: right;">Agenten/Tools</th>
 <th style="text-align: right;">Multimodalität</th>
-<th style="text-align: right;">Adoption</th>
+<th style="text-align: right;">Adoption separat</th>
 <th style="text-align: right;">Cap</th>
-<th>Begründung</th>
 </tr>
 </thead>
 <tbody>
@@ -275,9 +399,6 @@ Verantwortung oder Beziehungsarbeit durch reine Modellfortschritte
 <td style="text-align: right;">0.02</td>
 <td style="text-align: right;">0.05</td>
 <td style="text-align: right;">9</td>
-<td>Lange Verträge, Dossiers, Research, Korrespondenz und Reports
-profitieren stark; Verantwortung und Mandatsbeziehung bleiben
-begrenzend.</td>
 </tr>
 <tr>
 <td>IT &amp; Technologie</td>
@@ -286,8 +407,6 @@ begrenzend.</td>
 <td style="text-align: right;">0.03</td>
 <td style="text-align: right;">0.05</td>
 <td style="text-align: right;">10</td>
-<td>Coding-Agenten, Tool-Use, Debugging, grosse Repositories und
-IT-Workflows sind direkt betroffen.</td>
 </tr>
 <tr>
 <td>Gesundheit &amp; Pflege</td>
@@ -296,8 +415,6 @@ IT-Workflows sind direkt betroffen.</td>
 <td style="text-align: right;">0.04</td>
 <td style="text-align: right;">0.02</td>
 <td style="text-align: right;">6</td>
-<td>Dokumentation, Fachliteratur und Bild-/Befundkontext steigen;
-klinische Verantwortung und physische Pflege begrenzen.</td>
 </tr>
 <tr>
 <td>Bildung &amp; Forschung</td>
@@ -306,8 +423,6 @@ klinische Verantwortung und physische Pflege begrenzen.</td>
 <td style="text-align: right;">0.04</td>
 <td style="text-align: right;">0.03</td>
 <td style="text-align: right;">7</td>
-<td>Unterrichtsvorbereitung, Feedback, Lernmaterial und Research
-profitieren; Beziehung und Aufsicht bleiben zentral.</td>
 </tr>
 <tr>
 <td>Handwerk &amp; Bau</td>
@@ -316,8 +431,6 @@ profitieren; Beziehung und Aufsicht bleiben zentral.</td>
 <td style="text-align: right;">0.01</td>
 <td style="text-align: right;">0.01</td>
 <td style="text-align: right;">4</td>
-<td>Planung, Offerten und Dokumentation steigen leicht; Vor-Ort-Arbeit
-dominiert.</td>
 </tr>
 <tr>
 <td>Verwaltung &amp; Administration</td>
@@ -326,8 +439,6 @@ dominiert.</td>
 <td style="text-align: right;">0.02</td>
 <td style="text-align: right;">0.07</td>
 <td style="text-align: right;">9</td>
-<td>Standardisierte Dokumente, Formulare, E-Mail, Termine und Workflows
-sind stark agentenfähig.</td>
 </tr>
 <tr>
 <td>Verkauf &amp; Handel</td>
@@ -336,9 +447,6 @@ sind stark agentenfähig.</td>
 <td style="text-align: right;">0.03</td>
 <td style="text-align: right;">0.05</td>
 <td style="text-align: right;">8</td>
-<td>Kundenkommunikation, Angebote, CRM, Sortiments- und
-Backoffice-Arbeit profitieren; persönliche Beziehung bleibt
-relevant.</td>
 </tr>
 <tr>
 <td>Transport &amp; Logistik</td>
@@ -347,8 +455,6 @@ relevant.</td>
 <td style="text-align: right;">0.02</td>
 <td style="text-align: right;">0.02</td>
 <td style="text-align: right;">5</td>
-<td>Disposition, Dokumentation und Planung steigen; Fahren, Bewegung und
-Sicherheitskontext bleiben ausserhalb reiner LLM-Exposition.</td>
 </tr>
 <tr>
 <td>Gastronomie &amp; Tourismus</td>
@@ -357,8 +463,6 @@ Sicherheitskontext bleiben ausserhalb reiner LLM-Exposition.</td>
 <td style="text-align: right;">0.04</td>
 <td style="text-align: right;">0.04</td>
 <td style="text-align: right;">7</td>
-<td>Buchung, Planung, Menüs, Kommunikation und Content steigen; Service
-und Küche bleiben physisch.</td>
 </tr>
 <tr>
 <td>Landwirtschaft &amp; Natur</td>
@@ -367,8 +471,6 @@ und Küche bleiben physisch.</td>
 <td style="text-align: right;">0.02</td>
 <td style="text-align: right;">0.01</td>
 <td style="text-align: right;">4</td>
-<td>Beratung, Planung, Wetter-/Marktdaten und Marketing steigen leicht;
-Feldarbeit bleibt physisch.</td>
 </tr>
 <tr>
 <td>Kunst, Design &amp; Medien</td>
@@ -377,8 +479,6 @@ Feldarbeit bleibt physisch.</td>
 <td style="text-align: right;">0.16</td>
 <td style="text-align: right;">0.05</td>
 <td style="text-align: right;">9</td>
-<td>Bild-, Audio-, Video- und Textmodelle verschieben die Arbeitsmittel
-stark.</td>
 </tr>
 <tr>
 <td>Ingenieurwesen</td>
@@ -387,8 +487,6 @@ stark.</td>
 <td style="text-align: right;">0.06</td>
 <td style="text-align: right;">0.04</td>
 <td style="text-align: right;">8</td>
-<td>Normen, technische Dokumente, CAD-nahe Analysen, Code und visuelle
-Prüfung profitieren.</td>
 </tr>
 <tr>
 <td>Soziales &amp; Beratung</td>
@@ -397,8 +495,6 @@ Prüfung profitieren.</td>
 <td style="text-align: right;">0.01</td>
 <td style="text-align: right;">0.02</td>
 <td style="text-align: right;">5</td>
-<td>Falldokumentation und Research steigen; Beziehung, Schutzauftrag und
-Urteil begrenzen.</td>
 </tr>
 <tr>
 <td>Sicherheit &amp; Schutz</td>
@@ -407,212 +503,356 @@ Urteil begrenzen.</td>
 <td style="text-align: right;">0.02</td>
 <td style="text-align: right;">0.01</td>
 <td style="text-align: right;">5</td>
-<td>Berichte, Recherche und Lagebilder profitieren; Einsatzsituationen
-und Verantwortung bleiben menschlich.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="5-berufs-overrides">5. Berufs-Overrides</h2>
-<p>Einige Berufe werden durch heutige KI-Systeme stärker verschoben als
-ihr Berufsfeld allein nahelegt. Die Overrides sind zusätzliche
-Beta-Punkte, nicht zusätzliche Score-Punkte.</p>
+<p>Berufs-Overrides werden nur dort genutzt, wo der Beruf innerhalb des
+Berufsfeldes besonders klar von heutigen KI-Fähigkeiten betroffen ist,
+zum Beispiel Coding-Agenten bei Softwareentwicklung, Bild-KI bei
+Grafik/Fotografie oder Formularagenten in der Verwaltung.</p>
+<h2 id="6-caps">6. Caps</h2>
+<p>Caps verhindern, dass technische Fortschritte Aufgabenanteile
+überzeichnen, die wegen physischer Präsenz, Haftung, Regulierung,
+sozialer Beziehung oder fehlendem Datenzugang nicht direkt KI-erreichbar
+sind.</p>
+<table>
+<thead>
+<tr>
+<th>Berufsfeld</th>
+<th style="text-align: right;">Cap</th>
+<th>Cap-Typ</th>
+<th>Warum nicht höher?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IT &amp; Technologie</td>
+<td style="text-align: right;">10</td>
+<td>technisch</td>
+<td>Stark digitaler Aufgabenraum; kaum physische Grenze innerhalb des
+LLM-Scopes.</td>
+</tr>
+<tr>
+<td>Finanzen &amp; Recht</td>
+<td style="text-align: right;">9</td>
+<td>regulatorisch/sozial</td>
+<td>Mandatsverantwortung, Haftung, vertrauliche Daten und finale
+Beurteilung bleiben begrenzend.</td>
+</tr>
+<tr>
+<td>Verwaltung &amp; Administration</td>
+<td style="text-align: right;">9</td>
+<td>organisatorisch/regulatorisch</td>
+<td>Dokumente und Prozesse sind erreichbar, aber Amtsverantwortung und
+Datenschutz begrenzen.</td>
+</tr>
+<tr>
+<td>Kunst, Design &amp; Medien</td>
+<td style="text-align: right;">9</td>
+<td>sozial/marktlich</td>
+<td>Rechte, Stil, Marke, Auftrag und Auswahl bleiben begrenzend.</td>
+</tr>
+<tr>
+<td>Ingenieurwesen</td>
+<td style="text-align: right;">8</td>
+<td>regulatorisch/technisch</td>
+<td>Normen, Haftung, physische Systeme und Validierung begrenzen.</td>
+</tr>
+<tr>
+<td>Verkauf &amp; Handel</td>
+<td style="text-align: right;">8</td>
+<td>sozial/organisatorisch</td>
+<td>Kundenbeziehung und Verhandlung bleiben relevant.</td>
+</tr>
+<tr>
+<td>Bildung &amp; Forschung</td>
+<td style="text-align: right;">7</td>
+<td>sozial/regulatorisch</td>
+<td>Lernbeziehung, Aufsicht und Prüfungskontext begrenzen.</td>
+</tr>
+<tr>
+<td>Gastronomie &amp; Tourismus</td>
+<td style="text-align: right;">7</td>
+<td>physisch/sozial</td>
+<td>Service, Küche und Gästebeziehung bleiben physisch.</td>
+</tr>
+<tr>
+<td>Gesundheit &amp; Pflege</td>
+<td style="text-align: right;">6</td>
+<td>regulatorisch/sozial/physisch</td>
+<td>Klinische Verantwortung, Patientenkontakt, körperliche Pflege,
+Regulierung und Datenzugang begrenzen.</td>
+</tr>
+<tr>
+<td>Transport &amp; Logistik</td>
+<td style="text-align: right;">5</td>
+<td>physisch/sicherheit</td>
+<td>Mobilität, Maschinenbedienung und Sicherheit bleiben ausserhalb
+reiner LLM-Exposition.</td>
+</tr>
+<tr>
+<td>Soziales &amp; Beratung</td>
+<td style="text-align: right;">5</td>
+<td>sozial/regulatorisch</td>
+<td>Beziehungsarbeit, Schutzauftrag, Datenschutz und Verantwortung
+begrenzen.</td>
+</tr>
+<tr>
+<td>Sicherheit &amp; Schutz</td>
+<td style="text-align: right;">5</td>
+<td>sicherheit/physisch</td>
+<td>Einsatzsituationen, Deeskalation und Verantwortung bleiben
+menschlich.</td>
+</tr>
+<tr>
+<td>Handwerk &amp; Bau</td>
+<td style="text-align: right;">4</td>
+<td>physisch</td>
+<td>Vor-Ort-Ausführung, Materialarbeit und Sicherheitsnormen
+dominieren.</td>
+</tr>
+<tr>
+<td>Landwirtschaft &amp; Natur</td>
+<td style="text-align: right;">4</td>
+<td>physisch</td>
+<td>Feldarbeit, Tiere, Wetter und Maschinen begrenzen reine
+LLM-Exposition.</td>
+</tr>
+</tbody>
+</table>
+<p>Caps könnten in Zukunft steigen, wenn Robotik, sichere
+Fachsystemintegration, auditierbare Agenten, regulierte klinische
+Copilots oder CAD/CAE-Integrationen deutlich breiter verfügbar und
+validiert werden.</p>
+<h2 id="7-unsicherheit-und-mapping">7. Unsicherheit und Mapping</h2>
+<p>Jeder Beruf erhält eine Confidence-Kategorie:</p>
+<ul>
+<li><strong>High:</strong> klar digitales Text-, Code-, Dokumenten- oder
+Prozessprofil.</li>
+<li><strong>Medium:</strong> gemischte Aufgaben, starke
+Organisationsvariation oder regulatorische Grenzen.</li>
+<li><strong>Low:</strong> hohe physische Präsenz, Beziehungsarbeit,
+Sicherheitsverantwortung, Regulierung oder grobe Berufszuordnung.</li>
+</ul>
+<p>Zusätzlich enthält jeder Beruf ein Feld
+<code>uncertainty_reason</code>, zum Beispiel:</p>
+<ul>
+<li>hoher physischer Anteil,</li>
+<li>hohe regulatorische Verantwortung,</li>
+<li>unklare Schweizer Berufszuordnung,</li>
+<li>starke Variation zwischen Organisationen,</li>
+<li>KI-Nutzung abhängig von Datenzugang.</li>
+</ul>
+<p>Die SOC/ISCO/Schweizer Berufsprofil-Zuordnung ist in
+<code>data/mapping-2026.csv</code> dokumentiert. Dort stehen Schweizer
+Berufsbezeichnung, ISCO-Code, Mapping-Confidence, Mapping-Hinweis sowie
+die verwendeten Lohn- und Beschäftigungsquellen. Die bestehenden
+BFS-Angaben bleiben Näherungen auf Basis von BFS LSE 2022 und BFS SAKE
+2023.</p>
+<h2 id="8-sensitivitätsanalyse">8. Sensitivitätsanalyse</h2>
+<p>Die Ergebnisse sind Szenarien, keine Punktprognosen.</p>
+<table>
+<thead>
+<tr>
+<th>Szenario</th>
+<th style="text-align: right;">Score 8-10</th>
+<th style="text-align: right;">Score 5-7</th>
+<th style="text-align: right;">Score 0-4</th>
+<th style="text-align: right;">Gewichteter Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Science 2024</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">3.92</td>
+</tr>
+<tr>
+<td>Heute 2026 technisch</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">5.60</td>
+</tr>
+<tr>
+<td>Heute 2026 adoptionsgewichtet</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">5.84</td>
+</tr>
+<tr>
+<td>Ohne Berufs-Overrides</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">5.56</td>
+</tr>
+<tr>
+<td>Halbierte Modifikatoren</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">4.86</td>
+</tr>
+<tr>
+<td>Aggressivere Modifikatoren</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">5.94</td>
+</tr>
+<tr>
+<td>Ohne Caps</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">5.66</td>
+</tr>
+<tr>
+<td>Strengere Caps</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">5.40</td>
+</tr>
+</tbody>
+</table>
+<p>Im Basisszenario der 2026-Heuristik steigt die Zahl der Berufe mit
+Score 8 bis 10 von 1 auf 21. Adoptionsgewichtet steigt sie auf 24. Diese
+Werte sind sensitiv gegenüber Modifikatoren, Caps und Adoptionannahmen
+und sollten als Szenario gelesen werden.</p>
+<p>Top-Deltas im technischen Basisszenario:</p>
 <table>
 <thead>
 <tr>
 <th>Beruf</th>
-<th style="text-align: right;">Override</th>
-<th>Begründung</th>
+<th style="text-align: right;">2024</th>
+<th style="text-align: right;">Technisch 2026</th>
+<th style="text-align: right;">Delta</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Softwareentwickler/-in</td>
-<td style="text-align: right;">0.04</td>
-<td>Coding-Agenten und Repository-Kontext</td>
-</tr>
-<tr>
-<td>Data Scientist</td>
-<td style="text-align: right;">0.06</td>
-<td>Datenanalyse, Code, Notebook- und Modellierungsagenten</td>
-</tr>
-<tr>
-<td>Systemadministrator/-in</td>
-<td style="text-align: right;">0.04</td>
-<td>Tool-Use für IT-Betrieb und Runbooks</td>
-</tr>
-<tr>
-<td>Cybersecurity-Spezialist/-in</td>
-<td style="text-align: right;">0.07</td>
-<td>Codeanalyse, Triage, Reports und Security-Agenten</td>
-</tr>
-<tr>
-<td>KI-Ingenieur/-in</td>
-<td style="text-align: right;">0.08</td>
-<td>KI-native Workflows</td>
-</tr>
-<tr>
-<td>Jurist/-in</td>
-<td style="text-align: right;">0.06</td>
-<td>Long-Context Legal Review</td>
-</tr>
-<tr>
-<td>Steuerberater/-in</td>
-<td style="text-align: right;">0.04</td>
-<td>Steuer-Research und Mandatsdokumente</td>
-</tr>
-<tr>
-<td>Buchhalter/-in</td>
-<td style="text-align: right;">0.05</td>
-<td>Beleg-, Report- und Abstimmungsworkflows</td>
-</tr>
-<tr>
-<td>Sachbearbeiter/-in Verwaltung</td>
-<td style="text-align: right;">0.06</td>
-<td>Formular- und Prozessagenten</td>
-</tr>
-<tr>
-<td>Sekretär/-in</td>
-<td style="text-align: right;">0.05</td>
-<td>E-Mail-, Kalender- und Dokumentenagenten</td>
-</tr>
-<tr>
 <td>Grafiker/-in</td>
-<td style="text-align: right;">0.09</td>
-<td>Bildgenerierung und visuelle Iteration</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">+4</td>
 </tr>
 <tr>
 <td>Fotograf/-in</td>
-<td style="text-align: right;">0.09</td>
-<td>Bild-KI, Retusche und Generierung</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">+4</td>
 </tr>
 <tr>
-<td>Cutter/-in</td>
-<td style="text-align: right;">0.08</td>
-<td>Video-, Untertitel- und Schnittassistenz</td>
+<td>Cybersecurity-Spezialist/-in</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">+3</td>
+</tr>
+<tr>
+<td>Data Scientist</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">+3</td>
+</tr>
+<tr>
+<td>KI-Ingenieur/-in</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">+3</td>
+</tr>
+<tr>
+<td>Systemadministrator/-in</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">+3</td>
 </tr>
 <tr>
 <td>Journalist/-in</td>
-<td style="text-align: right;">0.04</td>
-<td>Recherche- und Redaktionsassistenz</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">+3</td>
 </tr>
 <tr>
-<td>Reisebüro</td>
-<td style="text-align: right;">0.06</td>
-<td>Reiseplanungs-Agenten</td>
+<td>PR-Fachmann/-frau</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">+3</td>
 </tr>
 <tr>
-<td>Arzt/Ärztin</td>
-<td style="text-align: right;">0.02</td>
-<td>medizinische Dokumentation</td>
+<td>Sachbearbeiter/-in Verwaltung</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">+3</td>
 </tr>
 <tr>
-<td>Apotheker/-in</td>
-<td style="text-align: right;">0.02</td>
-<td>Interaktions- und Beratungsassistenz</td>
-</tr>
-<tr>
-<td>UX Designer/-in</td>
-<td style="text-align: right;">0.04</td>
-<td>Prototyping, Research-Synthese und UI-Text</td>
-</tr>
-<tr>
-<td>HR-Fachmann/-frau</td>
-<td style="text-align: right;">0.03</td>
-<td>Recruiting-, Policy- und Interview-Workflows</td>
-</tr>
-<tr>
-<td>Einkäufer/-in</td>
-<td style="text-align: right;">0.03</td>
-<td>Lieferantenrecherche und Angebotsvergleich</td>
-</tr>
-<tr>
-<td>Hotelfachmann/-frau</td>
-<td style="text-align: right;">0.03</td>
-<td>Buchung, Gästekommunikation und Content</td>
-</tr>
-<tr>
-<td>Hochschuldozent/-in</td>
-<td style="text-align: right;">0.03</td>
-<td>Research, Materialerstellung und Feedback</td>
-</tr>
-<tr>
-<td>Maschinenbauingenieur/-in</td>
-<td style="text-align: right;">0.02</td>
-<td>technische Dokumentation und CAD-nahe Analyse</td>
-</tr>
-<tr>
-<td>Elektroingenieur/-in</td>
-<td style="text-align: right;">0.02</td>
-<td>technische Dokumentation, Code und Schaltplanprüfung</td>
+<td>Sekretär/-in</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">+3</td>
 </tr>
 </tbody>
 </table>
-<h2 id="6-interpretation">6. Interpretation</h2>
-<p>Die neue Ansicht ist eine <strong>heutige
-Expositionsperspektive</strong>, keine Vorhersage über Entlassungen. Ein
-höherer Wert bedeutet: Mehr Aufgaben in diesem Beruf lassen sich durch
-moderne KI-Systeme beschleunigen, vorbereiten, prüfen, dokumentieren
-oder teilweise ausführen. Ob daraus Produktivität, Reorganisation,
-höhere Anforderungen oder Substitution entsteht, hängt von Organisation,
-Regulierung, Datenzugang, Qualitätssicherung und sozialer Akzeptanz
-ab.</p>
-<p>Die wichtigste Leseregel lautet: Der 2026-Score ist relativ zum
-Original-Score zu lesen. Ein Delta von <code>+3</code> bedeutet nicht,
-dass der Beruf um drei Stufen "gefährlicher" wurde. Es bedeutet, dass
-heutige KI-Systeme im Vergleich zur GPT-4-basierten Originalmessung mehr
-relevante Aufgabenoberfläche erreichen.</p>
-<h2 id="7-reproduzierbarkeit">7. Reproduzierbarkeit</h2>
+<p>Berufe mit besonders grosser Szenario-Spannweite sind unter anderem
+Fotografie, Video/Film-Schnitt, HR-Fachleute und
+Zollbeamtinnen/Zollbeamte. Diese Spannweite wird in
+<code>scenario_score_range</code> je Beruf dokumentiert.</p>
+<p>Die vollständige Sensitivitätsanalyse liegt in:</p>
+<ul>
+<li><code>data/scenario-summary-2026.json</code></li>
+<li><code>data/scenario-summary-2026.csv</code></li>
+</ul>
+<h2 id="9-ergebnisdateien">9. Ergebnisdateien</h2>
 <p>Die Zahlen werden mit <code>scripts/generate-today-scores.js</code>
-erzeugt. Das Skript liest die bestehenden Dashboard-Berufe aus
-<code>index.html</code>, wendet die hier definierte Formel an und
-schreibt:</p>
+erzeugt.</p>
+<p>Ausgaben:</p>
 <ul>
 <li><code>data/today-scores-2026.json</code></li>
 <li><code>data/today-scores-2026.csv</code></li>
+<li><code>data/scenario-summary-2026.json</code></li>
+<li><code>data/scenario-summary-2026.csv</code></li>
+<li><code>data/reannotation-sample-2026.json</code></li>
+<li><code>data/reannotation-sample-2026.csv</code></li>
+<li><code>data/mapping-2026.csv</code></li>
 </ul>
-<p>Die Originaldaten werden nicht überschrieben. Damit bleiben die
-Science-2024-Ansicht und die Heute-2026-Ansicht getrennt prüfbar.</p>
-<h2 id="8-aggregierte-resultate">8. Aggregierte Resultate</h2>
-<p>Mit den 72 Berufen im Dashboard ergibt die 2026-Rechnung:</p>
-<table>
-<thead>
-<tr>
-<th>Kennzahl</th>
-<th style="text-align: right;">Science 2024</th>
-<th style="text-align: right;">Heute 2026</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Sehr hohe Exposition (Score 8-10)</td>
-<td style="text-align: right;">1 Beruf</td>
-<td style="text-align: right;">24 Berufe</td>
-</tr>
-<tr>
-<td>Mittlere Exposition (Score 5-7)</td>
-<td style="text-align: right;">33 Berufe</td>
-<td style="text-align: right;">20 Berufe</td>
-</tr>
-<tr>
-<td>Niedrige Exposition (Score 0-4)</td>
-<td style="text-align: right;">38 Berufe</td>
-<td style="text-align: right;">28 Berufe</td>
-</tr>
-<tr>
-<td>Beschäftigungsgewichteter Score</td>
-<td style="text-align: right;">3.92/10</td>
-<td style="text-align: right;">5.84/10</td>
-</tr>
-</tbody>
-</table>
-<p>Die stärksten Deltas entstehen in Berufen, deren Aufgabenoberfläche
-durch multimodale KI, agentische Workflows oder grosse Kontextfenster
-besonders stark gewachsen ist: HR-Fachleute, UX Design, Grafik,
-Video/Film-Schnitt, Fotografie, Data Science, Systemadministration,
-Cybersecurity und KI-Engineering. Die niedrigsten Werte bleiben bei
-Tätigkeiten, deren Kern physische Präsenz, Fürsorge, Sicherheit oder
-Vor-Ort-Ausführung verlangt.</p>
-<h2 id="9-quellen">9. Quellen</h2>
+<p>Beispielstruktur pro Beruf:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;occupation&quot;</span><span class="fu">:</span> <span class="st">&quot;Jurist/-in&quot;</span><span class="fu">,</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;score_2024&quot;</span><span class="fu">:</span> <span class="dv">4</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;beta_2024&quot;</span><span class="fu">:</span> <span class="fl">0.425</span><span class="fu">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;technical_beta_2026&quot;</span><span class="fu">:</span> <span class="fl">0.675</span><span class="fu">,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;technical_score_2026&quot;</span><span class="fu">:</span> <span class="dv">7</span><span class="fu">,</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;adoption_adjusted_beta_2026&quot;</span><span class="fu">:</span> <span class="fl">0.725</span><span class="fu">,</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;adoption_adjusted_score_2026&quot;</span><span class="fu">:</span> <span class="dv">7</span><span class="fu">,</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;delta_technical&quot;</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;delta_adoption_adjusted&quot;</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;cap&quot;</span><span class="fu">:</span> <span class="dv">9</span><span class="fu">,</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;modifiers&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;long_context&quot;</span><span class="fu">:</span> <span class="fl">0.1</span><span class="fu">,</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;agentic_tools&quot;</span><span class="fu">:</span> <span class="fl">0.07</span><span class="fu">,</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;multimodal&quot;</span><span class="fu">:</span> <span class="fl">0.02</span><span class="fu">,</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;adoption&quot;</span><span class="fu">:</span> <span class="fl">0.05</span><span class="fu">,</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;role_override&quot;</span><span class="fu">:</span> <span class="fl">0.06</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;confidence&quot;</span><span class="fu">:</span> <span class="st">&quot;medium&quot;</span><span class="fu">,</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;uncertainty_reason&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Hohe regulatorische Verantwortung&quot;</span><span class="ot">,</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Datenzugang und Auditierbarkeit entscheidend&quot;</span><span class="ot">,</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Unklare Schweizer Berufszuordnung&quot;</span><span class="ot">,</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Berufsspezifischer Override sensitiv&quot;</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;scenario&quot;</span><span class="fu">:</span> <span class="st">&quot;base_2026&quot;</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h2 id="10-quellen">10. Quellen</h2>
+<p>Es wurden nur Primärquellen oder projektinterne Datenartefakte als
+methodische Grundlage verwendet. Modellveröffentlichungen werden als
+Fähigkeits- und Verfügbarkeitsindikatoren gelesen, nicht als direkte
+Messung der Schweizer Arbeitsmarktwirkung.</p>
 <ul>
 <li>Eloundou, T., Manning, S., Mishkin, P., &amp; Rock, D. (2024).
 <em>GPTs are GPTs: Labor market impact potential of LLMs</em>. Science

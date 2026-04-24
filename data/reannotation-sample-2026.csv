@@ -1,0 +1,113 @@
+category,categoryLabel,task,oldLabel,newLabel,transition,driver,rationale
+finanzen-recht,Finanzen & Recht,Mehrere Vertragsversionen vergleichen,E2,E1,E2->E1,long_context,Lange Dokumente passen heute eher direkt in den Modellkontext.
+finanzen-recht,Finanzen & Recht,Mandantenbrief zu Steuerfrage vorbereiten,E1,E1,E1->E1,none,Textarbeit war bereits direkt exponiert.
+finanzen-recht,Finanzen & Recht,Belege klassifizieren und Rueckfragen formulieren,E2,E1,E2->E1,agentic_tools,Dokumenten- und Workflowtools reduzieren Tool-Reibung.
+finanzen-recht,Finanzen & Recht,Gerichtsstrategie festlegen,E0,E0,E0->E0,cap,Verantwortung und Urteil bleiben ausserhalb.
+finanzen-recht,Finanzen & Recht,Regulatorische Neuerungen recherchieren,E2,E1,E2->E1,agentic_tools,Rechercheagenten und Quellenarbeit sind reifer.
+finanzen-recht,Finanzen & Recht,Kundengespraech fuehren,E0,E0,E0->E0,social,Vertrauen und Haftung bleiben menschlich.
+finanzen-recht,Finanzen & Recht,Due-Diligence-Dossier zusammenfassen,E2,E1,E2->E1,long_context,Lange Kontexte senken den Integrationsaufwand.
+finanzen-recht,Finanzen & Recht,Standardreport aus Transaktionen entwerfen,E1,E1,E1->E1,none,Bereits text- und datenbasiert exponiert.
+it-tech,IT & Technologie,Bug in grosser Codebasis lokalisieren,E2,E1,E2->E1,long_context,Repository-Kontext und Coding-Agenten machen die Aufgabe direkter erreichbar.
+it-tech,IT & Technologie,Unit-Tests fuer Modul schreiben,E1,E1,E1->E1,none,Bereits direkt durch LLMs unterstuetzbar.
+it-tech,IT & Technologie,Deployment-Runbook ausfuehren,E2,E1,E2->E1,agentic_tools,Tool-Use und Terminal-Agenten reduzieren E2-Reibung.
+it-tech,IT & Technologie,Physischen Server tauschen,E0,E0,E0->E0,physical,Physische Arbeit bleibt ausser Scope.
+it-tech,IT & Technologie,Security Findings priorisieren,E2,E1,E2->E1,agentic_tools,Codeanalyse und Triageagenten sind deutlich staerker.
+it-tech,IT & Technologie,Architekturentscheidung verantworten,E0,E2,E0->E2,long_context,"KI kann Optionen vorbereiten, finale Verantwortung bleibt menschlich."
+it-tech,IT & Technologie,Datenpipeline dokumentieren,E1,E1,E1->E1,none,Dokumentation war bereits exponiert.
+it-tech,IT & Technologie,UI-Prototyp aus Briefing erstellen,E2,E1,E2->E1,multimodal,"Text-, Bild- und Codegenerierung wachsen zusammen."
+gesundheit,Gesundheit & Pflege,Arztbrief aus Notizen entwerfen,E1,E1,E1->E1,none,Dokumentation war bereits exponiert.
+gesundheit,Gesundheit & Pflege,Befundbild sprachlich einordnen,E2,E2,E2->E2,multimodal,"Multimodalitaet hilft, bleibt wegen Verantwortung aber Tool-gestuetzt."
+gesundheit,Gesundheit & Pflege,Patienten koerperlich untersuchen,E0,E0,E0->E0,physical,Physische Untersuchung und Verantwortung bleiben menschlich.
+gesundheit,Gesundheit & Pflege,Fachliteratur zu Therapieoptionen zusammenfassen,E2,E1,E2->E1,long_context,Lange Kontexte verbessern Literaturarbeit.
+gesundheit,Gesundheit & Pflege,Pflegedokumentation strukturieren,E1,E1,E1->E1,none,Text- und Formulararbeit bereits exponiert.
+gesundheit,Gesundheit & Pflege,Medikationsinteraktion vorpruefen,E2,E2,E2->E2,agentic_tools,"Vorpruefung moeglich, finale Entscheidung reguliert."
+gesundheit,Gesundheit & Pflege,Notfalleinsatz durchfuehren,E0,E0,E0->E0,physical,Zeitkritische physische Handlung bleibt ausser Scope.
+gesundheit,Gesundheit & Pflege,Patientenkommunikation empathisch fuehren,E0,E0,E0->E0,social,Beziehungsarbeit begrenzt.
+bildung,Bildung & Forschung,Unterrichtsmaterial differenziert erstellen,E1,E1,E1->E1,none,Direkte Text- und Materialarbeit.
+bildung,Bildung & Forschung,Schuelerarbeiten vorstrukturieren und Feedback entwerfen,E2,E1,E2->E1,agentic_tools,Workflownahe KI reduziert Aufwand.
+bildung,Bildung & Forschung,Klassenfuehrung im Unterricht,E0,E0,E0->E0,social,Praesenz und Beziehung bleiben zentral.
+bildung,Bildung & Forschung,Forschungsstand aus vielen PDFs synthetisieren,E2,E1,E2->E1,long_context,Long Context reduziert Recherchefriktion.
+bildung,Bildung & Forschung,Pruefung rechtsgueltig bewerten,E0,E2,E0->E2,agentic_tools,"Assistenz moeglich, Verantwortung bleibt menschlich."
+bildung,Bildung & Forschung,Lernvideo und Quiz aus Thema erstellen,E2,E1,E2->E1,multimodal,Multimodale Erstellung ist deutlich naeher an direkt.
+bildung,Bildung & Forschung,Elterngespraech fuehren,E0,E0,E0->E0,social,Beziehung und Kontext begrenzen.
+bildung,Bildung & Forschung,Vorlesungsskript aktualisieren,E1,E1,E1->E1,none,Textarbeit bereits exponiert.
+handwerk-bau,Handwerk & Bau,Offerte aus Kundenangaben formulieren,E1,E1,E1->E1,none,Text- und Kalkulationsvorbereitung.
+handwerk-bau,Handwerk & Bau,Baustellenfoto beschreiben,E2,E2,E2->E2,multimodal,"Bildanalyse hilft, ersetzt Vor-Ort-Pruefung nicht."
+handwerk-bau,Handwerk & Bau,Leitung installieren,E0,E0,E0->E0,physical,Physische Ausfuehrung bleibt ausser Scope.
+handwerk-bau,Handwerk & Bau,Materialliste aus Plan ableiten,E2,E2,E2->E2,multimodal,"Assistenz moeglich, Plaene und Kontext bleiben limitiert."
+handwerk-bau,Handwerk & Bau,Sicherheitsprotokoll schreiben,E1,E1,E1->E1,none,Dokumentation bereits exponiert.
+handwerk-bau,Handwerk & Bau,Mauerwerk erstellen,E0,E0,E0->E0,physical,Koerperliche Arbeit dominiert.
+handwerk-bau,Handwerk & Bau,Normenstelle fuer Installation recherchieren,E2,E1,E2->E1,long_context,Normenrecherche wird direkter erreichbar.
+handwerk-bau,Handwerk & Bau,Kundenberatung vor Ort,E0,E0,E0->E0,social,Vor-Ort-Vertrauen und Messung begrenzen.
+verwaltung,Verwaltung & Administration,Formularfall pruefen und Antwort entwerfen,E2,E1,E2->E1,agentic_tools,Formular- und Registerworkflows sind agentenfaehiger.
+verwaltung,Verwaltung & Administration,E-Mail triagieren,E1,E1,E1->E1,none,Bereits direkt exponiert.
+verwaltung,Verwaltung & Administration,Terminserie organisieren,E2,E1,E2->E1,agentic_tools,Kalenderagenten machen Tool-Use direkter.
+verwaltung,Verwaltung & Administration,Rechtsverbindliche Verfuegung verantworten,E0,E2,E0->E2,long_context,"Entwurf und Pruefung moeglich, Verantwortung bleibt."
+verwaltung,Verwaltung & Administration,Aktenstapel zusammenfassen,E2,E1,E2->E1,long_context,Lange Kontexte reduzieren Aktenfriktion.
+verwaltung,Verwaltung & Administration,Buergergespraech in Konfliktlage fuehren,E0,E0,E0->E0,social,Soziale Situation begrenzt.
+verwaltung,Verwaltung & Administration,Protokoll aus Sitzung erstellen,E1,E1,E1->E1,none,Textarbeit bereits exponiert.
+verwaltung,Verwaltung & Administration,Daten zwischen Fachsystemen abgleichen,E2,E1,E2->E1,agentic_tools,Computer-Use und Integrationen senken Aufwand.
+verkauf-handel,Verkauf & Handel,Angebot aus CRM-Daten vorbereiten,E2,E1,E2->E1,agentic_tools,CRM-Agenten machen Aufgabe direkter.
+verkauf-handel,Verkauf & Handel,Produktbeschreibung schreiben,E1,E1,E1->E1,none,Direkte Textarbeit.
+verkauf-handel,Verkauf & Handel,Preisverhandlung fuehren,E0,E0,E0->E0,social,Beziehung und Strategie bleiben menschlich.
+verkauf-handel,Verkauf & Handel,Sortimentsanalyse aus Reports erstellen,E2,E1,E2->E1,long_context,Mehr Dokumente und Daten koennen verarbeitet werden.
+verkauf-handel,Verkauf & Handel,Ladenregal einraeumen,E0,E0,E0->E0,physical,Physische Ausfuehrung.
+verkauf-handel,Verkauf & Handel,Kundenmail beantworten,E1,E1,E1->E1,none,Bereits exponiert.
+verkauf-handel,Verkauf & Handel,Produktbild fuer Kampagne variieren,E2,E1,E2->E1,multimodal,Bild-KI senkt Reibung.
+verkauf-handel,Verkauf & Handel,Lieferantenvergleich erstellen,E2,E1,E2->E1,agentic_tools,Recherche und Tabellenarbeit naeher an direkt.
+transport-logistik,Transport & Logistik,Tourenplan aus Auftraegen vorbereiten,E2,E2,E2->E2,agentic_tools,"Planungsassistenz steigt, Kontext bleibt operativ."
+transport-logistik,Transport & Logistik,Fahrzeug sicher fuehren,E0,E0,E0->E0,physical,Autonomes Fahren ausserhalb LLM-Scope.
+transport-logistik,Transport & Logistik,Frachtpapiere pruefen,E2,E1,E2->E1,long_context,Dokumentenabgleich wird direkter.
+transport-logistik,Transport & Logistik,Kundenstatusmeldung schreiben,E1,E1,E1->E1,none,Textarbeit bereits exponiert.
+transport-logistik,Transport & Logistik,Lagerware bewegen,E0,E0,E0->E0,physical,Physische Arbeit.
+transport-logistik,Transport & Logistik,Stoerungsmeldung triagieren,E2,E2,E2->E2,agentic_tools,"Assistenz moeglich, Echtzeitkontext begrenzt."
+transport-logistik,Transport & Logistik,Schichtbericht erstellen,E1,E1,E1->E1,none,Dokumentation.
+transport-logistik,Transport & Logistik,Sicherheitsentscheidung im Betrieb treffen,E0,E0,E0->E0,safety,Verantwortung und Situation vor Ort.
+gastronomie-tourismus,Gastronomie & Tourismus,Reiseroute mit Praeferenzen planen,E2,E1,E2->E1,agentic_tools,Reiseagenten sind deutlich staerker.
+gastronomie-tourismus,Gastronomie & Tourismus,Menuebeschreibung schreiben,E1,E1,E1->E1,none,Textarbeit.
+gastronomie-tourismus,Gastronomie & Tourismus,Speisen zubereiten,E0,E0,E0->E0,physical,Physische Arbeit.
+gastronomie-tourismus,Gastronomie & Tourismus,Gästemail beantworten,E1,E1,E1->E1,none,Direkt exponiert.
+gastronomie-tourismus,Gastronomie & Tourismus,Buchungsdaten abgleichen,E2,E1,E2->E1,agentic_tools,Tool-Use senkt Reibung.
+gastronomie-tourismus,Gastronomie & Tourismus,Beschwerdegespraech vor Ort fuehren,E0,E0,E0->E0,social,Empathie und Situation begrenzen.
+gastronomie-tourismus,Gastronomie & Tourismus,Social-Media-Visual erstellen,E2,E1,E2->E1,multimodal,Multimodale Generierung direkter.
+gastronomie-tourismus,Gastronomie & Tourismus,Hygienekontrolle physisch durchfuehren,E0,E0,E0->E0,physical,Vor-Ort-Pruefung.
+landwirtschaft,Landwirtschaft & Natur,Wetter- und Marktbericht zusammenfassen,E1,E1,E1->E1,none,Text- und Datenarbeit.
+landwirtschaft,Landwirtschaft & Natur,Pflanzenbild grob einordnen,E2,E2,E2->E2,multimodal,"Assistenz moeglich, Feldkontext begrenzt."
+landwirtschaft,Landwirtschaft & Natur,Ernte physisch einbringen,E0,E0,E0->E0,physical,Physische Arbeit.
+landwirtschaft,Landwirtschaft & Natur,Foerderantrag vorbereiten,E2,E1,E2->E1,long_context,Formulare und Regeln besser erreichbar.
+landwirtschaft,Landwirtschaft & Natur,Tier behandeln,E0,E0,E0->E0,physical,Physische und fachliche Verantwortung.
+landwirtschaft,Landwirtschaft & Natur,Marketingtext fuer Hofladen schreiben,E1,E1,E1->E1,none,Direkte Textarbeit.
+landwirtschaft,Landwirtschaft & Natur,Sensorwerte interpretieren,E2,E2,E2->E2,agentic_tools,"Datenassistenz, aber Integration variiert."
+landwirtschaft,Landwirtschaft & Natur,Maschine warten,E0,E0,E0->E0,physical,Vor-Ort-Arbeit.
+kunst-medien,"Kunst, Design & Medien",Bildvarianten fuer Kampagne erzeugen,E2,E1,E2->E1,multimodal,Bildgenerierung ist deutlich direkter geworden.
+kunst-medien,"Kunst, Design & Medien",Artikelentwurf schreiben,E1,E1,E1->E1,none,Textarbeit.
+kunst-medien,"Kunst, Design & Medien",Interview vor Ort fuehren,E0,E0,E0->E0,social,Beziehung und Situation begrenzen.
+kunst-medien,"Kunst, Design & Medien",Video transkribieren und schneiden lassen,E2,E1,E2->E1,multimodal,Video- und Untertiteltools naeher an direkt.
+kunst-medien,"Kunst, Design & Medien",Markenstrategie entscheiden,E0,E2,E0->E2,long_context,"Assistenz moeglich, Entscheidung menschlich."
+kunst-medien,"Kunst, Design & Medien",Pressemitteilung variieren,E1,E1,E1->E1,none,Direkte Textarbeit.
+kunst-medien,"Kunst, Design & Medien",Foto retuschieren,E2,E1,E2->E1,multimodal,Bild-KI senkt Tool-Reibung.
+kunst-medien,"Kunst, Design & Medien",Rechte und Freigaben klaeren,E0,E2,E0->E2,agentic_tools,"Vorbereitung moeglich, finale Klaerung bleibt."
+ingenieurwesen,Ingenieurwesen,Normen und Spezifikationen vergleichen,E2,E1,E2->E1,long_context,Lange technische Dokumente besser erreichbar.
+ingenieurwesen,Ingenieurwesen,Berechnungsbericht entwerfen,E1,E1,E1->E1,none,Text- und Rechenassistenz.
+ingenieurwesen,Ingenieurwesen,Anlage vor Ort abnehmen,E0,E0,E0->E0,physical,Physische Pruefung und Haftung.
+ingenieurwesen,Ingenieurwesen,CAD-Screenshot kommentieren,E2,E2,E2->E2,multimodal,"Visuelle Assistenz, aber fachliche Validierung."
+ingenieurwesen,Ingenieurwesen,Python-Skript fuer Simulation schreiben,E1,E1,E1->E1,none,Codearbeit bereits exponiert.
+ingenieurwesen,Ingenieurwesen,Technische Risikoanalyse vorbereiten,E2,E1,E2->E1,long_context,Dokumenten- und Normenkontext hilft.
+ingenieurwesen,Ingenieurwesen,Bauleitung auf Baustelle,E0,E0,E0->E0,physical,Vor-Ort-Koordination.
+ingenieurwesen,Ingenieurwesen,Messdaten plausibilisieren,E2,E2,E2->E2,agentic_tools,"Assistenz, aber Validierung bleibt."
+soziales,Soziales & Beratung,Falldokumentation strukturieren,E1,E1,E1->E1,none,Textarbeit.
+soziales,Soziales & Beratung,Hilfsangebote recherchieren,E2,E1,E2->E1,agentic_tools,Rechercheagenten helfen.
+soziales,Soziales & Beratung,Krisengespraech fuehren,E0,E0,E0->E0,social,Beziehung und Verantwortung zentral.
+soziales,Soziales & Beratung,Foerderplan entwerfen,E2,E2,E2->E2,long_context,"Assistenz moeglich, Individualkontext begrenzt."
+soziales,Soziales & Beratung,Kind betreuen,E0,E0,E0->E0,physical,Praesenz und Fuersorge.
+soziales,Soziales & Beratung,Bericht an Behoerde formulieren,E1,E1,E1->E1,none,Dokumentation.
+soziales,Soziales & Beratung,Risikoabschaetzung verantworten,E0,E0,E0->E0,social,Schutzauftrag und Urteil.
+soziales,Soziales & Beratung,Termine und Nachweise koordinieren,E2,E1,E2->E1,agentic_tools,Administrative Agenten senken Reibung.
+sicherheit,Sicherheit & Schutz,Rapport aus Stichworten erstellen,E1,E1,E1->E1,none,Textarbeit.
+sicherheit,Sicherheit & Schutz,Lagebild aus Meldungen zusammenfassen,E2,E1,E2->E1,long_context,Viele Meldungen koennen besser synthetisiert werden.
+sicherheit,Sicherheit & Schutz,Einsatz vor Ort fuehren,E0,E0,E0->E0,safety,Verantwortung und physische Lage.
+sicherheit,Sicherheit & Schutz,Videoausschnitt beschreiben,E2,E2,E2->E2,multimodal,"Assistenz, aber Beweiskraft und Kontext begrenzen."
+sicherheit,Sicherheit & Schutz,Deeskalationsgespraech fuehren,E0,E0,E0->E0,social,Menschliche Praesenz zentral.
+sicherheit,Sicherheit & Schutz,Checkliste fuer Schulung erstellen,E1,E1,E1->E1,none,Textarbeit.
+sicherheit,Sicherheit & Schutz,Zutrittsdaten pruefen,E2,E2,E2->E2,agentic_tools,"Assistenz, aber Systeme und Berechtigungen variieren."
+sicherheit,Sicherheit & Schutz,Brandbekaempfung durchfuehren,E0,E0,E0->E0,physical,Physische Einsatzarbeit.

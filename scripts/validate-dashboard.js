@@ -4,6 +4,9 @@ const path = require("path");
 const ROOT = path.resolve(__dirname, "..");
 const htmlPath = path.join(ROOT, "index.html");
 const mappingPath = path.join(ROOT, "Files for CC", "eloundou_mapping_results.json");
+const todayScoresPath = path.join(ROOT, "data", "today-scores-2026.json");
+const scenarioSummaryPath = path.join(ROOT, "data", "scenario-summary-2026.json");
+const reannotationPath = path.join(ROOT, "data", "reannotation-sample-2026.json");
 
 const html = fs.readFileSync(htmlPath, "utf8");
 const dataMatch = html.match(/const DATA = (\[[\s\S]*?\n\]);/);
@@ -76,6 +79,59 @@ if (fs.existsSync(mappingPath)) {
   }
 }
 
+if (fs.existsSync(todayScoresPath)) {
+  const today = JSON.parse(fs.readFileSync(todayScoresPath, "utf8"));
+  const todayBySlug = new Map((today.scores || []).map(item => [item.slug, item]));
+
+  if (todayBySlug.size !== DATA.length) {
+    errors.push(`Today 2026 scores contain ${todayBySlug.size} occupations, expected ${DATA.length}`);
+  }
+
+  for (const item of DATA) {
+    const todayItem = todayBySlug.get(item.slug);
+    if (!todayItem) {
+      errors.push(`Missing Today 2026 score for ${item.slug}`);
+      continue;
+    }
+
+    if (todayItem.score_2024 !== item.exposure || todayItem.beta_2024 !== item.beta) {
+      errors.push(`${item.title} Today 2026 baseline does not match Science 2024 DATA`);
+    }
+
+    if (todayItem.technical_score_2026 !== Math.round(todayItem.technical_beta_2026 * 10)) {
+      errors.push(`${item.title} technical_score_2026 does not match technical_beta_2026`);
+    }
+
+    if (todayItem.adoption_adjusted_score_2026 !== Math.round(todayItem.adoption_adjusted_beta_2026 * 10)) {
+      errors.push(`${item.title} adoption_adjusted_score_2026 does not match adoption_adjusted_beta_2026`);
+    }
+
+    if (todayItem.adoption_adjusted_beta_2026 < todayItem.technical_beta_2026) {
+      errors.push(`${item.title} adoption-adjusted beta is lower than technical beta`);
+    }
+
+    if (!["high", "medium", "low"].includes(todayItem.confidence)) {
+      errors.push(`${item.title} has invalid Today 2026 confidence: ${todayItem.confidence}`);
+    }
+  }
+}
+
+if (fs.existsSync(scenarioSummaryPath)) {
+  const scenarioSummary = JSON.parse(fs.readFileSync(scenarioSummaryPath, "utf8"));
+  const scenarioCount = Object.keys(scenarioSummary.scenarios || {}).length;
+  if (scenarioCount < 8) {
+    errors.push(`Expected at least 8 sensitivity scenarios, found ${scenarioCount}`);
+  }
+}
+
+if (fs.existsSync(reannotationPath)) {
+  const reannotation = JSON.parse(fs.readFileSync(reannotationPath, "utf8"));
+  const taskCount = (reannotation.tasks || []).length;
+  if (taskCount < 100 || taskCount > 200) {
+    errors.push(`Expected 100-200 reannotation tasks, found ${taskCount}`);
+  }
+}
+
 const high = DATA.filter(d => d.exposure >= 8).length;
 const medium = DATA.filter(d => d.exposure >= 5 && d.exposure <= 7).length;
 const low = DATA.filter(d => d.exposure <= 4).length;
@@ -99,6 +155,11 @@ console.log(`OK: ${DATA.length} occupations`);
 console.log(`Scores: ${high} very high, ${medium} medium, ${low} low`);
 console.log(`Weighted exposure: ${weighted.toFixed(2)}/10 across ${jobs.toLocaleString("de-CH")} jobs`);
 console.log(`Mapping notes: ${reviewCount}`);
+if (fs.existsSync(todayScoresPath)) {
+  const today = JSON.parse(fs.readFileSync(todayScoresPath, "utf8"));
+  console.log(`Today 2026 technical weighted: ${today.summary.technical_base_2026.weighted_score}/10`);
+  console.log(`Today 2026 adoption-adjusted weighted: ${today.summary.adoption_adjusted_base_2026.weighted_score}/10`);
+}
 
 function fail(messages, warnings = []) {
   for (const warning of warnings) {

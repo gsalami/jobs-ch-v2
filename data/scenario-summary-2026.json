@@ -1,0 +1,1661 @@
+{
+  "generated_at": "2026-04-24",
+  "scenarios": {
+    "science_2024": {
+      "id": "science_2024",
+      "label": "Science 2024",
+      "description": "Originale Eloundou-basierte Dashboard-Scores",
+      "very_high_8_10": 1,
+      "medium_5_7": 33,
+      "low_0_4": 38,
+      "weighted_score": 3.92,
+      "top_10_deltas": [
+        {
+          "slug": "softwareentwickler-in",
+          "occupation": "Softwareentwickler/-in",
+          "score_2024": 9,
+          "scenario_score": 9,
+          "delta": 0
+        },
+        {
+          "slug": "cybersecurity",
+          "occupation": "Cybersecurity-Spezialist/-in",
+          "score_2024": 7,
+          "scenario_score": 7,
+          "delta": 0
+        },
+        {
+          "slug": "data-scientist",
+          "occupation": "Data Scientist",
+          "score_2024": 7,
+          "scenario_score": 7,
+          "delta": 0
+        },
+        {
+          "slug": "ki-ingenieur",
+          "occupation": "KI-Ingenieur/-in",
+          "score_2024": 7,
+          "scenario_score": 7,
+          "delta": 0
+        },
+        {
+          "slug": "sysadmin",
+          "occupation": "Systemadministrator/-in",
+          "score_2024": 7,
+          "scenario_score": 7,
+          "delta": 0
+        },
+        {
+          "slug": "buchhalter-in",
+          "occupation": "Buchhalter/-in",
+          "score_2024": 6,
+          "scenario_score": 6,
+          "delta": 0
+        },
+        {
+          "slug": "elektroingenieur",
+          "occupation": "Elektroingenieur/-in",
+          "score_2024": 6,
+          "scenario_score": 6,
+          "delta": 0
+        },
+        {
+          "slug": "journalist-in",
+          "occupation": "Journalist/-in",
+          "score_2024": 6,
+          "scenario_score": 6,
+          "delta": 0
+        },
+        {
+          "slug": "pr-fachmann",
+          "occupation": "PR-Fachmann/-frau",
+          "score_2024": 6,
+          "scenario_score": 6,
+          "delta": 0
+        },
+        {
+          "slug": "sachbearbeiter-verwaltung",
+          "occupation": "Sachbearbeiter/-in (Verwaltung)",
+          "score_2024": 6,
+          "scenario_score": 6,
+          "delta": 0
+        }
+      ],
+      "top_10_uncertainty": [
+        {
+          "slug": "fotograf-in",
+          "occupation": "Fotograf/-in",
+          "confidence": "medium",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "cutter-in",
+          "occupation": "Cutter/-in (Video/Film)",
+          "confidence": "medium",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "hr-fachmann",
+          "occupation": "HR-Fachmann/-frau",
+          "confidence": "high",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Viele standardisierte digitale Dokumenten- und Prozessaufgaben",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "zollbeamter",
+          "occupation": "Zollbeamte/r",
+          "confidence": "high",
+          "scenario_score_range": 3,
+          "min_scenario_score": 5,
+          "max_scenario_score": 8,
+          "uncertainty_reason": [
+            "Viele standardisierte digitale Dokumenten- und Prozessaufgaben"
+          ]
+        },
+        {
+          "slug": "grafiker-in",
+          "occupation": "Grafiker/-in",
+          "confidence": "low",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Originalscore hat Scope-Hinweis",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "buchhalter-in",
+          "occupation": "Buchhalter/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "steuerberater-in",
+          "occupation": "Steuerberater/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "jurist-in",
+          "occupation": "Jurist/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 6,
+          "max_scenario_score": 8,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Unklare Schweizer Berufszuordnung",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "primarlehrer-in",
+          "occupation": "Primarlehrer/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 3,
+          "max_scenario_score": 5,
+          "uncertainty_reason": [
+            "Starke Variation zwischen Institutionen",
+            "Beziehungs- und Aufsichtsanteil"
+          ]
+        },
+        {
+          "slug": "detailhandelsfachmann",
+          "occupation": "Detailhandelsfachmann/-frau",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 5,
+          "max_scenario_score": 7,
+          "uncertainty_reason": [
+            "Starke Variation zwischen Organisationen",
+            "Kundenkontakt und Datenzugang relevant"
+          ]
+        }
+      ]
+    },
+    "technical_base_2026": {
+      "id": "technical_base_2026",
+      "label": "Heute 2026 technisch",
+      "description": "Basisszenario ohne Adoption",
+      "very_high_8_10": 21,
+      "medium_5_7": 23,
+      "low_0_4": 28,
+      "weighted_score": 5.6,
+      "top_10_deltas": [
+        {
+          "slug": "grafiker-in",
+          "occupation": "Grafiker/-in",
+          "score_2024": 5,
+          "scenario_score": 9,
+          "delta": 4
+        },
+        {
+          "slug": "fotograf-in",
+          "occupation": "Fotograf/-in",
+          "score_2024": 4,
+          "scenario_score": 8,
+          "delta": 4
+        },
+        {
+          "slug": "cybersecurity",
+          "occupation": "Cybersecurity-Spezialist/-in",
+          "score_2024": 7,
+          "scenario_score": 10,
+          "delta": 3
+        },
+        {
+          "slug": "data-scientist",
+          "occupation": "Data Scientist",
+          "score_2024": 7,
+          "scenario_score": 10,
+          "delta": 3
+        },
+        {
+          "slug": "ki-ingenieur",
+          "occupation": "KI-Ingenieur/-in",
+          "score_2024": 7,
+          "scenario_score": 10,
+          "delta": 3
+        },
+        {
+          "slug": "sysadmin",
+          "occupation": "Systemadministrator/-in",
+          "score_2024": 7,
+          "scenario_score": 10,
+          "delta": 3
+        },
+        {
+          "slug": "journalist-in",
+          "occupation": "Journalist/-in",
+          "score_2024": 6,
+          "scenario_score": 9,
+          "delta": 3
+        },
+        {
+          "slug": "pr-fachmann",
+          "occupation": "PR-Fachmann/-frau",
+          "score_2024": 6,
+          "scenario_score": 9,
+          "delta": 3
+        },
+        {
+          "slug": "sachbearbeiter-verwaltung",
+          "occupation": "Sachbearbeiter/-in (Verwaltung)",
+          "score_2024": 6,
+          "scenario_score": 9,
+          "delta": 3
+        },
+        {
+          "slug": "sekretaer-in",
+          "occupation": "Sekretär/-in",
+          "score_2024": 6,
+          "scenario_score": 9,
+          "delta": 3
+        }
+      ],
+      "top_10_uncertainty": [
+        {
+          "slug": "fotograf-in",
+          "occupation": "Fotograf/-in",
+          "confidence": "medium",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "cutter-in",
+          "occupation": "Cutter/-in (Video/Film)",
+          "confidence": "medium",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "hr-fachmann",
+          "occupation": "HR-Fachmann/-frau",
+          "confidence": "high",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Viele standardisierte digitale Dokumenten- und Prozessaufgaben",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "zollbeamter",
+          "occupation": "Zollbeamte/r",
+          "confidence": "high",
+          "scenario_score_range": 3,
+          "min_scenario_score": 5,
+          "max_scenario_score": 8,
+          "uncertainty_reason": [
+            "Viele standardisierte digitale Dokumenten- und Prozessaufgaben"
+          ]
+        },
+        {
+          "slug": "grafiker-in",
+          "occupation": "Grafiker/-in",
+          "confidence": "low",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Originalscore hat Scope-Hinweis",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "buchhalter-in",
+          "occupation": "Buchhalter/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "steuerberater-in",
+          "occupation": "Steuerberater/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "jurist-in",
+          "occupation": "Jurist/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 6,
+          "max_scenario_score": 8,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Unklare Schweizer Berufszuordnung",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "primarlehrer-in",
+          "occupation": "Primarlehrer/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 3,
+          "max_scenario_score": 5,
+          "uncertainty_reason": [
+            "Starke Variation zwischen Institutionen",
+            "Beziehungs- und Aufsichtsanteil"
+          ]
+        },
+        {
+          "slug": "detailhandelsfachmann",
+          "occupation": "Detailhandelsfachmann/-frau",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 5,
+          "max_scenario_score": 7,
+          "uncertainty_reason": [
+            "Starke Variation zwischen Organisationen",
+            "Kundenkontakt und Datenzugang relevant"
+          ]
+        }
+      ]
+    },
+    "adoption_adjusted_base_2026": {
+      "id": "adoption_adjusted_base_2026",
+      "label": "Heute 2026 adoptionsgewichtet",
+      "description": "Technische Exposition plus separater Adoptionaufschlag",
+      "very_high_8_10": 24,
+      "medium_5_7": 20,
+      "low_0_4": 28,
+      "weighted_score": 5.84,
+      "top_10_deltas": [
+        {
+          "slug": "cutter-in",
+          "occupation": "Cutter/-in (Video/Film)",
+          "score_2024": 5,
+          "scenario_score": 9,
+          "delta": 4
+        },
+        {
+          "slug": "grafiker-in",
+          "occupation": "Grafiker/-in",
+          "score_2024": 5,
+          "scenario_score": 9,
+          "delta": 4
+        },
+        {
+          "slug": "hr-fachmann",
+          "occupation": "HR-Fachmann/-frau",
+          "score_2024": 5,
+          "scenario_score": 9,
+          "delta": 4
+        },
+        {
+          "slug": "ux-designer",
+          "occupation": "UX Designer/-in",
+          "score_2024": 5,
+          "scenario_score": 9,
+          "delta": 4
+        },
+        {
+          "slug": "fotograf-in",
+          "occupation": "Fotograf/-in",
+          "score_2024": 4,
+          "scenario_score": 8,
+          "delta": 4
+        },
+        {
+          "slug": "cybersecurity",
+          "occupation": "Cybersecurity-Spezialist/-in",
+          "score_2024": 7,
+          "scenario_score": 10,
+          "delta": 3
+        },
+        {
+          "slug": "data-scientist",
+          "occupation": "Data Scientist",
+          "score_2024": 7,
+          "scenario_score": 10,
+          "delta": 3
+        },
+        {
+          "slug": "ki-ingenieur",
+          "occupation": "KI-Ingenieur/-in",
+          "score_2024": 7,
+          "scenario_score": 10,
+          "delta": 3
+        },
+        {
+          "slug": "sysadmin",
+          "occupation": "Systemadministrator/-in",
+          "score_2024": 7,
+          "scenario_score": 10,
+          "delta": 3
+        },
+        {
+          "slug": "buchhalter-in",
+          "occupation": "Buchhalter/-in",
+          "score_2024": 6,
+          "scenario_score": 9,
+          "delta": 3
+        }
+      ],
+      "top_10_uncertainty": [
+        {
+          "slug": "fotograf-in",
+          "occupation": "Fotograf/-in",
+          "confidence": "medium",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "cutter-in",
+          "occupation": "Cutter/-in (Video/Film)",
+          "confidence": "medium",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "hr-fachmann",
+          "occupation": "HR-Fachmann/-frau",
+          "confidence": "high",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Viele standardisierte digitale Dokumenten- und Prozessaufgaben",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "zollbeamter",
+          "occupation": "Zollbeamte/r",
+          "confidence": "high",
+          "scenario_score_range": 3,
+          "min_scenario_score": 5,
+          "max_scenario_score": 8,
+          "uncertainty_reason": [
+            "Viele standardisierte digitale Dokumenten- und Prozessaufgaben"
+          ]
+        },
+        {
+          "slug": "grafiker-in",
+          "occupation": "Grafiker/-in",
+          "confidence": "low",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Originalscore hat Scope-Hinweis",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "buchhalter-in",
+          "occupation": "Buchhalter/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "steuerberater-in",
+          "occupation": "Steuerberater/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "jurist-in",
+          "occupation": "Jurist/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 6,
+          "max_scenario_score": 8,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Unklare Schweizer Berufszuordnung",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "primarlehrer-in",
+          "occupation": "Primarlehrer/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 3,
+          "max_scenario_score": 5,
+          "uncertainty_reason": [
+            "Starke Variation zwischen Institutionen",
+            "Beziehungs- und Aufsichtsanteil"
+          ]
+        },
+        {
+          "slug": "detailhandelsfachmann",
+          "occupation": "Detailhandelsfachmann/-frau",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 5,
+          "max_scenario_score": 7,
+          "uncertainty_reason": [
+            "Starke Variation zwischen Organisationen",
+            "Kundenkontakt und Datenzugang relevant"
+          ]
+        }
+      ]
+    },
+    "no_role_overrides": {
+      "id": "no_role_overrides",
+      "label": "Ohne Berufs-Overrides",
+      "description": "Technische Modifikatoren ohne berufsspezifische Overrides",
+      "very_high_8_10": 20,
+      "medium_5_7": 24,
+      "low_0_4": 28,
+      "weighted_score": 5.56,
+      "top_10_deltas": [
+        {
+          "slug": "data-scientist",
+          "occupation": "Data Scientist",
+          "score_2024": 7,
+          "scenario_score": 10,
+          "delta": 3
+        },
+        {
+          "slug": "ki-ingenieur",
+          "occupation": "KI-Ingenieur/-in",
+          "score_2024": 7,
+          "scenario_score": 10,
+          "delta": 3
+        },
+        {
+          "slug": "sysadmin",
+          "occupation": "Systemadministrator/-in",
+          "score_2024": 7,
+          "scenario_score": 10,
+          "delta": 3
+        },
+        {
+          "slug": "journalist-in",
+          "occupation": "Journalist/-in",
+          "score_2024": 6,
+          "scenario_score": 9,
+          "delta": 3
+        },
+        {
+          "slug": "pr-fachmann",
+          "occupation": "PR-Fachmann/-frau",
+          "score_2024": 6,
+          "scenario_score": 9,
+          "delta": 3
+        },
+        {
+          "slug": "sachbearbeiter-verwaltung",
+          "occupation": "Sachbearbeiter/-in (Verwaltung)",
+          "score_2024": 6,
+          "scenario_score": 9,
+          "delta": 3
+        },
+        {
+          "slug": "sekretaer-in",
+          "occupation": "Sekretär/-in",
+          "score_2024": 6,
+          "scenario_score": 9,
+          "delta": 3
+        },
+        {
+          "slug": "cutter-in",
+          "occupation": "Cutter/-in (Video/Film)",
+          "score_2024": 5,
+          "scenario_score": 8,
+          "delta": 3
+        },
+        {
+          "slug": "grafiker-in",
+          "occupation": "Grafiker/-in",
+          "score_2024": 5,
+          "scenario_score": 8,
+          "delta": 3
+        },
+        {
+          "slug": "hr-fachmann",
+          "occupation": "HR-Fachmann/-frau",
+          "score_2024": 5,
+          "scenario_score": 8,
+          "delta": 3
+        }
+      ],
+      "top_10_uncertainty": [
+        {
+          "slug": "fotograf-in",
+          "occupation": "Fotograf/-in",
+          "confidence": "medium",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "cutter-in",
+          "occupation": "Cutter/-in (Video/Film)",
+          "confidence": "medium",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "hr-fachmann",
+          "occupation": "HR-Fachmann/-frau",
+          "confidence": "high",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Viele standardisierte digitale Dokumenten- und Prozessaufgaben",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "zollbeamter",
+          "occupation": "Zollbeamte/r",
+          "confidence": "high",
+          "scenario_score_range": 3,
+          "min_scenario_score": 5,
+          "max_scenario_score": 8,
+          "uncertainty_reason": [
+            "Viele standardisierte digitale Dokumenten- und Prozessaufgaben"
+          ]
+        },
+        {
+          "slug": "grafiker-in",
+          "occupation": "Grafiker/-in",
+          "confidence": "low",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Originalscore hat Scope-Hinweis",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "buchhalter-in",
+          "occupation": "Buchhalter/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "steuerberater-in",
+          "occupation": "Steuerberater/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "jurist-in",
+          "occupation": "Jurist/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 6,
+          "max_scenario_score": 8,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Unklare Schweizer Berufszuordnung",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "primarlehrer-in",
+          "occupation": "Primarlehrer/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 3,
+          "max_scenario_score": 5,
+          "uncertainty_reason": [
+            "Starke Variation zwischen Institutionen",
+            "Beziehungs- und Aufsichtsanteil"
+          ]
+        },
+        {
+          "slug": "detailhandelsfachmann",
+          "occupation": "Detailhandelsfachmann/-frau",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 5,
+          "max_scenario_score": 7,
+          "uncertainty_reason": [
+            "Starke Variation zwischen Organisationen",
+            "Kundenkontakt und Datenzugang relevant"
+          ]
+        }
+      ]
+    },
+    "half_modifiers": {
+      "id": "half_modifiers",
+      "label": "Halbierte Modifikatoren",
+      "description": "Konservativere technische Fortschrittsannahmen",
+      "very_high_8_10": 8,
+      "medium_5_7": 34,
+      "low_0_4": 30,
+      "weighted_score": 4.86,
+      "top_10_deltas": [
+        {
+          "slug": "data-scientist",
+          "occupation": "Data Scientist",
+          "score_2024": 7,
+          "scenario_score": 9,
+          "delta": 2
+        },
+        {
+          "slug": "ki-ingenieur",
+          "occupation": "KI-Ingenieur/-in",
+          "score_2024": 7,
+          "scenario_score": 9,
+          "delta": 2
+        },
+        {
+          "slug": "sysadmin",
+          "occupation": "Systemadministrator/-in",
+          "score_2024": 7,
+          "scenario_score": 9,
+          "delta": 2
+        },
+        {
+          "slug": "journalist-in",
+          "occupation": "Journalist/-in",
+          "score_2024": 6,
+          "scenario_score": 8,
+          "delta": 2
+        },
+        {
+          "slug": "sachbearbeiter-verwaltung",
+          "occupation": "Sachbearbeiter/-in (Verwaltung)",
+          "score_2024": 6,
+          "scenario_score": 8,
+          "delta": 2
+        },
+        {
+          "slug": "sekretaer-in",
+          "occupation": "Sekretär/-in",
+          "score_2024": 6,
+          "scenario_score": 8,
+          "delta": 2
+        },
+        {
+          "slug": "grafiker-in",
+          "occupation": "Grafiker/-in",
+          "score_2024": 5,
+          "scenario_score": 7,
+          "delta": 2
+        },
+        {
+          "slug": "it-projektleiter",
+          "occupation": "IT-Projektleiter/-in",
+          "score_2024": 5,
+          "scenario_score": 7,
+          "delta": 2
+        },
+        {
+          "slug": "ux-designer",
+          "occupation": "UX Designer/-in",
+          "score_2024": 5,
+          "scenario_score": 7,
+          "delta": 2
+        },
+        {
+          "slug": "fotograf-in",
+          "occupation": "Fotograf/-in",
+          "score_2024": 4,
+          "scenario_score": 6,
+          "delta": 2
+        }
+      ],
+      "top_10_uncertainty": [
+        {
+          "slug": "fotograf-in",
+          "occupation": "Fotograf/-in",
+          "confidence": "medium",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "cutter-in",
+          "occupation": "Cutter/-in (Video/Film)",
+          "confidence": "medium",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "hr-fachmann",
+          "occupation": "HR-Fachmann/-frau",
+          "confidence": "high",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Viele standardisierte digitale Dokumenten- und Prozessaufgaben",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "zollbeamter",
+          "occupation": "Zollbeamte/r",
+          "confidence": "high",
+          "scenario_score_range": 3,
+          "min_scenario_score": 5,
+          "max_scenario_score": 8,
+          "uncertainty_reason": [
+            "Viele standardisierte digitale Dokumenten- und Prozessaufgaben"
+          ]
+        },
+        {
+          "slug": "grafiker-in",
+          "occupation": "Grafiker/-in",
+          "confidence": "low",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Originalscore hat Scope-Hinweis",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "buchhalter-in",
+          "occupation": "Buchhalter/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "steuerberater-in",
+          "occupation": "Steuerberater/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "jurist-in",
+          "occupation": "Jurist/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 6,
+          "max_scenario_score": 8,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Unklare Schweizer Berufszuordnung",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "primarlehrer-in",
+          "occupation": "Primarlehrer/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 3,
+          "max_scenario_score": 5,
+          "uncertainty_reason": [
+            "Starke Variation zwischen Institutionen",
+            "Beziehungs- und Aufsichtsanteil"
+          ]
+        },
+        {
+          "slug": "detailhandelsfachmann",
+          "occupation": "Detailhandelsfachmann/-frau",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 5,
+          "max_scenario_score": 7,
+          "uncertainty_reason": [
+            "Starke Variation zwischen Organisationen",
+            "Kundenkontakt und Datenzugang relevant"
+          ]
+        }
+      ]
+    },
+    "aggressive_modifiers": {
+      "id": "aggressive_modifiers",
+      "label": "Aggressivere Modifikatoren",
+      "description": "Hoehere technische Fortschrittsannahmen bei gleichen Caps",
+      "very_high_8_10": 27,
+      "medium_5_7": 19,
+      "low_0_4": 26,
+      "weighted_score": 5.94,
+      "top_10_deltas": [
+        {
+          "slug": "fotograf-in",
+          "occupation": "Fotograf/-in",
+          "score_2024": 4,
+          "scenario_score": 9,
+          "delta": 5
+        },
+        {
+          "slug": "cutter-in",
+          "occupation": "Cutter/-in (Video/Film)",
+          "score_2024": 5,
+          "scenario_score": 9,
+          "delta": 4
+        },
+        {
+          "slug": "grafiker-in",
+          "occupation": "Grafiker/-in",
+          "score_2024": 5,
+          "scenario_score": 9,
+          "delta": 4
+        },
+        {
+          "slug": "hr-fachmann",
+          "occupation": "HR-Fachmann/-frau",
+          "score_2024": 5,
+          "scenario_score": 9,
+          "delta": 4
+        },
+        {
+          "slug": "it-projektleiter",
+          "occupation": "IT-Projektleiter/-in",
+          "score_2024": 5,
+          "scenario_score": 9,
+          "delta": 4
+        },
+        {
+          "slug": "ux-designer",
+          "occupation": "UX Designer/-in",
+          "score_2024": 5,
+          "scenario_score": 9,
+          "delta": 4
+        },
+        {
+          "slug": "jurist-in",
+          "occupation": "Jurist/-in",
+          "score_2024": 4,
+          "scenario_score": 8,
+          "delta": 4
+        },
+        {
+          "slug": "zollbeamter",
+          "occupation": "Zollbeamte/r",
+          "score_2024": 4,
+          "scenario_score": 8,
+          "delta": 4
+        },
+        {
+          "slug": "cybersecurity",
+          "occupation": "Cybersecurity-Spezialist/-in",
+          "score_2024": 7,
+          "scenario_score": 10,
+          "delta": 3
+        },
+        {
+          "slug": "data-scientist",
+          "occupation": "Data Scientist",
+          "score_2024": 7,
+          "scenario_score": 10,
+          "delta": 3
+        }
+      ],
+      "top_10_uncertainty": [
+        {
+          "slug": "fotograf-in",
+          "occupation": "Fotograf/-in",
+          "confidence": "medium",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "cutter-in",
+          "occupation": "Cutter/-in (Video/Film)",
+          "confidence": "medium",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "hr-fachmann",
+          "occupation": "HR-Fachmann/-frau",
+          "confidence": "high",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Viele standardisierte digitale Dokumenten- und Prozessaufgaben",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "zollbeamter",
+          "occupation": "Zollbeamte/r",
+          "confidence": "high",
+          "scenario_score_range": 3,
+          "min_scenario_score": 5,
+          "max_scenario_score": 8,
+          "uncertainty_reason": [
+            "Viele standardisierte digitale Dokumenten- und Prozessaufgaben"
+          ]
+        },
+        {
+          "slug": "grafiker-in",
+          "occupation": "Grafiker/-in",
+          "confidence": "low",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Originalscore hat Scope-Hinweis",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "buchhalter-in",
+          "occupation": "Buchhalter/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "steuerberater-in",
+          "occupation": "Steuerberater/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "jurist-in",
+          "occupation": "Jurist/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 6,
+          "max_scenario_score": 8,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Unklare Schweizer Berufszuordnung",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "primarlehrer-in",
+          "occupation": "Primarlehrer/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 3,
+          "max_scenario_score": 5,
+          "uncertainty_reason": [
+            "Starke Variation zwischen Institutionen",
+            "Beziehungs- und Aufsichtsanteil"
+          ]
+        },
+        {
+          "slug": "detailhandelsfachmann",
+          "occupation": "Detailhandelsfachmann/-frau",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 5,
+          "max_scenario_score": 7,
+          "uncertainty_reason": [
+            "Starke Variation zwischen Organisationen",
+            "Kundenkontakt und Datenzugang relevant"
+          ]
+        }
+      ]
+    },
+    "no_caps": {
+      "id": "no_caps",
+      "label": "Ohne Caps",
+      "description": "Technisches Basisszenario ohne berufsfeldspezifische Obergrenzen",
+      "very_high_8_10": 21,
+      "medium_5_7": 23,
+      "low_0_4": 28,
+      "weighted_score": 5.66,
+      "top_10_deltas": [
+        {
+          "slug": "journalist-in",
+          "occupation": "Journalist/-in",
+          "score_2024": 6,
+          "scenario_score": 10,
+          "delta": 4
+        },
+        {
+          "slug": "sekretaer-in",
+          "occupation": "Sekretär/-in",
+          "score_2024": 6,
+          "scenario_score": 10,
+          "delta": 4
+        },
+        {
+          "slug": "grafiker-in",
+          "occupation": "Grafiker/-in",
+          "score_2024": 5,
+          "scenario_score": 9,
+          "delta": 4
+        },
+        {
+          "slug": "fotograf-in",
+          "occupation": "Fotograf/-in",
+          "score_2024": 4,
+          "scenario_score": 8,
+          "delta": 4
+        },
+        {
+          "slug": "cybersecurity",
+          "occupation": "Cybersecurity-Spezialist/-in",
+          "score_2024": 7,
+          "scenario_score": 10,
+          "delta": 3
+        },
+        {
+          "slug": "data-scientist",
+          "occupation": "Data Scientist",
+          "score_2024": 7,
+          "scenario_score": 10,
+          "delta": 3
+        },
+        {
+          "slug": "ki-ingenieur",
+          "occupation": "KI-Ingenieur/-in",
+          "score_2024": 7,
+          "scenario_score": 10,
+          "delta": 3
+        },
+        {
+          "slug": "sysadmin",
+          "occupation": "Systemadministrator/-in",
+          "score_2024": 7,
+          "scenario_score": 10,
+          "delta": 3
+        },
+        {
+          "slug": "pr-fachmann",
+          "occupation": "PR-Fachmann/-frau",
+          "score_2024": 6,
+          "scenario_score": 9,
+          "delta": 3
+        },
+        {
+          "slug": "sachbearbeiter-verwaltung",
+          "occupation": "Sachbearbeiter/-in (Verwaltung)",
+          "score_2024": 6,
+          "scenario_score": 9,
+          "delta": 3
+        }
+      ],
+      "top_10_uncertainty": [
+        {
+          "slug": "fotograf-in",
+          "occupation": "Fotograf/-in",
+          "confidence": "medium",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "cutter-in",
+          "occupation": "Cutter/-in (Video/Film)",
+          "confidence": "medium",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "hr-fachmann",
+          "occupation": "HR-Fachmann/-frau",
+          "confidence": "high",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Viele standardisierte digitale Dokumenten- und Prozessaufgaben",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "zollbeamter",
+          "occupation": "Zollbeamte/r",
+          "confidence": "high",
+          "scenario_score_range": 3,
+          "min_scenario_score": 5,
+          "max_scenario_score": 8,
+          "uncertainty_reason": [
+            "Viele standardisierte digitale Dokumenten- und Prozessaufgaben"
+          ]
+        },
+        {
+          "slug": "grafiker-in",
+          "occupation": "Grafiker/-in",
+          "confidence": "low",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Originalscore hat Scope-Hinweis",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "buchhalter-in",
+          "occupation": "Buchhalter/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "steuerberater-in",
+          "occupation": "Steuerberater/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "jurist-in",
+          "occupation": "Jurist/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 6,
+          "max_scenario_score": 8,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Unklare Schweizer Berufszuordnung",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "primarlehrer-in",
+          "occupation": "Primarlehrer/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 3,
+          "max_scenario_score": 5,
+          "uncertainty_reason": [
+            "Starke Variation zwischen Institutionen",
+            "Beziehungs- und Aufsichtsanteil"
+          ]
+        },
+        {
+          "slug": "detailhandelsfachmann",
+          "occupation": "Detailhandelsfachmann/-frau",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 5,
+          "max_scenario_score": 7,
+          "uncertainty_reason": [
+            "Starke Variation zwischen Organisationen",
+            "Kundenkontakt und Datenzugang relevant"
+          ]
+        }
+      ]
+    },
+    "strict_caps": {
+      "id": "strict_caps",
+      "label": "Strengere Caps",
+      "description": "Technisches Basisszenario mit um einen Scorepunkt strengeren Caps",
+      "very_high_8_10": 19,
+      "medium_5_7": 25,
+      "low_0_4": 28,
+      "weighted_score": 5.4,
+      "top_10_deltas": [
+        {
+          "slug": "fotograf-in",
+          "occupation": "Fotograf/-in",
+          "score_2024": 4,
+          "scenario_score": 8,
+          "delta": 4
+        },
+        {
+          "slug": "cutter-in",
+          "occupation": "Cutter/-in (Video/Film)",
+          "score_2024": 5,
+          "scenario_score": 8,
+          "delta": 3
+        },
+        {
+          "slug": "grafiker-in",
+          "occupation": "Grafiker/-in",
+          "score_2024": 5,
+          "scenario_score": 8,
+          "delta": 3
+        },
+        {
+          "slug": "hr-fachmann",
+          "occupation": "HR-Fachmann/-frau",
+          "score_2024": 5,
+          "scenario_score": 8,
+          "delta": 3
+        },
+        {
+          "slug": "it-projektleiter",
+          "occupation": "IT-Projektleiter/-in",
+          "score_2024": 5,
+          "scenario_score": 8,
+          "delta": 3
+        },
+        {
+          "slug": "ux-designer",
+          "occupation": "UX Designer/-in",
+          "score_2024": 5,
+          "scenario_score": 8,
+          "delta": 3
+        },
+        {
+          "slug": "jurist-in",
+          "occupation": "Jurist/-in",
+          "score_2024": 4,
+          "scenario_score": 7,
+          "delta": 3
+        },
+        {
+          "slug": "zollbeamter",
+          "occupation": "Zollbeamte/r",
+          "score_2024": 4,
+          "scenario_score": 7,
+          "delta": 3
+        },
+        {
+          "slug": "cybersecurity",
+          "occupation": "Cybersecurity-Spezialist/-in",
+          "score_2024": 7,
+          "scenario_score": 9,
+          "delta": 2
+        },
+        {
+          "slug": "data-scientist",
+          "occupation": "Data Scientist",
+          "score_2024": 7,
+          "scenario_score": 9,
+          "delta": 2
+        }
+      ],
+      "top_10_uncertainty": [
+        {
+          "slug": "fotograf-in",
+          "occupation": "Fotograf/-in",
+          "confidence": "medium",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "cutter-in",
+          "occupation": "Cutter/-in (Video/Film)",
+          "confidence": "medium",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "hr-fachmann",
+          "occupation": "HR-Fachmann/-frau",
+          "confidence": "high",
+          "scenario_score_range": 3,
+          "min_scenario_score": 6,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Viele standardisierte digitale Dokumenten- und Prozessaufgaben",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "zollbeamter",
+          "occupation": "Zollbeamte/r",
+          "confidence": "high",
+          "scenario_score_range": 3,
+          "min_scenario_score": 5,
+          "max_scenario_score": 8,
+          "uncertainty_reason": [
+            "Viele standardisierte digitale Dokumenten- und Prozessaufgaben"
+          ]
+        },
+        {
+          "slug": "grafiker-in",
+          "occupation": "Grafiker/-in",
+          "confidence": "low",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Starke Variation nach Auftrag, Rechten und Organisation",
+            "Originalscore hat Scope-Hinweis",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "buchhalter-in",
+          "occupation": "Buchhalter/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "steuerberater-in",
+          "occupation": "Steuerberater/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 7,
+          "max_scenario_score": 9,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "jurist-in",
+          "occupation": "Jurist/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 6,
+          "max_scenario_score": 8,
+          "uncertainty_reason": [
+            "Hohe regulatorische Verantwortung",
+            "Datenzugang und Auditierbarkeit entscheidend",
+            "Unklare Schweizer Berufszuordnung",
+            "Berufsspezifischer Override sensitiv"
+          ]
+        },
+        {
+          "slug": "primarlehrer-in",
+          "occupation": "Primarlehrer/-in",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 3,
+          "max_scenario_score": 5,
+          "uncertainty_reason": [
+            "Starke Variation zwischen Institutionen",
+            "Beziehungs- und Aufsichtsanteil"
+          ]
+        },
+        {
+          "slug": "detailhandelsfachmann",
+          "occupation": "Detailhandelsfachmann/-frau",
+          "confidence": "medium",
+          "scenario_score_range": 2,
+          "min_scenario_score": 5,
+          "max_scenario_score": 7,
+          "uncertainty_reason": [
+            "Starke Variation zwischen Organisationen",
+            "Kundenkontakt und Datenzugang relevant"
+          ]
+        }
+      ]
+    }
+  }
+}
