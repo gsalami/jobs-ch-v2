@@ -1201,6 +1201,34 @@
       line-height: 1.65;
     }
 
+    .today-audit-row {
+      margin-top: 0.9rem;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(130px, 1fr));
+      gap: 0.65rem;
+    }
+
+    .today-audit-step {
+      background: #0c0c14;
+      border: 1px solid rgba(47,99,255,0.28);
+      border-radius: 10px;
+      padding: 0.8rem;
+    }
+
+    .today-audit-step b {
+      display: block;
+      color: #e8e8f0;
+      font-size: 0.82rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .today-audit-step span {
+      display: block;
+      color: #a9a9c6;
+      font-size: 0.76rem;
+      line-height: 1.45;
+    }
+
     .source-index {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -1471,7 +1499,7 @@
       }
       #detail-panel { width: 100%; }
       .controls input { width: 140px; }
-      .pipeline, .method-example {
+      .pipeline, .method-example, .today-audit-row {
         grid-template-columns: 1fr;
       }
       .pipeline-step:not(:last-child)::after {
@@ -1728,12 +1756,12 @@
   <figure class="method-image-card">
     <img src="assets/score-method-infographic.png" alt="Infografik: So entsteht der KI-Expositionsscore von Eloundou-Beta-Score über SOC-Bereinigung, ISCO-08-Mapping und BFS-Daten zum Dashboard-Score">
     <figcaption class="method-image-caption">
-      Visueller Überblick über die Berechnung: Eloundou-Beta-Score, SOC/ISCO-Mapping, Schweizer Berufszuordnung mit BFS-Daten und Rundung auf den Dashboard-Score.
+      Visueller Überblick über die Science-2024-Basis: Eloundou-Beta-Score, SOC/ISCO-Mapping, Schweizer Berufszuordnung mit BFS-Daten und Rundung auf den Dashboard-Score. Die Heute-2026-Sicht ergänzt diesen Basiswert anschliessend um technische Modifikatoren, Caps, separate Adoption und Sensitivität.
     </figcaption>
   </figure>
 
-  <div class="method-visual" aria-label="Methodik-Illustration: Von Eloundou-Daten über Mapping und Schweizer Daten zum Dashboard-Score">
-    <h3>Prüfpfad: von Quelle zu Score</h3>
+  <div class="method-visual" aria-label="Methodik-Illustration: Von Eloundou-Daten über Mapping, Schweizer Daten und 2026-Heuristik zum Dashboard-Score">
+    <h3>Prüfpfad: Science-2024-Basis</h3>
     <div class="pipeline">
       <div class="pipeline-step">
         <div class="pipeline-num">1</div>
@@ -1794,6 +1822,25 @@
           <li>Score kontrollieren: `round(beta x 10)` muss dem angezeigten Wert entsprechen.</li>
           <li>Bei Berufen mit Badge "Plausibilisierung" die konkrete Tätigkeitsmischung prüfen.</li>
         </ul>
+      </div>
+    </div>
+
+    <div class="today-audit-row" aria-label="Zusatzprüfpfad für die Heute-2026-Sicht">
+      <div class="today-audit-step">
+        <b>Heute 2026 startet beim Original</b>
+        <span>beta_2024 bleibt unverändert. Die neue Sicht ersetzt die Science-Basis nicht, sondern rechnet ein transparentes Szenario darauf.</span>
+      </div>
+      <div class="today-audit-step">
+        <b>Technische Modifikatoren</b>
+        <span>Long Context, Agenten/Tools, Multimodalität und wenige Berufs-Overrides werden nur addiert, wenn keine Doppelzählung plausibel ist.</span>
+      </div>
+      <div class="today-audit-step">
+        <b>Caps und Schweizer Limiten</b>
+        <span>Regulierung, Haftung, physische Präsenz, Beziehungsarbeit und Schweizer Tätigkeitsmischung begrenzen den technischen Score.</span>
+      </div>
+      <div class="today-audit-step">
+        <b>Adoption separat prüfen</b>
+        <span>Die Hauptansicht zeigt technische Exposition. Adoption, Sensitivität, Confidence und Mini-Reannotation liegen als eigene Prüfdaten daneben.</span>
       </div>
     </div>
   </div>
