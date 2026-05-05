@@ -18,7 +18,7 @@ node scripts/validate-dashboard.js
 
 ## Today 2026 framework
 
-The updated AI-exposure view is a conservative heuristic extension of the Science 2024 base values, not a full task-level replication. It separates technical exposure from adoption-adjusted exposure and includes sensitivity, uncertainty, mapping, and mini-reannotation artifacts.
+The updated AI-exposure view is a scenario-based heuristic extension of the Science 2024 base values, not a full task-level replication. It separates technical exposure from adoption-adjusted exposure and includes sensitivity, uncertainty, mapping, and mini-reannotation artifacts.
 
 Documentation:
 

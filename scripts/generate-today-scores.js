@@ -31,10 +31,10 @@ const CATS = {
 };
 
 const MODEL = {
-  id: "ai-exposure-framework-2026-04-24-v0.2",
-  asOf: "2026-04-24",
-  title: "Konservative 2026-Heuristik auf Basis der Eloundou et al. 2024 Werte",
-  framing: "Heuristische Erweiterung, keine vollstaendige neue Task-Annotation und keine Replikation der Science-Studie.",
+  id: "ai-exposure-framework-2026-05-05-v0.3",
+  asOf: "2026-05-05",
+  title: "Szenariobasierte 2026-Heuristik auf Basis der Eloundou et al. 2024 Werte",
+  framing: "Heuristische Erweiterung, keine vollstaendige neue Task-Annotation und keine Replikation der Science-Studie. Das Hauptszenario ist ein plausibles Basisszenario; die konservative Variante ist das Szenario mit halbierten Modifikatoren.",
   formulas: {
     technical: "technical_beta_2026 = min(cap / 10, beta_2024 + long_context + agentic_tools + multimodal + role_override)",
     adoptionAdjusted: "adoption_adjusted_beta_2026 = min(cap / 10, technical_beta_2026 + adoption)",
@@ -49,8 +49,17 @@ const MODEL = {
     "https://openai.com/index/hello-gpt-4o/",
     "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
     "https://blog.google/products-and-platforms/products/gemini/google-gemini-update-may-2024/",
-    "https://news.microsoft.com/source/emea/2025/04/2025-work-trend-index-swiss-organizations-lead-in-ai-adoption-52-automate-entire-business-processes-surpassing-global-and-european-averages/"
+    "https://news.microsoft.com/source/emea/2025/04/2025-work-trend-index-swiss-organizations-lead-in-ai-adoption-52-automate-entire-business-processes-surpassing-global-and-european-averages/",
+    "https://dam-api.bfs.admin.ch/hub/api/dam/assets/36195847/master",
+    "https://dam-api.bfs.admin.ch/hub/api/dam/assets/36035149/master",
+    "https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_202/-/px-x-0304010000_202.px/"
   ],
+  dataCurrency: {
+    dashboardPay: "Berufsnahe Lohnschaetzungen im Dashboard basieren weiterhin auf den vorhandenen LSE-2022-Ableitungen und wurden nicht still auf 2024 umetikettiert.",
+    dashboardJobs: "Berufsnahe Beschaeftigungsschaetzungen im Dashboard basieren weiterhin auf den vorhandenen SAKE-2023-Ableitungen und wurden nicht still auf 2024 umetikettiert.",
+    latestBfsPay: "BFS LSE 2024 ist verfuegbar; der gesamtwirtschaftliche Medianlohn lag 2024 bei 7024 Franken brutto pro Monat.",
+    latestBfsJobs: "BFS SAKE in Kuerze 2024 ist verfuegbar; sie weist 4.876 Mio. Erwerbstaetige in der staendigen Wohnbevoelkerung und 5.340 Mio. Erwerbstaetige in der Schweiz aus, je nach Definition."
+  },
   categoryFactors: {
     "finanzen-recht": {
       longContext: 0.10,
@@ -65,14 +74,14 @@ const MODEL = {
     },
     "it-tech": {
       longContext: 0.09,
-      agentic: 0.14,
+      agentic: 0.11,
       multimodal: 0.03,
       adoption: 0.05,
-      cap: 10,
-      capType: "technisch",
-      capRationale: "Der Aufgabenraum ist stark digital und code-/toolnah; es gibt kaum physische Grenzen innerhalb des LLM-Scopes.",
-      capCouldRiseIf: "nicht relevant, Cap liegt bereits bei 10.",
-      note: "Coding-Agenten, Tool-Use, grosse Codebasen und IT-Workflows"
+      cap: 9,
+      capType: "technisch/regulatorisch/sozial",
+      capRationale: "Der Aufgabenraum ist stark digital, aber Schweizer IT-Rollen enthalten oft Requirement Engineering, Architektur, Testing, Stakeholder-Interaktion und Haftung in regulierten oder sicherheitskritischen Systemen. Einfachere Implementierungsaufgaben sind teils off-/nearshored.",
+      capCouldRiseIf: "auditierbare Coding- und Architekturagenten in regulierten Umgebungen breit validiert werden und Verantwortung, Security Review sowie Change-Prozesse technisch besser abgesichert sind.",
+      note: "Coding-Agenten und Repository-Kontext, aber Schweizer Rollen enthalten viel Architektur, Review, Interaktion und Verantwortung"
     },
     "gesundheit": {
       longContext: 0.07,
@@ -208,11 +217,11 @@ const MODEL = {
     }
   },
   roleOverrides: {
-    "softwareentwickler-in": { delta: 0.04, label: "Coding-Agenten und Repository-Kontext" },
-    "data-scientist": { delta: 0.06, label: "Datenanalyse-, Notebook- und Modellierungsagenten" },
-    "sysadmin": { delta: 0.04, label: "Tool-Use für IT-Betrieb und Runbooks" },
-    "cybersecurity": { delta: 0.07, label: "Security-Codeanalyse und Triage-Agenten" },
-    "ki-ingenieur": { delta: 0.08, label: "KI-native Workflows" },
+    "softwareentwickler-in": { delta: 0.02, label: "Coding-Agenten und Repository-Kontext, begrenzt durch Architektur und Review" },
+    "data-scientist": { delta: 0.04, label: "Datenanalyse-, Notebook- und Modellierungsagenten" },
+    "sysadmin": { delta: 0.03, label: "Tool-Use für IT-Betrieb und Runbooks" },
+    "cybersecurity": { delta: 0.04, label: "Security-Codeanalyse und Triage-Agenten, begrenzt durch Haftung und Angriffskontext" },
+    "ki-ingenieur": { delta: 0.05, label: "KI-native Workflows, begrenzt durch Evaluation und Produktionsverantwortung" },
     "jurist-in": { delta: 0.06, label: "Long-Context Legal Review" },
     "steuerberater-in": { delta: 0.04, label: "Steuer-Research und Mandatsdokumente" },
     "buchhalter-in": { delta: 0.05, label: "Beleg-, Report- und Abstimmungsworkflows" },
@@ -225,7 +234,7 @@ const MODEL = {
     "reisebuero": { delta: 0.06, label: "Reiseplanungs-Agenten" },
     "arzt-aerztin": { delta: 0.02, label: "medizinische Dokumentation" },
     "apotheker-in": { delta: 0.02, label: "Interaktions- und Beratungsassistenz" },
-    "ux-designer": { delta: 0.04, label: "Prototyping, Research-Synthese und UI-Text" },
+    "ux-designer": { delta: 0.03, label: "Prototyping, Research-Synthese und UI-Text" },
     "hr-fachmann": { delta: 0.03, label: "Recruiting-, Policy- und Interview-Workflows" },
     "einkaeufer-in": { delta: 0.03, label: "Lieferantenrecherche und Angebotsvergleich" },
     "hotelfachmann": { delta: 0.03, label: "Buchung, Gaestekommunikation und Content" },
@@ -237,7 +246,7 @@ const MODEL = {
 
 const CATEGORY_CONFIDENCE = {
   "finanzen-recht": { confidence: "medium", reasons: ["Hohe regulatorische Verantwortung", "Datenzugang und Auditierbarkeit entscheidend"] },
-  "it-tech": { confidence: "high", reasons: ["Klar digitales Text-, Code- und Toolprofil"] },
+  "it-tech": { confidence: "medium", reasons: ["Klar digitales Text-, Code- und Toolprofil", "Schweizer Rollen enthalten oft mehr Architektur, Testing, Stakeholder-Interaktion und regulatorische Verantwortung", "Einfache Implementierungsaufgaben koennen off-/nearshored sein"] },
   "gesundheit": { confidence: "low", reasons: ["Hohe regulatorische Verantwortung", "Patientenkontakt und Datenzugang begrenzen"] },
   "bildung": { confidence: "medium", reasons: ["Starke Variation zwischen Institutionen", "Beziehungs- und Aufsichtsanteil"] },
   "handwerk-bau": { confidence: "low", reasons: ["Hoher physischer Anteil", "Vor-Ort-Kontext dominiert"] },
@@ -254,7 +263,7 @@ const CATEGORY_CONFIDENCE = {
 
 const SCENARIOS = [
   { id: "science_2024", label: "Science 2024", description: "Originale Eloundou-basierte Dashboard-Scores", adoption: false, roleScale: 0, factorScale: 0, capMode: "base" },
-  { id: "technical_base_2026", label: "Heute 2026 technisch", description: "Basisszenario ohne Adoption", adoption: false, roleScale: 1, factorScale: 1, capMode: "base" },
+  { id: "technical_base_2026", label: "Heute 2026 technisch", description: "Plausibles Basisszenario ohne Adoption; nicht als defensives Szenario zu lesen", adoption: false, roleScale: 1, factorScale: 1, capMode: "base" },
   { id: "adoption_adjusted_base_2026", label: "Heute 2026 adoptionsgewichtet", description: "Technische Exposition plus separater Adoptionaufschlag", adoption: true, roleScale: 1, factorScale: 1, capMode: "base" },
   { id: "no_role_overrides", label: "Ohne Berufs-Overrides", description: "Technische Modifikatoren ohne berufsspezifische Overrides", adoption: false, roleScale: 0, factorScale: 1, capMode: "base" },
   { id: "half_modifiers", label: "Halbierte Modifikatoren", description: "Konservativere technische Fortschrittsannahmen", adoption: false, roleScale: 0.5, factorScale: 0.5, capMode: "base" },
@@ -279,10 +288,10 @@ const REANNOTATION_SAMPLE = [
 
   task("it-tech", "Bug in grosser Codebasis lokalisieren", "E2", "E1", "long_context", "Repository-Kontext und Coding-Agenten machen die Aufgabe direkter erreichbar."),
   task("it-tech", "Unit-Tests fuer Modul schreiben", "E1", "E1", "none", "Bereits direkt durch LLMs unterstuetzbar."),
-  task("it-tech", "Deployment-Runbook ausfuehren", "E2", "E1", "agentic_tools", "Tool-Use und Terminal-Agenten reduzieren E2-Reibung."),
+  task("it-tech", "Deployment-Runbook ausfuehren", "E2", "E2", "agentic_tools", "Tool-Use reduziert Reibung, aber Produktivsysteme, Berechtigungen und Change-Freigaben bleiben begrenzend."),
   task("it-tech", "Physischen Server tauschen", "E0", "E0", "physical", "Physische Arbeit bleibt ausser Scope."),
-  task("it-tech", "Security Findings priorisieren", "E2", "E1", "agentic_tools", "Codeanalyse und Triageagenten sind deutlich staerker."),
-  task("it-tech", "Architekturentscheidung verantworten", "E0", "E2", "long_context", "KI kann Optionen vorbereiten, finale Verantwortung bleibt menschlich."),
+  task("it-tech", "Security Findings priorisieren", "E2", "E2", "agentic_tools", "Codeanalyse und Triageagenten sind staerker, aber Angriffskontext, Haftung und False Positives verhindern eine direkte Einstufung."),
+  task("it-tech", "Architekturentscheidung verantworten", "E0", "E0", "long_context", "KI kann Optionen vorbereiten, aber Systemverantwortung, Trade-offs und Stakeholder-Kontext bleiben ausserhalb direkter Exposition."),
   task("it-tech", "Datenpipeline dokumentieren", "E1", "E1", "none", "Dokumentation war bereits exponiert."),
   task("it-tech", "UI-Prototyp aus Briefing erstellen", "E2", "E1", "multimodal", "Text-, Bild- und Codegenerierung wachsen zusammen."),
 
@@ -621,7 +630,7 @@ const scenarioSummary = Object.fromEntries(SCENARIOS.map(scenario => [scenario.i
 }]));
 
 const output = {
-  generated_at: "2026-04-24",
+  generated_at: MODEL.asOf,
   model: MODEL,
   scenarios: SCENARIOS,
   summary: {
@@ -637,8 +646,8 @@ const output = {
 
 fs.mkdirSync(dataDir, { recursive: true });
 fs.writeFileSync(path.join(dataDir, "today-scores-2026.json"), JSON.stringify(output, null, 2) + "\n");
-fs.writeFileSync(path.join(dataDir, "scenario-summary-2026.json"), JSON.stringify({ generated_at: "2026-04-24", scenarios: scenarioSummary }, null, 2) + "\n");
-fs.writeFileSync(path.join(dataDir, "reannotation-sample-2026.json"), JSON.stringify({ generated_at: "2026-04-24", tasks: REANNOTATION_SAMPLE, summary: reannotationSummary() }, null, 2) + "\n");
+fs.writeFileSync(path.join(dataDir, "scenario-summary-2026.json"), JSON.stringify({ generated_at: MODEL.asOf, scenarios: scenarioSummary }, null, 2) + "\n");
+fs.writeFileSync(path.join(dataDir, "reannotation-sample-2026.json"), JSON.stringify({ generated_at: MODEL.asOf, tasks: REANNOTATION_SAMPLE, summary: reannotationSummary() }, null, 2) + "\n");
 
 writeCsv("today-scores-2026.csv", [
   "slug",

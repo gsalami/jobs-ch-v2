@@ -9,10 +9,10 @@ finanzen-recht,Finanzen & Recht,Due-Diligence-Dossier zusammenfassen,E2,E1,E2->E
 finanzen-recht,Finanzen & Recht,Standardreport aus Transaktionen entwerfen,E1,E1,E1->E1,none,Bereits text- und datenbasiert exponiert.
 it-tech,IT & Technologie,Bug in grosser Codebasis lokalisieren,E2,E1,E2->E1,long_context,Repository-Kontext und Coding-Agenten machen die Aufgabe direkter erreichbar.
 it-tech,IT & Technologie,Unit-Tests fuer Modul schreiben,E1,E1,E1->E1,none,Bereits direkt durch LLMs unterstuetzbar.
-it-tech,IT & Technologie,Deployment-Runbook ausfuehren,E2,E1,E2->E1,agentic_tools,Tool-Use und Terminal-Agenten reduzieren E2-Reibung.
+it-tech,IT & Technologie,Deployment-Runbook ausfuehren,E2,E2,E2->E2,agentic_tools,"Tool-Use reduziert Reibung, aber Produktivsysteme, Berechtigungen und Change-Freigaben bleiben begrenzend."
 it-tech,IT & Technologie,Physischen Server tauschen,E0,E0,E0->E0,physical,Physische Arbeit bleibt ausser Scope.
-it-tech,IT & Technologie,Security Findings priorisieren,E2,E1,E2->E1,agentic_tools,Codeanalyse und Triageagenten sind deutlich staerker.
-it-tech,IT & Technologie,Architekturentscheidung verantworten,E0,E2,E0->E2,long_context,"KI kann Optionen vorbereiten, finale Verantwortung bleibt menschlich."
+it-tech,IT & Technologie,Security Findings priorisieren,E2,E2,E2->E2,agentic_tools,"Codeanalyse und Triageagenten sind staerker, aber Angriffskontext, Haftung und False Positives verhindern eine direkte Einstufung."
+it-tech,IT & Technologie,Architekturentscheidung verantworten,E0,E0,E0->E0,long_context,"KI kann Optionen vorbereiten, aber Systemverantwortung, Trade-offs und Stakeholder-Kontext bleiben ausserhalb direkter Exposition."
 it-tech,IT & Technologie,Datenpipeline dokumentieren,E1,E1,E1->E1,none,Dokumentation war bereits exponiert.
 it-tech,IT & Technologie,UI-Prototyp aus Briefing erstellen,E2,E1,E2->E1,multimodal,"Text-, Bild- und Codegenerierung wachsen zusammen."
 gesundheit,Gesundheit & Pflege,Arztbrief aus Notizen entwerfen,E1,E1,E1->E1,none,Dokumentation war bereits exponiert.

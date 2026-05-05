@@ -1583,9 +1583,9 @@
     <div class="today-method-head">
       <div>
         <div class="framework-kicker">So wurde die neue Ansicht berechnet</div>
-        <h3>Konservative 2026-Heuristik, keine neue Science-Replikation</h3>
+        <h3>Szenariobasierte 2026-Heuristik, keine neue Science-Replikation</h3>
         <p>
-          Die 2026-Sicht startet bei den originalen Eloundou-Beta-Werten und prüft nur, wo heutige KI-Fähigkeiten frühere E2-Aufgaben näher an E1 rücken oder einzelne E0-Aufgaben zu E2 machen. Adoption wird nicht in den Hauptscore gemischt, sondern separat ausgewiesen.
+          Die 2026-Sicht startet bei den originalen Eloundou-Beta-Werten und prüft nur, wo heutige KI-Fähigkeiten frühere E2-Aufgaben näher an E1 rücken oder einzelne E0-Aufgaben zu E2 machen. Das Hauptszenario ist plausibel, aber nicht als defensiv zu lesen; die konservative Variante liegt in der Sensitivität mit halbierten Modifikatoren. Adoption wird nicht in den Hauptscore gemischt, sondern separat ausgewiesen.
         </p>
       </div>
       <div class="today-method-stats" aria-label="Heute-2026-Kernergebnisse">
@@ -1613,7 +1613,7 @@
       </div>
       <div class="today-method-step">
         <b>5. Unsicherheit</b>
-        <p>Jeder Beruf erhält Confidence, Unsicherheitsgründe und eine Szenario-Spannweite aus konservativen, strengen und aggressiveren Annahmen.</p>
+        <p>Jeder Beruf erhält Confidence, Unsicherheitsgründe und eine Szenario-Spannweite aus halbierten, strengen und aggressiveren Annahmen.</p>
       </div>
     </div>
     <div class="today-formula">
@@ -1650,7 +1650,7 @@
   </div>
   <div class="hl-card hl-neutral">
     <div class="hl-num" id="metric-pay">-</div>
-    <div class="hl-label">Lohnspanne<br><span>Medianlöhne CH 2022</span></div>
+    <div class="hl-label">Lohnspanne<br><span>BFS-basierte Schätzwerte</span></div>
   </div>
   <div class="hl-card hl-insight">
     <div class="hl-insight-text" id="metric-top">Am stärksten exponiert: <strong>Softwareentwickler/-in, Sysadmin, Data Scientist, KI-Ingenieur/-in</strong></div>
@@ -1663,7 +1663,7 @@
 <div class="controls">
   <input type="text" id="search" placeholder="Beruf suchen..." oninput="applyFilters()">
   <select id="catFilter" onchange="applyFilters()">
-    <option value="">Alle Branchen</option>
+    <option value="">Alle Berufsfelder</option>
     <option value="finanzen-recht">Finanzen & Recht</option>
     <option value="it-tech">IT & Technologie</option>
     <option value="gesundheit">Gesundheit & Pflege</option>
@@ -1821,14 +1821,18 @@
     </div>
     <div class="source-index-card">
       <h3>Schweizer Arbeitsmarkt</h3>
-      <p>Beschäftigte und Kontext zu Aufgabenprofilen aus BFS/SAKE.</p>
+      <p>Beschäftigte und Kontext zu Aufgabenprofilen aus BFS/SAKE. Die Berufszeilen im Dashboard nutzen die vorhandenen SAKE-2023-Ableitungen; die aktuelleren SAKE-2024-Publikationen sind als Datenrefresh-Quelle verlinkt.</p>
       <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb.html" target="_blank" rel="noopener noreferrer">BFS Arbeit und Erwerb</a>
+      <a href="https://dam-api.bfs.admin.ch/hub/api/dam/assets/36035149/master" target="_blank" rel="noopener noreferrer">BFS SAKE in Kürze 2024</a>
+      <a href="https://www.swissstats.bfs.admin.ch/data/webviewer/appId/ch.admin.bfs.swissstat/article/issue25032062506-01/package" target="_blank" rel="noopener noreferrer">BFS Arbeitsmarktindikatoren 2025</a>
       <a href="https://www.swissstats.bfs.admin.ch/data/webviewer/appId/ch.admin.bfs.swissstat/article/issue240323012200-01/package" target="_blank" rel="noopener noreferrer">BFS/SAKE Aufgaben und Digitalisierung 2022</a>
     </div>
     <div class="source-index-card">
       <h3>Medianlöhne</h3>
-      <p>BFS Lohnstrukturerhebung als Basis der Lohnangaben.</p>
+      <p>BFS Lohnstrukturerhebung als Basis der Lohnangaben. Die Berufszeilen im Dashboard nutzen die vorhandenen LSE-2022-Ableitungen; LSE 2024 ist verfügbar und wird für den nächsten Datenrefresh verlinkt.</p>
       <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb/loehne-erwerbseinkommen-arbeitskosten/lohnstruktur.html" target="_blank" rel="noopener noreferrer">BFS Lohnstruktur</a>
+      <a href="https://dam-api.bfs.admin.ch/hub/api/dam/assets/36195847/master" target="_blank" rel="noopener noreferrer">BFS LSE 2024: erste Ergebnisse</a>
+      <a href="https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_202/-/px-x-0304010000_202.px/" target="_blank" rel="noopener noreferrer">BFS LSE 2024 PxWeb-Tabelle</a>
     </div>
     <div class="source-index-card">
       <h3>Dashboard-Prüfdaten</h3>
@@ -1839,7 +1843,7 @@
     </div>
     <div class="source-index-card">
       <h3>Heute-Framework</h3>
-      <p>Konservative 2026-Heuristik bis 24. April 2026: technische Exposition getrennt von Adoption, mit Sensitivität, Unsicherheit, Mapping und Mini-Reannotation.</p>
+      <p>Szenariobasierte 2026-Heuristik bis 5. Mai 2026: technische Exposition getrennt von Adoption, mit Sensitivität, Unsicherheit, Mapping und Mini-Reannotation. Das Hauptszenario ist ein plausibles Basisszenario, kein defensives Minimum.</p>
       <a href="docs/ai-exposure-framework-2026.html" target="_blank" rel="noopener noreferrer">Methodenpapier 2026</a>
       <a href="data/today-scores-2026.json" target="_blank" rel="noopener noreferrer">Generierte Scores JSON</a>
       <a href="data/today-scores-2026.csv" target="_blank" rel="noopener noreferrer">Generierte Scores CSV</a>
@@ -1866,7 +1870,7 @@
     </div>
     <div class="source-card">
       <h3>Zweite Sicht: Heute 2026</h3>
-      <p>Der Original-Score bleibt die Basis. Die 2026-Sicht ist keine neue wissenschaftliche Replikation, sondern eine konservative Dashboard-Heuristik. Die Hauptansicht zeigt technische Exposition; Adoption wird separat dokumentiert.</p>
+      <p>Der Original-Score bleibt die Basis. Die 2026-Sicht ist keine neue wissenschaftliche Replikation, sondern eine transparente Dashboard-Heuristik. Die Hauptansicht zeigt technische Exposition im Basisszenario; Adoption wird separat dokumentiert.</p>
       <p style="margin-top:0.65rem"><strong>Technisch:</strong> Beta = min(Cap, Original-Beta + Long-Context + Agentik + Multimodalität + Berufs-Override).<br><strong>Adoptionsgewichtet:</strong> Beta = min(Cap, technische Beta + Adoption).</p>
       <a href="docs/ai-exposure-framework-2026.html" target="_blank" rel="noopener noreferrer">-> Methodenpapier 2026</a>
       <a href="data/today-scores-2026.json" target="_blank" rel="noopener noreferrer">-> Neue Zahlen JSON</a>
@@ -1882,13 +1886,17 @@
     </div>
     <div class="source-card">
       <h3>Beschäftigte</h3>
-      <p>Bundesamt für Statistik (BFS)<br>Schweizerische Arbeitskräfteerhebung (SAKE) 2023<br>Erwerbstätige nach Beruf (ISCO-08)</p>
+      <p>Bundesamt für Statistik (BFS)<br>Dashboard-Berufszeilen: vorhandene SAKE-2023-Ableitungen<br>Aktueller Datenrefresh: SAKE in Kürze 2024 und Arbeitsmarktindikatoren 2025 verlinkt</p>
       <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb.html" target="_blank" rel="noopener noreferrer">-> bfs.admin.ch</a>
+      <a href="https://dam-api.bfs.admin.ch/hub/api/dam/assets/36035149/master" target="_blank" rel="noopener noreferrer">-> SAKE in Kürze 2024</a>
+      <a href="https://www.swissstats.bfs.admin.ch/data/webviewer/appId/ch.admin.bfs.swissstat/article/issue25032062506-01/package" target="_blank" rel="noopener noreferrer">-> Arbeitsmarktindikatoren 2025</a>
     </div>
     <div class="source-card">
       <h3>Medianlöhne</h3>
-      <p>BFS Lohnstrukturerhebung (LSE) 2022<br>Bruttolohn, Vollzeit, Median in CHF/Jahr<br>(Monatslohn x 13)</p>
+      <p>BFS Lohnstrukturerhebung (LSE)<br>Dashboard-Berufszeilen: vorhandene LSE-2022-Ableitungen<br>LSE 2024: gesamtwirtschaftlicher Median 7024 Franken brutto pro Monat</p>
       <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb/loehne-erwerbseinkommen-arbeitskosten/lohnstruktur.html" target="_blank" rel="noopener noreferrer">-> BFS Lohnstruktur</a>
+      <a href="https://dam-api.bfs.admin.ch/hub/api/dam/assets/36195847/master" target="_blank" rel="noopener noreferrer">-> LSE 2024 erste Ergebnisse</a>
+      <a href="https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_202/-/px-x-0304010000_202.px/" target="_blank" rel="noopener noreferrer">-> LSE 2024 PxWeb</a>
     </div>
     <div class="source-card">
       <h3>SOC-ISCO Mapping</h3>
@@ -1897,16 +1905,18 @@
     </div>
   </div>
   <div class="disclaimer">
-    <strong>Wichtiger Hinweis:</strong> Das Eloundou-Mass erfasst spezifisch die <strong>LLM-Exposition</strong> - also inwieweit Sprachmodelle (wie GPT-4, Claude) die Aufgaben eines Berufs beschleunigen können. Es misst <em>nicht</em> allgemeine Automatisierung durch Robotik, autonomes Fahren oder physische KI-Systeme. Deshalb haben z.B. Lastwagenfahrer/-innen oder Lagerfachleute niedrige Scores, obwohl sie durch andere Technologien potenziell betroffen sind. Ein hoher Score bedeutet vor allem: hoher möglicher Produktivitätshebel durch LLMs, nicht automatisch Ersetzbarkeit oder Jobverlust. Die Beschäftigungs- und Lohndaten basieren auf BFS-Erhebungen und sind Näherungswerte. Diese Visualisierung ersetzt keine professionelle Berufsberatung.
+    <strong>Wichtiger Hinweis:</strong> Das Eloundou-Mass erfasst spezifisch die <strong>LLM-Exposition</strong> - also inwieweit Sprachmodelle berufliche Aufgaben beschleunigen, vorbereiten, prüfen, dokumentieren oder teilweise ausführen können. Es misst <em>nicht</em> allgemeine Automatisierung durch Robotik, autonomes Fahren oder physische KI-Systeme. Deshalb haben z.B. Lastwagenfahrer/-innen oder Lagerfachleute niedrige Scores, obwohl sie durch andere Technologien potenziell betroffen sind. Ein hoher Score bedeutet vor allem: hoher möglicher Produktivitätshebel durch LLMs, nicht automatisch Ersetzbarkeit oder Jobverlust. Die Berufs-, Beschäftigungs- und Lohndaten sind Näherungswerte; aktuelle BFS-2024-Veröffentlichungen sind verlinkt, aber noch nicht als vollständiger 72-Berufe-Datenrefresh eingerechnet.
   </div>
 
   <div class="source-card" style="margin-top:1.25rem;border-color:rgba(245,158,11,0.28);">
     <h3 style="color:#f59e0b;">So sollte man die Scores lesen</h3>
     <ul style="margin:0.5rem 0 0 1.2rem;color:#b0b0cc;line-height:1.8;font-size:0.85rem;">
       <li><strong>Mapping ist eine Annäherung:</strong> Schweizer Berufsbezeichnungen decken nicht immer exakt einen O*NET- oder ISCO-Beruf ab. Je nach konkretem Tätigkeitsprofil kann die Exposition höher oder tiefer liegen.</li>
+      <li><strong>Schweizer Tätigkeitsmischung kann abweichen:</strong> Gerade in IT, Finanzwesen, Gesundheit und regulierten Bereichen können Schweizer Rollen mehr Architektur, Review, Haftung, Interaktion oder höherqualifizierte Aufgaben enthalten als die US-O*NET-Basis.</li>
       <li><strong>Die 0-10-Skala ist gerundet:</strong> Der präzisere β-Wert wird in den Details angezeigt. Rundungen nahe einer Kategoriengrenze sollten nicht überinterpretiert werden.</li>
       <li><strong>"Sehr hoch" ist bewusst streng:</strong> Nur Score 8-10 wird rot markiert. Berufe mit 6 oder 7 sind trotzdem deutlich LLM-exponiert und verdienen Aufmerksamkeit.</li>
       <li><strong>Heikle Zuordnungen sind kommentiert:</strong> Bei Berufen wie Logistik, Recht oder Koch/Köchin hängt der Score stark davon ab, ob administrative, analytische oder physische Aufgaben dominieren.</li>
+      <li><strong>Outlook ist nicht Teil des Scores:</strong> Frühere Wachstumsannahmen werden im Detailpanel nicht mehr als Evidenz angezeigt, solange keine Schweizer Quelle und Methodik sauber dokumentiert ist.</li>
     </ul>
   </div>
 
@@ -2099,13 +2109,13 @@ const FRAMEWORK_COPY = {
   },
   today: {
     title: "Heute 2026: technische KI-Exposition",
-    desc: "Konservative 2026-Heuristik auf Basis der Science-2024-Werte. Die Hauptansicht zeigt technische Exposition ohne Adoption; Adoption, Sensitivität und Unsicherheit sind separat dokumentiert."
+    desc: "Szenariobasierte 2026-Heuristik auf Basis der Science-2024-Werte. Die Hauptansicht zeigt technische Exposition im Basisszenario ohne Adoption; Adoption, Sensitivität und Unsicherheit sind separat dokumentiert."
   }
 };
 
 const TODAY_CATEGORY_FACTORS = {
   "finanzen-recht": { longContext: 0.10, agentic: 0.07, multimodal: 0.02, adoption: 0.05, cap: 9, note: "lange Verträge, Dossiers, Regulierung, Research und Reports" },
-  "it-tech": { longContext: 0.09, agentic: 0.14, multimodal: 0.03, adoption: 0.05, cap: 10, note: "Coding-Agenten, Tool-Use, grosse Codebasen und IT-Workflows" },
+  "it-tech": { longContext: 0.09, agentic: 0.11, multimodal: 0.03, adoption: 0.05, cap: 9, note: "Coding-Agenten und Repository-Kontext, aber Schweizer Rollen enthalten viel Architektur, Review, Interaktion und Verantwortung" },
   "gesundheit": { longContext: 0.07, agentic: 0.03, multimodal: 0.04, adoption: 0.02, cap: 6, note: "Dokumentation, Fachliteratur und multimodaler Befundkontext, aber klinische Verantwortung bleibt begrenzend" },
   "bildung": { longContext: 0.07, agentic: 0.03, multimodal: 0.04, adoption: 0.03, cap: 7, note: "Materialerstellung, Feedback, Research und Unterrichtsvorbereitung" },
   "handwerk-bau": { longContext: 0.03, agentic: 0.02, multimodal: 0.01, adoption: 0.01, cap: 4, note: "Offerten, Planung und Dokumentation, aber physische Vor-Ort-Arbeit dominiert" },
@@ -2121,11 +2131,11 @@ const TODAY_CATEGORY_FACTORS = {
 };
 
 const TODAY_ROLE_OVERRIDES = {
-  "softwareentwickler-in": { delta: 0.04, label: "Coding-Agenten und Repository-Kontext" },
-  "data-scientist": { delta: 0.06, label: "Datenanalyse-, Notebook- und Modellierungsagenten" },
-  "sysadmin": { delta: 0.04, label: "Tool-Use für IT-Betrieb und Runbooks" },
-  "cybersecurity": { delta: 0.07, label: "Security-Codeanalyse und Triage-Agenten" },
-  "ki-ingenieur": { delta: 0.08, label: "KI-native Workflows" },
+  "softwareentwickler-in": { delta: 0.02, label: "Coding-Agenten und Repository-Kontext, begrenzt durch Architektur und Review" },
+  "data-scientist": { delta: 0.04, label: "Datenanalyse-, Notebook- und Modellierungsagenten" },
+  "sysadmin": { delta: 0.03, label: "Tool-Use für IT-Betrieb und Runbooks" },
+  "cybersecurity": { delta: 0.04, label: "Security-Codeanalyse und Triage-Agenten, begrenzt durch Haftung und Angriffskontext" },
+  "ki-ingenieur": { delta: 0.05, label: "KI-native Workflows, begrenzt durch Evaluation und Produktionsverantwortung" },
   "jurist-in": { delta: 0.06, label: "Long-Context Legal Review" },
   "steuerberater-in": { delta: 0.04, label: "Steuer-Research und Mandatsdokumente" },
   "buchhalter-in": { delta: 0.05, label: "Beleg-, Report- und Abstimmungsworkflows" },
@@ -2138,7 +2148,7 @@ const TODAY_ROLE_OVERRIDES = {
   "reisebuero": { delta: 0.06, label: "Reiseplanungs-Agenten" },
   "arzt-aerztin": { delta: 0.02, label: "medizinische Dokumentation" },
   "apotheker-in": { delta: 0.02, label: "Interaktions- und Beratungsassistenz" },
-  "ux-designer": { delta: 0.04, label: "Prototyping, Research-Synthese und UI-Text" },
+  "ux-designer": { delta: 0.03, label: "Prototyping, Research-Synthese und UI-Text" },
   "hr-fachmann": { delta: 0.03, label: "Recruiting-, Policy- und Interview-Workflows" },
   "einkaeufer-in": { delta: 0.03, label: "Lieferantenrecherche und Angebotsvergleich" },
   "hotelfachmann": { delta: 0.03, label: "Buchung, Gästekommunikation und Content" },
@@ -2149,7 +2159,7 @@ const TODAY_ROLE_OVERRIDES = {
 
 const TODAY_CONFIDENCE = {
   "finanzen-recht": { key: "medium", label: "Mittlere 2026-Sicherheit", className: "confidence-medium", reasons: ["regulatorische Verantwortung", "Datenzugang"] },
-  "it-tech": { key: "high", label: "Hohe 2026-Sicherheit", className: "confidence-high", reasons: ["digitales Code-/Toolprofil"] },
+  "it-tech": { key: "medium", label: "Mittlere 2026-Sicherheit", className: "confidence-medium", reasons: ["digitales Code-/Toolprofil", "Schweizer Rollen enthalten oft Architektur, Testing, Interaktion und Verantwortung", "einfache Implementierung teils off-/nearshored"] },
   "gesundheit": { key: "low", label: "Tiefe 2026-Sicherheit", className: "confidence-scope", reasons: ["klinische Verantwortung", "Patientenkontakt"] },
   "bildung": { key: "medium", label: "Mittlere 2026-Sicherheit", className: "confidence-medium", reasons: ["Institutionen variieren", "Aufsicht"] },
   "handwerk-bau": { key: "low", label: "Tiefe 2026-Sicherheit", className: "confidence-scope", reasons: ["physische Vor-Ort-Arbeit"] },
@@ -2501,8 +2511,9 @@ function showDetail(d) {
         <div class="dp-stat-value" style="font-size:0.85rem">${d.education}</div>
       </div>
       <div class="dp-stat">
-        <div class="dp-stat-label">Beschäftigungs-Outlook</div>
-        <div class="dp-stat-value" style="font-size:0.85rem;color:${d.outlook > 0 ? '#22c55e' : d.outlook < 0 ? '#ef4444' : '#9090b0'}">${d.outlook > 0 ? '+' : ''}${d.outlook}% - ${d.outlook_desc}</div>
+        <div class="dp-stat-label">Arbeitsmarkt-Ausblick</div>
+        <div class="dp-stat-value" style="font-size:0.8rem;color:#9090b0">nicht neu bewertet</div>
+        <div style="font-size:0.7rem;color:#5a5a7a;margin-top:2px">kein Bestandteil des Scores</div>
       </div>
     </div>
     <p style="font-size:0.8rem;color:#7c7c9a;margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.06em">${activeFrameworkLabel()} - Einordnung</p>
@@ -2511,7 +2522,7 @@ function showDetail(d) {
     ${d.mapping_note ? `<div class="dp-note"><strong>Plausibilisierung:</strong> ${d.mapping_note}</div>` : ''}
     ${d.url ? `<a class="dp-link" href="${d.url}" target="_blank" rel="noopener noreferrer">-> Berufsprofil auf berufsberatung.ch</a>` : ''}
     <div class="dp-sources">
-      Daten: ${d.source_pay} (Lohn) - ${d.source_jobs} (Beschäftigte) - LLM-Exposition: Eloundou et al. (2024), Science 384, 1306-1308
+      Daten: ${d.source_pay} (Lohn) - ${d.source_jobs} (Beschäftigte) - LLM-Exposition: Eloundou et al. (2024), Science 384, 1306-1308. Arbeitsmarkt-Outlook wird nicht mehr als Evidenz angezeigt, bis eine Schweizer Quelle und Methodik sauber dokumentiert ist.
     </div>
   `;
   panel.style.display = 'block';

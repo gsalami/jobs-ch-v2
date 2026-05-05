@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-24",
+  "generated_at": "2026-05-05",
   "tasks": [
     {
       "category": "finanzen-recht",
@@ -106,10 +106,10 @@
       "categoryLabel": "IT & Technologie",
       "task": "Deployment-Runbook ausfuehren",
       "oldLabel": "E2",
-      "newLabel": "E1",
-      "transition": "E2->E1",
+      "newLabel": "E2",
+      "transition": "E2->E2",
       "driver": "agentic_tools",
-      "rationale": "Tool-Use und Terminal-Agenten reduzieren E2-Reibung."
+      "rationale": "Tool-Use reduziert Reibung, aber Produktivsysteme, Berechtigungen und Change-Freigaben bleiben begrenzend."
     },
     {
       "category": "it-tech",
@@ -126,20 +126,20 @@
       "categoryLabel": "IT & Technologie",
       "task": "Security Findings priorisieren",
       "oldLabel": "E2",
-      "newLabel": "E1",
-      "transition": "E2->E1",
+      "newLabel": "E2",
+      "transition": "E2->E2",
       "driver": "agentic_tools",
-      "rationale": "Codeanalyse und Triageagenten sind deutlich staerker."
+      "rationale": "Codeanalyse und Triageagenten sind staerker, aber Angriffskontext, Haftung und False Positives verhindern eine direkte Einstufung."
     },
     {
       "category": "it-tech",
       "categoryLabel": "IT & Technologie",
       "task": "Architekturentscheidung verantworten",
       "oldLabel": "E0",
-      "newLabel": "E2",
-      "transition": "E0->E2",
+      "newLabel": "E0",
+      "transition": "E0->E0",
       "driver": "long_context",
-      "rationale": "KI kann Optionen vorbereiten, finale Verantwortung bleibt menschlich."
+      "rationale": "KI kann Optionen vorbereiten, aber Systemverantwortung, Trade-offs und Stakeholder-Kontext bleiben ausserhalb direkter Exposition."
     },
     {
       "category": "it-tech",
@@ -1142,14 +1142,14 @@
       "category_label": "IT & Technologie",
       "tasks": 8,
       "transitions": {
-        "E2->E1": 4,
+        "E2->E1": 2,
         "E1->E1": 2,
-        "E0->E0": 1,
-        "E0->E2": 1
+        "E2->E2": 2,
+        "E0->E0": 2
       },
-      "e0_stays_e0": 1,
-      "e0_to_e2": 1,
-      "e2_to_e1": 4,
+      "e0_stays_e0": 2,
+      "e0_to_e2": 0,
+      "e2_to_e1": 2,
       "e1_stays_e1": 2
     },
     {

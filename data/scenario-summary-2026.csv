@@ -1,9 +1,9 @@
 scenario,label,very_high_8_10,medium_5_7,low_0_4,weighted_score
 science_2024,Science 2024,1,33,38,3.92
-technical_base_2026,Heute 2026 technisch,21,23,28,5.6
-adoption_adjusted_base_2026,Heute 2026 adoptionsgewichtet,24,20,28,5.84
-no_role_overrides,Ohne Berufs-Overrides,20,24,28,5.56
-half_modifiers,Halbierte Modifikatoren,8,34,30,4.86
-aggressive_modifiers,Aggressivere Modifikatoren,27,19,26,5.94
-no_caps,Ohne Caps,21,23,28,5.66
-strict_caps,Strengere Caps,19,25,28,5.4
+technical_base_2026,Heute 2026 technisch,21,23,28,5.54
+adoption_adjusted_base_2026,Heute 2026 adoptionsgewichtet,24,20,28,5.77
+no_role_overrides,Ohne Berufs-Overrides,19,25,28,5.5
+half_modifiers,Halbierte Modifikatoren,8,34,30,4.8
+aggressive_modifiers,Aggressivere Modifikatoren,27,19,26,5.86
+no_caps,Ohne Caps,21,23,28,5.65
+strict_caps,Strengere Caps,19,25,28,5.37

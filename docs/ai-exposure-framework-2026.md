@@ -1,19 +1,21 @@
-# Konservative 2026-Heuristik auf Basis der Eloundou et al. 2024 Werte
+# Szenariobasierte 2026-Heuristik auf Basis der Eloundou et al. 2024 Werte
 
 **Heute-2026-Sicht als heuristische Erweiterung der Science-2024-Basis**  
-Version 0.2, Stand 24. April 2026
+Version 0.3, Stand 5. Mai 2026
 
 ## Abstract
 
-Dieses Dokument beschreibt keine neue wissenschaftliche Messung und keine Replikation von Eloundou et al. (2024). Es ist eine transparente, konservative Dashboard-Heuristik für die Frage: Wie plausibel verändert sich die KI-erreichbare Aufgabenoberfläche Schweizer Berufe, wenn man heutige Modellfähigkeiten auf die unveränderten Science-2024-Basiswerte legt?
+Dieses Dokument beschreibt keine neue wissenschaftliche Messung und keine Replikation von Eloundou et al. (2024). Es ist eine transparente Dashboard-Heuristik für die Frage: Wie plausibel verändert sich die KI-erreichbare Aufgabenoberfläche Schweizer Berufe, wenn man heutige Modellfähigkeiten auf die unveränderten Science-2024-Basiswerte legt?
 
 Die Originalwerte bleiben die wissenschaftliche Basis. Die 2026-Sicht trennt drei Ebenen:
 
 1. **Science 2024:** Originaler Eloundou-basierter Beta-Score.
-2. **Technische Exposition 2026:** Heuristische Erweiterung für Long Context, Agenten/Tool-Use, Multimodalität und klar begründete Berufs-Overrides.
+2. **Technische Exposition 2026:** Heuristische Erweiterung für Long Context, Agenten/Tool-Use, Multimodalität und klar begründete Berufs-Overrides. Das Hauptszenario ist ein plausibles Basisszenario, nicht als defensives Minimum zu lesen.
 3. **Adoptionsgewichtete Exposition 2026:** Separater Zusatz für organisatorische Diffusion in der Schweiz.
 
 Ein hoher Score bedeutet nicht Jobverlust. Er bedeutet, dass ein grösserer Teil der Aufgaben durch moderne KI-Systeme unterstützt, beschleunigt, vorbereitet, geprüft, dokumentiert oder teilweise ausgeführt werden kann.
+
+Wichtige Korrektur gegenüber Version 0.2: Schweizer Einschränkungen werden stärker berücksichtigt. Besonders bei IT & Technologie wurde der Cap von 10 auf 9 gesenkt, weil Schweizer IT-Rollen oft Architektur, Requirement Engineering, Testing, Code Review, Stakeholder-Interaktion, regulatorische Verantwortung und Haftung enthalten. Einfachere Implementierungsanteile können zudem bereits off- oder nearshored sein. Deshalb sind hohe IT-Werte weiterhin plausibel, aber nicht mehr als praktisch grenzenlose technische Exposition modelliert.
 
 ## 1. Abgrenzung zur Originalstudie
 
@@ -25,6 +27,19 @@ Die 2026-Version macht **keine vollständige neue O*NET-Task-Annotation**. Sie i
 - kein Automatisierungs- oder Jobverlustforecast,
 - keine Aussage zur tatsächlichen Nutzung in einem konkreten Unternehmen,
 - sondern ein nachvollziehbares Szenario für heutige technische Exposition.
+
+Ebenfalls nicht Teil dieser Heuristik ist ein Beschäftigungs-Outlook. Frühere Wachstumsannahmen werden nicht als Evidenz verwendet, solange keine Schweizer Quelle und Methodik sauber dokumentiert ist.
+
+## 1.1 Datenstand Schweiz
+
+Die Berufszeilen des Dashboards enthalten vorhandene berufsnahe Schätzwerte für Lohn und Beschäftigung. Diese Werte werden **nicht** still auf 2024 umetikettiert:
+
+- Lohnangaben im Dashboard: vorhandene Ableitungen auf Basis BFS LSE 2022 und ergänzender berufsnaher Quellen.
+- Beschäftigte im Dashboard: vorhandene Ableitungen auf Basis BFS SAKE 2023 und ergänzender berufsnaher Quellen.
+- Aktueller BFS-Stand: LSE 2024 ist verfügbar; der gesamtwirtschaftliche Medianlohn lag 2024 bei 7024 Franken brutto pro Monat.
+- Aktueller BFS-Stand: SAKE in Kürze 2024 und Arbeitsmarktindikatoren 2025 sind verfügbar und werden als Quellen für den nächsten Datenrefresh verlinkt.
+
+Das ist methodisch wichtig: Die KI-Expositionsrechnung wurde aktualisiert; die darunterliegenden 72 berufsnahen Schweizer Lohn- und Beschäftigungswerte sind noch kein vollständiger 2024-Datenrefresh.
 
 ## 2. Regel gegen Doppelzählung
 
@@ -81,13 +96,15 @@ Gesamtergebnis der Stichprobe:
 
 | Transition | Anzahl |
 |---|---:|
-| E2 -> E1 | 34 |
+| E2 -> E1 | 32 |
 | E1 -> E1 | 28 |
-| E0 -> E0 | 32 |
-| E2 -> E2 | 13 |
-| E0 -> E2 | 5 |
+| E0 -> E0 | 33 |
+| E2 -> E2 | 15 |
+| E0 -> E2 | 4 |
 
 Interpretation: Der wichtigste 2026-Effekt ist nicht, dass alle nicht exponierten Aufgaben plötzlich exponiert werden. Der häufigste Effekt ist, dass frühere toolabhängige E2-Aufgaben durch Long Context, Agenten, Computer Use und multimodale Systeme näher an direkte Nutzbarkeit rücken.
+
+Die IT-Stichprobe wurde bewusst defensiver kalibriert als in Version 0.2: Deployment-Runbooks, Security-Triage und Architekturverantwortung werden nicht automatisch von E2 auf E1 oder von E0 auf E2 gehoben, wenn Produktivsysteme, Haftung, Security-Kontext oder Stakeholder-Entscheide dominieren.
 
 Die vollständige Stichprobe liegt in:
 
@@ -101,7 +118,7 @@ Die Modifikatoren sind Beta-Punkte. Sie werden durch die Mini-Reannotation, die 
 | Berufsfeld | Long Context | Agenten/Tools | Multimodalität | Adoption separat | Cap |
 |---|---:|---:|---:|---:|---:|
 | Finanzen & Recht | 0.10 | 0.07 | 0.02 | 0.05 | 9 |
-| IT & Technologie | 0.09 | 0.14 | 0.03 | 0.05 | 10 |
+| IT & Technologie | 0.09 | 0.11 | 0.03 | 0.05 | 9 |
 | Gesundheit & Pflege | 0.07 | 0.03 | 0.04 | 0.02 | 6 |
 | Bildung & Forschung | 0.07 | 0.03 | 0.04 | 0.03 | 7 |
 | Handwerk & Bau | 0.03 | 0.02 | 0.01 | 0.01 | 4 |
@@ -115,7 +132,7 @@ Die Modifikatoren sind Beta-Punkte. Sie werden durch die Mini-Reannotation, die 
 | Soziales & Beratung | 0.05 | 0.03 | 0.01 | 0.02 | 5 |
 | Sicherheit & Schutz | 0.04 | 0.03 | 0.02 | 0.01 | 5 |
 
-Berufs-Overrides werden nur dort genutzt, wo der Beruf innerhalb des Berufsfeldes besonders klar von heutigen KI-Fähigkeiten betroffen ist, zum Beispiel Coding-Agenten bei Softwareentwicklung, Bild-KI bei Grafik/Fotografie oder Formularagenten in der Verwaltung.
+Berufs-Overrides werden nur dort genutzt, wo der Beruf innerhalb des Berufsfeldes besonders klar von heutigen KI-Fähigkeiten betroffen ist, zum Beispiel Coding-Agenten bei Softwareentwicklung, Bild-KI bei Grafik/Fotografie oder Formularagenten in der Verwaltung. Für IT wurden diese Overrides gegenüber Version 0.2 reduziert, damit Schweizer Rollen mit mehr Architektur, Review, Testing, Sicherheitsverantwortung und Interaktion nicht wie reine Implementierungsrollen behandelt werden.
 
 ## 6. Caps
 
@@ -123,7 +140,7 @@ Caps verhindern, dass technische Fortschritte Aufgabenanteile überzeichnen, die
 
 | Berufsfeld | Cap | Cap-Typ | Warum nicht höher? |
 |---|---:|---|---|
-| IT & Technologie | 10 | technisch | Stark digitaler Aufgabenraum; kaum physische Grenze innerhalb des LLM-Scopes. |
+| IT & Technologie | 9 | technisch/regulatorisch/sozial | Digitaler Aufgabenraum, aber Schweizer IT-Rollen enthalten oft Requirement Engineering, Architektur, Testing, Code Review, Stakeholder-Interaktion, Security und Haftung; einfache Implementierung ist teils off-/nearshored. |
 | Finanzen & Recht | 9 | regulatorisch/sozial | Mandatsverantwortung, Haftung, vertrauliche Daten und finale Beurteilung bleiben begrenzend. |
 | Verwaltung & Administration | 9 | organisatorisch/regulatorisch | Dokumente und Prozesse sind erreichbar, aber Amtsverantwortung und Datenschutz begrenzen. |
 | Kunst, Design & Medien | 9 | sozial/marktlich | Rechte, Stil, Marke, Auftrag und Auswahl bleiben begrenzend. |
@@ -156,7 +173,9 @@ Zusätzlich enthält jeder Beruf ein Feld `uncertainty_reason`, zum Beispiel:
 - starke Variation zwischen Organisationen,
 - KI-Nutzung abhängig von Datenzugang.
 
-Die SOC/ISCO/Schweizer Berufsprofil-Zuordnung ist in `data/mapping-2026.csv` dokumentiert. Dort stehen Schweizer Berufsbezeichnung, ISCO-Code, Mapping-Confidence, Mapping-Hinweis sowie die verwendeten Lohn- und Beschäftigungsquellen. Die bestehenden BFS-Angaben bleiben Näherungen auf Basis von BFS LSE 2022 und BFS SAKE 2023.
+Die SOC/ISCO/Schweizer Berufsprofil-Zuordnung ist in `data/mapping-2026.csv` dokumentiert. Dort stehen Schweizer Berufsbezeichnung, ISCO-Code, Mapping-Confidence, Mapping-Hinweis sowie die verwendeten Lohn- und Beschäftigungsquellen. Die bestehenden berufsnahen Dashboard-Werte bleiben Näherungen auf Basis von BFS LSE 2022, BFS SAKE 2023 und ergänzenden Quellen; BFS-2024-Publikationen sind verlinkt, aber noch kein vollständiger 72-Berufe-Refresh.
+
+Grenze des Mappings: Die O*NET-Basis beschreibt US-Berufe. Die tatsächliche Tätigkeitsmischung in der Schweiz kann abweichen, etwa wegen höherer Bildungsstandards, höherer Lohnkosten, Spezialisierung, Off-/Nearshoring einfacher Tätigkeiten oder stärkerer Regulierung. Das betrifft besonders IT, Finanzwesen, Gesundheit, Engineering und öffentliche Verwaltung. Diese Abweichung wird nicht task-vollständig neu gemessen, sondern über Mapping-Confidence, Unsicherheitsgründe, strengere Caps und Sensitivität sichtbar gemacht.
 
 ## 8. Sensitivitätsanalyse
 
@@ -165,15 +184,15 @@ Die Ergebnisse sind Szenarien, keine Punktprognosen.
 | Szenario | Score 8-10 | Score 5-7 | Score 0-4 | Gewichteter Score |
 |---|---:|---:|---:|---:|
 | Science 2024 | 1 | 33 | 38 | 3.92 |
-| Heute 2026 technisch | 21 | 23 | 28 | 5.60 |
-| Heute 2026 adoptionsgewichtet | 24 | 20 | 28 | 5.84 |
-| Ohne Berufs-Overrides | 20 | 24 | 28 | 5.56 |
-| Halbierte Modifikatoren | 8 | 34 | 30 | 4.86 |
-| Aggressivere Modifikatoren | 27 | 19 | 26 | 5.94 |
-| Ohne Caps | 21 | 23 | 28 | 5.66 |
-| Strengere Caps | 19 | 25 | 28 | 5.40 |
+| Heute 2026 technisch | 21 | 23 | 28 | 5.54 |
+| Heute 2026 adoptionsgewichtet | 24 | 20 | 28 | 5.77 |
+| Ohne Berufs-Overrides | 19 | 25 | 28 | 5.50 |
+| Halbierte Modifikatoren | 8 | 34 | 30 | 4.80 |
+| Aggressivere Modifikatoren | 27 | 19 | 26 | 5.86 |
+| Ohne Caps | 21 | 23 | 28 | 5.65 |
+| Strengere Caps | 19 | 25 | 28 | 5.37 |
 
-Im Basisszenario der 2026-Heuristik steigt die Zahl der Berufe mit Score 8 bis 10 von 1 auf 21. Adoptionsgewichtet steigt sie auf 24. Diese Werte sind sensitiv gegenüber Modifikatoren, Caps und Adoptionannahmen und sollten als Szenario gelesen werden.
+Im Basisszenario der 2026-Heuristik steigt die Zahl der Berufe mit Score 8 bis 10 von 1 auf 21. Adoptionsgewichtet steigt sie auf 24. Diese Werte sind sensitiv gegenüber Modifikatoren, Caps und Adoptionannahmen und sollten als Szenario gelesen werden. Insbesondere ist das technische Basisszenario nicht als defensives Minimum zu verstehen; das defensivere Lesart ist das Szenario mit halbierten Modifikatoren.
 
 Top-Deltas im technischen Basisszenario:
 
@@ -181,16 +200,16 @@ Top-Deltas im technischen Basisszenario:
 |---|---:|---:|---:|
 | Grafiker/-in | 5 | 9 | +4 |
 | Fotograf/-in | 4 | 8 | +4 |
-| Cybersecurity-Spezialist/-in | 7 | 10 | +3 |
-| Data Scientist | 7 | 10 | +3 |
-| KI-Ingenieur/-in | 7 | 10 | +3 |
-| Systemadministrator/-in | 7 | 10 | +3 |
 | Journalist/-in | 6 | 9 | +3 |
 | PR-Fachmann/-frau | 6 | 9 | +3 |
 | Sachbearbeiter/-in Verwaltung | 6 | 9 | +3 |
 | Sekretär/-in | 6 | 9 | +3 |
+| Cutter/-in (Video/Film) | 5 | 8 | +3 |
+| HR-Fachmann/-frau | 5 | 8 | +3 |
+| IT-Projektleiter/-in | 5 | 8 | +3 |
+| UX Designer/-in | 5 | 8 | +3 |
 
-Berufe mit besonders grosser Szenario-Spannweite sind unter anderem Fotografie, Video/Film-Schnitt, HR-Fachleute und Zollbeamtinnen/Zollbeamte. Diese Spannweite wird in `scenario_score_range` je Beruf dokumentiert.
+Berufe mit besonders grosser Szenario-Spannweite sind unter anderem UX Design, Fotografie, Video/Film-Schnitt, HR-Fachleute, Zollbeamtinnen/Zollbeamte und Data Science. Diese Spannweite wird in `scenario_score_range` je Beruf dokumentiert.
 
 Die vollständige Sensitivitätsanalyse liegt in:
 
@@ -257,3 +276,7 @@ Es wurden nur Primärquellen oder projektinterne Datenartefakte als methodische 
 - Google. *Get more done with Gemini: Try 1.5 Pro and more intelligent features* (14. Mai 2024). https://blog.google/products-and-platforms/products/gemini/google-gemini-update-may-2024/
 - Microsoft Switzerland. *2025 Work Trend Index: Swiss Organizations Lead in AI Adoption* (23. April 2025). https://news.microsoft.com/source/emea/2025/04/2025-work-trend-index-swiss-organizations-lead-in-ai-adoption-52-automate-entire-business-processes-surpassing-global-and-european-averages/
 - Bundesamt für Statistik. Arbeit und Erwerb. https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb.html
+- Bundesamt für Statistik. *Schweizerische Lohnstrukturerhebung (LSE) im Jahr 2024: Erste Ergebnisse* (25. November 2025). https://dam-api.bfs.admin.ch/hub/api/dam/assets/36195847/master
+- Bundesamt für Statistik. *Monatlicher Bruttolohn nach Jahr, Grossregion, Ausbildung, beruflicher Stellung, Geschlecht und Zentralwert und andere Perzentile* (LSE, Stand Datenbank 21.11.2025; letzte Aktualisierung 29.04.2026). https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_202/-/px-x-0304010000_202.px/
+- Bundesamt für Statistik. *SAKE in Kürze 2024* (2025). https://dam-api.bfs.admin.ch/hub/api/dam/assets/36035149/master
+- Bundesamt für Statistik. *Labour market indicators 2025*. https://www.swissstats.bfs.admin.ch/data/webviewer/appId/ch.admin.bfs.swissstat/article/issue25032062506-01/package

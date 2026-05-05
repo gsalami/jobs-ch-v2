@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Konservative 2026-Heuristik</title>
+  <title>Szenariobasierte 2026-Heuristik</title>
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -238,20 +238,20 @@
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Konservative 2026-Heuristik</h1>
+<h1 class="title">Szenariobasierte 2026-Heuristik</h1>
 </header>
 <h1
-id="konservative-2026-heuristik-auf-basis-der-eloundou-et-al-2024-werte">Konservative
-2026-Heuristik auf Basis der Eloundou et al. 2024 Werte</h1>
+id="szenariobasierte-2026-heuristik-auf-basis-der-eloundou-et-al.-2024-werte">Szenariobasierte
+2026-Heuristik auf Basis der Eloundou et al. 2024 Werte</h1>
 <p><strong>Heute-2026-Sicht als heuristische Erweiterung der
 Science-2024-Basis</strong><br />
-Version 0.2, Stand 24. April 2026</p>
+Version 0.3, Stand 5. Mai 2026</p>
 <h2 id="abstract">Abstract</h2>
 <p>Dieses Dokument beschreibt keine neue wissenschaftliche Messung und
-keine Replikation von Eloundou et al. (2024). Es ist eine transparente,
-konservative Dashboard-Heuristik für die Frage: Wie plausibel verändert
-sich die KI-erreichbare Aufgabenoberfläche Schweizer Berufe, wenn man
-heutige Modellfähigkeiten auf die unveränderten Science-2024-Basiswerte
+keine Replikation von Eloundou et al. (2024). Es ist eine transparente
+Dashboard-Heuristik für die Frage: Wie plausibel verändert sich die
+KI-erreichbare Aufgabenoberfläche Schweizer Berufe, wenn man heutige
+Modellfähigkeiten auf die unveränderten Science-2024-Basiswerte
 legt?</p>
 <p>Die Originalwerte bleiben die wissenschaftliche Basis. Die 2026-Sicht
 trennt drei Ebenen:</p>
@@ -260,7 +260,8 @@ trennt drei Ebenen:</p>
 Beta-Score.</li>
 <li><strong>Technische Exposition 2026:</strong> Heuristische
 Erweiterung für Long Context, Agenten/Tool-Use, Multimodalität und klar
-begründete Berufs-Overrides.</li>
+begründete Berufs-Overrides. Das Hauptszenario ist ein plausibles
+Basisszenario, nicht als defensives Minimum zu lesen.</li>
 <li><strong>Adoptionsgewichtete Exposition 2026:</strong> Separater
 Zusatz für organisatorische Diffusion in der Schweiz.</li>
 </ol>
@@ -268,14 +269,22 @@ Zusatz für organisatorische Diffusion in der Schweiz.</li>
 grösserer Teil der Aufgaben durch moderne KI-Systeme unterstützt,
 beschleunigt, vorbereitet, geprüft, dokumentiert oder teilweise
 ausgeführt werden kann.</p>
-<h2 id="1-abgrenzung-zur-originalstudie">1. Abgrenzung zur
+<p>Wichtige Korrektur gegenüber Version 0.2: Schweizer Einschränkungen
+werden stärker berücksichtigt. Besonders bei IT &amp; Technologie wurde
+der Cap von 10 auf 9 gesenkt, weil Schweizer IT-Rollen oft Architektur,
+Requirement Engineering, Testing, Code Review, Stakeholder-Interaktion,
+regulatorische Verantwortung und Haftung enthalten. Einfachere
+Implementierungsanteile können zudem bereits off- oder nearshored sein.
+Deshalb sind hohe IT-Werte weiterhin plausibel, aber nicht mehr als
+praktisch grenzenlose technische Exposition modelliert.</p>
+<h2 id="abgrenzung-zur-originalstudie">1. Abgrenzung zur
 Originalstudie</h2>
-<p>Eloundou et al. bewerten Aufgaben auf Task-Ebene anhand einer
+<p>Eloundou et al. bewerten Aufgaben auf Task-Ebene anhand einer
 Expositionsrubrik mit E0, E1, E2 und E3. Das Dashboard nutzt die daraus
 abgeleiteten Berufswerte und bildet
 <code>score_2024 = round(beta_2024 x 10)</code>.</p>
-<p>Die 2026-Version macht <strong>keine vollständige neue
-O*NET-Task-Annotation</strong>. Sie ist deshalb:</p>
+<p>Die 2026-Version macht **keine vollständige neue
+O*NET-Task-Annotation**. Sie ist deshalb:</p>
 <ul>
 <li>keine neue wissenschaftliche Punktschätzung,</li>
 <li>kein Automatisierungs- oder Jobverlustforecast,</li>
@@ -284,7 +293,29 @@ Unternehmen,</li>
 <li>sondern ein nachvollziehbares Szenario für heutige technische
 Exposition.</li>
 </ul>
-<h2 id="2-regel-gegen-doppelzählung">2. Regel gegen Doppelzählung</h2>
+<p>Ebenfalls nicht Teil dieser Heuristik ist ein Beschäftigungs-Outlook.
+Frühere Wachstumsannahmen werden nicht als Evidenz verwendet, solange
+keine Schweizer Quelle und Methodik sauber dokumentiert ist.</p>
+<h2 id="datenstand-schweiz">1.1 Datenstand Schweiz</h2>
+<p>Die Berufszeilen des Dashboards enthalten vorhandene berufsnahe
+Schätzwerte für Lohn und Beschäftigung. Diese Werte werden
+<strong>nicht</strong> still auf 2024 umetikettiert:</p>
+<ul>
+<li>Lohnangaben im Dashboard: vorhandene Ableitungen auf Basis BFS LSE
+2022 und ergänzender berufsnaher Quellen.</li>
+<li>Beschäftigte im Dashboard: vorhandene Ableitungen auf Basis BFS SAKE
+2023 und ergänzender berufsnaher Quellen.</li>
+<li>Aktueller BFS-Stand: LSE 2024 ist verfügbar; der
+gesamtwirtschaftliche Medianlohn lag 2024 bei 7024 Franken brutto pro
+Monat.</li>
+<li>Aktueller BFS-Stand: SAKE in Kürze 2024 und Arbeitsmarktindikatoren
+2025 sind verfügbar und werden als Quellen für den nächsten Datenrefresh
+verlinkt.</li>
+</ul>
+<p>Das ist methodisch wichtig: Die KI-Expositionsrechnung wurde
+aktualisiert; die darunterliegenden 72 berufsnahen Schweizer Lohn- und
+Beschäftigungswerte sind noch kein vollständiger 2024-Datenrefresh.</p>
+<h2 id="regel-gegen-doppelzählung">2. Regel gegen Doppelzählung</h2>
 <p>Ein Teil heutiger Fähigkeiten war im Originalframework bereits
 angelegt, insbesondere LLM-gestützte Software, Recherche,
 Organisationswissen und visuelle Fähigkeiten als Tool- oder E3-nahe
@@ -302,7 +333,7 @@ und Befundvorbereitung stärker exponiert sind.</li>
 <li>Bildgenerierung erhöht Medien- und Designexposition, aber nicht
 automatisch die Exposition handwerklicher Vor-Ort-Arbeit.</li>
 </ul>
-<h2 id="3-formeln">3. Formeln</h2>
+<h2 id="formeln">3. Formeln</h2>
 <p>Die Hauptansicht des Dashboards zeigt technische Exposition ohne
 Adoption:</p>
 <pre class="text"><code>technical_beta_2026_i =
@@ -323,7 +354,7 @@ adoption_adjusted_score_2026_i =
   round(adoption_adjusted_beta_2026_i x 10)</code></pre>
 <p>Damit bleiben technische Leistungsfähigkeit und reale
 Nutzung/Diffusion getrennt.</p>
-<h2 id="4-mini-reannotation">4. Mini-Reannotation</h2>
+<h2 id="mini-reannotation">4. Mini-Reannotation</h2>
 <p>Zur Plausibilisierung wurde eine kleine systematische Reannotation
 erstellt. Sie ersetzt keine Vollreplikation, kalibriert aber die
 Richtung der Modifikatoren.</p>
@@ -346,7 +377,7 @@ bleibt E1, E2 bleibt E2</li>
 <tbody>
 <tr>
 <td>E2 -&gt; E1</td>
-<td style="text-align: right;">34</td>
+<td style="text-align: right;">32</td>
 </tr>
 <tr>
 <td>E1 -&gt; E1</td>
@@ -354,15 +385,15 @@ bleibt E1, E2 bleibt E2</li>
 </tr>
 <tr>
 <td>E0 -&gt; E0</td>
-<td style="text-align: right;">32</td>
+<td style="text-align: right;">33</td>
 </tr>
 <tr>
 <td>E2 -&gt; E2</td>
-<td style="text-align: right;">13</td>
+<td style="text-align: right;">15</td>
 </tr>
 <tr>
 <td>E0 -&gt; E2</td>
-<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
 </tr>
 </tbody>
 </table>
@@ -371,16 +402,29 @@ exponierten Aufgaben plötzlich exponiert werden. Der häufigste Effekt
 ist, dass frühere toolabhängige E2-Aufgaben durch Long Context, Agenten,
 Computer Use und multimodale Systeme näher an direkte Nutzbarkeit
 rücken.</p>
+<p>Die IT-Stichprobe wurde bewusst defensiver kalibriert als in Version
+0.2: Deployment-Runbooks, Security-Triage und Architekturverantwortung
+werden nicht automatisch von E2 auf E1 oder von E0 auf E2 gehoben, wenn
+Produktivsysteme, Haftung, Security-Kontext oder Stakeholder-Entscheide
+dominieren.</p>
 <p>Die vollständige Stichprobe liegt in:</p>
 <ul>
 <li><code>data/reannotation-sample-2026.csv</code></li>
 <li><code>data/reannotation-sample-2026.json</code></li>
 </ul>
-<h2 id="5-modifikatoren">5. Modifikatoren</h2>
+<h2 id="modifikatoren">5. Modifikatoren</h2>
 <p>Die Modifikatoren sind Beta-Punkte. Sie werden durch die
 Mini-Reannotation, die ursprüngliche E-Logik und die heutigen
 Primärquellen plausibilisiert.</p>
 <table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
 <thead>
 <tr>
 <th>Berufsfeld</th>
@@ -403,10 +447,10 @@ Primärquellen plausibilisiert.</p>
 <tr>
 <td>IT &amp; Technologie</td>
 <td style="text-align: right;">0.09</td>
-<td style="text-align: right;">0.14</td>
+<td style="text-align: right;">0.11</td>
 <td style="text-align: right;">0.03</td>
 <td style="text-align: right;">0.05</td>
-<td style="text-align: right;">10</td>
+<td style="text-align: right;">9</td>
 </tr>
 <tr>
 <td>Gesundheit &amp; Pflege</td>
@@ -509,13 +553,22 @@ Primärquellen plausibilisiert.</p>
 <p>Berufs-Overrides werden nur dort genutzt, wo der Beruf innerhalb des
 Berufsfeldes besonders klar von heutigen KI-Fähigkeiten betroffen ist,
 zum Beispiel Coding-Agenten bei Softwareentwicklung, Bild-KI bei
-Grafik/Fotografie oder Formularagenten in der Verwaltung.</p>
-<h2 id="6-caps">6. Caps</h2>
+Grafik/Fotografie oder Formularagenten in der Verwaltung. Für IT wurden
+diese Overrides gegenüber Version 0.2 reduziert, damit Schweizer Rollen
+mit mehr Architektur, Review, Testing, Sicherheitsverantwortung und
+Interaktion nicht wie reine Implementierungsrollen behandelt werden.</p>
+<h2 id="caps">6. Caps</h2>
 <p>Caps verhindern, dass technische Fortschritte Aufgabenanteile
 überzeichnen, die wegen physischer Präsenz, Haftung, Regulierung,
 sozialer Beziehung oder fehlendem Datenzugang nicht direkt KI-erreichbar
 sind.</p>
-<table>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 30%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
 <thead>
 <tr>
 <th>Berufsfeld</th>
@@ -527,10 +580,12 @@ sind.</p>
 <tbody>
 <tr>
 <td>IT &amp; Technologie</td>
-<td style="text-align: right;">10</td>
-<td>technisch</td>
-<td>Stark digitaler Aufgabenraum; kaum physische Grenze innerhalb des
-LLM-Scopes.</td>
+<td style="text-align: right;">9</td>
+<td>technisch/regulatorisch/sozial</td>
+<td>Digitaler Aufgabenraum, aber Schweizer IT-Rollen enthalten oft
+Requirement Engineering, Architektur, Testing, Code Review,
+Stakeholder-Interaktion, Security und Haftung; einfache Implementierung
+ist teils off-/nearshored.</td>
 </tr>
 <tr>
 <td>Finanzen &amp; Recht</td>
@@ -624,7 +679,7 @@ LLM-Exposition.</td>
 Fachsystemintegration, auditierbare Agenten, regulierte klinische
 Copilots oder CAD/CAE-Integrationen deutlich breiter verfügbar und
 validiert werden.</p>
-<h2 id="7-unsicherheit-und-mapping">7. Unsicherheit und Mapping</h2>
+<h2 id="unsicherheit-und-mapping">7. Unsicherheit und Mapping</h2>
 <p>Jeder Beruf erhält eine Confidence-Kategorie:</p>
 <ul>
 <li><strong>High:</strong> klar digitales Text-, Code-, Dokumenten- oder
@@ -647,9 +702,18 @@ Sicherheitsverantwortung, Regulierung oder grobe Berufszuordnung.</li>
 <code>data/mapping-2026.csv</code> dokumentiert. Dort stehen Schweizer
 Berufsbezeichnung, ISCO-Code, Mapping-Confidence, Mapping-Hinweis sowie
 die verwendeten Lohn- und Beschäftigungsquellen. Die bestehenden
-BFS-Angaben bleiben Näherungen auf Basis von BFS LSE 2022 und BFS SAKE
-2023.</p>
-<h2 id="8-sensitivitätsanalyse">8. Sensitivitätsanalyse</h2>
+berufsnahen Dashboard-Werte bleiben Näherungen auf Basis von BFS LSE
+2022, BFS SAKE 2023 und ergänzenden Quellen; BFS-2024-Publikationen sind
+verlinkt, aber noch kein vollständiger 72-Berufe-Refresh.</p>
+<p>Grenze des Mappings: Die O*NET-Basis beschreibt US-Berufe. Die
+tatsächliche Tätigkeitsmischung in der Schweiz kann abweichen, etwa
+wegen höherer Bildungsstandards, höherer Lohnkosten, Spezialisierung,
+Off-/Nearshoring einfacher Tätigkeiten oder stärkerer Regulierung. Das
+betrifft besonders IT, Finanzwesen, Gesundheit, Engineering und
+öffentliche Verwaltung. Diese Abweichung wird nicht task-vollständig neu
+gemessen, sondern über Mapping-Confidence, Unsicherheitsgründe,
+strengere Caps und Sensitivität sichtbar gemacht.</p>
+<h2 id="sensitivitätsanalyse">8. Sensitivitätsanalyse</h2>
 <p>Die Ergebnisse sind Szenarien, keine Punktprognosen.</p>
 <table>
 <thead>
@@ -674,56 +738,58 @@ BFS-Angaben bleiben Näherungen auf Basis von BFS LSE 2022 und BFS SAKE
 <td style="text-align: right;">21</td>
 <td style="text-align: right;">23</td>
 <td style="text-align: right;">28</td>
-<td style="text-align: right;">5.60</td>
+<td style="text-align: right;">5.54</td>
 </tr>
 <tr>
 <td>Heute 2026 adoptionsgewichtet</td>
 <td style="text-align: right;">24</td>
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">28</td>
-<td style="text-align: right;">5.84</td>
+<td style="text-align: right;">5.77</td>
 </tr>
 <tr>
 <td>Ohne Berufs-Overrides</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">24</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">25</td>
 <td style="text-align: right;">28</td>
-<td style="text-align: right;">5.56</td>
+<td style="text-align: right;">5.50</td>
 </tr>
 <tr>
 <td>Halbierte Modifikatoren</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">34</td>
 <td style="text-align: right;">30</td>
-<td style="text-align: right;">4.86</td>
+<td style="text-align: right;">4.80</td>
 </tr>
 <tr>
 <td>Aggressivere Modifikatoren</td>
 <td style="text-align: right;">27</td>
 <td style="text-align: right;">19</td>
 <td style="text-align: right;">26</td>
-<td style="text-align: right;">5.94</td>
+<td style="text-align: right;">5.86</td>
 </tr>
 <tr>
 <td>Ohne Caps</td>
 <td style="text-align: right;">21</td>
 <td style="text-align: right;">23</td>
 <td style="text-align: right;">28</td>
-<td style="text-align: right;">5.66</td>
+<td style="text-align: right;">5.65</td>
 </tr>
 <tr>
 <td>Strengere Caps</td>
 <td style="text-align: right;">19</td>
 <td style="text-align: right;">25</td>
 <td style="text-align: right;">28</td>
-<td style="text-align: right;">5.40</td>
+<td style="text-align: right;">5.37</td>
 </tr>
 </tbody>
 </table>
 <p>Im Basisszenario der 2026-Heuristik steigt die Zahl der Berufe mit
 Score 8 bis 10 von 1 auf 21. Adoptionsgewichtet steigt sie auf 24. Diese
 Werte sind sensitiv gegenüber Modifikatoren, Caps und Adoptionannahmen
-und sollten als Szenario gelesen werden.</p>
+und sollten als Szenario gelesen werden. Insbesondere ist das technische
+Basisszenario nicht als defensives Minimum zu verstehen; das defensivere
+Lesart ist das Szenario mit halbierten Modifikatoren.</p>
 <p>Top-Deltas im technischen Basisszenario:</p>
 <table>
 <thead>
@@ -746,30 +812,6 @@ und sollten als Szenario gelesen werden.</p>
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">+4</td>
-</tr>
-<tr>
-<td>Cybersecurity-Spezialist/-in</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: right;">+3</td>
-</tr>
-<tr>
-<td>Data Scientist</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: right;">+3</td>
-</tr>
-<tr>
-<td>KI-Ingenieur/-in</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: right;">+3</td>
-</tr>
-<tr>
-<td>Systemadministrator/-in</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: right;">+3</td>
 </tr>
 <tr>
 <td>Journalist/-in</td>
@@ -795,18 +837,42 @@ und sollten als Szenario gelesen werden.</p>
 <td style="text-align: right;">9</td>
 <td style="text-align: right;">+3</td>
 </tr>
+<tr>
+<td>Cutter/-in (Video/Film)</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">+3</td>
+</tr>
+<tr>
+<td>HR-Fachmann/-frau</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">+3</td>
+</tr>
+<tr>
+<td>IT-Projektleiter/-in</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">+3</td>
+</tr>
+<tr>
+<td>UX Designer/-in</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">+3</td>
+</tr>
 </tbody>
 </table>
 <p>Berufe mit besonders grosser Szenario-Spannweite sind unter anderem
-Fotografie, Video/Film-Schnitt, HR-Fachleute und
-Zollbeamtinnen/Zollbeamte. Diese Spannweite wird in
+UX Design, Fotografie, Video/Film-Schnitt, HR-Fachleute,
+Zollbeamtinnen/Zollbeamte und Data Science. Diese Spannweite wird in
 <code>scenario_score_range</code> je Beruf dokumentiert.</p>
 <p>Die vollständige Sensitivitätsanalyse liegt in:</p>
 <ul>
 <li><code>data/scenario-summary-2026.json</code></li>
 <li><code>data/scenario-summary-2026.csv</code></li>
 </ul>
-<h2 id="9-ergebnisdateien">9. Ergebnisdateien</h2>
+<h2 id="ergebnisdateien">9. Ergebnisdateien</h2>
 <p>Die Zahlen werden mit <code>scripts/generate-today-scores.js</code>
 erzeugt.</p>
 <p>Ausgaben:</p>
@@ -848,7 +914,7 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span><span class="fu">,</span></span>
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;scenario&quot;</span><span class="fu">:</span> <span class="st">&quot;base_2026&quot;</span></span>
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
-<h2 id="10-quellen">10. Quellen</h2>
+<h2 id="quellen">10. Quellen</h2>
 <p>Es wurden nur Primärquellen oder projektinterne Datenartefakte als
 methodische Grundlage verwendet. Modellveröffentlichungen werden als
 Fähigkeits- und Verfügbarkeitsindikatoren gelesen, nicht als direkte
@@ -856,29 +922,40 @@ Messung der Schweizer Arbeitsmarktwirkung.</p>
 <ul>
 <li>Eloundou, T., Manning, S., Mishkin, P., &amp; Rock, D. (2024).
 <em>GPTs are GPTs: Labor market impact potential of LLMs</em>. Science
-384, 1306-1308. <a
-href="https://www.science.org/doi/10.1126/science.adj0998">https://www.science.org/doi/10.1126/science.adj0998</a></li>
+384, 1306-1308. https://www.science.org/doi/10.1126/science.adj0998</li>
 <li>OpenAI. <em>GPTs are GPTs: An early look at the labor market impact
-potential of large language models</em>. <a
-href="https://openai.com/index/gpts-are-gpts/">https://openai.com/index/gpts-are-gpts/</a></li>
-<li>OpenAI. <em>Introducing GPT-5.5</em> (23. April 2026). <a
-href="https://openai.com/index/introducing-gpt-5-5/">https://openai.com/index/introducing-gpt-5-5/</a></li>
-<li>OpenAI. <em>Introducing GPT-5.4</em> (5. März 2026). <a
-href="https://openai.com/index/introducing-gpt-5-4/">https://openai.com/index/introducing-gpt-5-4/</a></li>
-<li>OpenAI. <em>Introducing GPT-4.1 in the API</em> (14. April 2025). <a
-href="https://openai.com/index/gpt-4-1/">https://openai.com/index/gpt-4-1/</a></li>
-<li>OpenAI. <em>Hello GPT-4o</em> (13. Mai 2024). <a
-href="https://openai.com/index/hello-gpt-4o/">https://openai.com/index/hello-gpt-4o/</a></li>
-<li>Anthropic. <em>Computer use tool</em>. <a
-href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool">https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool</a></li>
+potential of large language models</em>.
+https://openai.com/index/gpts-are-gpts/</li>
+<li>OpenAI. <em>Introducing GPT-5.5</em> (23. April 2026).
+https://openai.com/index/introducing-gpt-5-5/</li>
+<li>OpenAI. <em>Introducing GPT-5.4</em> (5. März 2026).
+https://openai.com/index/introducing-gpt-5-4/</li>
+<li>OpenAI. <em>Introducing GPT-4.1 in the API</em> (14. April 2025).
+https://openai.com/index/gpt-4-1/</li>
+<li>OpenAI. <em>Hello GPT-4o</em> (13. Mai 2024).
+https://openai.com/index/hello-gpt-4o/</li>
+<li>Anthropic. <em>Computer use tool</em>.
+https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool</li>
 <li>Google. <em>Get more done with Gemini: Try 1.5 Pro and more
-intelligent features</em> (14. Mai 2024). <a
-href="https://blog.google/products-and-platforms/products/gemini/google-gemini-update-may-2024/">https://blog.google/products-and-platforms/products/gemini/google-gemini-update-may-2024/</a></li>
+intelligent features</em> (14. Mai 2024).
+https://blog.google/products-and-platforms/products/gemini/google-gemini-update-may-2024/</li>
 <li>Microsoft Switzerland. <em>2025 Work Trend Index: Swiss
-Organizations Lead in AI Adoption</em> (23. April 2025). <a
-href="https://news.microsoft.com/source/emea/2025/04/2025-work-trend-index-swiss-organizations-lead-in-ai-adoption-52-automate-entire-business-processes-surpassing-global-and-european-averages/">https://news.microsoft.com/source/emea/2025/04/2025-work-trend-index-swiss-organizations-lead-in-ai-adoption-52-automate-entire-business-processes-surpassing-global-and-european-averages/</a></li>
-<li>Bundesamt für Statistik. Arbeit und Erwerb. <a
-href="https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb.html">https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb.html</a></li>
+Organizations Lead in AI Adoption</em> (23. April 2025).
+https://news.microsoft.com/source/emea/2025/04/2025-work-trend-index-swiss-organizations-lead-in-ai-adoption-52-automate-entire-business-processes-surpassing-global-and-european-averages/</li>
+<li>Bundesamt für Statistik. Arbeit und Erwerb.
+https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb.html</li>
+<li>Bundesamt für Statistik. <em>Schweizerische Lohnstrukturerhebung
+(LSE) im Jahr 2024: Erste Ergebnisse</em> (25. November 2025).
+https://dam-api.bfs.admin.ch/hub/api/dam/assets/36195847/master</li>
+<li>Bundesamt für Statistik. <em>Monatlicher Bruttolohn nach Jahr,
+Grossregion, Ausbildung, beruflicher Stellung, Geschlecht und
+Zentralwert und andere Perzentile</em> (LSE, Stand Datenbank 21.11.2025;
+letzte Aktualisierung 29.04.2026).
+https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_202/-/px-x-0304010000_202.px/</li>
+<li>Bundesamt für Statistik. <em>SAKE in Kürze 2024</em> (2025).
+https://dam-api.bfs.admin.ch/hub/api/dam/assets/36035149/master</li>
+<li>Bundesamt für Statistik. <em>Labour market indicators 2025</em>.
+https://www.swissstats.bfs.admin.ch/data/webviewer/appId/ch.admin.bfs.swissstat/article/issue25032062506-01/package</li>
 </ul>
 </body>
 </html>
