@@ -21,7 +21,7 @@ Wichtige Korrektur gegen체ber Version 0.2: Schweizer Einschr채nkungen werden st�
 
 Eloundou et al. bewerten Aufgaben auf Task-Ebene anhand einer Expositionsrubrik mit E0, E1, E2 und E3. Das Dashboard nutzt die daraus abgeleiteten Berufswerte und bildet `score_2024 = round(beta_2024 x 10)`.
 
-Die 2026-Version macht **keine vollst채ndige neue O*NET-Task-Annotation**. Sie ist deshalb:
+Die 2026-Version macht <strong>keine vollst채ndige neue O*NET-Task-Annotation</strong>. Sie ist deshalb:
 
 - keine neue wissenschaftliche Punktsch채tzung,
 - kein Automatisierungs- oder Jobverlustforecast,
