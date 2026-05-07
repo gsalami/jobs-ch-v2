@@ -1,7 +1,7 @@
 # Szenariobasierte 2026-Heuristik auf Basis der Eloundou et al. 2024 Werte
 
 **Heute-2026-Sicht als heuristische Erweiterung der Science-2024-Basis**  
-Version 0.3, Stand 5. Mai 2026
+Version 0.4, Stand 7. Mai 2026
 
 ## Abstract
 
@@ -16,6 +16,8 @@ Die Originalwerte bleiben die wissenschaftliche Basis. Die 2026-Sicht trennt dre
 Ein hoher Score bedeutet nicht Jobverlust. Er bedeutet, dass ein grösserer Teil der Aufgaben durch moderne KI-Systeme unterstützt, beschleunigt, vorbereitet, geprüft, dokumentiert oder teilweise ausgeführt werden kann.
 
 Wichtige Korrektur gegenüber Version 0.2: Schweizer Einschränkungen werden stärker berücksichtigt. Besonders bei IT & Technologie wurde der Cap von 10 auf 9 gesenkt, weil Schweizer IT-Rollen oft Architektur, Requirement Engineering, Testing, Code Review, Stakeholder-Interaktion, regulatorische Verantwortung und Haftung enthalten. Einfachere Implementierungsanteile können zudem bereits off- oder nearshored sein. Deshalb sind hohe IT-Werte weiterhin plausibel, aber nicht mehr als praktisch grenzenlose technische Exposition modelliert.
+
+Wichtige Korrektur gegenüber Version 0.3: Die Schweizer Arbeitsmarktdaten wurden als eigener BFS-2024-Refresh ergänzt. Lohnwerte nutzen nun LSE 2024 nach CH-ISCO-19-Berufsgruppen; Beschäftigtenwerte werden transparent mit dem SAKE-Gesamtwachstum 2023-2024 kalibriert, ohne eine nicht verfügbare 72-Berufe-Mikrotabelle vorzutäuschen.
 
 ## 1. Abgrenzung zur Originalstudie
 
@@ -32,14 +34,14 @@ Ebenfalls nicht Teil dieser Heuristik ist ein Beschäftigungs-Outlook. Frühere 
 
 ## 1.1 Datenstand Schweiz
 
-Die Berufszeilen des Dashboards enthalten vorhandene berufsnahe Schätzwerte für Lohn und Beschäftigung. Diese Werte werden **nicht** still auf 2024 umetikettiert:
+Die Berufszeilen des Dashboards enthalten berufsnahe Schätzwerte für Lohn und Beschäftigung. Version 0.4 aktualisiert diese Werte soweit mit öffentlich verfügbaren BFS-2024-Daten möglich:
 
-- Lohnangaben im Dashboard: vorhandene Ableitungen auf Basis BFS LSE 2022 und ergänzender berufsnaher Quellen.
-- Beschäftigte im Dashboard: vorhandene Ableitungen auf Basis BFS SAKE 2023 und ergänzender berufsnaher Quellen.
-- Aktueller BFS-Stand: LSE 2024 ist verfügbar; der gesamtwirtschaftliche Medianlohn lag 2024 bei 7024 Franken brutto pro Monat.
-- Aktueller BFS-Stand: SAKE in Kürze 2024 und Arbeitsmarktindikatoren 2025 sind verfügbar und werden als Quellen für den nächsten Datenrefresh verlinkt.
+- Lohnangaben im Dashboard: BFS LSE 2024, Tabelle `px-x-0304010000_205`, monatlicher Bruttolohn nach CH-ISCO-19-Berufsgruppe, Schweiz, Total Alter, Total Geschlecht, Zentralwert. Aus dem Monatsmedian wird ein Jahresbenchmark mit 13 Monatslöhnen gebildet und auf 1000 Franken gerundet.
+- Spezial-, Kantons-, Vertrags- und Arbeitgeberquellen bleiben dort erhalten, wo die CH-ISCO-2-Steller-Gruppe zu grob wäre, zum Beispiel bei Ärztinnen/Ärzten, Piloten, Lehrpersonen, Polizei oder Feuerwehr. Der LSE-2024-Wert wird in diesen Fällen trotzdem als Benchmark pro Beruf dokumentiert.
+- Beschäftigte im Dashboard: Es wurde keine öffentliche BFS-Tabelle gefunden, die SAKE 2024 direkt auf die 72 Dashboard-Berufe abbildet. Deshalb wird der bestehende SAKE-2023-Berufsmix proportional mit dem offiziellen SAKE-Gesamtwachstum skaliert: 4.848 Mio. Erwerbstätige 2023 auf 4.876 Mio. Erwerbstätige 2024, Faktor 1.0058.
+- Alle Refresh-Schritte liegen in `data/bfs-2024-refresh.csv` und `data/bfs-2024-refresh.json`.
 
-Das ist methodisch wichtig: Die KI-Expositionsrechnung wurde aktualisiert; die darunterliegenden 72 berufsnahen Schweizer Lohn- und Beschäftigungswerte sind noch kein vollständiger 2024-Datenrefresh.
+Das ist methodisch wichtig: Die LSE-2024-Löhne sind ein echter Gruppenrefresh, aber kein 4-stelliger Berufslohn pro Dashboard-Label. Die SAKE-2024-Beschäftigten sind eine transparente Kalibrierung, keine neue 72-Berufe-Messung. Dadurch wird BFS 2024 genutzt, ohne Präzision vorzutäuschen, die in den öffentlichen Tabellen nicht vorliegt.
 
 ## 2. Regel gegen Doppelzählung
 
@@ -173,7 +175,7 @@ Zusätzlich enthält jeder Beruf ein Feld `uncertainty_reason`, zum Beispiel:
 - starke Variation zwischen Organisationen,
 - KI-Nutzung abhängig von Datenzugang.
 
-Die SOC/ISCO/Schweizer Berufsprofil-Zuordnung ist in `data/mapping-2026.csv` dokumentiert. Dort stehen Schweizer Berufsbezeichnung, ISCO-Code, Mapping-Confidence, Mapping-Hinweis sowie die verwendeten Lohn- und Beschäftigungsquellen. Die bestehenden berufsnahen Dashboard-Werte bleiben Näherungen auf Basis von BFS LSE 2022, BFS SAKE 2023 und ergänzenden Quellen; BFS-2024-Publikationen sind verlinkt, aber noch kein vollständiger 72-Berufe-Refresh.
+Die SOC/ISCO/Schweizer Berufsprofil-Zuordnung ist in `data/mapping-2026.csv` dokumentiert. Dort stehen Schweizer Berufsbezeichnung, ISCO-Code, Mapping-Confidence, Mapping-Hinweis sowie die verwendeten Lohn- und Beschäftigungsquellen. Zusätzlich dokumentiert `data/bfs-2024-refresh.csv` pro Beruf die LSE-2024-Berufsgruppe, den Monatsmedian, den Jahresbenchmark, die Pay-Refresh-Methode, die bisherige Beschäftigtenzahl und die SAKE-2024-Kalibrierung.
 
 Grenze des Mappings: Die O*NET-Basis beschreibt US-Berufe. Die tatsächliche Tätigkeitsmischung in der Schweiz kann abweichen, etwa wegen höherer Bildungsstandards, höherer Lohnkosten, Spezialisierung, Off-/Nearshoring einfacher Tätigkeiten oder stärkerer Regulierung. Das betrifft besonders IT, Finanzwesen, Gesundheit, Engineering und öffentliche Verwaltung. Diese Abweichung wird nicht task-vollständig neu gemessen, sondern über Mapping-Confidence, Unsicherheitsgründe, strengere Caps und Sensitivität sichtbar gemacht.
 
@@ -229,12 +231,22 @@ Ausgaben:
 - `data/reannotation-sample-2026.json`
 - `data/reannotation-sample-2026.csv`
 - `data/mapping-2026.csv`
+- `data/bfs-2024-refresh.json`
+- `data/bfs-2024-refresh.csv`
 
 Beispielstruktur pro Beruf:
 
 ```json
 {
   "occupation": "Jurist/-in",
+  "pay": 119000,
+  "jobs": 35200,
+  "lse_2024_group_code": "26",
+  "lse_2024_monthly_median": 9122,
+  "lse_2024_annual_benchmark": 119000,
+  "pay_refresh_method": "lse_2024_ch_isco_group_median",
+  "jobs_2023_base": 35000,
+  "jobs_refresh_factor": 1.005776,
   "score_2024": 4,
   "beta_2024": 0.425,
   "technical_beta_2026": 0.675,
@@ -277,6 +289,7 @@ Es wurden nur Primärquellen oder projektinterne Datenartefakte als methodische 
 - Microsoft Switzerland. *2025 Work Trend Index: Swiss Organizations Lead in AI Adoption* (23. April 2025). https://news.microsoft.com/source/emea/2025/04/2025-work-trend-index-swiss-organizations-lead-in-ai-adoption-52-automate-entire-business-processes-surpassing-global-and-european-averages/
 - Bundesamt für Statistik. Arbeit und Erwerb. https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb.html
 - Bundesamt für Statistik. *Schweizerische Lohnstrukturerhebung (LSE) im Jahr 2024: Erste Ergebnisse* (25. November 2025). https://dam-api.bfs.admin.ch/hub/api/dam/assets/36195847/master
-- Bundesamt für Statistik. *Monatlicher Bruttolohn nach Jahr, Grossregion, Ausbildung, beruflicher Stellung, Geschlecht und Zentralwert und andere Perzentile* (LSE, Stand Datenbank 21.11.2025; letzte Aktualisierung 29.04.2026). https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_202/-/px-x-0304010000_202.px/
+- Bundesamt für Statistik. *Monatlicher Bruttolohn nach Jahr, Grossregion, Berufsgruppe, Lebensalter, Geschlecht und Zentralwert und andere Perzentile* (LSE, Tabelle `px-x-0304010000_205`). https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/
+- Bundesamt für Statistik. *SAKE in Kürze 2023* (2024). https://dam-api.bfs.admin.ch/hub/api/dam/assets/32069034/master
 - Bundesamt für Statistik. *SAKE in Kürze 2024* (2025). https://dam-api.bfs.admin.ch/hub/api/dam/assets/36035149/master
 - Bundesamt für Statistik. *Labour market indicators 2025*. https://www.swissstats.bfs.admin.ch/data/webviewer/appId/ch.admin.bfs.swissstat/article/issue25032062506-01/package

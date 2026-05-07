@@ -245,7 +245,7 @@ id="szenariobasierte-2026-heuristik-auf-basis-der-eloundou-et-al.-2024-werte">Sz
 2026-Heuristik auf Basis der Eloundou et al. 2024 Werte</h1>
 <p><strong>Heute-2026-Sicht als heuristische Erweiterung der
 Science-2024-Basis</strong><br />
-Version 0.3, Stand 5. Mai 2026</p>
+Version 0.4, Stand 7. Mai 2026</p>
 <h2 id="abstract">Abstract</h2>
 <p>Dieses Dokument beschreibt keine neue wissenschaftliche Messung und
 keine Replikation von Eloundou et al. (2024). Es ist eine transparente
@@ -277,6 +277,11 @@ regulatorische Verantwortung und Haftung enthalten. Einfachere
 Implementierungsanteile können zudem bereits off- oder nearshored sein.
 Deshalb sind hohe IT-Werte weiterhin plausibel, aber nicht mehr als
 praktisch grenzenlose technische Exposition modelliert.</p>
+<p>Wichtige Korrektur gegenüber Version 0.3: Die Schweizer
+Arbeitsmarktdaten wurden als eigener BFS-2024-Refresh ergänzt. Lohnwerte
+nutzen nun LSE 2024 nach CH-ISCO-19-Berufsgruppen; Beschäftigtenwerte
+werden transparent mit dem SAKE-Gesamtwachstum 2023-2024 kalibriert,
+ohne eine nicht verfügbare 72-Berufe-Mikrotabelle vorzutäuschen.</p>
 <h2 id="abgrenzung-zur-originalstudie">1. Abgrenzung zur
 Originalstudie</h2>
 <p>Eloundou et al. bewerten Aufgaben auf Task-Ebene anhand einer
@@ -297,24 +302,34 @@ Exposition.</li>
 Frühere Wachstumsannahmen werden nicht als Evidenz verwendet, solange
 keine Schweizer Quelle und Methodik sauber dokumentiert ist.</p>
 <h2 id="datenstand-schweiz">1.1 Datenstand Schweiz</h2>
-<p>Die Berufszeilen des Dashboards enthalten vorhandene berufsnahe
-Schätzwerte für Lohn und Beschäftigung. Diese Werte werden
-<strong>nicht</strong> still auf 2024 umetikettiert:</p>
+<p>Die Berufszeilen des Dashboards enthalten berufsnahe Schätzwerte für
+Lohn und Beschäftigung. Version 0.4 aktualisiert diese Werte soweit mit
+öffentlich verfügbaren BFS-2024-Daten möglich:</p>
 <ul>
-<li>Lohnangaben im Dashboard: vorhandene Ableitungen auf Basis BFS LSE
-2022 und ergänzender berufsnaher Quellen.</li>
-<li>Beschäftigte im Dashboard: vorhandene Ableitungen auf Basis BFS SAKE
-2023 und ergänzender berufsnaher Quellen.</li>
-<li>Aktueller BFS-Stand: LSE 2024 ist verfügbar; der
-gesamtwirtschaftliche Medianlohn lag 2024 bei 7024 Franken brutto pro
-Monat.</li>
-<li>Aktueller BFS-Stand: SAKE in Kürze 2024 und Arbeitsmarktindikatoren
-2025 sind verfügbar und werden als Quellen für den nächsten Datenrefresh
-verlinkt.</li>
+<li>Lohnangaben im Dashboard: BFS LSE 2024, Tabelle
+<code>px-x-0304010000_205</code>, monatlicher Bruttolohn nach
+CH-ISCO-19-Berufsgruppe, Schweiz, Total Alter, Total Geschlecht,
+Zentralwert. Aus dem Monatsmedian wird ein Jahresbenchmark mit 13
+Monatslöhnen gebildet und auf 1000 Franken gerundet.</li>
+<li>Spezial-, Kantons-, Vertrags- und Arbeitgeberquellen bleiben dort
+erhalten, wo die CH-ISCO-2-Steller-Gruppe zu grob wäre, zum Beispiel bei
+Ärztinnen/Ärzten, Piloten, Lehrpersonen, Polizei oder Feuerwehr. Der
+LSE-2024-Wert wird in diesen Fällen trotzdem als Benchmark pro Beruf
+dokumentiert.</li>
+<li>Beschäftigte im Dashboard: Es wurde keine öffentliche BFS-Tabelle
+gefunden, die SAKE 2024 direkt auf die 72 Dashboard-Berufe abbildet.
+Deshalb wird der bestehende SAKE-2023-Berufsmix proportional mit dem
+offiziellen SAKE-Gesamtwachstum skaliert: 4.848 Mio. Erwerbstätige 2023
+auf 4.876 Mio. Erwerbstätige 2024, Faktor 1.0058.</li>
+<li>Alle Refresh-Schritte liegen in
+<code>data/bfs-2024-refresh.csv</code> und
+<code>data/bfs-2024-refresh.json</code>.</li>
 </ul>
-<p>Das ist methodisch wichtig: Die KI-Expositionsrechnung wurde
-aktualisiert; die darunterliegenden 72 berufsnahen Schweizer Lohn- und
-Beschäftigungswerte sind noch kein vollständiger 2024-Datenrefresh.</p>
+<p>Das ist methodisch wichtig: Die LSE-2024-Löhne sind ein echter
+Gruppenrefresh, aber kein 4-stelliger Berufslohn pro Dashboard-Label.
+Die SAKE-2024-Beschäftigten sind eine transparente Kalibrierung, keine
+neue 72-Berufe-Messung. Dadurch wird BFS 2024 genutzt, ohne Präzision
+vorzutäuschen, die in den öffentlichen Tabellen nicht vorliegt.</p>
 <h2 id="regel-gegen-doppelzählung">2. Regel gegen Doppelzählung</h2>
 <p>Ein Teil heutiger Fähigkeiten war im Originalframework bereits
 angelegt, insbesondere LLM-gestützte Software, Recherche,
@@ -701,10 +716,11 @@ Sicherheitsverantwortung, Regulierung oder grobe Berufszuordnung.</li>
 <p>Die SOC/ISCO/Schweizer Berufsprofil-Zuordnung ist in
 <code>data/mapping-2026.csv</code> dokumentiert. Dort stehen Schweizer
 Berufsbezeichnung, ISCO-Code, Mapping-Confidence, Mapping-Hinweis sowie
-die verwendeten Lohn- und Beschäftigungsquellen. Die bestehenden
-berufsnahen Dashboard-Werte bleiben Näherungen auf Basis von BFS LSE
-2022, BFS SAKE 2023 und ergänzenden Quellen; BFS-2024-Publikationen sind
-verlinkt, aber noch kein vollständiger 72-Berufe-Refresh.</p>
+die verwendeten Lohn- und Beschäftigungsquellen. Zusätzlich dokumentiert
+<code>data/bfs-2024-refresh.csv</code> pro Beruf die
+LSE-2024-Berufsgruppe, den Monatsmedian, den Jahresbenchmark, die
+Pay-Refresh-Methode, die bisherige Beschäftigtenzahl und die
+SAKE-2024-Kalibrierung.</p>
 <p>Grenze des Mappings: Die O*NET-Basis beschreibt US-Berufe. Die
 tatsächliche Tätigkeitsmischung in der Schweiz kann abweichen, etwa
 wegen höherer Bildungsstandards, höherer Lohnkosten, Spezialisierung,
@@ -884,36 +900,46 @@ erzeugt.</p>
 <li><code>data/reannotation-sample-2026.json</code></li>
 <li><code>data/reannotation-sample-2026.csv</code></li>
 <li><code>data/mapping-2026.csv</code></li>
+<li><code>data/bfs-2024-refresh.json</code></li>
+<li><code>data/bfs-2024-refresh.csv</code></li>
 </ul>
 <p>Beispielstruktur pro Beruf:</p>
 <div class="sourceCode" id="cb3"><pre
 class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;occupation&quot;</span><span class="fu">:</span> <span class="st">&quot;Jurist/-in&quot;</span><span class="fu">,</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;score_2024&quot;</span><span class="fu">:</span> <span class="dv">4</span><span class="fu">,</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;beta_2024&quot;</span><span class="fu">:</span> <span class="fl">0.425</span><span class="fu">,</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;technical_beta_2026&quot;</span><span class="fu">:</span> <span class="fl">0.675</span><span class="fu">,</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;technical_score_2026&quot;</span><span class="fu">:</span> <span class="dv">7</span><span class="fu">,</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;adoption_adjusted_beta_2026&quot;</span><span class="fu">:</span> <span class="fl">0.725</span><span class="fu">,</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;adoption_adjusted_score_2026&quot;</span><span class="fu">:</span> <span class="dv">7</span><span class="fu">,</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;delta_technical&quot;</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;delta_adoption_adjusted&quot;</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;cap&quot;</span><span class="fu">:</span> <span class="dv">9</span><span class="fu">,</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;modifiers&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;long_context&quot;</span><span class="fu">:</span> <span class="fl">0.1</span><span class="fu">,</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;agentic_tools&quot;</span><span class="fu">:</span> <span class="fl">0.07</span><span class="fu">,</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;multimodal&quot;</span><span class="fu">:</span> <span class="fl">0.02</span><span class="fu">,</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;adoption&quot;</span><span class="fu">:</span> <span class="fl">0.05</span><span class="fu">,</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;role_override&quot;</span><span class="fu">:</span> <span class="fl">0.06</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;confidence&quot;</span><span class="fu">:</span> <span class="st">&quot;medium&quot;</span><span class="fu">,</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;uncertainty_reason&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Hohe regulatorische Verantwortung&quot;</span><span class="ot">,</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Datenzugang und Auditierbarkeit entscheidend&quot;</span><span class="ot">,</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Unklare Schweizer Berufszuordnung&quot;</span><span class="ot">,</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Berufsspezifischer Override sensitiv&quot;</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;scenario&quot;</span><span class="fu">:</span> <span class="st">&quot;base_2026&quot;</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;pay&quot;</span><span class="fu">:</span> <span class="dv">119000</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;jobs&quot;</span><span class="fu">:</span> <span class="dv">35200</span><span class="fu">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;lse_2024_group_code&quot;</span><span class="fu">:</span> <span class="st">&quot;26&quot;</span><span class="fu">,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;lse_2024_monthly_median&quot;</span><span class="fu">:</span> <span class="dv">9122</span><span class="fu">,</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;lse_2024_annual_benchmark&quot;</span><span class="fu">:</span> <span class="dv">119000</span><span class="fu">,</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;pay_refresh_method&quot;</span><span class="fu">:</span> <span class="st">&quot;lse_2024_ch_isco_group_median&quot;</span><span class="fu">,</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;jobs_2023_base&quot;</span><span class="fu">:</span> <span class="dv">35000</span><span class="fu">,</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;jobs_refresh_factor&quot;</span><span class="fu">:</span> <span class="fl">1.005776</span><span class="fu">,</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;score_2024&quot;</span><span class="fu">:</span> <span class="dv">4</span><span class="fu">,</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;beta_2024&quot;</span><span class="fu">:</span> <span class="fl">0.425</span><span class="fu">,</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;technical_beta_2026&quot;</span><span class="fu">:</span> <span class="fl">0.675</span><span class="fu">,</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;technical_score_2026&quot;</span><span class="fu">:</span> <span class="dv">7</span><span class="fu">,</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;adoption_adjusted_beta_2026&quot;</span><span class="fu">:</span> <span class="fl">0.725</span><span class="fu">,</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;adoption_adjusted_score_2026&quot;</span><span class="fu">:</span> <span class="dv">7</span><span class="fu">,</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;delta_technical&quot;</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;delta_adoption_adjusted&quot;</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;cap&quot;</span><span class="fu">:</span> <span class="dv">9</span><span class="fu">,</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;modifiers&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;long_context&quot;</span><span class="fu">:</span> <span class="fl">0.1</span><span class="fu">,</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;agentic_tools&quot;</span><span class="fu">:</span> <span class="fl">0.07</span><span class="fu">,</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;multimodal&quot;</span><span class="fu">:</span> <span class="fl">0.02</span><span class="fu">,</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;adoption&quot;</span><span class="fu">:</span> <span class="fl">0.05</span><span class="fu">,</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;role_override&quot;</span><span class="fu">:</span> <span class="fl">0.06</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;confidence&quot;</span><span class="fu">:</span> <span class="st">&quot;medium&quot;</span><span class="fu">,</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;uncertainty_reason&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Hohe regulatorische Verantwortung&quot;</span><span class="ot">,</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Datenzugang und Auditierbarkeit entscheidend&quot;</span><span class="ot">,</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Unklare Schweizer Berufszuordnung&quot;</span><span class="ot">,</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Berufsspezifischer Override sensitiv&quot;</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;scenario&quot;</span><span class="fu">:</span> <span class="st">&quot;base_2026&quot;</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 <h2 id="quellen">10. Quellen</h2>
 <p>Es wurden nur Primärquellen oder projektinterne Datenartefakte als
 methodische Grundlage verwendet. Modellveröffentlichungen werden als
@@ -948,10 +974,11 @@ https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb.html</li>
 (LSE) im Jahr 2024: Erste Ergebnisse</em> (25. November 2025).
 https://dam-api.bfs.admin.ch/hub/api/dam/assets/36195847/master</li>
 <li>Bundesamt für Statistik. <em>Monatlicher Bruttolohn nach Jahr,
-Grossregion, Ausbildung, beruflicher Stellung, Geschlecht und
-Zentralwert und andere Perzentile</em> (LSE, Stand Datenbank 21.11.2025;
-letzte Aktualisierung 29.04.2026).
-https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_202/-/px-x-0304010000_202.px/</li>
+Grossregion, Berufsgruppe, Lebensalter, Geschlecht und Zentralwert und
+andere Perzentile</em> (LSE, Tabelle <code>px-x-0304010000_205</code>).
+https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/</li>
+<li>Bundesamt für Statistik. <em>SAKE in Kürze 2023</em> (2024).
+https://dam-api.bfs.admin.ch/hub/api/dam/assets/32069034/master</li>
 <li>Bundesamt für Statistik. <em>SAKE in Kürze 2024</em> (2025).
 https://dam-api.bfs.admin.ch/hub/api/dam/assets/36035149/master</li>
 <li>Bundesamt für Statistik. <em>Labour market indicators 2025</em>.

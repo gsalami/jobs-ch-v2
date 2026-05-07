@@ -32,8 +32,18 @@ Regenerate the 2026 score files with:
 node scripts/generate-today-scores.js
 ```
 
+Refresh the BFS 2024 labour-market fields first with:
+
+```bash
+node scripts/refresh-bfs-2024.js
+```
+
+This pulls the BFS LSE 2024 PxWeb table by CH-ISCO-19 occupation group and documents the SAKE 2024 employment calibration. It intentionally does not invent a new 72-occupation SAKE microtable.
+
 Outputs:
 
+- `data/bfs-2024-refresh.json`
+- `data/bfs-2024-refresh.csv`
 - `data/today-scores-2026.json`
 - `data/today-scores-2026.csv`
 - `data/scenario-summary-2026.json`
