@@ -26,24 +26,32 @@ Documentation:
 - `docs/ai-exposure-framework-2026.html`
 - `docs/ai-exposure-framework-2026.pdf`
 
-Regenerate the 2026 score files with:
+Apply the v4 gap additions from `Lückenanalyse.rtf` first:
 
 ```bash
-node scripts/generate-today-scores.js
+node scripts/apply-v4-gap-additions.js
 ```
 
-Refresh the BFS 2024 labour-market fields first with:
+Then refresh the BFS 2024 labour-market fields:
 
 ```bash
 node scripts/refresh-bfs-2024.js
 ```
 
-This pulls the BFS LSE 2024 PxWeb table by CH-ISCO-19 occupation group and documents the SAKE 2024 employment calibration. It intentionally does not invent a new 72-occupation SAKE microtable.
+This pulls the BFS LSE 2024 PxWeb table by CH-ISCO-19 occupation group and documents the SAKE 2024 employment calibration. It intentionally does not invent a new dashboard-level SAKE microtable.
+
+Finally regenerate the 2026 score files:
+
+```bash
+node scripts/generate-today-scores.js
+```
 
 Outputs:
 
 - `data/bfs-2024-refresh.json`
 - `data/bfs-2024-refresh.csv`
+- `data/gap-additions-v4.json`
+- `data/gap-additions-v4.csv`
 - `data/today-scores-2026.json`
 - `data/today-scores-2026.csv`
 - `data/scenario-summary-2026.json`

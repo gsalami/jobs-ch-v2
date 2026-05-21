@@ -245,7 +245,7 @@ id="szenariobasierte-2026-heuristik-auf-basis-der-eloundou-et-al.-2024-werte">Sz
 2026-Heuristik auf Basis der Eloundou et al. 2024 Werte</h1>
 <p><strong>Heute-2026-Sicht als heuristische Erweiterung der
 Science-2024-Basis</strong><br />
-Version 0.4, Stand 7. Mai 2026</p>
+Version 0.5, Stand 21. Mai 2026</p>
 <h2 id="abstract">Abstract</h2>
 <p>Dieses Dokument beschreibt keine neue wissenschaftliche Messung und
 keine Replikation von Eloundou et al. (2024). Es ist eine transparente
@@ -281,7 +281,14 @@ praktisch grenzenlose technische Exposition modelliert.</p>
 Arbeitsmarktdaten wurden als eigener BFS-2024-Refresh ergänzt. Lohnwerte
 nutzen nun LSE 2024 nach CH-ISCO-19-Berufsgruppen; Beschäftigtenwerte
 werden transparent mit dem SAKE-Gesamtwachstum 2023-2024 kalibriert,
-ohne eine nicht verfügbare 72-Berufe-Mikrotabelle vorzutäuschen.</p>
+ohne eine nicht verfügbare Dashboard-SAKE-Mikrotabelle
+vorzutäuschen.</p>
+<p>Wichtige Korrektur gegenüber Version 0.4: Version 0.5 ergänzt 14 in
+der Lückenanalyse identifizierte Berufe, besonders Marketing, Sales,
+Beratung, Übersetzung, Controlling, Audit, Architektur, FaGe, MPA und
+personenbezogene Dienstleistungen. Das Dashboard umfasst damit 86
+Berufszeilen. Die Ergänzungen sind als <code>v4_gap_addition</code>
+markiert und in <code>data/gap-additions-v4.csv</code> dokumentiert.</p>
 <h2 id="abgrenzung-zur-originalstudie">1. Abgrenzung zur
 Originalstudie</h2>
 <p>Eloundou et al. bewerten Aufgaben auf Task-Ebene anhand einer
@@ -303,7 +310,7 @@ Frühere Wachstumsannahmen werden nicht als Evidenz verwendet, solange
 keine Schweizer Quelle und Methodik sauber dokumentiert ist.</p>
 <h2 id="datenstand-schweiz">1.1 Datenstand Schweiz</h2>
 <p>Die Berufszeilen des Dashboards enthalten berufsnahe Schätzwerte für
-Lohn und Beschäftigung. Version 0.4 aktualisiert diese Werte soweit mit
+Lohn und Beschäftigung. Version 0.5 aktualisiert diese Werte soweit mit
 öffentlich verfügbaren BFS-2024-Daten möglich:</p>
 <ul>
 <li>Lohnangaben im Dashboard: BFS LSE 2024, Tabelle
@@ -317,18 +324,22 @@ erhalten, wo die CH-ISCO-2-Steller-Gruppe zu grob wäre, zum Beispiel bei
 LSE-2024-Wert wird in diesen Fällen trotzdem als Benchmark pro Beruf
 dokumentiert.</li>
 <li>Beschäftigte im Dashboard: Es wurde keine öffentliche BFS-Tabelle
-gefunden, die SAKE 2024 direkt auf die 72 Dashboard-Berufe abbildet.
-Deshalb wird der bestehende SAKE-2023-Berufsmix proportional mit dem
-offiziellen SAKE-Gesamtwachstum skaliert: 4.848 Mio. Erwerbstätige 2023
-auf 4.876 Mio. Erwerbstätige 2024, Faktor 1.0058.</li>
+gefunden, die SAKE 2024 direkt auf die 86 Dashboard-Berufe abbildet.
+Deshalb wird der bestehende SAKE-2023-Berufsmix plus v4-Ergänzungswerte
+proportional mit dem offiziellen SAKE-Gesamtwachstum skaliert: 4.848
+Mio. Erwerbstätige 2023 auf 4.876 Mio. Erwerbstätige 2024, Faktor
+1.0058.</li>
 <li>Alle Refresh-Schritte liegen in
 <code>data/bfs-2024-refresh.csv</code> und
 <code>data/bfs-2024-refresh.json</code>.</li>
+<li>Die v4-Ergänzungen aus der Lückenanalyse liegen separat in
+<code>data/gap-additions-v4.csv</code> und
+<code>data/gap-additions-v4.json</code>.</li>
 </ul>
 <p>Das ist methodisch wichtig: Die LSE-2024-Löhne sind ein echter
 Gruppenrefresh, aber kein 4-stelliger Berufslohn pro Dashboard-Label.
 Die SAKE-2024-Beschäftigten sind eine transparente Kalibrierung, keine
-neue 72-Berufe-Messung. Dadurch wird BFS 2024 genutzt, ohne Präzision
+neue 86-Berufe-Messung. Dadurch wird BFS 2024 genutzt, ohne Präzision
 vorzutäuschen, die in den öffentlichen Tabellen nicht vorliegt.</p>
 <h2 id="regel-gegen-doppelzählung">2. Regel gegen Doppelzählung</h2>
 <p>Ein Teil heutiger Fähigkeiten war im Originalframework bereits
@@ -374,9 +385,9 @@ Nutzung/Diffusion getrennt.</p>
 erstellt. Sie ersetzt keine Vollreplikation, kalibriert aber die
 Richtung der Modifikatoren.</p>
 <ul>
-<li>14 Berufsfelder</li>
+<li>16 Berufsfelder</li>
 <li>8 repräsentative Aufgaben je Berufsfeld</li>
-<li>112 Aufgaben insgesamt</li>
+<li>128 Aufgaben insgesamt</li>
 <li>Labels: E0, E1, E2</li>
 <li>explizite Transitionen: E0 bleibt E0, E0 wird E2, E2 wird E1, E1
 bleibt E1, E2 bleibt E2</li>
@@ -392,23 +403,23 @@ bleibt E1, E2 bleibt E2</li>
 <tbody>
 <tr>
 <td>E2 -&gt; E1</td>
-<td style="text-align: right;">32</td>
+<td style="text-align: right;">37</td>
 </tr>
 <tr>
 <td>E1 -&gt; E1</td>
-<td style="text-align: right;">28</td>
+<td style="text-align: right;">32</td>
 </tr>
 <tr>
 <td>E0 -&gt; E0</td>
-<td style="text-align: right;">33</td>
+<td style="text-align: right;">38</td>
 </tr>
 <tr>
 <td>E2 -&gt; E2</td>
-<td style="text-align: right;">15</td>
+<td style="text-align: right;">16</td>
 </tr>
 <tr>
 <td>E0 -&gt; E2</td>
-<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
 </tr>
 </tbody>
 </table>
@@ -508,6 +519,14 @@ Primärquellen plausibilisiert.</p>
 <td style="text-align: right;">8</td>
 </tr>
 <tr>
+<td>Marketing, Sales &amp; Beratung</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">0.09</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr>
 <td>Transport &amp; Logistik</td>
 <td style="text-align: right;">0.04</td>
 <td style="text-align: right;">0.04</td>
@@ -554,6 +573,14 @@ Primärquellen plausibilisiert.</p>
 <td style="text-align: right;">0.01</td>
 <td style="text-align: right;">0.02</td>
 <td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>Persönliche Dienste &amp; Reinigung</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">3</td>
 </tr>
 <tr>
 <td>Sicherheit &amp; Schutz</td>
@@ -635,6 +662,14 @@ Datenschutz begrenzen.</td>
 <td>Kundenbeziehung und Verhandlung bleiben relevant.</td>
 </tr>
 <tr>
+<td>Marketing, Sales &amp; Beratung</td>
+<td style="text-align: right;">8</td>
+<td>sozial/marktlich/organisatorisch</td>
+<td>Kampagnen, Research, CRM, Angebote und Präsentationen sind
+erreichbar, aber Markenurteil, Verhandlung, Umsetzung und
+Budgetverantwortung begrenzen.</td>
+</tr>
+<tr>
 <td>Bildung &amp; Forschung</td>
 <td style="text-align: right;">7</td>
 <td>sozial/regulatorisch</td>
@@ -688,6 +723,14 @@ dominieren.</td>
 <td>Feldarbeit, Tiere, Wetter und Maschinen begrenzen reine
 LLM-Exposition.</td>
 </tr>
+<tr>
+<td>Persönliche Dienste &amp; Reinigung</td>
+<td style="text-align: right;">3</td>
+<td>physisch/sozial</td>
+<td>Körperliche Dienstleistungen vor Ort dominieren; KI erreicht vor
+allem Termin-, Kommunikations-, Rapport- oder
+Marketingnebenaufgaben.</td>
+</tr>
 </tbody>
 </table>
 <p>Caps könnten in Zukunft steigen, wenn Robotik, sichere
@@ -720,7 +763,9 @@ die verwendeten Lohn- und Beschäftigungsquellen. Zusätzlich dokumentiert
 <code>data/bfs-2024-refresh.csv</code> pro Beruf die
 LSE-2024-Berufsgruppe, den Monatsmedian, den Jahresbenchmark, die
 Pay-Refresh-Methode, die bisherige Beschäftigtenzahl und die
-SAKE-2024-Kalibrierung.</p>
+SAKE-2024-Kalibrierung. Die 14 v4-Lückenberufe sind zusätzlich in
+<code>data/gap-additions-v4.csv</code> ausgewiesen, weil sie nicht Teil
+der ursprünglichen 72er-Mappingdatei waren.</p>
 <p>Grenze des Mappings: Die O*NET-Basis beschreibt US-Berufe. Die
 tatsächliche Tätigkeitsmischung in der Schweiz kann abweichen, etwa
 wegen höherer Bildungsstandards, höherer Lohnkosten, Spezialisierung,
@@ -744,68 +789,69 @@ strengere Caps und Sensitivität sichtbar gemacht.</p>
 <tbody>
 <tr>
 <td>Science 2024</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">33</td>
-<td style="text-align: right;">38</td>
-<td style="text-align: right;">3.92</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">3.93</td>
 </tr>
 <tr>
 <td>Heute 2026 technisch</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">23</td>
-<td style="text-align: right;">28</td>
-<td style="text-align: right;">5.54</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">5.39</td>
 </tr>
 <tr>
 <td>Heute 2026 adoptionsgewichtet</td>
-<td style="text-align: right;">24</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">28</td>
-<td style="text-align: right;">5.77</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">5.61</td>
 </tr>
 <tr>
 <td>Ohne Berufs-Overrides</td>
-<td style="text-align: right;">19</td>
 <td style="text-align: right;">25</td>
 <td style="text-align: right;">28</td>
-<td style="text-align: right;">5.50</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">5.36</td>
 </tr>
 <tr>
 <td>Halbierte Modifikatoren</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">34</td>
-<td style="text-align: right;">30</td>
-<td style="text-align: right;">4.80</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">4.71</td>
 </tr>
 <tr>
 <td>Aggressivere Modifikatoren</td>
-<td style="text-align: right;">27</td>
-<td style="text-align: right;">19</td>
-<td style="text-align: right;">26</td>
-<td style="text-align: right;">5.86</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">5.69</td>
 </tr>
 <tr>
 <td>Ohne Caps</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">23</td>
-<td style="text-align: right;">28</td>
-<td style="text-align: right;">5.65</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">5.54</td>
 </tr>
 <tr>
 <td>Strengere Caps</td>
-<td style="text-align: right;">19</td>
-<td style="text-align: right;">25</td>
-<td style="text-align: right;">28</td>
-<td style="text-align: right;">5.37</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">5.24</td>
 </tr>
 </tbody>
 </table>
-<p>Im Basisszenario der 2026-Heuristik steigt die Zahl der Berufe mit
-Score 8 bis 10 von 1 auf 21. Adoptionsgewichtet steigt sie auf 24. Diese
-Werte sind sensitiv gegenüber Modifikatoren, Caps und Adoptionannahmen
-und sollten als Szenario gelesen werden. Insbesondere ist das technische
-Basisszenario nicht als defensives Minimum zu verstehen; das defensivere
-Lesart ist das Szenario mit halbierten Modifikatoren.</p>
+<p>Im Basisszenario der 2026-Heuristik liegt die Zahl der Berufe mit
+Score 8 bis 10 bei 27 von 86. Adoptionsgewichtet steigt sie auf 30.
+Diese Werte sind sensitiv gegenüber Modifikatoren, Caps und
+Adoptionannahmen und sollten als Szenario gelesen werden. Insbesondere
+ist das technische Basisszenario nicht als defensives Minimum zu
+verstehen; die defensivere Lesart ist das Szenario mit halbierten
+Modifikatoren.</p>
 <p>Top-Deltas im technischen Basisszenario:</p>
 <table>
 <thead>
@@ -872,7 +918,7 @@ Lesart ist das Szenario mit halbierten Modifikatoren.</p>
 <td style="text-align: right;">+3</td>
 </tr>
 <tr>
-<td>UX Designer/-in</td>
+<td>Key Account Manager/-in</td>
 <td style="text-align: right;">5</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">+3</td>

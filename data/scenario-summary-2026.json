@@ -1,20 +1,34 @@
 {
-  "generated_at": "2026-05-07",
+  "generated_at": "2026-05-21",
   "scenarios": {
     "science_2024": {
       "id": "science_2024",
       "label": "Science 2024",
       "description": "Originale Eloundou-basierte Dashboard-Scores",
-      "very_high_8_10": 1,
-      "medium_5_7": 33,
-      "low_0_4": 38,
-      "weighted_score": 3.92,
+      "very_high_8_10": 3,
+      "medium_5_7": 39,
+      "low_0_4": 44,
+      "weighted_score": 3.93,
       "top_10_deltas": [
         {
           "slug": "softwareentwickler-in",
           "occupation": "Softwareentwickler/-in",
           "score_2024": 9,
           "scenario_score": 9,
+          "delta": 0
+        },
+        {
+          "slug": "marketingfachmann-frau",
+          "occupation": "Marketingfachmann/-frau",
+          "score_2024": 8,
+          "scenario_score": 8,
+          "delta": 0
+        },
+        {
+          "slug": "uebersetzer-dolmetscher",
+          "occupation": "Übersetzer/-in & Dolmetscher/-in",
+          "score_2024": 8,
+          "scenario_score": 8,
           "delta": 0
         },
         {
@@ -46,6 +60,13 @@
           "delta": 0
         },
         {
+          "slug": "unternehmensberater-management-consultant",
+          "occupation": "Unternehmensberater/-in / Management Consultant",
+          "score_2024": 7,
+          "scenario_score": 7,
+          "delta": 0
+        },
+        {
           "slug": "buchhalter-in",
           "occupation": "Buchhalter/-in",
           "score_2024": 6,
@@ -53,29 +74,8 @@
           "delta": 0
         },
         {
-          "slug": "elektroingenieur",
-          "occupation": "Elektroingenieur/-in",
-          "score_2024": 6,
-          "scenario_score": 6,
-          "delta": 0
-        },
-        {
-          "slug": "journalist-in",
-          "occupation": "Journalist/-in",
-          "score_2024": 6,
-          "scenario_score": 6,
-          "delta": 0
-        },
-        {
-          "slug": "pr-fachmann",
-          "occupation": "PR-Fachmann/-frau",
-          "score_2024": 6,
-          "scenario_score": 6,
-          "delta": 0
-        },
-        {
-          "slug": "sachbearbeiter-verwaltung",
-          "occupation": "Sachbearbeiter/-in (Verwaltung)",
+          "slug": "controller-in",
+          "occupation": "Controller/-in",
           "score_2024": 6,
           "scenario_score": 6,
           "delta": 0
@@ -216,10 +216,10 @@
       "id": "technical_base_2026",
       "label": "Heute 2026 technisch",
       "description": "Plausibles Basisszenario ohne Adoption; nicht als defensives Szenario zu lesen",
-      "very_high_8_10": 21,
-      "medium_5_7": 23,
-      "low_0_4": 28,
-      "weighted_score": 5.54,
+      "very_high_8_10": 27,
+      "medium_5_7": 26,
+      "low_0_4": 33,
+      "weighted_score": 5.39,
       "top_10_deltas": [
         {
           "slug": "grafiker-in",
@@ -285,8 +285,8 @@
           "delta": 3
         },
         {
-          "slug": "ux-designer",
-          "occupation": "UX Designer/-in",
+          "slug": "key-account-manager",
+          "occupation": "Key Account Manager/-in",
           "score_2024": 5,
           "scenario_score": 8,
           "delta": 3
@@ -427,10 +427,10 @@
       "id": "adoption_adjusted_base_2026",
       "label": "Heute 2026 adoptionsgewichtet",
       "description": "Technische Exposition plus separater Adoptionaufschlag",
-      "very_high_8_10": 24,
-      "medium_5_7": 20,
-      "low_0_4": 28,
-      "weighted_score": 5.77,
+      "very_high_8_10": 30,
+      "medium_5_7": 23,
+      "low_0_4": 33,
+      "weighted_score": 5.61,
       "top_10_deltas": [
         {
           "slug": "cutter-in",
@@ -496,8 +496,8 @@
           "delta": 3
         },
         {
-          "slug": "einkaeufer-in",
-          "occupation": "Einkäufer/-in",
+          "slug": "aussendienst-b2b-verkaufsberater",
+          "occupation": "Aussendienstmitarbeiter/-in B2B / Verkaufsberater/-in",
           "score_2024": 5,
           "scenario_score": 8,
           "delta": 3
@@ -638,10 +638,10 @@
       "id": "no_role_overrides",
       "label": "Ohne Berufs-Overrides",
       "description": "Technische Modifikatoren ohne berufsspezifische Overrides",
-      "very_high_8_10": 19,
-      "medium_5_7": 25,
-      "low_0_4": 28,
-      "weighted_score": 5.5,
+      "very_high_8_10": 25,
+      "medium_5_7": 28,
+      "low_0_4": 33,
+      "weighted_score": 5.36,
       "top_10_deltas": [
         {
           "slug": "journalist-in",
@@ -700,15 +700,15 @@
           "delta": 3
         },
         {
-          "slug": "fotograf-in",
-          "occupation": "Fotograf/-in",
-          "score_2024": 4,
-          "scenario_score": 7,
+          "slug": "key-account-manager",
+          "occupation": "Key Account Manager/-in",
+          "score_2024": 5,
+          "scenario_score": 8,
           "delta": 3
         },
         {
-          "slug": "zollbeamter",
-          "occupation": "Zollbeamte/r",
+          "slug": "fotograf-in",
+          "occupation": "Fotograf/-in",
           "score_2024": 4,
           "scenario_score": 7,
           "delta": 3
@@ -849,10 +849,10 @@
       "id": "half_modifiers",
       "label": "Halbierte Modifikatoren",
       "description": "Konservativere technische Fortschrittsannahmen",
-      "very_high_8_10": 8,
-      "medium_5_7": 34,
-      "low_0_4": 30,
-      "weighted_score": 4.8,
+      "very_high_8_10": 11,
+      "medium_5_7": 40,
+      "low_0_4": 35,
+      "weighted_score": 4.71,
       "top_10_deltas": [
         {
           "slug": "sysadmin",
@@ -904,6 +904,13 @@
           "delta": 2
         },
         {
+          "slug": "uebersetzer-dolmetscher",
+          "occupation": "Übersetzer/-in & Dolmetscher/-in",
+          "score_2024": 8,
+          "scenario_score": 9,
+          "delta": 1
+        },
+        {
           "slug": "cybersecurity",
           "occupation": "Cybersecurity-Spezialist/-in",
           "score_2024": 7,
@@ -913,13 +920,6 @@
         {
           "slug": "data-scientist",
           "occupation": "Data Scientist",
-          "score_2024": 7,
-          "scenario_score": 8,
-          "delta": 1
-        },
-        {
-          "slug": "ki-ingenieur",
-          "occupation": "KI-Ingenieur/-in",
           "score_2024": 7,
           "scenario_score": 8,
           "delta": 1
@@ -1060,10 +1060,10 @@
       "id": "aggressive_modifiers",
       "label": "Aggressivere Modifikatoren",
       "description": "Hoehere technische Fortschrittsannahmen bei gleichen Caps",
-      "very_high_8_10": 27,
-      "medium_5_7": 19,
-      "low_0_4": 26,
-      "weighted_score": 5.86,
+      "very_high_8_10": 33,
+      "medium_5_7": 22,
+      "low_0_4": 31,
+      "weighted_score": 5.69,
       "top_10_deltas": [
         {
           "slug": "fotograf-in",
@@ -1122,15 +1122,15 @@
           "delta": 3
         },
         {
-          "slug": "journalist-in",
-          "occupation": "Journalist/-in",
+          "slug": "controller-in",
+          "occupation": "Controller/-in",
           "score_2024": 6,
           "scenario_score": 9,
           "delta": 3
         },
         {
-          "slug": "pr-fachmann",
-          "occupation": "PR-Fachmann/-frau",
+          "slug": "journalist-in",
+          "occupation": "Journalist/-in",
           "score_2024": 6,
           "scenario_score": 9,
           "delta": 3
@@ -1271,10 +1271,10 @@
       "id": "no_caps",
       "label": "Ohne Caps",
       "description": "Technisches Basisszenario ohne berufsfeldspezifische Obergrenzen",
-      "very_high_8_10": 21,
-      "medium_5_7": 23,
-      "low_0_4": 28,
-      "weighted_score": 5.65,
+      "very_high_8_10": 27,
+      "medium_5_7": 26,
+      "low_0_4": 33,
+      "weighted_score": 5.54,
       "top_10_deltas": [
         {
           "slug": "journalist-in",
@@ -1482,10 +1482,10 @@
       "id": "strict_caps",
       "label": "Strengere Caps",
       "description": "Technisches Basisszenario mit um einen Scorepunkt strengeren Caps",
-      "very_high_8_10": 19,
-      "medium_5_7": 25,
-      "low_0_4": 28,
-      "weighted_score": 5.37,
+      "very_high_8_10": 23,
+      "medium_5_7": 30,
+      "low_0_4": 33,
+      "weighted_score": 5.24,
       "top_10_deltas": [
         {
           "slug": "fotograf-in",
@@ -1551,8 +1551,8 @@
           "delta": 2
         },
         {
-          "slug": "journalist-in",
-          "occupation": "Journalist/-in",
+          "slug": "controller-in",
+          "occupation": "Controller/-in",
           "score_2024": 6,
           "scenario_score": 8,
           "delta": 2

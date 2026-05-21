@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-07",
+  "generated_at": "2026-05-21",
   "tasks": [
     {
       "category": "finanzen-recht",
@@ -562,6 +562,86 @@
       "rationale": "Recherche und Tabellenarbeit naeher an direkt."
     },
     {
+      "category": "marketing-sales",
+      "categoryLabel": "Marketing, Sales & Beratung",
+      "task": "Kampagnenbriefing in Zielgruppen-Copy uebersetzen",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Text- und Variantenarbeit war bereits direkt exponiert."
+    },
+    {
+      "category": "marketing-sales",
+      "categoryLabel": "Marketing, Sales & Beratung",
+      "task": "Markt- und Wettbewerbsrecherche fuer Pitch verdichten",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "long_context",
+      "rationale": "Viele Quellen und Reports koennen heute direkter synthetisiert werden."
+    },
+    {
+      "category": "marketing-sales",
+      "categoryLabel": "Marketing, Sales & Beratung",
+      "task": "CRM-Follow-up nach Kundentermin vorbereiten",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "agentic_tools",
+      "rationale": "CRM- und E-Mail-Agenten reduzieren Tool-Reibung."
+    },
+    {
+      "category": "marketing-sales",
+      "categoryLabel": "Marketing, Sales & Beratung",
+      "task": "Preis- und Vertragsverhandlung fuehren",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "social",
+      "rationale": "Vertrauen, Timing und Verhandlungsverantwortung bleiben menschlich."
+    },
+    {
+      "category": "marketing-sales",
+      "categoryLabel": "Marketing, Sales & Beratung",
+      "task": "Praesentationsdeck aus Interviewnotizen erstellen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "agentic_tools",
+      "rationale": "Recherche-, Schreib- und Slide-Workflows sind agentenfaehiger."
+    },
+    {
+      "category": "marketing-sales",
+      "categoryLabel": "Marketing, Sales & Beratung",
+      "task": "Markenpositionierung final entscheiden",
+      "oldLabel": "E0",
+      "newLabel": "E2",
+      "transition": "E0->E2",
+      "driver": "long_context",
+      "rationale": "KI kann Optionen und Evidenz vorbereiten, aber Entscheidung und Verantwortung bleiben."
+    },
+    {
+      "category": "marketing-sales",
+      "categoryLabel": "Marketing, Sales & Beratung",
+      "task": "Produktvisual fuer Kampagne variieren",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "multimodal",
+      "rationale": "Bild- und Layoutgenerierung senken Reibung deutlich."
+    },
+    {
+      "category": "marketing-sales",
+      "categoryLabel": "Marketing, Sales & Beratung",
+      "task": "B2B-Besuch vor Ort durchfuehren",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "social",
+      "rationale": "Praesenz, Beziehung und Fachkontext beim Kunden begrenzen."
+    },
+    {
       "category": "transport-logistik",
       "categoryLabel": "Transport & Logistik",
       "task": "Tourenplan aus Auftraegen vorbereiten",
@@ -1042,6 +1122,86 @@
       "rationale": "Administrative Agenten senken Reibung."
     },
     {
+      "category": "personen-dienste",
+      "categoryLabel": "Persönliche Dienste & Reinigung",
+      "task": "Termin- und Einsatzplan erstellen",
+      "oldLabel": "E2",
+      "newLabel": "E1",
+      "transition": "E2->E1",
+      "driver": "agentic_tools",
+      "rationale": "Planungs- und Kommunikationsagenten machen Nebenaufgaben direkter erreichbar."
+    },
+    {
+      "category": "personen-dienste",
+      "categoryLabel": "Persönliche Dienste & Reinigung",
+      "task": "Kundenantwort oder Offertentext formulieren",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Textarbeit war bereits exponiert."
+    },
+    {
+      "category": "personen-dienste",
+      "categoryLabel": "Persönliche Dienste & Reinigung",
+      "task": "Haarschnitt oder Reinigung vor Ort ausfuehren",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "physical",
+      "rationale": "Die Kerntaetigkeit ist koerperliche Arbeit am Ort."
+    },
+    {
+      "category": "personen-dienste",
+      "categoryLabel": "Persönliche Dienste & Reinigung",
+      "task": "Foto eines Arbeitsbereichs fuer Checkliste beschreiben",
+      "oldLabel": "E2",
+      "newLabel": "E2",
+      "transition": "E2->E2",
+      "driver": "multimodal",
+      "rationale": "Visuelle Assistenz hilft, ersetzt aber Vor-Ort-Beurteilung nicht."
+    },
+    {
+      "category": "personen-dienste",
+      "categoryLabel": "Persönliche Dienste & Reinigung",
+      "task": "Social-Media-Post fuer Salon oder Betrieb erstellen",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Direkte Text- und Bildideenarbeit."
+    },
+    {
+      "category": "personen-dienste",
+      "categoryLabel": "Persönliche Dienste & Reinigung",
+      "task": "Qualitaetskontrolle vor Ort verantworten",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "physical",
+      "rationale": "Sensorik, Verantwortung und Umgebung bleiben ausserhalb reiner LLM-Exposition."
+    },
+    {
+      "category": "personen-dienste",
+      "categoryLabel": "Persönliche Dienste & Reinigung",
+      "task": "Rapport oder Checkliste aus Stichworten schreiben",
+      "oldLabel": "E1",
+      "newLabel": "E1",
+      "transition": "E1->E1",
+      "driver": "none",
+      "rationale": "Dokumentation ist direkt erreichbar."
+    },
+    {
+      "category": "personen-dienste",
+      "categoryLabel": "Persönliche Dienste & Reinigung",
+      "task": "Kundengespraech ueber Stil, Erwartungen oder Beschwerden fuehren",
+      "oldLabel": "E0",
+      "newLabel": "E0",
+      "transition": "E0->E0",
+      "driver": "social",
+      "rationale": "Menschliche Beziehung, Vertrauen und Situation begrenzen."
+    },
+    {
       "category": "sicherheit",
       "categoryLabel": "Sicherheit & Schutz",
       "task": "Rapport aus Stichworten erstellen",
@@ -1227,6 +1387,21 @@
       "e1_stays_e1": 2
     },
     {
+      "category": "marketing-sales",
+      "category_label": "Marketing, Sales & Beratung",
+      "tasks": 8,
+      "transitions": {
+        "E1->E1": 1,
+        "E2->E1": 4,
+        "E0->E0": 2,
+        "E0->E2": 1
+      },
+      "e0_stays_e0": 2,
+      "e0_to_e2": 1,
+      "e2_to_e1": 4,
+      "e1_stays_e1": 1
+    },
+    {
       "category": "transport-logistik",
       "category_label": "Transport & Logistik",
       "tasks": 8,
@@ -1314,6 +1489,21 @@
       "e0_to_e2": 0,
       "e2_to_e1": 2,
       "e1_stays_e1": 2
+    },
+    {
+      "category": "personen-dienste",
+      "category_label": "Persönliche Dienste & Reinigung",
+      "tasks": 8,
+      "transitions": {
+        "E2->E1": 1,
+        "E1->E1": 3,
+        "E0->E0": 3,
+        "E2->E2": 1
+      },
+      "e0_stays_e0": 3,
+      "e0_to_e2": 0,
+      "e2_to_e1": 1,
+      "e1_stays_e1": 3
     },
     {
       "category": "sicherheit",

@@ -5,7 +5,7 @@ const ROOT = path.resolve(__dirname, "..");
 const htmlPath = path.join(ROOT, "index.html");
 const dataDir = path.join(ROOT, "data");
 
-const GENERATED_AT = "2026-05-07";
+const GENERATED_AT = "2026-05-21";
 const LSE_API =
   "https://www.pxweb.bfs.admin.ch/api/v1/de/px-x-0304010000_205/px-x-0304010000_205.px";
 const LSE_BROWSER_URL =
@@ -179,6 +179,9 @@ async function main() {
     pay_mapping_confidence: item.pay_mapping_confidence,
     jobs_2023_base: item.jobs_2023_base,
     source_jobs_previous: item.source_jobs_previous,
+    v4_gap_addition: Boolean(item.v4_gap_addition),
+    v4_gap_source: item.v4_gap_source || "",
+    mapping_note: item.mapping_note || "",
     jobs_dashboard_2024_calibrated: item.jobs,
     jobs_refresh_factor: item.jobs_refresh_factor,
     jobs_refresh_method: item.jobs_refresh_method,
@@ -192,7 +195,7 @@ async function main() {
       pay:
         "BFS LSE 2024 median monthly gross pay by Switzerland, total age, total sex, central value, CH-ISCO-19 two-digit occupation group. Dashboard pay is replaced where the previous source was a generic LSE value; specialized, contract, canton or employer estimates are retained and the LSE 2024 group value is stored as benchmark.",
       jobs:
-        "No official BFS table was found that directly maps SAKE 2024 employment to the dashboard's 72 occupation labels. Existing SAKE-2023 occupation estimates are therefore proportionally calibrated with total SAKE employed persons 2023 to 2024.",
+        "No official BFS table was found that directly maps SAKE 2024 employment to the dashboard occupation labels. Existing SAKE-2023 occupation estimates and v4 gap-addition starting values are therefore proportionally calibrated with total SAKE employed persons 2023 to 2024.",
       jobs_refresh_factor: Number(JOBS_REFRESH_FACTOR.toFixed(6)),
       sake_2023_total_employed: SAKE_2023_EMPLOYED,
       sake_2024_total_employed: SAKE_2024_EMPLOYED

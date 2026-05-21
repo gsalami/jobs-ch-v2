@@ -70,9 +70,15 @@ if (fs.existsSync(mappingPath)) {
   const dataSlugs = new Set(DATA.map(item => item.slug));
   const dataOnly = [...dataSlugs].filter(slug => !mappedSlugs.has(slug));
   const mappingOnly = [...mappedSlugs].filter(slug => !dataSlugs.has(slug));
+  const dataBySlug = new Map(DATA.map(item => [item.slug, item]));
 
   for (const slug of dataOnly) {
-    errors.push(`Slug exists in DATA but not mapping JSON: ${slug}`);
+    const item = dataBySlug.get(slug);
+    if (item && item.v4_gap_addition) {
+      warnings.push(`V4 gap addition is not in original mapping JSON: ${slug}`);
+    } else {
+      errors.push(`Slug exists in DATA but not mapping JSON: ${slug}`);
+    }
   }
   for (const slug of mappingOnly) {
     errors.push(`Slug exists in mapping JSON but not DATA: ${slug}`);
@@ -139,8 +145,8 @@ const jobs = DATA.reduce((sum, d) => sum + d.jobs, 0);
 const weighted = DATA.reduce((sum, d) => sum + d.jobs * d.exposure, 0) / jobs;
 const reviewCount = DATA.filter(d => d.mapping_confidence && d.mapping_confidence !== "hoch").length;
 
-if (DATA.length !== 72) {
-  warnings.push(`Expected 72 occupations, found ${DATA.length}`);
+if (DATA.length !== 86) {
+  warnings.push(`Expected 86 occupations, found ${DATA.length}`);
 }
 
 if (errors.length) {

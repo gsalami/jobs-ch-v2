@@ -1,7 +1,7 @@
 # Szenariobasierte 2026-Heuristik auf Basis der Eloundou et al. 2024 Werte
 
 **Heute-2026-Sicht als heuristische Erweiterung der Science-2024-Basis**  
-Version 0.4, Stand 7. Mai 2026
+Version 0.5, Stand 21. Mai 2026
 
 ## Abstract
 
@@ -17,7 +17,9 @@ Ein hoher Score bedeutet nicht Jobverlust. Er bedeutet, dass ein grösserer Teil
 
 Wichtige Korrektur gegenüber Version 0.2: Schweizer Einschränkungen werden stärker berücksichtigt. Besonders bei IT & Technologie wurde der Cap von 10 auf 9 gesenkt, weil Schweizer IT-Rollen oft Architektur, Requirement Engineering, Testing, Code Review, Stakeholder-Interaktion, regulatorische Verantwortung und Haftung enthalten. Einfachere Implementierungsanteile können zudem bereits off- oder nearshored sein. Deshalb sind hohe IT-Werte weiterhin plausibel, aber nicht mehr als praktisch grenzenlose technische Exposition modelliert.
 
-Wichtige Korrektur gegenüber Version 0.3: Die Schweizer Arbeitsmarktdaten wurden als eigener BFS-2024-Refresh ergänzt. Lohnwerte nutzen nun LSE 2024 nach CH-ISCO-19-Berufsgruppen; Beschäftigtenwerte werden transparent mit dem SAKE-Gesamtwachstum 2023-2024 kalibriert, ohne eine nicht verfügbare 72-Berufe-Mikrotabelle vorzutäuschen.
+Wichtige Korrektur gegenüber Version 0.3: Die Schweizer Arbeitsmarktdaten wurden als eigener BFS-2024-Refresh ergänzt. Lohnwerte nutzen nun LSE 2024 nach CH-ISCO-19-Berufsgruppen; Beschäftigtenwerte werden transparent mit dem SAKE-Gesamtwachstum 2023-2024 kalibriert, ohne eine nicht verfügbare Dashboard-SAKE-Mikrotabelle vorzutäuschen.
+
+Wichtige Korrektur gegenüber Version 0.4: Version 0.5 ergänzt 14 in der Lückenanalyse identifizierte Berufe, besonders Marketing, Sales, Beratung, Übersetzung, Controlling, Audit, Architektur, FaGe, MPA und personenbezogene Dienstleistungen. Das Dashboard umfasst damit 86 Berufszeilen. Die Ergänzungen sind als `v4_gap_addition` markiert und in `data/gap-additions-v4.csv` dokumentiert.
 
 ## 1. Abgrenzung zur Originalstudie
 
@@ -34,14 +36,15 @@ Ebenfalls nicht Teil dieser Heuristik ist ein Beschäftigungs-Outlook. Frühere 
 
 ## 1.1 Datenstand Schweiz
 
-Die Berufszeilen des Dashboards enthalten berufsnahe Schätzwerte für Lohn und Beschäftigung. Version 0.4 aktualisiert diese Werte soweit mit öffentlich verfügbaren BFS-2024-Daten möglich:
+Die Berufszeilen des Dashboards enthalten berufsnahe Schätzwerte für Lohn und Beschäftigung. Version 0.5 aktualisiert diese Werte soweit mit öffentlich verfügbaren BFS-2024-Daten möglich:
 
 - Lohnangaben im Dashboard: BFS LSE 2024, Tabelle `px-x-0304010000_205`, monatlicher Bruttolohn nach CH-ISCO-19-Berufsgruppe, Schweiz, Total Alter, Total Geschlecht, Zentralwert. Aus dem Monatsmedian wird ein Jahresbenchmark mit 13 Monatslöhnen gebildet und auf 1000 Franken gerundet.
 - Spezial-, Kantons-, Vertrags- und Arbeitgeberquellen bleiben dort erhalten, wo die CH-ISCO-2-Steller-Gruppe zu grob wäre, zum Beispiel bei Ärztinnen/Ärzten, Piloten, Lehrpersonen, Polizei oder Feuerwehr. Der LSE-2024-Wert wird in diesen Fällen trotzdem als Benchmark pro Beruf dokumentiert.
-- Beschäftigte im Dashboard: Es wurde keine öffentliche BFS-Tabelle gefunden, die SAKE 2024 direkt auf die 72 Dashboard-Berufe abbildet. Deshalb wird der bestehende SAKE-2023-Berufsmix proportional mit dem offiziellen SAKE-Gesamtwachstum skaliert: 4.848 Mio. Erwerbstätige 2023 auf 4.876 Mio. Erwerbstätige 2024, Faktor 1.0058.
+- Beschäftigte im Dashboard: Es wurde keine öffentliche BFS-Tabelle gefunden, die SAKE 2024 direkt auf die 86 Dashboard-Berufe abbildet. Deshalb wird der bestehende SAKE-2023-Berufsmix plus v4-Ergänzungswerte proportional mit dem offiziellen SAKE-Gesamtwachstum skaliert: 4.848 Mio. Erwerbstätige 2023 auf 4.876 Mio. Erwerbstätige 2024, Faktor 1.0058.
 - Alle Refresh-Schritte liegen in `data/bfs-2024-refresh.csv` und `data/bfs-2024-refresh.json`.
+- Die v4-Ergänzungen aus der Lückenanalyse liegen separat in `data/gap-additions-v4.csv` und `data/gap-additions-v4.json`.
 
-Das ist methodisch wichtig: Die LSE-2024-Löhne sind ein echter Gruppenrefresh, aber kein 4-stelliger Berufslohn pro Dashboard-Label. Die SAKE-2024-Beschäftigten sind eine transparente Kalibrierung, keine neue 72-Berufe-Messung. Dadurch wird BFS 2024 genutzt, ohne Präzision vorzutäuschen, die in den öffentlichen Tabellen nicht vorliegt.
+Das ist methodisch wichtig: Die LSE-2024-Löhne sind ein echter Gruppenrefresh, aber kein 4-stelliger Berufslohn pro Dashboard-Label. Die SAKE-2024-Beschäftigten sind eine transparente Kalibrierung, keine neue 86-Berufe-Messung. Dadurch wird BFS 2024 genutzt, ohne Präzision vorzutäuschen, die in den öffentlichen Tabellen nicht vorliegt.
 
 ## 2. Regel gegen Doppelzählung
 
@@ -88,9 +91,9 @@ Damit bleiben technische Leistungsfähigkeit und reale Nutzung/Diffusion getrenn
 
 Zur Plausibilisierung wurde eine kleine systematische Reannotation erstellt. Sie ersetzt keine Vollreplikation, kalibriert aber die Richtung der Modifikatoren.
 
-- 14 Berufsfelder
+- 16 Berufsfelder
 - 8 repräsentative Aufgaben je Berufsfeld
-- 112 Aufgaben insgesamt
+- 128 Aufgaben insgesamt
 - Labels: E0, E1, E2
 - explizite Transitionen: E0 bleibt E0, E0 wird E2, E2 wird E1, E1 bleibt E1, E2 bleibt E2
 
@@ -98,11 +101,11 @@ Gesamtergebnis der Stichprobe:
 
 | Transition | Anzahl |
 |---|---:|
-| E2 -> E1 | 32 |
-| E1 -> E1 | 28 |
-| E0 -> E0 | 33 |
-| E2 -> E2 | 15 |
-| E0 -> E2 | 4 |
+| E2 -> E1 | 37 |
+| E1 -> E1 | 32 |
+| E0 -> E0 | 38 |
+| E2 -> E2 | 16 |
+| E0 -> E2 | 5 |
 
 Interpretation: Der wichtigste 2026-Effekt ist nicht, dass alle nicht exponierten Aufgaben plötzlich exponiert werden. Der häufigste Effekt ist, dass frühere toolabhängige E2-Aufgaben durch Long Context, Agenten, Computer Use und multimodale Systeme näher an direkte Nutzbarkeit rücken.
 
@@ -126,12 +129,14 @@ Die Modifikatoren sind Beta-Punkte. Sie werden durch die Mini-Reannotation, die 
 | Handwerk & Bau | 0.03 | 0.02 | 0.01 | 0.01 | 4 |
 | Verwaltung & Administration | 0.11 | 0.14 | 0.02 | 0.07 | 9 |
 | Verkauf & Handel | 0.07 | 0.09 | 0.03 | 0.05 | 8 |
+| Marketing, Sales & Beratung | 0.10 | 0.09 | 0.07 | 0.05 | 8 |
 | Transport & Logistik | 0.04 | 0.04 | 0.02 | 0.02 | 5 |
 | Gastronomie & Tourismus | 0.05 | 0.05 | 0.04 | 0.04 | 7 |
 | Landwirtschaft & Natur | 0.03 | 0.02 | 0.02 | 0.01 | 4 |
 | Kunst, Design & Medien | 0.09 | 0.06 | 0.16 | 0.05 | 9 |
 | Ingenieurwesen | 0.09 | 0.06 | 0.06 | 0.04 | 8 |
 | Soziales & Beratung | 0.05 | 0.03 | 0.01 | 0.02 | 5 |
+| Persönliche Dienste & Reinigung | 0.02 | 0.02 | 0.02 | 0.01 | 3 |
 | Sicherheit & Schutz | 0.04 | 0.03 | 0.02 | 0.01 | 5 |
 
 Berufs-Overrides werden nur dort genutzt, wo der Beruf innerhalb des Berufsfeldes besonders klar von heutigen KI-Fähigkeiten betroffen ist, zum Beispiel Coding-Agenten bei Softwareentwicklung, Bild-KI bei Grafik/Fotografie oder Formularagenten in der Verwaltung. Für IT wurden diese Overrides gegenüber Version 0.2 reduziert, damit Schweizer Rollen mit mehr Architektur, Review, Testing, Sicherheitsverantwortung und Interaktion nicht wie reine Implementierungsrollen behandelt werden.
@@ -148,6 +153,7 @@ Caps verhindern, dass technische Fortschritte Aufgabenanteile überzeichnen, die
 | Kunst, Design & Medien | 9 | sozial/marktlich | Rechte, Stil, Marke, Auftrag und Auswahl bleiben begrenzend. |
 | Ingenieurwesen | 8 | regulatorisch/technisch | Normen, Haftung, physische Systeme und Validierung begrenzen. |
 | Verkauf & Handel | 8 | sozial/organisatorisch | Kundenbeziehung und Verhandlung bleiben relevant. |
+| Marketing, Sales & Beratung | 8 | sozial/marktlich/organisatorisch | Kampagnen, Research, CRM, Angebote und Präsentationen sind erreichbar, aber Markenurteil, Verhandlung, Umsetzung und Budgetverantwortung begrenzen. |
 | Bildung & Forschung | 7 | sozial/regulatorisch | Lernbeziehung, Aufsicht und Prüfungskontext begrenzen. |
 | Gastronomie & Tourismus | 7 | physisch/sozial | Service, Küche und Gästebeziehung bleiben physisch. |
 | Gesundheit & Pflege | 6 | regulatorisch/sozial/physisch | Klinische Verantwortung, Patientenkontakt, körperliche Pflege, Regulierung und Datenzugang begrenzen. |
@@ -156,6 +162,7 @@ Caps verhindern, dass technische Fortschritte Aufgabenanteile überzeichnen, die
 | Sicherheit & Schutz | 5 | sicherheit/physisch | Einsatzsituationen, Deeskalation und Verantwortung bleiben menschlich. |
 | Handwerk & Bau | 4 | physisch | Vor-Ort-Ausführung, Materialarbeit und Sicherheitsnormen dominieren. |
 | Landwirtschaft & Natur | 4 | physisch | Feldarbeit, Tiere, Wetter und Maschinen begrenzen reine LLM-Exposition. |
+| Persönliche Dienste & Reinigung | 3 | physisch/sozial | Körperliche Dienstleistungen vor Ort dominieren; KI erreicht vor allem Termin-, Kommunikations-, Rapport- oder Marketingnebenaufgaben. |
 
 Caps könnten in Zukunft steigen, wenn Robotik, sichere Fachsystemintegration, auditierbare Agenten, regulierte klinische Copilots oder CAD/CAE-Integrationen deutlich breiter verfügbar und validiert werden.
 
@@ -175,7 +182,7 @@ Zusätzlich enthält jeder Beruf ein Feld `uncertainty_reason`, zum Beispiel:
 - starke Variation zwischen Organisationen,
 - KI-Nutzung abhängig von Datenzugang.
 
-Die SOC/ISCO/Schweizer Berufsprofil-Zuordnung ist in `data/mapping-2026.csv` dokumentiert. Dort stehen Schweizer Berufsbezeichnung, ISCO-Code, Mapping-Confidence, Mapping-Hinweis sowie die verwendeten Lohn- und Beschäftigungsquellen. Zusätzlich dokumentiert `data/bfs-2024-refresh.csv` pro Beruf die LSE-2024-Berufsgruppe, den Monatsmedian, den Jahresbenchmark, die Pay-Refresh-Methode, die bisherige Beschäftigtenzahl und die SAKE-2024-Kalibrierung.
+Die SOC/ISCO/Schweizer Berufsprofil-Zuordnung ist in `data/mapping-2026.csv` dokumentiert. Dort stehen Schweizer Berufsbezeichnung, ISCO-Code, Mapping-Confidence, Mapping-Hinweis sowie die verwendeten Lohn- und Beschäftigungsquellen. Zusätzlich dokumentiert `data/bfs-2024-refresh.csv` pro Beruf die LSE-2024-Berufsgruppe, den Monatsmedian, den Jahresbenchmark, die Pay-Refresh-Methode, die bisherige Beschäftigtenzahl und die SAKE-2024-Kalibrierung. Die 14 v4-Lückenberufe sind zusätzlich in `data/gap-additions-v4.csv` ausgewiesen, weil sie nicht Teil der ursprünglichen 72er-Mappingdatei waren.
 
 Grenze des Mappings: Die O*NET-Basis beschreibt US-Berufe. Die tatsächliche Tätigkeitsmischung in der Schweiz kann abweichen, etwa wegen höherer Bildungsstandards, höherer Lohnkosten, Spezialisierung, Off-/Nearshoring einfacher Tätigkeiten oder stärkerer Regulierung. Das betrifft besonders IT, Finanzwesen, Gesundheit, Engineering und öffentliche Verwaltung. Diese Abweichung wird nicht task-vollständig neu gemessen, sondern über Mapping-Confidence, Unsicherheitsgründe, strengere Caps und Sensitivität sichtbar gemacht.
 
@@ -185,16 +192,16 @@ Die Ergebnisse sind Szenarien, keine Punktprognosen.
 
 | Szenario | Score 8-10 | Score 5-7 | Score 0-4 | Gewichteter Score |
 |---|---:|---:|---:|---:|
-| Science 2024 | 1 | 33 | 38 | 3.92 |
-| Heute 2026 technisch | 21 | 23 | 28 | 5.54 |
-| Heute 2026 adoptionsgewichtet | 24 | 20 | 28 | 5.77 |
-| Ohne Berufs-Overrides | 19 | 25 | 28 | 5.50 |
-| Halbierte Modifikatoren | 8 | 34 | 30 | 4.80 |
-| Aggressivere Modifikatoren | 27 | 19 | 26 | 5.86 |
-| Ohne Caps | 21 | 23 | 28 | 5.65 |
-| Strengere Caps | 19 | 25 | 28 | 5.37 |
+| Science 2024 | 3 | 39 | 44 | 3.93 |
+| Heute 2026 technisch | 27 | 26 | 33 | 5.39 |
+| Heute 2026 adoptionsgewichtet | 30 | 23 | 33 | 5.61 |
+| Ohne Berufs-Overrides | 25 | 28 | 33 | 5.36 |
+| Halbierte Modifikatoren | 11 | 40 | 35 | 4.71 |
+| Aggressivere Modifikatoren | 33 | 22 | 31 | 5.69 |
+| Ohne Caps | 27 | 26 | 33 | 5.54 |
+| Strengere Caps | 23 | 30 | 33 | 5.24 |
 
-Im Basisszenario der 2026-Heuristik steigt die Zahl der Berufe mit Score 8 bis 10 von 1 auf 21. Adoptionsgewichtet steigt sie auf 24. Diese Werte sind sensitiv gegenüber Modifikatoren, Caps und Adoptionannahmen und sollten als Szenario gelesen werden. Insbesondere ist das technische Basisszenario nicht als defensives Minimum zu verstehen; das defensivere Lesart ist das Szenario mit halbierten Modifikatoren.
+Im Basisszenario der 2026-Heuristik liegt die Zahl der Berufe mit Score 8 bis 10 bei 27 von 86. Adoptionsgewichtet steigt sie auf 30. Diese Werte sind sensitiv gegenüber Modifikatoren, Caps und Adoptionannahmen und sollten als Szenario gelesen werden. Insbesondere ist das technische Basisszenario nicht als defensives Minimum zu verstehen; die defensivere Lesart ist das Szenario mit halbierten Modifikatoren.
 
 Top-Deltas im technischen Basisszenario:
 
@@ -209,7 +216,7 @@ Top-Deltas im technischen Basisszenario:
 | Cutter/-in (Video/Film) | 5 | 8 | +3 |
 | HR-Fachmann/-frau | 5 | 8 | +3 |
 | IT-Projektleiter/-in | 5 | 8 | +3 |
-| UX Designer/-in | 5 | 8 | +3 |
+| Key Account Manager/-in | 5 | 8 | +3 |
 
 Berufe mit besonders grosser Szenario-Spannweite sind unter anderem UX Design, Fotografie, Video/Film-Schnitt, HR-Fachleute, Zollbeamtinnen/Zollbeamte und Data Science. Diese Spannweite wird in `scenario_score_range` je Beruf dokumentiert.
 

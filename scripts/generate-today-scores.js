@@ -21,18 +21,20 @@ const CATS = {
   "handwerk-bau": "Handwerk & Bau",
   "verwaltung": "Verwaltung & Administration",
   "verkauf-handel": "Verkauf & Handel",
+  "marketing-sales": "Marketing, Sales & Beratung",
   "transport-logistik": "Transport & Logistik",
   "gastronomie-tourismus": "Gastronomie & Tourismus",
   "landwirtschaft": "Landwirtschaft & Natur",
   "kunst-medien": "Kunst, Design & Medien",
   "ingenieurwesen": "Ingenieurwesen",
   "soziales": "Soziales & Beratung",
+  "personen-dienste": "Persönliche Dienste & Reinigung",
   "sicherheit": "Sicherheit & Schutz"
 };
 
 const MODEL = {
-  id: "ai-exposure-framework-2026-05-07-v0.4",
-  asOf: "2026-05-07",
+  id: "ai-exposure-framework-2026-05-21-v0.5",
+  asOf: "2026-05-21",
   title: "Szenariobasierte 2026-Heuristik auf Basis der Eloundou et al. 2024 Werte",
   framing: "Heuristische Erweiterung, keine vollstaendige neue Task-Annotation und keine Replikation der Science-Studie. Das Hauptszenario ist ein plausibles Basisszenario; die konservative Variante ist das Szenario mit halbierten Modifikatoren.",
   formulas: {
@@ -56,8 +58,8 @@ const MODEL = {
     "https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/"
   ],
   dataCurrency: {
-    dashboardPay: "Lohnwerte wurden am 2026-05-07 mit BFS LSE 2024 nach CH-ISCO-19 Berufsgruppen aktualisiert. Wo Spezial-, Kantons-, Vertrags- oder Arbeitgeberquellen genauer sind als ein 2-Steller-Gruppenlohn, bleibt der bisherige Dashboard-Wert erhalten und LSE 2024 wird als Benchmark dokumentiert.",
-    dashboardJobs: "Beschaeftigtenwerte wurden am 2026-05-07 nicht als neue 72-Berufe-SAKE-Mikrotabelle ersetzt. Der bestehende SAKE-2023-Berufsmix wurde proportional mit dem offiziellen SAKE-Gesamtwachstum 2023-2024 skaliert.",
+    dashboardPay: "Lohnwerte wurden am 2026-05-21 mit BFS LSE 2024 nach CH-ISCO-19 Berufsgruppen aktualisiert. Wo Spezial-, Kantons-, Vertrags- oder Arbeitgeberquellen genauer sind als ein 2-Steller-Gruppenlohn, bleibt der bisherige Dashboard-Wert erhalten und LSE 2024 wird als Benchmark dokumentiert.",
+    dashboardJobs: "Beschaeftigtenwerte wurden am 2026-05-21 nicht als neue Dashboard-SAKE-Mikrotabelle ersetzt. Der bestehende SAKE-2023-Berufsmix und die v4-Ergaenzungswerte wurden proportional mit dem offiziellen SAKE-Gesamtwachstum 2023-2024 skaliert.",
     latestBfsPay: "BFS LSE 2024 ist verfuegbar; der gesamtwirtschaftliche Medianlohn lag 2024 bei 7024 Franken brutto pro Monat.",
     latestBfsJobs: "BFS SAKE in Kuerze 2024 ist verfuegbar; sie weist 4.876 Mio. Erwerbstaetige aus. SAKE in Kuerze 2023 weist 4.848 Mio. Erwerbstaetige aus; daraus ergibt sich ein Kalibrierungsfaktor von rund 1.0058.",
     lsePxWebTable: "Monatlicher Bruttolohn nach Jahr, Grossregion, Berufsgruppe, Lebensalter, Geschlecht und Zentralwert und andere Perzentile, Tabelle px-x-0304010000_205.",
@@ -141,6 +143,17 @@ const MODEL = {
       capCouldRiseIf: "CRM-, ERP- und Angebotsagenten direkt in Verkaufsprozessen laufen.",
       note: "Kundenkommunikation, Angebote, CRM, Sortiments- und Backoffice-Arbeit"
     },
+    "marketing-sales": {
+      longContext: 0.10,
+      agentic: 0.09,
+      multimodal: 0.07,
+      adoption: 0.05,
+      cap: 8,
+      capType: "sozial/marktlich/organisatorisch",
+      capRationale: "Kampagnen, Research, CRM, Angebote und Präsentationen sind stark erreichbar, aber Markenurteil, Verhandlung, Kundenzugang, Umsetzung und Budgetverantwortung begrenzen.",
+      capCouldRiseIf: "CRM-, Marketing-Automation-, Research- und Präsentationsagenten enger mit Unternehmensdaten und Freigabeprozessen verbunden werden.",
+      note: "Kampagnen, Copy, Research, Slides, CRM, Angebote und Beratungsvorbereitung"
+    },
     "transport-logistik": {
       longContext: 0.04,
       agentic: 0.04,
@@ -207,6 +220,17 @@ const MODEL = {
       capCouldRiseIf: "Fallführungssysteme und Dokumentationsassistenten sicherer integriert werden.",
       note: "Falldokumentation und Research, aber Beziehung und Schutzauftrag bleiben zentral"
     },
+    "personen-dienste": {
+      longContext: 0.02,
+      agentic: 0.02,
+      multimodal: 0.02,
+      adoption: 0.01,
+      cap: 3,
+      capType: "physisch/sozial",
+      capRationale: "Die Kerntaetigkeiten sind koerperliche Dienstleistungen vor Ort; KI hilft vor allem bei Termin-, Kommunikations-, Rapport- oder Marketingnebenaufgaben.",
+      capCouldRiseIf: "Serviceplanung, visuelle Assistenz und Robotik enger mit betrieblichen Workflows gekoppelt werden.",
+      note: "Termine, Checklisten, Kundenkommunikation und Marketing, aber physische Dienstleistung dominiert"
+    },
     "sicherheit": {
       longContext: 0.04,
       agentic: 0.03,
@@ -255,12 +279,14 @@ const CATEGORY_CONFIDENCE = {
   "handwerk-bau": { confidence: "low", reasons: ["Hoher physischer Anteil", "Vor-Ort-Kontext dominiert"] },
   "verwaltung": { confidence: "high", reasons: ["Viele standardisierte digitale Dokumenten- und Prozessaufgaben"] },
   "verkauf-handel": { confidence: "medium", reasons: ["Starke Variation zwischen Organisationen", "Kundenkontakt und Datenzugang relevant"] },
+  "marketing-sales": { confidence: "medium", reasons: ["Starke Variation zwischen Organisationen", "Kundenzugang, Marke und Datenzugang relevant"] },
   "transport-logistik": { confidence: "low", reasons: ["Hoher physischer Anteil", "Sicherheits- und Mobilitaetskontext"] },
   "gastronomie-tourismus": { confidence: "medium", reasons: ["Gemischtes digitales und physisches Aufgabenprofil"] },
   "landwirtschaft": { confidence: "low", reasons: ["Hoher physischer Anteil", "Sensorik und Robotik ausserhalb des LLM-Scopes"] },
   "kunst-medien": { confidence: "medium", reasons: ["Starke Variation nach Auftrag, Rechten und Organisation"] },
   "ingenieurwesen": { confidence: "medium", reasons: ["Validierung, Normen und physische Systeme begrenzen"] },
   "soziales": { confidence: "low", reasons: ["Beziehungsarbeit und Schutzauftrag zentral", "Datenzugang stark begrenzt"] },
+  "personen-dienste": { confidence: "low", reasons: ["Hoher physischer Anteil", "Vor-Ort-Service und menschliche Beziehung dominieren"] },
   "sicherheit": { confidence: "low", reasons: ["Einsatzsituationen und Verantwortung stark kontextabhaengig"] }
 };
 
@@ -343,6 +369,15 @@ const REANNOTATION_SAMPLE = [
   task("verkauf-handel", "Produktbild fuer Kampagne variieren", "E2", "E1", "multimodal", "Bild-KI senkt Reibung."),
   task("verkauf-handel", "Lieferantenvergleich erstellen", "E2", "E1", "agentic_tools", "Recherche und Tabellenarbeit naeher an direkt."),
 
+  task("marketing-sales", "Kampagnenbriefing in Zielgruppen-Copy uebersetzen", "E1", "E1", "none", "Text- und Variantenarbeit war bereits direkt exponiert."),
+  task("marketing-sales", "Markt- und Wettbewerbsrecherche fuer Pitch verdichten", "E2", "E1", "long_context", "Viele Quellen und Reports koennen heute direkter synthetisiert werden."),
+  task("marketing-sales", "CRM-Follow-up nach Kundentermin vorbereiten", "E2", "E1", "agentic_tools", "CRM- und E-Mail-Agenten reduzieren Tool-Reibung."),
+  task("marketing-sales", "Preis- und Vertragsverhandlung fuehren", "E0", "E0", "social", "Vertrauen, Timing und Verhandlungsverantwortung bleiben menschlich."),
+  task("marketing-sales", "Praesentationsdeck aus Interviewnotizen erstellen", "E2", "E1", "agentic_tools", "Recherche-, Schreib- und Slide-Workflows sind agentenfaehiger."),
+  task("marketing-sales", "Markenpositionierung final entscheiden", "E0", "E2", "long_context", "KI kann Optionen und Evidenz vorbereiten, aber Entscheidung und Verantwortung bleiben."),
+  task("marketing-sales", "Produktvisual fuer Kampagne variieren", "E2", "E1", "multimodal", "Bild- und Layoutgenerierung senken Reibung deutlich."),
+  task("marketing-sales", "B2B-Besuch vor Ort durchfuehren", "E0", "E0", "social", "Praesenz, Beziehung und Fachkontext beim Kunden begrenzen."),
+
   task("transport-logistik", "Tourenplan aus Auftraegen vorbereiten", "E2", "E2", "agentic_tools", "Planungsassistenz steigt, Kontext bleibt operativ."),
   task("transport-logistik", "Fahrzeug sicher fuehren", "E0", "E0", "physical", "Autonomes Fahren ausserhalb LLM-Scope."),
   task("transport-logistik", "Frachtpapiere pruefen", "E2", "E1", "long_context", "Dokumentenabgleich wird direkter."),
@@ -396,6 +431,15 @@ const REANNOTATION_SAMPLE = [
   task("soziales", "Bericht an Behoerde formulieren", "E1", "E1", "none", "Dokumentation."),
   task("soziales", "Risikoabschaetzung verantworten", "E0", "E0", "social", "Schutzauftrag und Urteil."),
   task("soziales", "Termine und Nachweise koordinieren", "E2", "E1", "agentic_tools", "Administrative Agenten senken Reibung."),
+
+  task("personen-dienste", "Termin- und Einsatzplan erstellen", "E2", "E1", "agentic_tools", "Planungs- und Kommunikationsagenten machen Nebenaufgaben direkter erreichbar."),
+  task("personen-dienste", "Kundenantwort oder Offertentext formulieren", "E1", "E1", "none", "Textarbeit war bereits exponiert."),
+  task("personen-dienste", "Haarschnitt oder Reinigung vor Ort ausfuehren", "E0", "E0", "physical", "Die Kerntaetigkeit ist koerperliche Arbeit am Ort."),
+  task("personen-dienste", "Foto eines Arbeitsbereichs fuer Checkliste beschreiben", "E2", "E2", "multimodal", "Visuelle Assistenz hilft, ersetzt aber Vor-Ort-Beurteilung nicht."),
+  task("personen-dienste", "Social-Media-Post fuer Salon oder Betrieb erstellen", "E1", "E1", "none", "Direkte Text- und Bildideenarbeit."),
+  task("personen-dienste", "Qualitaetskontrolle vor Ort verantworten", "E0", "E0", "physical", "Sensorik, Verantwortung und Umgebung bleiben ausserhalb reiner LLM-Exposition."),
+  task("personen-dienste", "Rapport oder Checkliste aus Stichworten schreiben", "E1", "E1", "none", "Dokumentation ist direkt erreichbar."),
+  task("personen-dienste", "Kundengespraech ueber Stil, Erwartungen oder Beschwerden fuehren", "E0", "E0", "social", "Menschliche Beziehung, Vertrauen und Situation begrenzen."),
 
   task("sicherheit", "Rapport aus Stichworten erstellen", "E1", "E1", "none", "Textarbeit."),
   task("sicherheit", "Lagebild aus Meldungen zusammenfassen", "E2", "E1", "long_context", "Viele Meldungen koennen besser synthetisiert werden."),
@@ -558,6 +602,8 @@ function computeRows() {
       max_scenario_score: maxScenarioScore,
       mapping_confidence: item.mapping_confidence || (item.mapping_note ? "mittel" : "hoch"),
       mapping_note: item.mapping_note || "",
+      v4_gap_addition: Boolean(item.v4_gap_addition),
+      v4_gap_source: item.v4_gap_source || "",
       source_pay: item.source_pay,
       source_jobs: item.source_jobs,
       scenario: "base_2026",
@@ -705,7 +751,9 @@ writeCsv("today-scores-2026.csv", [
   "role_override",
   "confidence",
   "uncertainty_reason",
-  "mapping_confidence"
+  "mapping_confidence",
+  "v4_gap_addition",
+  "v4_gap_source"
 ], scores.map(row => ({
   slug: row.slug,
   occupation: row.occupation,
@@ -742,7 +790,9 @@ writeCsv("today-scores-2026.csv", [
   role_override: row.modifiers.role_override,
   confidence: row.confidence,
   uncertainty_reason: row.uncertainty_reason,
-  mapping_confidence: row.mapping_confidence
+  mapping_confidence: row.mapping_confidence,
+  v4_gap_addition: row.v4_gap_addition,
+  v4_gap_source: row.v4_gap_source
 })));
 
 writeCsv("scenario-summary-2026.csv", [
@@ -792,6 +842,8 @@ writeCsv("mapping-2026.csv", [
   "jobs_refresh_factor",
   "jobs_refresh_method",
   "source_jobs_previous",
+  "v4_gap_addition",
+  "v4_gap_source",
   "source_pay",
   "source_jobs"
 ], DATA.map(item => ({
@@ -814,6 +866,8 @@ writeCsv("mapping-2026.csv", [
   jobs_refresh_factor: item.jobs_refresh_factor || "",
   jobs_refresh_method: item.jobs_refresh_method || "",
   source_jobs_previous: item.source_jobs_previous || "",
+  v4_gap_addition: Boolean(item.v4_gap_addition),
+  v4_gap_source: item.v4_gap_source || "",
   source_pay: item.source_pay,
   source_jobs: item.source_jobs
 })));

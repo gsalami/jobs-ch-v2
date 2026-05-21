@@ -55,6 +55,14 @@ verkauf-handel,Verkauf & Handel,Ladenregal einraeumen,E0,E0,E0->E0,physical,Phys
 verkauf-handel,Verkauf & Handel,Kundenmail beantworten,E1,E1,E1->E1,none,Bereits exponiert.
 verkauf-handel,Verkauf & Handel,Produktbild fuer Kampagne variieren,E2,E1,E2->E1,multimodal,Bild-KI senkt Reibung.
 verkauf-handel,Verkauf & Handel,Lieferantenvergleich erstellen,E2,E1,E2->E1,agentic_tools,Recherche und Tabellenarbeit naeher an direkt.
+marketing-sales,"Marketing, Sales & Beratung",Kampagnenbriefing in Zielgruppen-Copy uebersetzen,E1,E1,E1->E1,none,Text- und Variantenarbeit war bereits direkt exponiert.
+marketing-sales,"Marketing, Sales & Beratung",Markt- und Wettbewerbsrecherche fuer Pitch verdichten,E2,E1,E2->E1,long_context,Viele Quellen und Reports koennen heute direkter synthetisiert werden.
+marketing-sales,"Marketing, Sales & Beratung",CRM-Follow-up nach Kundentermin vorbereiten,E2,E1,E2->E1,agentic_tools,CRM- und E-Mail-Agenten reduzieren Tool-Reibung.
+marketing-sales,"Marketing, Sales & Beratung",Preis- und Vertragsverhandlung fuehren,E0,E0,E0->E0,social,"Vertrauen, Timing und Verhandlungsverantwortung bleiben menschlich."
+marketing-sales,"Marketing, Sales & Beratung",Praesentationsdeck aus Interviewnotizen erstellen,E2,E1,E2->E1,agentic_tools,"Recherche-, Schreib- und Slide-Workflows sind agentenfaehiger."
+marketing-sales,"Marketing, Sales & Beratung",Markenpositionierung final entscheiden,E0,E2,E0->E2,long_context,"KI kann Optionen und Evidenz vorbereiten, aber Entscheidung und Verantwortung bleiben."
+marketing-sales,"Marketing, Sales & Beratung",Produktvisual fuer Kampagne variieren,E2,E1,E2->E1,multimodal,Bild- und Layoutgenerierung senken Reibung deutlich.
+marketing-sales,"Marketing, Sales & Beratung",B2B-Besuch vor Ort durchfuehren,E0,E0,E0->E0,social,"Praesenz, Beziehung und Fachkontext beim Kunden begrenzen."
 transport-logistik,Transport & Logistik,Tourenplan aus Auftraegen vorbereiten,E2,E2,E2->E2,agentic_tools,"Planungsassistenz steigt, Kontext bleibt operativ."
 transport-logistik,Transport & Logistik,Fahrzeug sicher fuehren,E0,E0,E0->E0,physical,Autonomes Fahren ausserhalb LLM-Scope.
 transport-logistik,Transport & Logistik,Frachtpapiere pruefen,E2,E1,E2->E1,long_context,Dokumentenabgleich wird direkter.
@@ -103,6 +111,14 @@ soziales,Soziales & Beratung,Kind betreuen,E0,E0,E0->E0,physical,Praesenz und Fu
 soziales,Soziales & Beratung,Bericht an Behoerde formulieren,E1,E1,E1->E1,none,Dokumentation.
 soziales,Soziales & Beratung,Risikoabschaetzung verantworten,E0,E0,E0->E0,social,Schutzauftrag und Urteil.
 soziales,Soziales & Beratung,Termine und Nachweise koordinieren,E2,E1,E2->E1,agentic_tools,Administrative Agenten senken Reibung.
+personen-dienste,Persönliche Dienste & Reinigung,Termin- und Einsatzplan erstellen,E2,E1,E2->E1,agentic_tools,Planungs- und Kommunikationsagenten machen Nebenaufgaben direkter erreichbar.
+personen-dienste,Persönliche Dienste & Reinigung,Kundenantwort oder Offertentext formulieren,E1,E1,E1->E1,none,Textarbeit war bereits exponiert.
+personen-dienste,Persönliche Dienste & Reinigung,Haarschnitt oder Reinigung vor Ort ausfuehren,E0,E0,E0->E0,physical,Die Kerntaetigkeit ist koerperliche Arbeit am Ort.
+personen-dienste,Persönliche Dienste & Reinigung,Foto eines Arbeitsbereichs fuer Checkliste beschreiben,E2,E2,E2->E2,multimodal,"Visuelle Assistenz hilft, ersetzt aber Vor-Ort-Beurteilung nicht."
+personen-dienste,Persönliche Dienste & Reinigung,Social-Media-Post fuer Salon oder Betrieb erstellen,E1,E1,E1->E1,none,Direkte Text- und Bildideenarbeit.
+personen-dienste,Persönliche Dienste & Reinigung,Qualitaetskontrolle vor Ort verantworten,E0,E0,E0->E0,physical,"Sensorik, Verantwortung und Umgebung bleiben ausserhalb reiner LLM-Exposition."
+personen-dienste,Persönliche Dienste & Reinigung,Rapport oder Checkliste aus Stichworten schreiben,E1,E1,E1->E1,none,Dokumentation ist direkt erreichbar.
+personen-dienste,Persönliche Dienste & Reinigung,"Kundengespraech ueber Stil, Erwartungen oder Beschwerden fuehren",E0,E0,E0->E0,social,"Menschliche Beziehung, Vertrauen und Situation begrenzen."
 sicherheit,Sicherheit & Schutz,Rapport aus Stichworten erstellen,E1,E1,E1->E1,none,Textarbeit.
 sicherheit,Sicherheit & Schutz,Lagebild aus Meldungen zusammenfassen,E2,E1,E2->E1,long_context,Viele Meldungen koennen besser synthetisiert werden.
 sicherheit,Sicherheit & Schutz,Einsatz vor Ort fuehren,E0,E0,E0->E0,safety,Verantwortung und physische Lage.
