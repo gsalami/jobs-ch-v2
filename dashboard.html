@@ -866,7 +866,7 @@ function updateSplitReveal(percent) {
   const handle = document.getElementById('split-handle');
   const range = document.getElementById('split-range');
   if (!overlay || !handle) return;
-  overlay.style.width = splitReveal + '%';
+  overlay.style.clipPath = `inset(0 0 0 ${splitReveal}%)`;
   handle.style.left = splitReveal + '%';
   handle.setAttribute('aria-valuenow', Math.round(splitReveal));
   if (range) range.value = Math.round(splitReveal);
@@ -877,8 +877,8 @@ function renderSplitCompare(W, H) {
   container.innerHTML = `
     <div class="split-compare">
       <div class="split-head">
-        <span class="split-tag split-tag--today">Heute 2026 aufgedeckt</span>
         <span class="split-tag split-tag--science">Science 2024 Basis</span>
+        <span class="split-tag split-tag--today">Heute 2026 rechts</span>
       </div>
       <div class="split-stage" id="split-stage" style="width:${W}px;height:${H}px">
         <svg id="split-science" width="${W}" height="${H}" aria-label="Science 2024 Treemap"></svg>
@@ -886,19 +886,19 @@ function renderSplitCompare(W, H) {
           <svg id="split-today" width="${W}" height="${H}" aria-label="Heute 2026 Treemap"></svg>
         </div>
         <div class="split-stage-labels" aria-hidden="true">
-          <span class="split-stage-label split-stage-label--today">Heute 2026</span>
           <span class="split-stage-label split-stage-label--science">Science 2024</span>
+          <span class="split-stage-label split-stage-label--today">Heute 2026</span>
         </div>
         <div class="split-handle" id="split-handle" role="slider" tabindex="0" aria-label="Aufdeckung zwischen Science 2024 und Heute 2026" aria-valuemin="3" aria-valuemax="97" aria-valuenow="${Math.round(splitReveal)}"><span aria-hidden="true"></span></div>
       </div>
       <div class="split-mobile-control">
         <input id="split-range" type="range" min="3" max="97" value="${Math.round(splitReveal)}" aria-label="Split-Screen-Aufdeckung steuern">
         <div class="split-mobile-legend" aria-hidden="true">
-          <span>Heute 2026</span>
           <span>Science 2024</span>
+          <span>Heute 2026</span>
         </div>
       </div>
-      <p class="split-caption">Weissen Handle anfassen, ziehen und loslassen. Die Kacheln bleiben klickbar und öffnen wie gewohnt die Detailansicht.</p>
+      <p class="split-caption">Links bleibt die Science-2024-Basis, rechts liegt die Heute-2026-Sicht. Weissen Handle anfassen, ziehen und loslassen; die Kacheln bleiben klickbar.</p>
     </div>
   `;
 
