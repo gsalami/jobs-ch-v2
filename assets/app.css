@@ -164,34 +164,6 @@
       margin-top: 1.9rem;
     }
 
-    .hero-proof {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.55rem;
-      margin-top: 1.1rem;
-      max-width: 640px;
-    }
-
-    .hero-proof a {
-      display: inline-flex;
-      align-items: center;
-      min-height: 31px;
-      padding: 0.34rem 0.62rem;
-      border: 1px solid rgba(255,255,255,0.16);
-      border-radius: 999px;
-      color: #dfe7ff;
-      background: rgba(255,255,255,0.045);
-      text-decoration: none;
-      font-size: 0.72rem;
-      font-weight: 750;
-      white-space: nowrap;
-    }
-
-    .hero-proof a:hover {
-      border-color: rgba(47,99,255,0.65);
-      background: rgba(47,99,255,0.13);
-    }
-
     .cta-btn {
       display: inline-flex;
       align-items: center;
@@ -1819,12 +1791,6 @@
         width: 100%;
         max-width: 358px;
         gap: 0.65rem;
-      }
-      .hero-proof {
-        max-width: 358px;
-      }
-      .hero-proof a {
-        white-space: normal;
       }
       .cta-btn {
         width: 100%;
