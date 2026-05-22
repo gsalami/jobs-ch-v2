@@ -534,6 +534,7 @@
       border: 1px solid #101b34;
       border-radius: 4px;
       cursor: ew-resize;
+      isolation: isolate;
       touch-action: none;
     }
 
@@ -549,8 +550,48 @@
       inset: 0 auto 0 0;
       overflow: hidden;
       width: 52%;
-      border-right: 1px solid rgba(255,255,255,0.3);
-      box-shadow: 10px 0 30px rgba(0,0,0,0.24);
+      background: transparent;
+      box-shadow: none;
+      filter: none;
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .split-stage-labels {
+      position: absolute;
+      top: 0.72rem;
+      left: 0.72rem;
+      right: 0.72rem;
+      z-index: 3;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.6rem;
+      pointer-events: none;
+    }
+
+    .split-stage-label {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0.28rem 0.55rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 999px;
+      background: rgba(3,6,12,0.72);
+      color: #f4f7ff;
+      font-size: 0.7rem;
+      font-weight: 850;
+      letter-spacing: 0.02em;
+      backdrop-filter: blur(8px);
+    }
+
+    .split-stage-label--today {
+      border-color: rgba(245,158,11,0.45);
+      color: #f59e0b;
+    }
+
+    .split-stage-label--science {
+      border-color: rgba(47,99,255,0.45);
+      color: #9db2ff;
     }
 
     .split-handle {
@@ -560,7 +601,7 @@
       left: 52%;
       width: 0;
       outline: none;
-      z-index: 4;
+      z-index: 5;
     }
 
     .split-handle::before {
@@ -568,10 +609,10 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      left: -1px;
-      width: 2px;
+      left: -1.5px;
+      width: 3px;
       background: #fff;
-      box-shadow: 0 0 20px rgba(255,255,255,0.58);
+      box-shadow: none;
     }
 
     .split-handle span {
@@ -579,25 +620,30 @@
       top: 50%;
       left: 0;
       transform: translate(-50%, -50%);
-      width: 42px;
-      height: 42px;
+      width: 36px;
+      height: 54px;
       border-radius: 999px;
       border: 2px solid #fff;
-      background: #05070d;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      background: #fff;
+      box-shadow: none;
     }
 
     .split-handle span::before {
-      content: "< >";
+      content: "<>";
       position: absolute;
       inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
-      font-size: 0.78rem;
+      color: #03060c;
+      font-size: 0.72rem;
       font-weight: 900;
-      letter-spacing: 0.04em;
+      letter-spacing: -0.02em;
+    }
+
+    .split-handle:focus-visible span {
+      outline: 3px solid rgba(245,158,11,0.7);
+      outline-offset: 3px;
     }
 
     .split-caption {

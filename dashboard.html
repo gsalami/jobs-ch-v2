@@ -883,9 +883,13 @@ function renderSplitCompare(W, H) {
         <div class="split-overlay" id="split-overlay">
           <svg id="split-today" width="${W}" height="${H}" aria-label="Heute 2026 Treemap"></svg>
         </div>
+        <div class="split-stage-labels" aria-hidden="true">
+          <span class="split-stage-label split-stage-label--today">Heute 2026</span>
+          <span class="split-stage-label split-stage-label--science">Science 2024</span>
+        </div>
         <div class="split-handle" id="split-handle" role="slider" tabindex="0" aria-label="Aufdeckung zwischen Science 2024 und Heute 2026" aria-valuemin="3" aria-valuemax="97" aria-valuenow="${Math.round(splitReveal)}"><span aria-hidden="true"></span></div>
       </div>
-      <p class="split-caption">Maus bewegen oder den Handle ziehen: links wird die Heute-2026-Sicht sichtbar, rechts bleibt die Science-2024-Basis. Die Flächen bleiben gleich, nur Score-Farbe und Score-Zahl wechseln.</p>
+      <p class="split-caption">Handle ziehen oder in die Treemap klicken: links erscheint die Heute-2026-Sicht, rechts bleibt die Science-2024-Basis. Die Flächen bleiben gleich, nur Score-Farbe und Score-Zahl wechseln.</p>
     </div>
   `;
 
@@ -908,7 +912,7 @@ function renderSplitCompare(W, H) {
     updateFromEvent(event);
   });
   stage.addEventListener('pointermove', (event) => {
-    if (dragging || event.pointerType === 'mouse') updateFromEvent(event);
+    if (dragging) updateFromEvent(event);
   });
   stage.addEventListener('pointerup', (event) => {
     dragging = false;
