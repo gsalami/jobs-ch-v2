@@ -661,6 +661,26 @@
       font-weight: 650;
     }
 
+    .split-mobile-control {
+      display: none;
+    }
+
+    .split-mobile-control input {
+      width: 100%;
+    }
+
+    .split-mobile-legend {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      margin-top: 0.32rem;
+      color: #8f98b8;
+      font-size: 0.68rem;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
     .today-method-panel {
       max-width: 1280px;
       margin: -0.3rem auto 1.4rem;
@@ -1881,6 +1901,51 @@
       .split-head {
         align-items: flex-start;
         flex-direction: column;
+      }
+      .split-tag {
+        min-height: 28px;
+        padding: 0.3rem 0.55rem;
+        font-size: 0.68rem;
+      }
+      .split-stage-labels {
+        top: 0.5rem;
+        left: 0.5rem;
+        right: 0.5rem;
+        gap: 0.4rem;
+      }
+      .split-stage-label {
+        min-height: 27px;
+        padding: 0.24rem 0.45rem;
+        font-size: 0.62rem;
+        background: rgba(3,6,12,0.82);
+      }
+      .split-handle {
+        width: 64px;
+      }
+      .split-handle::before {
+        left: calc(50% - 1px);
+        width: 2px;
+      }
+      .split-handle span {
+        width: 44px;
+        height: 44px;
+      }
+      .split-mobile-control {
+        display: block;
+        margin-top: 0.8rem;
+        padding: 0.7rem 0.72rem 0.58rem;
+        border: 1px solid #1d2743;
+        border-radius: 4px;
+        background: #05070d;
+      }
+      .split-mobile-control input {
+        display: block;
+        height: 30px;
+        accent-color: #fff;
+      }
+      .split-caption {
+        margin-top: 0.62rem;
+        font-size: 0.74rem;
       }
       .today-method-panel {
         padding-left: 1rem;

@@ -864,10 +864,12 @@ function updateSplitReveal(percent) {
   splitReveal = clamp(percent, 3, 97);
   const overlay = document.getElementById('split-overlay');
   const handle = document.getElementById('split-handle');
+  const range = document.getElementById('split-range');
   if (!overlay || !handle) return;
   overlay.style.width = splitReveal + '%';
   handle.style.left = splitReveal + '%';
   handle.setAttribute('aria-valuenow', Math.round(splitReveal));
+  if (range) range.value = Math.round(splitReveal);
 }
 
 function renderSplitCompare(W, H) {
@@ -889,6 +891,13 @@ function renderSplitCompare(W, H) {
         </div>
         <div class="split-handle" id="split-handle" role="slider" tabindex="0" aria-label="Aufdeckung zwischen Science 2024 und Heute 2026" aria-valuemin="3" aria-valuemax="97" aria-valuenow="${Math.round(splitReveal)}"><span aria-hidden="true"></span></div>
       </div>
+      <div class="split-mobile-control">
+        <input id="split-range" type="range" min="3" max="97" value="${Math.round(splitReveal)}" aria-label="Split-Screen-Aufdeckung steuern">
+        <div class="split-mobile-legend" aria-hidden="true">
+          <span>Heute 2026</span>
+          <span>Science 2024</span>
+        </div>
+      </div>
       <p class="split-caption">Weissen Handle anfassen, ziehen und loslassen. Die Kacheln bleiben klickbar und öffnen wie gewohnt die Detailansicht.</p>
     </div>
   `;
@@ -900,6 +909,7 @@ function renderSplitCompare(W, H) {
 
   const stage = document.getElementById('split-stage');
   const handle = document.getElementById('split-handle');
+  const range = document.getElementById('split-range');
   let dragging = false;
   const updateFromEvent = (event) => {
     const rect = stage.getBoundingClientRect();
@@ -925,6 +935,9 @@ function renderSplitCompare(W, H) {
     if (event.key === 'ArrowLeft') updateSplitReveal(splitReveal - 4);
     if (event.key === 'ArrowRight') updateSplitReveal(splitReveal + 4);
   });
+  if (range) {
+    range.addEventListener('input', (event) => updateSplitReveal(Number(event.target.value)));
+  }
 }
 
 function renderTreemap() {
@@ -935,7 +948,8 @@ function renderTreemap() {
   const H = Math.max(500, Math.min(W * 0.65, 700));
 
   if (activeFramework === "compare") {
-    renderSplitCompare(W, H);
+    const compareH = window.innerWidth <= 640 ? Math.max(390, Math.min(window.innerHeight * 0.52, 470)) : H;
+    renderSplitCompare(W, compareH);
     return;
   }
 
