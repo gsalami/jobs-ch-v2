@@ -854,7 +854,7 @@ function drawTreemapCells(svg, leaves, scoreMode, tooltipMode = scoreMode) {
 }
 
 function updateSplitReveal(percent) {
-  splitReveal = clamp(percent, 3, 97);
+  splitReveal = clamp(percent, 0, 100);
   const overlay = document.getElementById('split-overlay');
   const handle = document.getElementById('split-handle');
   const range = document.getElementById('split-range');
@@ -882,10 +882,10 @@ function renderSplitCompare(W, H) {
           <span class="split-stage-label split-stage-label--science">Science 2024</span>
           <span class="split-stage-label split-stage-label--today">Heute 2026</span>
         </div>
-        <div class="split-handle" id="split-handle" role="slider" tabindex="0" aria-label="Aufdeckung zwischen Science 2024 und Heute 2026" aria-valuemin="3" aria-valuemax="97" aria-valuenow="${Math.round(splitReveal)}"><span aria-hidden="true"></span></div>
+        <div class="split-handle" id="split-handle" role="slider" tabindex="0" aria-label="Aufdeckung zwischen Science 2024 und Heute 2026" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(splitReveal)}"><span aria-hidden="true"></span></div>
       </div>
       <div class="split-mobile-control">
-        <input id="split-range" type="range" min="3" max="97" value="${Math.round(splitReveal)}" aria-label="Split-Screen-Aufdeckung steuern">
+        <input id="split-range" type="range" min="0" max="100" value="${Math.round(splitReveal)}" aria-label="Split-Screen-Aufdeckung steuern">
         <div class="split-mobile-legend" aria-hidden="true">
           <span>Science 2024</span>
           <span>Heute 2026</span>
