@@ -199,28 +199,6 @@
       margin-bottom: 1rem;
     }
 
-    .data-vintage {
-      display: inline-flex;
-      flex-wrap: wrap;
-      gap: 0.35rem 0.55rem;
-      align-items: center;
-      margin: 0.1rem 0 1.05rem;
-      padding: 0.55rem 0.75rem;
-      border: 1px solid rgba(245,158,11,0.35);
-      border-radius: 8px;
-      background: rgba(245,158,11,0.08);
-      color: #ffe3b0;
-      font-size: 0.78rem;
-      line-height: 1.45;
-      font-weight: 750;
-      max-width: 650px;
-    }
-
-    .data-vintage span {
-      color: #b0b0cc;
-      font-weight: 650;
-    }
-
     .hero-visual {
       position: relative;
       display: flex;
