@@ -12,7 +12,7 @@ Open <http://localhost:8000>.
 
 Pages:
 
-- `index.html` - Intro/Home
+- `index.html` - Home/Landing
 - `dashboard.html` - interactive dashboard and embedded DATA array
 - `methodik.html` - methodology and audit trail
 - `quellen.html` - sources and local audit artifacts
