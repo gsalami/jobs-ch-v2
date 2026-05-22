@@ -550,7 +550,7 @@
       inset: 0 auto 0 0;
       overflow: hidden;
       width: 52%;
-      background: transparent;
+      background: #03060c;
       box-shadow: none;
       filter: none;
       opacity: 1;
@@ -644,6 +644,10 @@
     .split-handle:focus-visible span {
       outline: 3px solid rgba(245,158,11,0.7);
       outline-offset: 3px;
+    }
+
+    .split-stage .cell:hover {
+      opacity: 1;
     }
 
     .split-caption {
