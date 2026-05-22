@@ -1629,6 +1629,7 @@
 
     .contact-logo .logo-angestellte {
       width: min(240px, 72vw);
+      margin-left: -0.35rem;
     }
 
     .contact-logo .logo-kuble {
@@ -1997,6 +1998,7 @@
       }
       .contact-logo .logo-angestellte {
         width: min(215px, 72vw);
+        margin-left: -0.25rem;
       }
       .contact-logo .logo-kuble {
         width: min(190px, 72vw);
