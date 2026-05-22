@@ -85,6 +85,11 @@
     }
 
     .nav-links a {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding-bottom: 0.28rem;
       color: rgba(255,255,255,0.76);
       text-decoration: none;
       transition: color 0.18s;
@@ -281,8 +286,7 @@
     }
 
     .subpage-bar {
-      position: sticky;
-      top: 0;
+      position: relative;
       z-index: 40;
       padding: 1.15rem clamp(1.25rem, 5vw, 4.5rem);
       background: rgba(0, 0, 0, 0.94);
@@ -1777,9 +1781,11 @@
 
 .nav-links a.active::after {
   content: "";
-  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   height: 2px;
-  margin-top: 0.32rem;
   background: #2f63ff;
 }
 
