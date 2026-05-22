@@ -12,10 +12,10 @@ Open <http://localhost:8000>.
 
 Pages:
 
-- `index.html` - Home/Landing
-- `dashboard.html` - interactive dashboard and embedded DATA array
-- `methodik.html` - methodology and audit trail
-- `quellen.html` - sources and local audit artifacts
+- `/` - Home/Landing
+- `/dashboard` - interactive dashboard and embedded DATA array
+- `/methodik` - methodology and audit trail
+- `/quellen` - sources and local audit artifacts
 
 ## Validation
 
@@ -30,7 +30,7 @@ The updated AI-exposure view is a scenario-based heuristic extension of the Scie
 Documentation:
 
 - `docs/ai-exposure-framework-2026.md`
-- `docs/ai-exposure-framework-2026.html`
+- `docs/ai-exposure-framework-2026.html` (`/docs/ai-exposure-framework-2026` on the deployed server)
 - `docs/ai-exposure-framework-2026.pdf`
 
 Apply the v4 gap additions from `Lückenanalyse.rtf` first:
