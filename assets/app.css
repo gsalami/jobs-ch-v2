@@ -533,7 +533,7 @@
       background: #03060c;
       border: 1px solid #101b34;
       border-radius: 4px;
-      cursor: ew-resize;
+      cursor: default;
       isolation: isolate;
       touch-action: none;
     }
@@ -599,9 +599,12 @@
       top: 0;
       bottom: 0;
       left: 52%;
-      width: 0;
+      width: 54px;
+      transform: translateX(-50%);
+      cursor: ew-resize;
       outline: none;
       z-index: 5;
+      touch-action: none;
     }
 
     .split-handle::before {
@@ -609,7 +612,7 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      left: -1.5px;
+      left: calc(50% - 1.5px);
       width: 3px;
       background: #fff;
       box-shadow: none;
@@ -618,7 +621,7 @@
     .split-handle span {
       position: absolute;
       top: 50%;
-      left: 0;
+      left: 50%;
       transform: translate(-50%, -50%);
       width: 36px;
       height: 54px;

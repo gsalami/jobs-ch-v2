@@ -889,7 +889,7 @@ function renderSplitCompare(W, H) {
         </div>
         <div class="split-handle" id="split-handle" role="slider" tabindex="0" aria-label="Aufdeckung zwischen Science 2024 und Heute 2026" aria-valuemin="3" aria-valuemax="97" aria-valuenow="${Math.round(splitReveal)}"><span aria-hidden="true"></span></div>
       </div>
-      <p class="split-caption">Handle ziehen oder in die Treemap klicken: links erscheint die Heute-2026-Sicht, rechts bleibt die Science-2024-Basis. Die Flächen bleiben gleich, nur Score-Farbe und Score-Zahl wechseln.</p>
+      <p class="split-caption">Weissen Handle anfassen, ziehen und loslassen. Die Kacheln bleiben klickbar und öffnen wie gewohnt die Detailansicht.</p>
     </div>
   `;
 
@@ -906,19 +906,21 @@ function renderSplitCompare(W, H) {
     updateSplitReveal(((event.clientX - rect.left) / rect.width) * 100);
   };
 
-  stage.addEventListener('pointerdown', (event) => {
+  handle.addEventListener('pointerdown', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     dragging = true;
-    stage.setPointerCapture(event.pointerId);
+    handle.setPointerCapture(event.pointerId);
     updateFromEvent(event);
   });
-  stage.addEventListener('pointermove', (event) => {
+  handle.addEventListener('pointermove', (event) => {
     if (dragging) updateFromEvent(event);
   });
-  stage.addEventListener('pointerup', (event) => {
+  handle.addEventListener('pointerup', (event) => {
     dragging = false;
-    if (stage.hasPointerCapture(event.pointerId)) stage.releasePointerCapture(event.pointerId);
+    if (handle.hasPointerCapture(event.pointerId)) handle.releasePointerCapture(event.pointerId);
   });
-  stage.addEventListener('pointercancel', () => { dragging = false; });
+  handle.addEventListener('pointercancel', () => { dragging = false; });
   handle.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowLeft') updateSplitReveal(splitReveal - 4);
     if (event.key === 'ArrowRight') updateSplitReveal(splitReveal + 4);
