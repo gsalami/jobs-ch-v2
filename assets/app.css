@@ -280,10 +280,20 @@
       z-index: 1;
     }
 
+    .subpage-bar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding: 1.15rem clamp(1.25rem, 5vw, 4.5rem);
+      background: rgba(0, 0, 0, 0.94);
+      border-bottom: 1px solid #07162f;
+      backdrop-filter: blur(14px);
+    }
+
     .dashboard-intro {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 4rem 2rem 1.25rem;
+      padding: 2.25rem 2rem 1.25rem;
       display: grid;
       grid-template-columns: minmax(280px, 0.8fr) minmax(260px, 1fr);
       gap: 2rem;
@@ -312,12 +322,24 @@
 
     .framework-toggle {
       max-width: 1280px;
-      margin: 0 auto 1.3rem;
+      margin: 0 auto 1.6rem;
       padding: 0 2rem;
       display: grid;
       grid-template-columns: minmax(260px, 1fr) auto;
       gap: 1rem;
       align-items: center;
+    }
+
+    .framework-toggle--primary {
+      margin-top: 2rem;
+      margin-bottom: 1.4rem;
+      padding: 1.25rem;
+      background:
+        linear-gradient(135deg, rgba(47,99,255,0.18), rgba(5,7,13,0.98) 42%, rgba(255,91,0,0.1));
+      border: 1px solid #1d2743;
+      border-radius: 8px;
+      grid-template-columns: minmax(280px, 0.68fr) minmax(520px, 1.32fr);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.42);
     }
 
     .framework-summary {
@@ -327,6 +349,15 @@
       border-radius: 4px;
       padding: 0.9rem 1rem;
       min-height: 92px;
+    }
+
+    .framework-toggle--primary .framework-summary {
+      background: transparent;
+      border: none;
+      border-left: 3px solid #2f63ff;
+      border-radius: 0;
+      padding: 0.25rem 0 0.25rem 1rem;
+      min-height: 0;
     }
 
     .framework-kicker {
@@ -344,6 +375,13 @@
       margin-bottom: 0.3rem;
     }
 
+    .framework-toggle--primary .framework-summary h3 {
+      font-size: clamp(1.35rem, 2.2vw, 2.05rem);
+      line-height: 1.12;
+      max-width: 520px;
+      margin-bottom: 0.65rem;
+    }
+
     .framework-summary p {
       color: #bfc6dd;
       line-height: 1.5;
@@ -351,11 +389,22 @@
       font-weight: 600;
     }
 
+    .framework-toggle--primary .framework-summary p {
+      font-size: 0.95rem;
+      line-height: 1.62;
+      max-width: 560px;
+    }
+
     .framework-buttons {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0.5rem;
       min-width: 300px;
+    }
+
+    .framework-toggle--primary .framework-buttons {
+      gap: 0.85rem;
+      min-width: 0;
     }
 
     .framework-btn {
@@ -370,6 +419,24 @@
       transition: border-color 0.18s, background 0.18s, color 0.18s;
     }
 
+    .framework-toggle--primary .framework-btn {
+      min-height: 142px;
+      padding: 1.1rem 1.2rem;
+      border-radius: 8px;
+      border-width: 2px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    .framework-label {
+      display: inline-flex;
+      color: #8ba4ff;
+      font-size: 0.72rem;
+      font-weight: 850;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+    }
+
     .framework-btn strong {
       display: block;
       font-size: 0.86rem;
@@ -377,11 +444,41 @@
       color: inherit;
     }
 
+    .framework-toggle--primary .framework-btn strong {
+      font-size: clamp(1.55rem, 2.25vw, 2rem);
+      line-height: 1.08;
+      margin-bottom: 0.45rem;
+    }
+
     .framework-btn span {
       display: block;
       font-size: 0.7rem;
       color: #8a91ad;
       line-height: 1.3;
+    }
+
+    .framework-btn .framework-label {
+      color: #8ba4ff;
+      font-size: 0.72rem;
+      line-height: 1.2;
+    }
+
+    .framework-toggle--primary .framework-btn span:not(.framework-label) {
+      font-size: 0.95rem;
+      line-height: 1.45;
+      max-width: 430px;
+    }
+
+    #btn-framework-science {
+      border-color: rgba(47,99,255,0.34);
+    }
+
+    #btn-framework-today {
+      border-color: rgba(245,158,11,0.28);
+    }
+
+    #btn-framework-today .framework-label {
+      color: #f59e0b;
     }
 
     .framework-btn:hover {
@@ -393,6 +490,12 @@
       border-color: #2f63ff;
       color: #fff;
       box-shadow: inset 0 0 0 1px rgba(47,99,255,0.2);
+    }
+
+    #btn-framework-today.active {
+      background: rgba(255,91,0,0.14);
+      border-color: #ff5b00;
+      box-shadow: inset 0 0 0 1px rgba(255,91,0,0.18);
     }
 
     .today-method-panel {
@@ -992,8 +1095,16 @@
     .content-section {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 4rem 2rem 2rem;
-      border-top: 1px solid #07162f;
+      padding: 2.8rem 2rem 2rem;
+    }
+
+    .content-title {
+      color: #fff;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1.08;
+      font-weight: 600;
+      letter-spacing: 0;
+      margin-bottom: 1.25rem;
     }
 
     .content-section h2 {

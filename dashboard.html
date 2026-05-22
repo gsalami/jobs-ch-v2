@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<header class="page-header">
+<div class="subpage-bar" id="top">
   <nav class="site-nav" aria-label="Hauptnavigation">
     <a class="site-logo" href="index.html" aria-label="einstAIn">
       <img src="assets/brand/einstain-logo-white.svg" alt="einstAIn">
@@ -23,18 +23,29 @@
       <a href="quellen.html">Quellen</a>
     </div>
   </nav>
-  <div class="page-title-block" id="top">
-    <div class="eyebrow">Interaktives Dashboard</div>
-    <h1>Dashboard: KI-Exposition <strong>nach Beruf</strong></h1>
-    <p class="subtitle">Treemap und Liste für Schweizer Berufe. Die Hauptansicht zeigt die Science-2024-Basis; die zweite Ansicht ergänzt eine transparente Heute-2026-Heuristik mit separater Adoption und Sensitivität.</p>
-    <div class="hero-actions">
-      <a class="cta-btn" href="#dashboard">Zum Dashboard</a>
-      <a class="cta-btn" href="methodik.html">Methodik prüfen</a>
-    </div>
-  </div>
-</header>
+</div>
 
 <main id="dashboard">
+<div class="framework-toggle framework-toggle--primary" aria-label="Science-2024 und Heute-2026 vergleichen">
+  <div class="framework-summary">
+    <div class="framework-kicker" id="framework-kicker">Vergleichsansicht</div>
+    <h3 id="framework-title">Zwei Versionen derselben Berufsdaten vergleichen</h3>
+    <p id="framework-desc">Wähle die peer-reviewte Science-2024-Basis oder die Heute-2026-Heuristik. Treemap, Kennzahlen und Detailpanel wechseln direkt mit.</p>
+  </div>
+  <div class="framework-buttons">
+    <button class="framework-btn active" id="btn-framework-science" type="button" onclick="setFramework('science')">
+      <span class="framework-label">Originalbasis</span>
+      <strong>Science 2024</strong>
+      <span>Eloundou-Beta-Score, unverändert auf Schweizer Berufe gemappt</span>
+    </button>
+    <button class="framework-btn" id="btn-framework-today" type="button" onclick="setFramework('today')">
+      <span class="framework-label">Aktualisierte Sicht</span>
+      <strong>Heute 2026</strong>
+      <span>Technische Heuristik mit Caps, Sensitivität und separater Adoption</span>
+    </button>
+  </div>
+</div>
+
 <section class="dashboard-intro">
   <h2>Analysen, Trends & <strong>Insights</strong></h2>
   <p>
@@ -43,24 +54,6 @@
     Datenstand Lohn: BFS LSE 2024 nach CH-ISCO-Berufsgruppen; Beschäftigte: SAKE-2024-Gesamtwachstum auf den bestehenden Berufsmix kalibriert; KI-Szenario: 2026.
   </p>
 </section>
-
-<div class="framework-toggle" aria-label="Score-Framework wählen">
-  <div class="framework-summary">
-    <div class="framework-kicker" id="framework-kicker">Score-Framework</div>
-    <h3 id="framework-title">Science 2024: Originaler Eloundou-Score</h3>
-    <p id="framework-desc">Peer-reviewed Basiswert: Beta x 10, gerundet. Misst LLM-Exposition, nicht Automatisierung oder Jobverlust.</p>
-  </div>
-  <div class="framework-buttons">
-    <button class="framework-btn active" id="btn-framework-science" type="button" onclick="setFramework('science')">
-      <strong>Science 2024</strong>
-      <span>Original nach Eloundou et al.</span>
-    </button>
-    <button class="framework-btn" id="btn-framework-today" type="button" onclick="setFramework('today')">
-      <strong>Heute 2026</strong>
-      <span>Aktualisiert für Agenten, Long Context, Multimodalität</span>
-    </button>
-  </div>
-</div>
 
 <section class="today-method-panel" id="today-method-panel" hidden aria-label="Methodik der Heute-2026-Ansicht">
   <div class="today-method-inner">
@@ -322,12 +315,12 @@ function mappingConfidence(d) {
 
 const FRAMEWORK_COPY = {
   science: {
-    title: "Science 2024: Originaler Eloundou-Score",
-    desc: "Peer-reviewed Basiswert: Beta x 10, gerundet. Misst LLM-Exposition, nicht Automatisierung oder Jobverlust."
+    title: "Aktive Ansicht: Science 2024",
+    desc: "Peer-reviewter Originalwert von Eloundou et al.: Beta x 10, gerundet. Das ist die unveränderte wissenschaftliche Basis."
   },
   today: {
-    title: "Heute 2026: technische KI-Exposition",
-    desc: "Szenariobasierte 2026-Heuristik auf Basis der Science-2024-Werte. Die Hauptansicht zeigt technische Exposition im Basisszenario ohne Adoption; Adoption, Sensitivität und Unsicherheit sind separat dokumentiert."
+    title: "Aktive Ansicht: Heute 2026",
+    desc: "Szenariobasierte 2026-Heuristik auf derselben Berufsbasis. Sie zeigt technische Exposition im Basisszenario; Adoption, Sensitivität und Unsicherheit bleiben getrennt dokumentiert."
   }
 };
 
@@ -482,7 +475,7 @@ function setFramework(name) {
   activeFramework = name === "today" ? "today" : "science";
   document.getElementById("btn-framework-science").classList.toggle("active", activeFramework === "science");
   document.getElementById("btn-framework-today").classList.toggle("active", activeFramework === "today");
-  document.getElementById("framework-kicker").textContent = activeFramework === "today" ? "Zweite Sicht" : "Score-Framework";
+  document.getElementById("framework-kicker").textContent = activeFramework === "today" ? "Aktiv: Heute 2026" : "Aktiv: Science 2024";
   document.getElementById("framework-title").textContent = FRAMEWORK_COPY[activeFramework].title;
   document.getElementById("framework-desc").textContent = FRAMEWORK_COPY[activeFramework].desc;
   document.getElementById("legend-label").textContent = `${activeFrameworkLabel()} Score:`;
