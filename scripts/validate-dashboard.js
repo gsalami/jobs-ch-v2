@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
-const htmlPath = path.join(ROOT, "index.html");
+const htmlPath = path.join(ROOT, "dashboard.html");
 const mappingPath = path.join(ROOT, "Files for CC", "eloundou_mapping_results.json");
 const todayScoresPath = path.join(ROOT, "data", "today-scores-2026.json");
 const scenarioSummaryPath = path.join(ROOT, "data", "scenario-summary-2026.json");
@@ -12,7 +12,7 @@ const html = fs.readFileSync(htmlPath, "utf8");
 const dataMatch = html.match(/const DATA = (\[[\s\S]*?\n\]);/);
 
 if (!dataMatch) {
-  fail(["Could not find const DATA array in index.html"]);
+  fail(["Could not find const DATA array in dashboard.html"]);
 }
 
 const DATA = Function("return " + dataMatch[1])();

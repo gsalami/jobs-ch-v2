@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quellen - KI-Exposition Schweiz</title>
+  <meta name="description" content="Quellen und Prüfdaten für das Schweizer KI-Expositionsdashboard: Science Paper, OpenAI-Datensatz, BLS Crosswalk, BFS LSE/SAKE 2024 und lokale CSV/JSON-Artefakte.">
+  <link rel="icon" href="assets/brand/einstain-icon.png" type="image/png">
+  <link rel="stylesheet" href="assets/app.css">
+  
+</head>
+<body>
+
+<header class="page-header">
+  <nav class="site-nav" aria-label="Hauptnavigation">
+    <a class="site-logo" href="index.html" aria-label="einstAIn">
+      <img src="assets/brand/einstain-logo-white.svg" alt="einstAIn">
+    </a>
+    <div class="nav-links" aria-label="Seitennavigation">
+      <a href="index.html">Intro</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="methodik.html">Methodik</a>
+      <a href="quellen.html" class="active" aria-current="page">Quellen</a>
+    </div>
+  </nav>
+  <div class="page-title-block" id="top">
+    <div class="eyebrow">Quellen & Prüfdaten</div>
+    <h1>Quellen</h1>
+    <p class="subtitle">Alle externen Quellen und lokalen Prüfdaten sind hier gebündelt: Paper, Crosswalks, BFS-Links, Mapping-Dateien, Sensitivität, Reannotation und generierte Score-Dateien.</p>
+    <div class="hero-actions">
+      <a class="cta-btn" href="dashboard.html">Dashboard öffnen</a>
+      <a class="cta-btn" href="methodik.html">Methodik lesen</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="content-section">
+    <h2>Quellen und Prüfdaten</h2>
+    <p class="section-lead">Die Links führen entweder zu Primärquellen oder zu lokalen Artefakten, mit denen Mapping, BFS-Refresh, 2026-Szenarien und Validierung nachvollzogen werden können.</p>
+    <div class="source-index" id="sources" aria-label="Alle Quellen und lokale Prüfdaten">
+        <div class="source-index-card">
+          <h3>Peer-reviewed Paper</h3>
+          <p>Definition des LLM-Expositionsmasses und wissenschaftlicher Kontext.</p>
+          <a href="https://www.science.org/doi/10.1126/science.adj0998" target="_blank" rel="noopener noreferrer">Eloundou et al. (2024), Science</a>
+          <a href="https://openai.com/index/gpts-are-gpts/" target="_blank" rel="noopener noreferrer">OpenAI Projektseite</a>
+        </div>
+        <div class="source-index-card">
+          <h3>Expositionsdaten</h3>
+          <p>Berufsebene mit O*NET-SOC-Code und `dv_rating_beta`.</p>
+          <a href="https://github.com/openai/GPTs-are-GPTs" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+          <a href="https://github.com/openai/GPTs-are-GPTs/blob/main/data/occ_level.csv" target="_blank" rel="noopener noreferrer">`data/occ_level.csv`</a>
+          <a href="Files%20for%20CC/occ_level.csv">Lokale Kopie `occ_level.csv`</a>
+        </div>
+        <div class="source-index-card">
+          <h3>Berufscode-Mapping</h3>
+          <p>Übersetzung von SOC-2010 auf ISCO-08 via BLS.</p>
+          <a href="https://www.bls.gov/soc/soccrosswalks.htm" target="_blank" rel="noopener noreferrer">BLS Crosswalk-Übersicht</a>
+          <a href="https://www.bls.gov/soc/isco_soc_crosswalk.xls" target="_blank" rel="noopener noreferrer">BLS `isco_soc_crosswalk.xls`</a>
+          <a href="Files%20for%20CC/isco_soc_crosswalk.xls">Lokale Kopie Crosswalk</a>
+        </div>
+        <div class="source-index-card">
+          <h3>Schweizer Arbeitsmarkt</h3>
+          <p>Beschäftigte und Kontext zu Aufgabenprofilen aus BFS/SAKE. Die 86 Berufszeilen nutzen den bestehenden SAKE-2023-Berufsmix plus v4-Ergänzungswerte und werden proportional mit dem offiziellen SAKE-Gesamtwachstum 2023-2024 kalibriert.</p>
+          <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb.html" target="_blank" rel="noopener noreferrer">BFS Arbeit und Erwerb</a>
+          <a href="https://dam-api.bfs.admin.ch/hub/api/dam/assets/32069034/master" target="_blank" rel="noopener noreferrer">BFS SAKE in Kürze 2023</a>
+          <a href="https://dam-api.bfs.admin.ch/hub/api/dam/assets/36035149/master" target="_blank" rel="noopener noreferrer">BFS SAKE in Kürze 2024</a>
+          <a href="https://www.swissstats.bfs.admin.ch/data/webviewer/appId/ch.admin.bfs.swissstat/article/issue25032062506-01/package" target="_blank" rel="noopener noreferrer">BFS Arbeitsmarktindikatoren 2025</a>
+          <a href="https://www.swissstats.bfs.admin.ch/data/webviewer/appId/ch.admin.bfs.swissstat/article/issue240323012200-01/package" target="_blank" rel="noopener noreferrer">BFS/SAKE Aufgaben und Digitalisierung 2022</a>
+        </div>
+        <div class="source-index-card">
+          <h3>Medianlöhne</h3>
+          <p>BFS Lohnstrukturerhebung 2024 als Basis der Lohnbenchmarks. Die Zuordnung erfolgt über CH-ISCO-19-Berufsgruppen auf 2-Steller-Ebene; Spezial-, Kantons-, Vertrags- und Arbeitgeberquellen bleiben dort erhalten, wo die Gruppenlöhne zu grob wären.</p>
+          <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb/loehne-erwerbseinkommen-arbeitskosten/lohnstruktur.html" target="_blank" rel="noopener noreferrer">BFS Lohnstruktur</a>
+          <a href="https://dam-api.bfs.admin.ch/hub/api/dam/assets/36195847/master" target="_blank" rel="noopener noreferrer">BFS LSE 2024: erste Ergebnisse</a>
+          <a href="https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/" target="_blank" rel="noopener noreferrer">BFS LSE 2024 PxWeb Berufsgruppen</a>
+        </div>
+        <div class="source-index-card">
+          <h3>Dashboard-Prüfdaten</h3>
+          <p>Lokale Arbeitsdateien für Mapping, Anleitung und automatisierte Checks.</p>
+          <a href="Files%20for%20CC/eloundou_mapping_results.json">Mapping-Ergebnis JSON</a>
+          <a href="Files%20for%20CC/anleitung-eloundou-scores-integration.txt">Integrationsanleitung</a>
+          <a href="data/bfs-2024-refresh.csv">BFS-2024-Refresh CSV</a>
+          <a href="data/bfs-2024-refresh.json">BFS-2024-Refresh JSON</a>
+          <a href="scripts/validate-dashboard.js">Validierungsscript</a>
+        </div>
+        <div class="source-index-card">
+          <h3>Heute-Framework</h3>
+          <p>Szenariobasierte 2026-Heuristik bis 21. Mai 2026: technische Exposition getrennt von Adoption, mit Sensitivität, Unsicherheit, Mapping und Mini-Reannotation. Das Hauptszenario ist ein plausibles Basisszenario, kein defensives Minimum.</p>
+          <a href="docs/ai-exposure-framework-2026.html" target="_blank" rel="noopener noreferrer">Methodenpapier 2026</a>
+          <a href="data/today-scores-2026.json" target="_blank" rel="noopener noreferrer">Generierte Scores JSON</a>
+          <a href="data/today-scores-2026.csv" target="_blank" rel="noopener noreferrer">Generierte Scores CSV</a>
+          <a href="data/scenario-summary-2026.json" target="_blank" rel="noopener noreferrer">Sensitivitätsszenarien JSON</a>
+          <a href="data/reannotation-sample-2026.csv" target="_blank" rel="noopener noreferrer">Mini-Reannotation CSV</a>
+          <a href="data/mapping-2026.csv" target="_blank" rel="noopener noreferrer">Mapping-Tabelle CSV</a>
+          <a href="https://openai.com/index/introducing-gpt-5-5/" target="_blank" rel="noopener noreferrer">OpenAI GPT-5.5: Agentic Work</a>
+          <a href="https://openai.com/index/introducing-gpt-5-4/" target="_blank" rel="noopener noreferrer">OpenAI GPT-5.4: Computer Use</a>
+          <a href="https://openai.com/index/gpt-4-1/" target="_blank" rel="noopener noreferrer">OpenAI GPT-4.1: Coding, Long Context, Agents</a>
+          <a href="https://openai.com/index/hello-gpt-4o/" target="_blank" rel="noopener noreferrer">OpenAI GPT-4o: Text, Audio, Bild, Video</a>
+          <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool" target="_blank" rel="noopener noreferrer">Anthropic Computer Use</a>
+          <a href="https://blog.google/products-and-platforms/products/gemini/google-gemini-update-may-2024/" target="_blank" rel="noopener noreferrer">Google Gemini: 1M Context</a>
+          <a href="https://news.microsoft.com/source/emea/2025/04/2025-work-trend-index-swiss-organizations-lead-in-ai-adoption-52-automate-entire-business-processes-surpassing-global-and-european-averages/" target="_blank" rel="noopener noreferrer">Microsoft Work Trend Index Schweiz 2025</a>
+        </div>
+      </div>
+    
+      <div class="source-grid">
+        <div class="source-card">
+          <h3>LLM-Exposition (Beta-Score)</h3>
+          <p>Eloundou, T. et al. (2024). "GPTs are GPTs: Labor market impact potential of LLMs." <em>Science</em>, 384, 1306-1308.<br><br>
+          Das Beta-Mass bewertet pro Beruf, inwieweit LLMs die Erledigungszeit von Aufgaben um mindestens 50% reduzieren können. Formel: Beta = E1 + 0.5 x E2. Mapping von O*NET-SOC auf ISCO-08 via BLS-Crosswalk.</p>
+          <a href="https://www.science.org/doi/10.1126/science.adj0998" target="_blank" rel="noopener noreferrer">-> Science (2024)</a>
+          <a href="https://github.com/openai/GPTs-are-GPTs" target="_blank" rel="noopener noreferrer">-> Datensatz (GitHub)</a>
+        </div>
+        <div class="source-card">
+          <h3>Zweite Sicht: Heute 2026</h3>
+          <p>Der Original-Score bleibt die Basis. Die 2026-Sicht ist keine neue wissenschaftliche Replikation, sondern eine transparente Dashboard-Heuristik. Die Hauptansicht zeigt technische Exposition im Basisszenario; Adoption wird separat dokumentiert.</p>
+          <p style="margin-top:0.65rem"><strong>Technisch:</strong> Beta = min(Cap, Original-Beta + Long-Context + Agentik + Multimodalität + Berufs-Override).<br><strong>Adoptionsgewichtet:</strong> Beta = min(Cap, technische Beta + Adoption).</p>
+          <a href="docs/ai-exposure-framework-2026.html" target="_blank" rel="noopener noreferrer">-> Methodenpapier 2026</a>
+          <a href="data/today-scores-2026.json" target="_blank" rel="noopener noreferrer">-> Neue Zahlen JSON</a>
+          <a href="data/scenario-summary-2026.json" target="_blank" rel="noopener noreferrer">-> Sensitivität</a>
+          <a href="data/reannotation-sample-2026.csv" target="_blank" rel="noopener noreferrer">-> Mini-Reannotation</a>
+          <a href="data/mapping-2026.csv" target="_blank" rel="noopener noreferrer">-> Mapping-Tabelle</a>
+          <a href="https://openai.com/index/introducing-gpt-5-5/" target="_blank" rel="noopener noreferrer">-> OpenAI GPT-5.5</a>
+          <a href="https://openai.com/index/introducing-gpt-5-4/" target="_blank" rel="noopener noreferrer">-> OpenAI GPT-5.4</a>
+          <a href="https://openai.com/index/gpt-4-1/" target="_blank" rel="noopener noreferrer">-> OpenAI GPT-4.1</a>
+          <a href="https://openai.com/index/hello-gpt-4o/" target="_blank" rel="noopener noreferrer">-> OpenAI GPT-4o</a>
+          <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool" target="_blank" rel="noopener noreferrer">-> Anthropic Computer Use</a>
+          <a href="https://blog.google/products-and-platforms/products/gemini/google-gemini-update-may-2024/" target="_blank" rel="noopener noreferrer">-> Google Gemini Long Context</a>
+        </div>
+        <div class="source-card">
+          <h3>Beschäftigte</h3>
+          <p>Bundesamt für Statistik (BFS)<br>Dashboard-Berufszeilen: bestehender SAKE-2023-Berufsmix plus v4-Ergänzungswerte, proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert (4.848 Mio. -> 4.876 Mio. Erwerbstätige). Keine neue Dashboard-SAKE-Mikrotabelle.</p>
+          <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb.html" target="_blank" rel="noopener noreferrer">-> bfs.admin.ch</a>
+          <a href="https://dam-api.bfs.admin.ch/hub/api/dam/assets/32069034/master" target="_blank" rel="noopener noreferrer">-> SAKE in Kürze 2023</a>
+          <a href="https://dam-api.bfs.admin.ch/hub/api/dam/assets/36035149/master" target="_blank" rel="noopener noreferrer">-> SAKE in Kürze 2024</a>
+          <a href="https://www.swissstats.bfs.admin.ch/data/webviewer/appId/ch.admin.bfs.swissstat/article/issue25032062506-01/package" target="_blank" rel="noopener noreferrer">-> Arbeitsmarktindikatoren 2025</a>
+        </div>
+        <div class="source-card">
+          <h3>Medianlöhne</h3>
+          <p>BFS Lohnstrukturerhebung (LSE)<br>Dashboard-Berufszeilen: LSE 2024 nach CH-ISCO-19-Berufsgruppen gemappt; Spezial-, Kantons-, Vertrags- und Arbeitgeberquellen bleiben bei stark spezialisierten Berufen erhalten. LSE 2024: gesamtwirtschaftlicher Median 7024 Franken brutto pro Monat.</p>
+          <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb/loehne-erwerbseinkommen-arbeitskosten/lohnstruktur.html" target="_blank" rel="noopener noreferrer">-> BFS Lohnstruktur</a>
+          <a href="https://dam-api.bfs.admin.ch/hub/api/dam/assets/36195847/master" target="_blank" rel="noopener noreferrer">-> LSE 2024 erste Ergebnisse</a>
+          <a href="https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/" target="_blank" rel="noopener noreferrer">-> LSE 2024 PxWeb Berufsgruppen</a>
+        </div>
+        <div class="source-card">
+          <h3>SOC-ISCO Mapping</h3>
+          <p>Bureau of Labor Statistics (BLS)<br>ISCO-08 to SOC 2010 Crosswalk (2015)<br>Aggregation: O*NET-SOC -> SOC-2010 -> ISCO-08 -> CH-Berufe</p>
+          <a href="https://www.bls.gov/soc/isco_soc_crosswalk.xls" target="_blank" rel="noopener noreferrer">-> BLS Crosswalk</a>
+        </div>
+      </div>
+  </section>
+</main>
+
+<section class="contact-band" aria-label="Kontakt">
+  <div class="contact-card">
+    <div class="contact-logo">
+      <a href="https://angestellte.ch/" target="_blank" rel="noopener noreferrer" aria-label="Angestellte Schweiz">
+        <img class="logo-angestellte" src="assets/brand/angestellte-schweiz-logo-white.svg" alt="Angestellte Schweiz">
+      </a>
+    </div>
+    <div class="contact-line"><a href="mailto:alexander.belaz@angestellte.ch">alexander.belaz@angestellte.ch</a></div>
+    <div class="contact-line">Martin-Disteli-Strasse 9<br>Postfach 234 4601 Olten</div>
+  </div>
+  <div class="contact-card">
+    <div class="contact-logo">
+      <a href="https://www.kuble.com/en" target="_blank" rel="noopener noreferrer" aria-label="Kuble - House of Intelligence">
+        <img class="logo-kuble" src="assets/brand/kuble-house-logo-white.svg" alt="Kuble - House of Intelligence">
+      </a>
+    </div>
+    <div class="contact-line"><a href="mailto:roger.oberholzer@kuble.com">roger.oberholzer@kuble.com</a></div>
+    <div class="contact-line">Räffelstrasse 26<br>8045 Zürich</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <a class="site-logo site-logo--footer" href="#top" aria-label="einstAIn">
+      <img src="assets/brand/einstain-logo-white.svg" alt="einstAIn">
+    </a>
+    <div class="footer-center">© 2026. All rights reserved.</div>
+    <div class="footer-initiators">
+      <span>Initiatoren</span>
+      <a class="footer-brand footer-brand--angestellte" href="https://angestellte.ch/" target="_blank" rel="noopener noreferrer" aria-label="Angestellte Schweiz">
+        <img src="assets/brand/angestellte-schweiz-logo-white.svg" alt="Angestellte Schweiz">
+      </a>
+      <a class="footer-brand footer-brand--kuble" href="https://www.kuble.com/en" target="_blank" rel="noopener noreferrer" aria-label="Kuble - House of Intelligence">
+        <img src="assets/brand/kuble-house-logo-white.svg" alt="Kuble - House of Intelligence">
+      </a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

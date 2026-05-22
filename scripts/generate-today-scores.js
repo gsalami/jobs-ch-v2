@@ -2,13 +2,13 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
-const htmlPath = path.join(ROOT, "index.html");
+const htmlPath = path.join(ROOT, "dashboard.html");
 const dataDir = path.join(ROOT, "data");
 const html = fs.readFileSync(htmlPath, "utf8");
 const dataMatch = html.match(/const DATA = (\[[\s\S]*?\n\]);/);
 
 if (!dataMatch) {
-  throw new Error("Could not find const DATA array in index.html");
+  throw new Error("Could not find const DATA array in dashboard.html");
 }
 
 const DATA = Function("return " + dataMatch[1])();

@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
-const htmlPath = path.join(ROOT, "index.html");
+const htmlPath = path.join(ROOT, "dashboard.html");
 const dataDir = path.join(ROOT, "data");
 const gapSource = "Lueckenanalyse.rtf, v4";
 
@@ -219,7 +219,7 @@ const GAP_ADDITIONS = [
 function readDashboardData() {
   const html = fs.readFileSync(htmlPath, "utf8");
   const match = html.match(/const DATA = (\[[\s\S]*?\n\]);/);
-  if (!match) throw new Error("Could not find const DATA array in index.html");
+  if (!match) throw new Error("Could not find const DATA array in dashboard.html");
   return { html, data: Function("return " + match[1])() };
 }
 

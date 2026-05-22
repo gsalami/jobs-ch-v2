@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - KI-Exposition Schweiz</title>
+  <meta name="description" content="Interaktives Dashboard: 86 Schweizer Berufe mit Science-2024-Expositionsscore, Heute-2026-Heuristik, LSE-2024-Lohnbenchmarks und SAKE-2024-kalibrierten Beschäftigtenzahlen.">
+  <link rel="icon" href="assets/brand/einstain-icon.png" type="image/png">
+  <link rel="stylesheet" href="assets/app.css">
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+</head>
+<body>
+
+<header class="page-header">
+  <nav class="site-nav" aria-label="Hauptnavigation">
+    <a class="site-logo" href="index.html" aria-label="einstAIn">
+      <img src="assets/brand/einstain-logo-white.svg" alt="einstAIn">
+    </a>
+    <div class="nav-links" aria-label="Seitennavigation">
+      <a href="index.html">Intro</a>
+      <a href="dashboard.html" class="active" aria-current="page">Dashboard</a>
+      <a href="methodik.html">Methodik</a>
+      <a href="quellen.html">Quellen</a>
+    </div>
+  </nav>
+  <div class="page-title-block" id="top">
+    <div class="eyebrow">Interaktives Dashboard</div>
+    <h1>Dashboard: KI-Exposition <strong>nach Beruf</strong></h1>
+    <p class="subtitle">Treemap und Liste für Schweizer Berufe. Die Hauptansicht zeigt die Science-2024-Basis; die zweite Ansicht ergänzt eine transparente Heute-2026-Heuristik mit separater Adoption und Sensitivität.</p>
+    <div class="hero-actions">
+      <a class="cta-btn" href="#dashboard">Zum Dashboard</a>
+      <a class="cta-btn" href="methodik.html">Methodik prüfen</a>
+    </div>
+  </div>
+</header>
+
+<main id="dashboard">
+<section class="dashboard-intro">
+  <h2>Analysen, Trends & <strong>Insights</strong></h2>
+  <p>
+    Das Dashboard zeigt, wo Sprachmodelle berufliche Aufgaben beschleunigen können.
+    Der Score misst LLM-Exposition, nicht Jobverlust, und macht die zugrunde liegenden Quellen transparent prüfbar.
+    Datenstand Lohn: BFS LSE 2024 nach CH-ISCO-Berufsgruppen; Beschäftigte: SAKE-2024-Gesamtwachstum auf den bestehenden Berufsmix kalibriert; KI-Szenario: 2026.
+  </p>
+</section>
+
+<div class="framework-toggle" aria-label="Score-Framework wählen">
+  <div class="framework-summary">
+    <div class="framework-kicker" id="framework-kicker">Score-Framework</div>
+    <h3 id="framework-title">Science 2024: Originaler Eloundou-Score</h3>
+    <p id="framework-desc">Peer-reviewed Basiswert: Beta x 10, gerundet. Misst LLM-Exposition, nicht Automatisierung oder Jobverlust.</p>
+  </div>
+  <div class="framework-buttons">
+    <button class="framework-btn active" id="btn-framework-science" type="button" onclick="setFramework('science')">
+      <strong>Science 2024</strong>
+      <span>Original nach Eloundou et al.</span>
+    </button>
+    <button class="framework-btn" id="btn-framework-today" type="button" onclick="setFramework('today')">
+      <strong>Heute 2026</strong>
+      <span>Aktualisiert für Agenten, Long Context, Multimodalität</span>
+    </button>
+  </div>
+</div>
+
+<section class="today-method-panel" id="today-method-panel" hidden aria-label="Methodik der Heute-2026-Ansicht">
+  <div class="today-method-inner">
+    <div class="today-method-head">
+      <div>
+        <div class="framework-kicker">So wurde die neue Ansicht berechnet</div>
+        <h3>Szenariobasierte 2026-Heuristik, keine neue Science-Replikation</h3>
+        <p>
+          Die 2026-Sicht startet bei den originalen Eloundou-Beta-Werten und prüft nur, wo heutige KI-Fähigkeiten frühere E2-Aufgaben näher an E1 rücken oder einzelne E0-Aufgaben zu E2 machen. Das Hauptszenario ist plausibel, aber nicht als defensiv zu lesen; die konservative Variante liegt in der Sensitivität mit halbierten Modifikatoren. Adoption wird nicht in den Hauptscore gemischt, sondern separat ausgewiesen. Die Schweizer Lohndaten wurden mit LSE 2024 nach CH-ISCO-Berufsgruppen aktualisiert; Beschäftigte wurden mangels Dashboard-SAKE-Mikrotabelle proportional mit dem SAKE-Gesamtwachstum 2023-2024 kalibriert. v4 ergänzt 14 bisher fehlende Marketing-, Sales-, Beratungs-, Gesundheits- und Dienstleistungsrollen.
+        </p>
+      </div>
+      <div class="today-method-stats" aria-label="Heute-2026-Kernergebnisse">
+        <div class="today-method-stat"><strong>128</strong><span>repräsentative Aufgaben reannotiert</span></div>
+        <div class="today-method-stat"><strong>8</strong><span>Sensitivitätsszenarien</span></div>
+        <div class="today-method-stat"><strong>27</strong><span>Berufe Score 8-10 technisch</span></div>
+      </div>
+    </div>
+    <div class="today-method-grid">
+      <div class="today-method-step">
+        <b>1. Basis</b>
+        <p>Science 2024 bleibt unverändert: beta_2024 aus Eloundou et al., übertragen auf Schweizer Berufe via SOC/ISCO-Mapping.</p>
+      </div>
+      <div class="today-method-step">
+        <b>2. Reannotation</b>
+        <p>Pro Berufsfeld wurden 8 Aufgaben geprüft: E0 bleibt E0, E0 wird E2, E2 wird E1, E1 bleibt E1 oder E2 bleibt E2.</p>
+      </div>
+      <div class="today-method-step">
+        <b>3. Technik</b>
+        <p>Long Context, Agenten/Tools, Multimodalität und wenige Berufs-Overrides werden nur addiert, wenn sie Doppelzählung vermeiden.</p>
+      </div>
+      <div class="today-method-step">
+        <b>4. Caps</b>
+        <p>Caps begrenzen Werte bei physischer Arbeit, Regulierung, Haftung, Patientenkontakt, Sicherheitsverantwortung oder Beziehungsarbeit.</p>
+      </div>
+      <div class="today-method-step">
+        <b>5. Unsicherheit</b>
+        <p>Jeder Beruf erhält Confidence, Unsicherheitsgründe und eine Szenario-Spannweite aus halbierten, strengen und aggressiveren Annahmen.</p>
+      </div>
+    </div>
+    <div class="today-formula">
+      technical_beta_2026 = min(cap / 10, beta_2024 + long_context + agentic_tools + multimodal + role_override)<br>
+      technical_score_2026 = round(technical_beta_2026 x 10)<br>
+      adoption_adjusted_beta_2026 = min(cap / 10, technical_beta_2026 + adoption)
+    </div>
+    <div class="today-method-links">
+      <a href="docs/ai-exposure-framework-2026.html" target="_blank" rel="noopener noreferrer">Methodenpapier</a>
+      <a href="data/today-scores-2026.json" target="_blank" rel="noopener noreferrer">Scores JSON</a>
+      <a href="data/scenario-summary-2026.csv" target="_blank" rel="noopener noreferrer">Sensitivität CSV</a>
+      <a href="data/reannotation-sample-2026.csv" target="_blank" rel="noopener noreferrer">Mini-Reannotation</a>
+      <a href="data/mapping-2026.csv" target="_blank" rel="noopener noreferrer">Mapping</a>
+    </div>
+  </div>
+</section>
+
+<div class="highlights-bar">
+  <div class="hl-card hl-red">
+    <div class="hl-num" id="metric-high">-</div>
+    <div class="hl-label">Berufe mit sehr hoher LLM-Exposition<br><span>(Score 8-10)</span></div>
+  </div>
+  <div class="hl-card hl-orange">
+    <div class="hl-num" id="metric-medium">-</div>
+    <div class="hl-label">Berufe mit mittlerer Exposition<br><span>(Score 5-7; 6-7 = deutlich)</span></div>
+  </div>
+  <div class="hl-card hl-green">
+    <div class="hl-num" id="metric-low">-</div>
+    <div class="hl-label">Berufe mit niedriger Exposition<br><span>(Score 0-4)</span></div>
+  </div>
+  <div class="hl-card hl-neutral">
+    <div class="hl-num" id="metric-weighted">-</div>
+    <div class="hl-label">Gewichtete Exposition<br><span>nach Beschäftigten</span></div>
+  </div>
+  <div class="hl-card hl-neutral">
+    <div class="hl-num" id="metric-pay">-</div>
+    <div class="hl-label">Lohnspanne<br><span>LSE 2024 / Spezialquellen</span></div>
+  </div>
+  <div class="hl-card hl-insight">
+    <div class="hl-insight-text" id="metric-top">Am stärksten exponiert: <strong>Softwareentwickler/-in, Sysadmin, Data Scientist, KI-Ingenieur/-in</strong></div>
+  </div>
+  <div class="hl-card hl-insight">
+    <div class="hl-insight-text" id="metric-bottom">Am wenigsten exponiert: <strong>Maurer/-in, Maler/-in, Sanitärinstallateur/-in, Elektriker/-in</strong></div>
+  </div>
+</div>
+
+<div class="controls">
+  <input type="text" id="search" placeholder="Beruf suchen..." oninput="applyFilters()">
+  <select id="catFilter" onchange="applyFilters()">
+    <option value="">Alle Berufsfelder</option>
+    <option value="finanzen-recht">Finanzen & Recht</option>
+    <option value="it-tech">IT & Technologie</option>
+    <option value="gesundheit">Gesundheit & Pflege</option>
+    <option value="bildung">Bildung & Forschung</option>
+    <option value="handwerk-bau">Handwerk & Bau</option>
+    <option value="verwaltung">Verwaltung & Administration</option>
+    <option value="verkauf-handel">Verkauf & Handel</option>
+    <option value="marketing-sales">Marketing, Sales & Beratung</option>
+    <option value="transport-logistik">Transport & Logistik</option>
+    <option value="gastronomie-tourismus">Gastronomie & Tourismus</option>
+    <option value="landwirtschaft">Landwirtschaft & Natur</option>
+    <option value="kunst-medien">Kunst, Design & Medien</option>
+    <option value="ingenieurwesen">Ingenieurwesen</option>
+    <option value="soziales">Soziales & Beratung</option>
+    <option value="personen-dienste">Persönliche Dienste & Reinigung</option>
+    <option value="sicherheit">Sicherheit & Schutz</option>
+  </select>
+  <select id="mappingFilter" onchange="applyFilters()">
+    <option value="">Alle Mappings</option>
+    <option value="review">Plausibilisierung nötig</option>
+    <option value="high">Solides Mapping</option>
+  </select>
+  <select id="sortBy" onchange="applyFilters()">
+    <option value="exposure-desc">Aktiver Score (hoch -> tief)</option>
+    <option value="exposure-asc">Aktiver Score (tief -> hoch)</option>
+    <option value="delta-desc">Veränderung Heute vs. 2024</option>
+    <option value="pay-desc">Lohn (hoch -> tief)</option>
+    <option value="jobs-desc">Beschäftigte (meiste -> wenigste)</option>
+  </select>
+</div>
+
+<div class="legend">
+  <span id="legend-label" style="font-size:0.78rem;color:#7c7c9a;margin-right:0.25rem;">Science 2024 Score:</span>
+  <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div> Niedrig (0-4)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div> Mittel (5-7)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div> Sehr hoch (8-10)</div>
+  <span class="legend-size-note" style="margin-left:auto;font-size:0.75rem;color:#5a5a7a;">Grösse = Anzahl Beschäftigte in CH</span>
+</div>
+
+<div class="view-toggle">
+  <button class="view-btn active" onclick="setView('treemap')" id="btn-treemap">Treemap</button>
+  <button class="view-btn" onclick="setView('list')" id="btn-list">Liste</button>
+</div>
+
+<div id="treemap-container">
+  <svg id="treemap"></svg>
+</div>
+
+<div id="list-view"></div>
+
+<!-- Tooltip -->
+<div id="tooltip"></div>
+
+<!-- Detail Panel -->
+<div id="detail-panel">
+  <button class="close-btn" onclick="closePanel()">&#10005;</button>
+  <div id="detail-content"></div>
+</div>
+</main>
+
+<section class="contact-band" aria-label="Kontakt">
+  <div class="contact-card">
+    <div class="contact-logo">
+      <a href="https://angestellte.ch/" target="_blank" rel="noopener noreferrer" aria-label="Angestellte Schweiz">
+        <img class="logo-angestellte" src="assets/brand/angestellte-schweiz-logo-white.svg" alt="Angestellte Schweiz">
+      </a>
+    </div>
+    <div class="contact-line"><a href="mailto:alexander.belaz@angestellte.ch">alexander.belaz@angestellte.ch</a></div>
+    <div class="contact-line">Martin-Disteli-Strasse 9<br>Postfach 234 4601 Olten</div>
+  </div>
+  <div class="contact-card">
+    <div class="contact-logo">
+      <a href="https://www.kuble.com/en" target="_blank" rel="noopener noreferrer" aria-label="Kuble - House of Intelligence">
+        <img class="logo-kuble" src="assets/brand/kuble-house-logo-white.svg" alt="Kuble - House of Intelligence">
+      </a>
+    </div>
+    <div class="contact-line"><a href="mailto:roger.oberholzer@kuble.com">roger.oberholzer@kuble.com</a></div>
+    <div class="contact-line">Räffelstrasse 26<br>8045 Zürich</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <a class="site-logo site-logo--footer" href="#top" aria-label="einstAIn">
+      <img src="assets/brand/einstain-logo-white.svg" alt="einstAIn">
+    </a>
+    <div class="footer-center">© 2026. All rights reserved.</div>
+    <div class="footer-initiators">
+      <span>Initiatoren</span>
+      <a class="footer-brand footer-brand--angestellte" href="https://angestellte.ch/" target="_blank" rel="noopener noreferrer" aria-label="Angestellte Schweiz">
+        <img src="assets/brand/angestellte-schweiz-logo-white.svg" alt="Angestellte Schweiz">
+      </a>
+      <a class="footer-brand footer-brand--kuble" href="https://www.kuble.com/en" target="_blank" rel="noopener noreferrer" aria-label="Kuble - House of Intelligence">
+        <img src="assets/brand/kuble-house-logo-white.svg" alt="Kuble - House of Intelligence">
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const CATS = {
+  "finanzen-recht": "Finanzen & Recht",
+  "it-tech": "IT & Technologie",
+  "gesundheit": "Gesundheit & Pflege",
+  "bildung": "Bildung & Forschung",
+  "handwerk-bau": "Handwerk & Bau",
+  "verwaltung": "Verwaltung & Administration",
+  "verkauf-handel": "Verkauf & Handel",
+  "marketing-sales": "Marketing, Sales & Beratung",
+  "transport-logistik": "Transport & Logistik",
+  "gastronomie-tourismus": "Gastronomie & Tourismus",
+  "landwirtschaft": "Landwirtschaft & Natur",
+  "kunst-medien": "Kunst, Design & Medien",
+  "ingenieurwesen": "Ingenieurwesen",
+  "soziales": "Soziales & Beratung",
+  "personen-dienste": "Persönliche Dienste & Reinigung",
+  "sicherheit": "Sicherheit & Schutz"
+};
+
+function scoreColor(e) {
+  if (e >= 8) return "#ef4444";
+  if (e >= 5) return "#f59e0b";
+  return "#22c55e";
+}
+
+function scoreBg(e) {
+  if (e >= 8) return "rgba(239,68,68,0.18)";
+  if (e >= 5) return "rgba(245,158,11,0.18)";
+  return "rgba(34,197,94,0.18)";
+}
+
+function fmtPay(p) {
+  return "CHF " + p.toLocaleString("de-CH").replace(/,/g, "'");
+}
+
+function fmtJobs(j) {
+  if (j >= 1000) return Math.round(j/1000) + "'000";
+  return j.toString();
+}
+
+function fmtPayShort(p) {
+  return Math.round(p / 1000) + "k";
+}
+
+function fmtSigned(n, digits = 2) {
+  const value = n.toFixed(digits);
+  return n > 0 ? `+${value}` : value;
+}
+
+const MAPPING_CONFIDENCE = {
+  hoch: {
+    key: "hoch",
+    label: "Solides Mapping",
+    className: "confidence-high"
+  },
+  mittel: {
+    key: "mittel",
+    label: "Plausibilisierung",
+    className: "confidence-medium"
+  },
+  scope: {
+    key: "scope",
+    label: "Scope-Hinweis",
+    className: "confidence-scope"
+  }
+};
+
+function mappingConfidence(d) {
+  const key = d.mapping_confidence || (d.mapping_note ? "mittel" : "hoch");
+  return MAPPING_CONFIDENCE[key] || MAPPING_CONFIDENCE.hoch;
+}
+
+const FRAMEWORK_COPY = {
+  science: {
+    title: "Science 2024: Originaler Eloundou-Score",
+    desc: "Peer-reviewed Basiswert: Beta x 10, gerundet. Misst LLM-Exposition, nicht Automatisierung oder Jobverlust."
+  },
+  today: {
+    title: "Heute 2026: technische KI-Exposition",
+    desc: "Szenariobasierte 2026-Heuristik auf Basis der Science-2024-Werte. Die Hauptansicht zeigt technische Exposition im Basisszenario ohne Adoption; Adoption, Sensitivität und Unsicherheit sind separat dokumentiert."
+  }
+};
+
+const TODAY_CATEGORY_FACTORS = {
+  "finanzen-recht": { longContext: 0.10, agentic: 0.07, multimodal: 0.02, adoption: 0.05, cap: 9, note: "lange Verträge, Dossiers, Regulierung, Research und Reports" },
+  "it-tech": { longContext: 0.09, agentic: 0.11, multimodal: 0.03, adoption: 0.05, cap: 9, note: "Coding-Agenten und Repository-Kontext, aber Schweizer Rollen enthalten viel Architektur, Review, Interaktion und Verantwortung" },
+  "gesundheit": { longContext: 0.07, agentic: 0.03, multimodal: 0.04, adoption: 0.02, cap: 6, note: "Dokumentation, Fachliteratur und multimodaler Befundkontext, aber klinische Verantwortung bleibt begrenzend" },
+  "bildung": { longContext: 0.07, agentic: 0.03, multimodal: 0.04, adoption: 0.03, cap: 7, note: "Materialerstellung, Feedback, Research und Unterrichtsvorbereitung" },
+  "handwerk-bau": { longContext: 0.03, agentic: 0.02, multimodal: 0.01, adoption: 0.01, cap: 4, note: "Offerten, Planung und Dokumentation, aber physische Vor-Ort-Arbeit dominiert" },
+  "verwaltung": { longContext: 0.11, agentic: 0.14, multimodal: 0.02, adoption: 0.07, cap: 9, note: "standardisierte Dokumente, Formulare, E-Mail, Termine und Workflows" },
+  "verkauf-handel": { longContext: 0.07, agentic: 0.09, multimodal: 0.03, adoption: 0.05, cap: 8, note: "Kundenkommunikation, Angebote, CRM, Sortiments- und Backoffice-Arbeit" },
+  "marketing-sales": { longContext: 0.10, agentic: 0.09, multimodal: 0.07, adoption: 0.05, cap: 8, note: "Kampagnen, Copy, Research, Slides, CRM, Angebote und Beratungsvorbereitung" },
+  "transport-logistik": { longContext: 0.04, agentic: 0.04, multimodal: 0.02, adoption: 0.02, cap: 5, note: "Disposition, Planung und Dokumentation, aber physische Mobilität bleibt ausser Scope" },
+  "gastronomie-tourismus": { longContext: 0.05, agentic: 0.05, multimodal: 0.04, adoption: 0.04, cap: 7, note: "Buchung, Planung, Menüs, Kommunikation und Content" },
+  "landwirtschaft": { longContext: 0.03, agentic: 0.02, multimodal: 0.02, adoption: 0.01, cap: 4, note: "Beratung, Planung, Markt-/Wetterdaten und Marketing, aber Feldarbeit bleibt physisch" },
+  "kunst-medien": { longContext: 0.09, agentic: 0.06, multimodal: 0.16, adoption: 0.05, cap: 9, note: "Text plus Bild-, Video- und Audio-Workflows" },
+  "ingenieurwesen": { longContext: 0.09, agentic: 0.06, multimodal: 0.06, adoption: 0.04, cap: 8, note: "Normen, technische Dokumente, Code und visuelle Analysen" },
+  "soziales": { longContext: 0.05, agentic: 0.03, multimodal: 0.01, adoption: 0.02, cap: 5, note: "Falldokumentation und Research, aber Beziehung und Schutzauftrag bleiben zentral" },
+  "personen-dienste": { longContext: 0.02, agentic: 0.02, multimodal: 0.02, adoption: 0.01, cap: 3, note: "Termine, Checklisten, Kundenkommunikation und Marketing, aber physische Dienstleistung dominiert" },
+  "sicherheit": { longContext: 0.04, agentic: 0.03, multimodal: 0.02, adoption: 0.01, cap: 5, note: "Berichte, Recherche und Lagebilder, aber Einsatzsituationen bleiben menschlich" }
+};
+
+const TODAY_ROLE_OVERRIDES = {
+  "softwareentwickler-in": { delta: 0.02, label: "Coding-Agenten und Repository-Kontext, begrenzt durch Architektur und Review" },
+  "data-scientist": { delta: 0.04, label: "Datenanalyse-, Notebook- und Modellierungsagenten" },
+  "sysadmin": { delta: 0.03, label: "Tool-Use für IT-Betrieb und Runbooks" },
+  "cybersecurity": { delta: 0.04, label: "Security-Codeanalyse und Triage-Agenten, begrenzt durch Haftung und Angriffskontext" },
+  "ki-ingenieur": { delta: 0.05, label: "KI-native Workflows, begrenzt durch Evaluation und Produktionsverantwortung" },
+  "jurist-in": { delta: 0.06, label: "Long-Context Legal Review" },
+  "steuerberater-in": { delta: 0.04, label: "Steuer-Research und Mandatsdokumente" },
+  "buchhalter-in": { delta: 0.05, label: "Beleg-, Report- und Abstimmungsworkflows" },
+  "sachbearbeiter-verwaltung": { delta: 0.06, label: "Formular- und Prozessagenten" },
+  "sekretaer-in": { delta: 0.05, label: "E-Mail-, Kalender- und Dokumentenagenten" },
+  "grafiker-in": { delta: 0.09, label: "Bildgenerierung und visuelle Iteration" },
+  "fotograf-in": { delta: 0.09, label: "Bild-KI und Retusche" },
+  "cutter-in": { delta: 0.08, label: "Video-, Untertitel- und Schnittassistenz" },
+  "journalist-in": { delta: 0.04, label: "Recherche- und Redaktionsassistenz" },
+  "reisebuero": { delta: 0.06, label: "Reiseplanungs-Agenten" },
+  "arzt-aerztin": { delta: 0.02, label: "medizinische Dokumentation" },
+  "apotheker-in": { delta: 0.02, label: "Interaktions- und Beratungsassistenz" },
+  "ux-designer": { delta: 0.03, label: "Prototyping, Research-Synthese und UI-Text" },
+  "hr-fachmann": { delta: 0.03, label: "Recruiting-, Policy- und Interview-Workflows" },
+  "einkaeufer-in": { delta: 0.03, label: "Lieferantenrecherche und Angebotsvergleich" },
+  "hotelfachmann": { delta: 0.03, label: "Buchung, Gästekommunikation und Content" },
+  "hochschuldozent": { delta: 0.03, label: "Research, Materialerstellung und Feedback" },
+  "maschinenbauingenieur": { delta: 0.02, label: "technische Dokumentation und CAD-nahe Analyse" },
+  "elektroingenieur": { delta: 0.02, label: "technische Dokumentation, Code und Schaltplanprüfung" }
+};
+
+const TODAY_CONFIDENCE = {
+  "finanzen-recht": { key: "medium", label: "Mittlere 2026-Sicherheit", className: "confidence-medium", reasons: ["regulatorische Verantwortung", "Datenzugang"] },
+  "it-tech": { key: "medium", label: "Mittlere 2026-Sicherheit", className: "confidence-medium", reasons: ["digitales Code-/Toolprofil", "Schweizer Rollen enthalten oft Architektur, Testing, Interaktion und Verantwortung", "einfache Implementierung teils off-/nearshored"] },
+  "gesundheit": { key: "low", label: "Tiefe 2026-Sicherheit", className: "confidence-scope", reasons: ["klinische Verantwortung", "Patientenkontakt"] },
+  "bildung": { key: "medium", label: "Mittlere 2026-Sicherheit", className: "confidence-medium", reasons: ["Institutionen variieren", "Aufsicht"] },
+  "handwerk-bau": { key: "low", label: "Tiefe 2026-Sicherheit", className: "confidence-scope", reasons: ["physische Vor-Ort-Arbeit"] },
+  "verwaltung": { key: "high", label: "Hohe 2026-Sicherheit", className: "confidence-high", reasons: ["standardisierte digitale Prozesse"] },
+  "verkauf-handel": { key: "medium", label: "Mittlere 2026-Sicherheit", className: "confidence-medium", reasons: ["Organisationen variieren", "Kundenkontakt"] },
+  "marketing-sales": { key: "medium", label: "Mittlere 2026-Sicherheit", className: "confidence-medium", reasons: ["Organisationen variieren", "Marke, Kundenzugang und Datenzugang"] },
+  "transport-logistik": { key: "low", label: "Tiefe 2026-Sicherheit", className: "confidence-scope", reasons: ["physische Mobilität", "Sicherheit"] },
+  "gastronomie-tourismus": { key: "medium", label: "Mittlere 2026-Sicherheit", className: "confidence-medium", reasons: ["gemischtes physisches und digitales Profil"] },
+  "landwirtschaft": { key: "low", label: "Tiefe 2026-Sicherheit", className: "confidence-scope", reasons: ["Feldarbeit", "Robotik ausser Scope"] },
+  "kunst-medien": { key: "medium", label: "Mittlere 2026-Sicherheit", className: "confidence-medium", reasons: ["Auftrag, Rechte und Tools variieren"] },
+  "ingenieurwesen": { key: "medium", label: "Mittlere 2026-Sicherheit", className: "confidence-medium", reasons: ["Normen und Validierung"] },
+  "soziales": { key: "low", label: "Tiefe 2026-Sicherheit", className: "confidence-scope", reasons: ["Beziehungsarbeit", "Schutzauftrag"] },
+  "personen-dienste": { key: "low", label: "Tiefe 2026-Sicherheit", className: "confidence-scope", reasons: ["physische Vor-Ort-Arbeit", "Servicebeziehung"] },
+  "sicherheit": { key: "low", label: "Tiefe 2026-Sicherheit", className: "confidence-scope", reasons: ["Einsatzsituation", "Verantwortung"] }
+};
+
+let activeFramework = "science";
+
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
+
+function todayComponents(d) {
+  const category = TODAY_CATEGORY_FACTORS[d.category] || { longContext: 0.03, agentic: 0.02, multimodal: 0.01, adoption: 0.02, cap: 7, note: "allgemeiner KI-Fortschritt" };
+  const override = TODAY_ROLE_OVERRIDES[d.slug] || { delta: 0, label: "" };
+  const parts = [
+    { label: "Long Context", value: category.longContext },
+    { label: "Agenten/Tools", value: category.agentic },
+    { label: "Multimodalität", value: category.multimodal }
+  ];
+
+  if (override.delta) {
+    parts.push({ label: override.label, value: override.delta });
+  }
+
+  const technicalDelta = parts.reduce((sum, part) => sum + part.value, 0);
+  const rawBeta = d.beta + technicalDelta;
+  const capBeta = Math.max(d.beta, category.cap / 10);
+  const beta = clamp(rawBeta, d.beta, capBeta);
+  const adoptionRawBeta = beta + category.adoption;
+  const adoptionBeta = clamp(adoptionRawBeta, d.beta, capBeta);
+  const score = Math.round(beta * 10);
+  const adoptionScore = Math.round(adoptionBeta * 10);
+
+  return {
+    beta,
+    score,
+    adoptionBeta,
+    adoptionScore,
+    rawBeta,
+    adoptionRawBeta,
+    cap: category.cap,
+    capApplied: rawBeta > capBeta,
+    adoptionCapApplied: adoptionRawBeta > capBeta,
+    delta: technicalDelta,
+    adoptionDelta: category.adoption,
+    scoreDelta: score - d.exposure,
+    adoptionScoreDelta: adoptionScore - d.exposure,
+    parts,
+    adoptionPart: { label: "Adoption", value: category.adoption },
+    note: category.note
+  };
+}
+
+function todayConfidence(d) {
+  const base = TODAY_CONFIDENCE[d.category] || { key: "medium", label: "Mittlere 2026-Sicherheit", className: "confidence-medium", reasons: ["gemischtes Aufgabenprofil"] };
+  const reasons = [...base.reasons];
+  let key = base.key;
+  let label = base.label;
+  let className = base.className;
+  if (mappingConfidence(d).key === "mittel" && key === "high") {
+    key = "medium";
+    label = "Mittlere 2026-Sicherheit";
+    className = "confidence-medium";
+    reasons.push("Mapping grob");
+  } else if (mappingConfidence(d).key !== "hoch") {
+    reasons.push("Mapping oder Scope prüfen");
+  }
+  if (TODAY_ROLE_OVERRIDES[d.slug]) reasons.push("Berufs-Override sensitiv");
+  return { key, label, className, reasons: [...new Set(reasons)] };
+}
+
+function activeScore(d) {
+  return activeFramework === "today" ? todayComponents(d).score : d.exposure;
+}
+
+function activeBeta(d) {
+  return activeFramework === "today" ? todayComponents(d).beta : d.beta;
+}
+
+function activeFrameworkLabel() {
+  return activeFramework === "today" ? "Technisch 2026" : "Science 2024";
+}
+
+function activeScoreTitle() {
+  return activeFramework === "today" ? "Technisch" : "LLM";
+}
+
+function setFramework(name) {
+  activeFramework = name === "today" ? "today" : "science";
+  document.getElementById("btn-framework-science").classList.toggle("active", activeFramework === "science");
+  document.getElementById("btn-framework-today").classList.toggle("active", activeFramework === "today");
+  document.getElementById("framework-kicker").textContent = activeFramework === "today" ? "Zweite Sicht" : "Score-Framework";
+  document.getElementById("framework-title").textContent = FRAMEWORK_COPY[activeFramework].title;
+  document.getElementById("framework-desc").textContent = FRAMEWORK_COPY[activeFramework].desc;
+  document.getElementById("legend-label").textContent = `${activeFrameworkLabel()} Score:`;
+  document.getElementById("today-method-panel").hidden = activeFramework !== "today";
+  applyFilters();
+  if (selectedDetail) showDetail(selectedDetail);
+}
+
+function updateHighlights() {
+  const high = DATA.filter(d => activeScore(d) >= 8).length;
+  const medium = DATA.filter(d => activeScore(d) >= 5 && activeScore(d) <= 7).length;
+  const low = DATA.filter(d => activeScore(d) <= 4).length;
+  const totalJobs = DATA.reduce((sum, d) => sum + d.jobs, 0);
+  const weighted = DATA.reduce((sum, d) => sum + d.jobs * activeScore(d), 0) / totalJobs;
+  const pays = DATA.map(d => d.pay);
+  const top = [...DATA].sort((a, b) => activeScore(b) - activeScore(a) || activeBeta(b) - activeBeta(a)).slice(0, 4).map(d => d.title);
+  const bottom = [...DATA].sort((a, b) => activeScore(a) - activeScore(b) || activeBeta(a) - activeBeta(b)).slice(0, 4).map(d => d.title);
+
+  document.getElementById("metric-high").textContent = high;
+  document.getElementById("metric-medium").textContent = medium;
+  document.getElementById("metric-low").textContent = low;
+  document.getElementById("metric-weighted").textContent = weighted.toFixed(1) + "/10";
+  document.getElementById("metric-pay").textContent = "CHF " + fmtPayShort(Math.min(...pays)) + "-" + fmtPayShort(Math.max(...pays));
+  document.getElementById("metric-top").innerHTML = `${activeFrameworkLabel()} am stärksten: <strong>${top.join(", ")}</strong>`;
+  document.getElementById("metric-bottom").innerHTML = `${activeFrameworkLabel()} am wenigsten: <strong>${bottom.join(", ")}</strong>`;
+}
+
+const DATA = [
+  {"title":"Buchhalter/-in","slug":"buchhalter-in","category":"finanzen-recht","pay":124000,"jobs":95500,"education":"EFZ KV / HF Treuhand","exposure":6,"beta":0.5683,"isco":"2411","exposure_rationale":"Das Eloundou-Mass zeigt moderate bis hohe LLM-Exposition: Textbasierte Buchhaltungsaufgaben wie Berichterstellung, Beleganalyse und Korrespondenz können durch LLMs beschleunigt werden. Reine Datenverarbeitungsaufgaben (Buchungen, Abstimmungen) profitieren weniger direkt von Sprachmodellen, sondern eher von spezialisierten Automatisierungstools.","source_pay":"BFS LSE 2024 CH-ISCO 24","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4836","pay_previous":87000,"jobs_2023_base":95000,"lse_2024_monthly_median":9509,"lse_2024_annual_benchmark":124000,"lse_2024_group_code":"24","lse_2024_group_label":"24 Betriebswirte und vergleichbare Spezialisten","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Finanzberater/-in","slug":"finanzberater-in","category":"finanzen-recht","pay":124000,"jobs":42200,"education":"Bachelor / CFA","exposure":5,"beta":0.4808,"isco":"2412","exposure_rationale":"Mittlere LLM-Exposition: Analyseberichte, Kundenkorrespondenz und Research können durch LLMs unterstützt werden. Die persönliche Beratungsbeziehung und Vertrauenskomponente sind jedoch nicht durch Sprachmodelle ersetzbar. Hybride Modelle (Mensch + KI) werden zur Norm.","source_pay":"BFS LSE 2024 CH-ISCO 24","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4844","pay_previous":118000,"jobs_2023_base":42000,"lse_2024_monthly_median":9509,"lse_2024_annual_benchmark":124000,"lse_2024_group_code":"24","lse_2024_group_label":"24 Betriebswirte und vergleichbare Spezialisten","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Steuerberater/-in","slug":"steuerberater-in","category":"finanzen-recht","pay":124000,"jobs":28200,"education":"Master / Steuerexperte","exposure":6,"beta":0.5683,"isco":"2411","exposure_rationale":"Hohe LLM-Exposition bei Textarbeit: Steuererklärungen, Gutachten, Gesetzesrecherche und Kundenkorrespondenz können durch LLMs stark beschleunigt werden. Komplexe internationale Strukturierungen und strategische Beratung erfordern weiterhin menschliches Urteilsvermögen.","source_pay":"BFS LSE 2024 CH-ISCO 24","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4857","pay_previous":105000,"jobs_2023_base":28000,"lse_2024_monthly_median":9509,"lse_2024_annual_benchmark":124000,"lse_2024_group_code":"24","lse_2024_group_label":"24 Betriebswirte und vergleichbare Spezialisten","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Jurist/-in","slug":"jurist-in","category":"finanzen-recht","pay":119000,"jobs":35200,"education":"Master Rechtswissenschaften / Anwaltspatent","exposure":4,"beta":0.425,"isco":"2611","exposure_rationale":"Moderate LLM-Exposition: Legal Research und Vertragsanalyse profitieren stark von LLMs. Gerichtsverhandlungen, Mandantenbeziehungen und juristische Strategie bleiben menschlich. Der Score ist niedriger als erwartet, da viele juristische Aufgaben kontextsensitive menschliche Interaktion erfordern.","mapping_confidence":"mittel","mapping_note":"Der ISCO-/SOC-Mix für juristische Berufe ist relativ breit. Kanzlei-nahe Recherche- und Vertragsarbeit kann deutlich höher exponiert sein als gerichtliche, beratende oder verhandlungsorientierte Arbeit.","source_pay":"BFS LSE 2024 CH-ISCO 26","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4898","pay_previous":130000,"jobs_2023_base":35000,"lse_2024_monthly_median":9122,"lse_2024_annual_benchmark":119000,"lse_2024_group_code":"26","lse_2024_group_label":"26 Juristen, Sozialwissenschaftler und Kulturberufe","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Treuhänder/-in","slug":"treuhaender-in","category":"finanzen-recht","pay":124000,"jobs":22100,"education":"HF Treuhand / dipl. Treuhandexperte","exposure":6,"beta":0.5683,"isco":"2411","exposure_rationale":"Gleicher ISCO-Code wie Buchhalter/-in. Textbasierte Aufgaben (Korrespondenz, Berichte, Steuererklärungen) sind durch LLMs stark beschleunigbar. Die persönliche Mandatsbetreuung und Beratungsfunktion bleibt relevant.","source_pay":"BFS LSE 2024 CH-ISCO 24","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4858","pay_previous":92000,"jobs_2023_base":22000,"lse_2024_monthly_median":9509,"lse_2024_annual_benchmark":124000,"lse_2024_group_code":"24","lse_2024_group_label":"24 Betriebswirte und vergleichbare Spezialisten","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Versicherungskaufmann/-frau","slug":"versicherungskaufmann","category":"finanzen-recht","pay":103000,"jobs":55300,"education":"EFZ KV / HF Versicherung","exposure":6,"beta":0.5614,"isco":"3321","exposure_rationale":"Mittlere bis hohe LLM-Exposition: Policen-Texte, Schadenskorrespondenz und Kundenanfragen können durch LLMs bearbeitet werden. Risikoanalyse und Vertriebsgespräche bleiben menschlich.","source_pay":"BFS LSE 2024 CH-ISCO 33","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4855","pay_previous":78000,"jobs_2023_base":55000,"lse_2024_monthly_median":7900,"lse_2024_annual_benchmark":103000,"lse_2024_group_code":"33","lse_2024_group_label":"33 Betriebswirtschaftliche und kaufmännische Fachkräfte und Verwaltungsfachkräfte","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Anlageberater/-in (Private Banking)","slug":"anlageberater-in","category":"finanzen-recht","pay":124000,"jobs":18100,"education":"Master / CFA / AZEK","exposure":5,"beta":0.4808,"isco":"2412","exposure_rationale":"Mittlere LLM-Exposition: Marktanalysen und Research-Reports können LLM-gestützt erstellt werden. Die High-Net-Worth-Kundenbeziehung und das persönliche Vertrauensverhältnis im Schweizer Private Banking sind nicht automatisierbar.","source_pay":"BFS LSE 2024 CH-ISCO 24","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4844","pay_previous":145000,"jobs_2023_base":18000,"lse_2024_monthly_median":9509,"lse_2024_annual_benchmark":124000,"lse_2024_group_code":"24","lse_2024_group_label":"24 Betriebswirte und vergleichbare Spezialisten","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Softwareentwickler/-in","slug":"softwareentwickler-in","category":"it-tech","pay":129000,"jobs":88500,"education":"Bachelor Informatik / HF Informatik","exposure":9,"beta":0.9092,"isco":"2512","exposure_rationale":"Höchste LLM-Exposition aller Berufe im Dashboard. Code-Generierung, Debugging, Dokumentation und Code-Review sind Kernkompetenzen von LLMs. Eloundou et al. stufen Softwareentwicklung als einen der am stärksten exponierten Berufe ein. Architekturentscheide und Systemdesign bleiben menschlich.","source_pay":"BFS LSE 2024 CH-ISCO 25","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4969","pay_previous":115000,"jobs_2023_base":88000,"lse_2024_monthly_median":9949,"lse_2024_annual_benchmark":129000,"lse_2024_group_code":"25","lse_2024_group_label":"25 Spezialisten in der Informations- und Kommunikationstechnologie","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Data Scientist","slug":"data-scientist","category":"it-tech","pay":113000,"jobs":22100,"education":"Master Statistik / Data Science","exposure":7,"beta":0.6958,"isco":"2120","exposure_rationale":"Hohe LLM-Exposition: Code-Erstellung, statistische Analyse, Berichterstellung und Dateninterpretation können durch LLMs stark unterstützt werden. Die Problemformulierung und kreative Datenmodellierung bleiben menschlich.","source_pay":"BFS LSE 2024 CH-ISCO 21","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4969","pay_previous":125000,"jobs_2023_base":22000,"lse_2024_monthly_median":8730,"lse_2024_annual_benchmark":113000,"lse_2024_group_code":"21","lse_2024_group_label":"21 Naturwissenschaftler, Mathematiker und Ingenieure","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Systemadministrator/-in","slug":"sysadmin","category":"it-tech","pay":129000,"jobs":32200,"education":"EFZ Informatik / CCNA / AWS","exposure":7,"beta":0.7297,"isco":"2522","exposure_rationale":"Hohe LLM-Exposition: Scripting, Konfigurationsdokumentation, Troubleshooting-Recherche und Incident-Reports können durch LLMs beschleunigt werden. Physische Serverarbeit und Notfall-Reaktionen bleiben menschlich.","source_pay":"BFS LSE 2024 CH-ISCO 25","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4969","pay_previous":98000,"jobs_2023_base":32000,"lse_2024_monthly_median":9949,"lse_2024_annual_benchmark":129000,"lse_2024_group_code":"25","lse_2024_group_label":"25 Spezialisten in der Informations- und Kommunikationstechnologie","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"IT-Projektleiter/-in","slug":"it-projektleiter","category":"it-tech","pay":125000,"jobs":28200,"education":"Bachelor / PMP / IPMA","exposure":5,"beta":0.5303,"isco":"1330","exposure_rationale":"Mittlere LLM-Exposition: Projektdokumentation, Statusberichte und Kommunikation können durch LLMs unterstützt werden. Stakeholder-Management, Konfliktlösung und Führung sind nicht automatisierbar.","source_pay":"BFS LSE 2024 CH-ISCO 13","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4969","pay_previous":120000,"jobs_2023_base":28000,"lse_2024_monthly_median":9594,"lse_2024_annual_benchmark":125000,"lse_2024_group_code":"13","lse_2024_group_label":"13 Führungskräfte in der Produktion und bei spezialisierten Dienstleistungen","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Cybersecurity-Spezialist/-in","slug":"cybersecurity","category":"it-tech","pay":129000,"jobs":18100,"education":"Master / CISSP / CEH","exposure":7,"beta":0.6636,"isco":"2529","exposure_rationale":"Hohe LLM-Exposition: Bedrohungsanalyse, Security-Berichte, Policy-Erstellung und Code-Review profitieren stark von LLMs. Incident Response unter Zeitdruck und die Bewertung neuartiger Angriffsvektoren erfordern menschliches Urteil.","source_pay":"BFS LSE 2024 CH-ISCO 25","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4969","pay_previous":130000,"jobs_2023_base":18000,"lse_2024_monthly_median":9949,"lse_2024_annual_benchmark":129000,"lse_2024_group_code":"25","lse_2024_group_label":"25 Spezialisten in der Informations- und Kommunikationstechnologie","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"UX Designer/-in","slug":"ux-designer","category":"it-tech","pay":113000,"jobs":12100,"education":"Bachelor Design / Zertifikat","exposure":5,"beta":0.5125,"isco":"2166","exposure_rationale":"Mittlere LLM-Exposition: Nutzerforschungs-Auswertungen, Copy-Writing und Dokumentation profitieren von LLMs. Das visuelle Design und die empathische Nutzerforschung sind weniger direkt durch Sprachmodelle betroffen.","source_pay":"BFS LSE 2024 CH-ISCO 21","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4969","pay_previous":100000,"jobs_2023_base":12000,"lse_2024_monthly_median":8730,"lse_2024_annual_benchmark":113000,"lse_2024_group_code":"21","lse_2024_group_label":"21 Naturwissenschaftler, Mathematiker und Ingenieure","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"KI-Ingenieur/-in","slug":"ki-ingenieur","category":"it-tech","pay":140000,"jobs":5000,"education":"Master Informatik / ML-Spezialisierung","exposure":7,"beta":0.6923,"isco":"2511","exposure_rationale":"Hohe LLM-Exposition: Code-Generierung, Paper-Analyse, Dokumentation und Experiment-Design werden durch LLMs beschleunigt. Das Eloundou-Mass zeigt, dass auch KI-Fachleute stark von LLMs profitieren - gerade weil ihre Arbeit textbasiert und technisch ist.","source_pay":"Spezialquelle beibehalten (Schätzung 2024); LSE 2024 CH-ISCO 25 Benchmark","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4969","pay_previous":140000,"jobs_2023_base":5000,"lse_2024_monthly_median":9949,"lse_2024_annual_benchmark":129000,"lse_2024_group_code":"25","lse_2024_group_label":"25 Spezialisten in der Informations- und Kommunikationstechnologie","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"specialized_source_retained_lse_2024_benchmark_added","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"benchmark","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"Schätzung 2024","source_jobs_previous":"Schätzung BFS/IKT 2023"},
+  {"title":"Arzt / Ärztin (Allgemein)","slug":"arzt-aerztin","category":"gesundheit","pay":180000,"jobs":38200,"education":"Staatsexamen Medizin / FMH","exposure":4,"beta":0.4473,"isco":"2211","exposure_rationale":"Moderate LLM-Exposition: Medizinische Dokumentation, Fachliteratur-Recherche und Arztbriefe können durch LLMs unterstützt werden. Die klinische Untersuchung, Diagnosestellung am Patienten und ethische Entscheide sind nicht durch Sprachmodelle ersetzbar.","source_pay":"Spezialquelle beibehalten (FMH); LSE 2024 CH-ISCO 22 Benchmark","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4964","pay_previous":180000,"jobs_2023_base":38000,"lse_2024_monthly_median":8000,"lse_2024_annual_benchmark":104000,"lse_2024_group_code":"22","lse_2024_group_label":"22 Spezialisten in Gesundheitsberufen","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"specialized_source_retained_lse_2024_benchmark_added","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"benchmark","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022 / FMH","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Zahnarzt / Zahnärztin","slug":"zahnarzt","category":"gesundheit","pay":104000,"jobs":15100,"education":"Staatsexamen Zahnmedizin","exposure":2,"beta":0.1589,"isco":"2261","exposure_rationale":"Niedrige LLM-Exposition: Die physische Natur der Zahnbehandlung macht sie kaum durch Sprachmodelle beeinflussbar. Befunddokumentation und Patientenkommunikation können leicht unterstützt werden, bilden aber nur einen kleinen Teil der Tätigkeit.","source_pay":"BFS LSE 2024 CH-ISCO 22","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4964","pay_previous":165000,"jobs_2023_base":15000,"lse_2024_monthly_median":8000,"lse_2024_annual_benchmark":104000,"lse_2024_group_code":"22","lse_2024_group_label":"22 Spezialisten in Gesundheitsberufen","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Pflegefachmann/-frau","slug":"pflegefachmann","category":"gesundheit","pay":104000,"jobs":181000,"education":"HF Pflege / Bachelor Pflege","exposure":3,"beta":0.3428,"isco":"2221","exposure_rationale":"Niedrige bis moderate LLM-Exposition: Pflegedokumentation und Übergabeberichte können durch LLMs unterstützt werden. Die körperliche Pflege, emotionale Unterstützung und situative Einschätzung sind zutiefst menschlich und nicht durch Sprachmodelle ersetzbar.","source_pay":"BFS LSE 2024 CH-ISCO 22","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4963","pay_previous":75000,"jobs_2023_base":180000,"lse_2024_monthly_median":8000,"lse_2024_annual_benchmark":104000,"lse_2024_group_code":"22","lse_2024_group_label":"22 Spezialisten in Gesundheitsberufen","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Physiotherapeut/-in","slug":"physiotherapeut","category":"gesundheit","pay":104000,"jobs":22100,"education":"Bachelor Physiotherapie","exposure":2,"beta":0.2257,"isco":"2264","exposure_rationale":"Niedrige LLM-Exposition: Physikalische Therapie erfordert haptisches Feedback und Körperarbeit. LLMs können bei Behandlungsplandokumentation helfen, aber die Kernarbeit ist physisch und interaktiv.","source_pay":"BFS LSE 2024 CH-ISCO 22","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4963","pay_previous":80000,"jobs_2023_base":22000,"lse_2024_monthly_median":8000,"lse_2024_annual_benchmark":104000,"lse_2024_group_code":"22","lse_2024_group_label":"22 Spezialisten in Gesundheitsberufen","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Apotheker/-in","slug":"apotheker-in","category":"gesundheit","pay":104000,"jobs":12100,"education":"Master Pharmazie / Staatsexamen","exposure":4,"beta":0.4286,"isco":"2262","exposure_rationale":"Moderate LLM-Exposition: Medikamenteninformationen, Wechselwirkungsanalysen und Patientenberatung auf Textbasis können durch LLMs unterstützt werden. Die physische Ausgabe und persönliche Beratung bleiben menschlich.","source_pay":"BFS LSE 2024 CH-ISCO 22","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4963","pay_previous":95000,"jobs_2023_base":12000,"lse_2024_monthly_median":8000,"lse_2024_annual_benchmark":104000,"lse_2024_group_code":"22","lse_2024_group_label":"22 Spezialisten in Gesundheitsberufen","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Psychiater/-in","slug":"psychiater-in","category":"gesundheit","pay":200000,"jobs":8000,"education":"Staatsexamen Medizin / FMH Psychiatrie","exposure":5,"beta":0.4783,"isco":"2212","exposure_rationale":"Mittlere LLM-Exposition: Befundberichte, Fachliteratur und Dokumentation profitieren von LLMs. Die therapeutische Beziehung und psychiatrische Beurteilung sind essenziell menschlich. Höher als andere Ärzte, da der Beruf stärker textbasiert ist (Befundberichte, Gutachten).","source_pay":"Spezialquelle beibehalten (FMH); LSE 2024 CH-ISCO 22 Benchmark","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4964","pay_previous":200000,"jobs_2023_base":8000,"lse_2024_monthly_median":8000,"lse_2024_annual_benchmark":104000,"lse_2024_group_code":"22","lse_2024_group_label":"22 Spezialisten in Gesundheitsberufen","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"specialized_source_retained_lse_2024_benchmark_added","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"benchmark","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022 / FMH","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Rettungssanitäter/-in","slug":"rettungssanitaeter","category":"gesundheit","pay":81000,"jobs":8000,"education":"HF Rettungssanität","exposure":2,"beta":0.181,"isco":"3258","exposure_rationale":"Niedrige LLM-Exposition: Notfallmedizin erfordert schnelle physische Intervention in unstrukturierten Umgebungen. Protokollerstellung kann durch LLMs unterstützt werden, aber die Kerntätigkeit ist rein physisch und situativ.","source_pay":"BFS LSE 2024 CH-ISCO 32","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4963","pay_previous":72000,"jobs_2023_base":8000,"lse_2024_monthly_median":6203,"lse_2024_annual_benchmark":81000,"lse_2024_group_code":"32","lse_2024_group_label":"32 Assistenzberufe im Gesundheitswesen","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Primarlehrer/-in","slug":"primarlehrer-in","category":"bildung","pay":82000,"jobs":55300,"education":"Bachelor Lehramt (PH)","exposure":3,"beta":0.2797,"isco":"2341","exposure_rationale":"Niedrige LLM-Exposition: Unterrichtsvorbereitung und Materialerstellung profitieren von LLMs. Die sozialpädagogische Funktion, Klassenführung und Vorbildrolle sind nicht automatisierbar.","source_pay":"Spezialquelle beibehalten (Kanton); LSE 2024 CH-ISCO 23 Benchmark","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4966","pay_previous":82000,"jobs_2023_base":55000,"lse_2024_monthly_median":9697,"lse_2024_annual_benchmark":126000,"lse_2024_group_code":"23","lse_2024_group_label":"23 Lehrkräfte","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"specialized_source_retained_lse_2024_benchmark_added","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"benchmark","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022 / Kanton","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Gymnasiallehrer/-in","slug":"gymnasiallehrer-in","category":"bildung","pay":105000,"jobs":22100,"education":"Master + Pädagogische Ausbildung","exposure":3,"beta":0.3333,"isco":"2330","exposure_rationale":"Niedrige bis moderate LLM-Exposition: Prüfungserstellung, Unterrichtsmaterialien und Korrekturen können durch LLMs unterstützt werden. Die Lehrerpersönlichkeit und Interaktion mit Jugendlichen bleibt essenziell.","source_pay":"Spezialquelle beibehalten (Kantone (bes. ZH)); LSE 2024 CH-ISCO 23 Benchmark","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4966","pay_previous":105000,"jobs_2023_base":22000,"lse_2024_monthly_median":9697,"lse_2024_annual_benchmark":126000,"lse_2024_group_code":"23","lse_2024_group_label":"23 Lehrkräfte","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"specialized_source_retained_lse_2024_benchmark_added","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"benchmark","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"Kantone (bes. ZH)","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Hochschuldozent/-in","slug":"hochschuldozent","category":"bildung","pay":128000,"jobs":18100,"education":"Doktorat / Habilitation","exposure":5,"beta":0.4844,"isco":"2310","exposure_rationale":"Mittlere LLM-Exposition: Forschungsliteratur-Analyse, Paper-Entwürfe und Vorlesungsmaterialien profitieren stark von LLMs. Originäre Forschung, kritische Diskussion und Betreuung bleiben menschlich.","source_pay":"Spezialquelle beibehalten (ETH/Uni Zürich Gehaltsbänder); LSE 2024 CH-ISCO 23 Benchmark","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4966","pay_previous":128000,"jobs_2023_base":18000,"lse_2024_monthly_median":9697,"lse_2024_annual_benchmark":126000,"lse_2024_group_code":"23","lse_2024_group_label":"23 Lehrkräfte","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"specialized_source_retained_lse_2024_benchmark_added","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"benchmark","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"ETH/Uni Zürich Gehaltsbänder","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Kindergärtner/-in","slug":"kindergaertner-in","category":"bildung","pay":126000,"jobs":28200,"education":"Diploma PH","exposure":2,"beta":0.2301,"isco":"2342","exposure_rationale":"Niedrige LLM-Exposition: Frühkindliche Bildung basiert auf emotionaler Bindung, körperlicher Präsenz und spielerischem Lernen. Textbasierte Aufgaben bilden nur einen minimalen Anteil der Tätigkeit.","source_pay":"BFS LSE 2024 CH-ISCO 23","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4966","pay_previous":72000,"jobs_2023_base":28000,"lse_2024_monthly_median":9697,"lse_2024_annual_benchmark":126000,"lse_2024_group_code":"23","lse_2024_group_label":"23 Lehrkräfte","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Berufsschullehrer/-in","slug":"berufsschullehrer","category":"bildung","pay":126000,"jobs":15100,"education":"Fachausbildung + CAS Berufsbildung","exposure":4,"beta":0.381,"isco":"2320","exposure_rationale":"Moderate LLM-Exposition: Theoretischer Unterricht und Prüfungen können LLM-gestützt vorbereitet werden. Die praktische Berufsausbildung und Werkstattarbeit sind nicht durch Sprachmodelle beeinflussbar.","source_pay":"BFS LSE 2024 CH-ISCO 23","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4966","pay_previous":95000,"jobs_2023_base":15000,"lse_2024_monthly_median":9697,"lse_2024_annual_benchmark":126000,"lse_2024_group_code":"23","lse_2024_group_label":"23 Lehrkräfte","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Elektriker/-in","slug":"elektriker-in","category":"handwerk-bau","pay":84000,"jobs":65400,"education":"EFZ Elektroinstallateur","exposure":1,"beta":0.1282,"isco":"7411","exposure_rationale":"Sehr niedrige LLM-Exposition: Elektrische Installationen sind rein physische Arbeit. LLMs können bei Dokumentation und Normenrecherche minimal helfen, aber die Kerntätigkeit ist Handarbeit vor Ort.","source_pay":"BFS LSE 2024 CH-ISCO 74","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4929","pay_previous":72000,"jobs_2023_base":65000,"lse_2024_monthly_median":6432,"lse_2024_annual_benchmark":84000,"lse_2024_group_code":"74","lse_2024_group_label":"74 Elektriker und Elektroniker","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Sanitärinstallateur/-in","slug":"sanitaer-installateur","category":"handwerk-bau","pay":80000,"jobs":35200,"education":"EFZ Sanitärinstallateur","exposure":1,"beta":0.0555,"isco":"7126","exposure_rationale":"Minimal LLM-Exposition: Einer der am wenigsten durch LLMs beeinflussbaren Berufe. Die Arbeit ist vollständig physisch, ortsbezogen und erfordert handwerkliches Geschick.","source_pay":"BFS LSE 2024 CH-ISCO 71","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4929","pay_previous":68000,"jobs_2023_base":35000,"lse_2024_monthly_median":6172,"lse_2024_annual_benchmark":80000,"lse_2024_group_code":"71","lse_2024_group_label":"71 Bau- und Ausbaufachkräfte sowie verwandte Berufe, ausgenommen Elektriker","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Maurer/-in","slug":"maurer-in","category":"handwerk-bau","pay":66000,"jobs":45300,"education":"EFZ Maurer","exposure":0,"beta":0.0192,"isco":"7112","exposure_rationale":"Praktisch keine LLM-Exposition: Der niedrigste Score im gesamten Dashboard. Mauern ist rein physische Arbeit ohne nennenswerte textbasierte Aufgabenkomponenten.","source_pay":"Spezialquelle beibehalten (LMV Bau); LSE 2024 CH-ISCO 71 Benchmark","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4929","pay_previous":66000,"jobs_2023_base":45000,"lse_2024_monthly_median":6172,"lse_2024_annual_benchmark":80000,"lse_2024_group_code":"71","lse_2024_group_label":"71 Bau- und Ausbaufachkräfte sowie verwandte Berufe, ausgenommen Elektriker","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"specialized_source_retained_lse_2024_benchmark_added","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"benchmark","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022 / LMV Bau","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Schreiner/-in","slug":"schreiner-in","category":"handwerk-bau","pay":80000,"jobs":28200,"education":"EFZ Schreiner","exposure":1,"beta":0.1444,"isco":"7115","exposure_rationale":"Sehr niedrige LLM-Exposition: Schreinerei ist überwiegend physische Handarbeit. Offertenerstellung und Kundenkommunikation können minimal von LLMs profitieren.","source_pay":"BFS LSE 2024 CH-ISCO 71","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4929","pay_previous":65000,"jobs_2023_base":28000,"lse_2024_monthly_median":6172,"lse_2024_annual_benchmark":80000,"lse_2024_group_code":"71","lse_2024_group_label":"71 Bau- und Ausbaufachkräfte sowie verwandte Berufe, ausgenommen Elektriker","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Maler/-in (Gebäude)","slug":"maler-in","category":"handwerk-bau","pay":80000,"jobs":22100,"education":"EFZ Maler","exposure":0,"beta":0.0421,"isco":"7131","exposure_rationale":"Praktisch keine LLM-Exposition: Gebäudemalerei ist rein physische Arbeit. Zweitniedrigster Score im Dashboard.","source_pay":"BFS LSE 2024 CH-ISCO 71","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4929","pay_previous":62000,"jobs_2023_base":22000,"lse_2024_monthly_median":6172,"lse_2024_annual_benchmark":80000,"lse_2024_group_code":"71","lse_2024_group_label":"71 Bau- und Ausbaufachkräfte sowie verwandte Berufe, ausgenommen Elektriker","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Zimmermann/-frau","slug":"zimmermann","category":"handwerk-bau","pay":80000,"jobs":18100,"education":"EFZ Zimmermann","exposure":1,"beta":0.1444,"isco":"7115","exposure_rationale":"Sehr niedrige LLM-Exposition: Holzbau ist dreidimensionale physische Arbeit. Planungsunterstützung durch LLMs ist marginal.","source_pay":"BFS LSE 2024 CH-ISCO 71","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4929","pay_previous":68000,"jobs_2023_base":18000,"lse_2024_monthly_median":6172,"lse_2024_annual_benchmark":80000,"lse_2024_group_code":"71","lse_2024_group_label":"71 Bau- und Ausbaufachkräfte sowie verwandte Berufe, ausgenommen Elektriker","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Heizungsinstallateur/-in","slug":"heizungsinstallateur","category":"handwerk-bau","pay":80000,"jobs":20100,"education":"EFZ Heizungsinstallateur","exposure":3,"beta":0.2578,"isco":"7127","exposure_rationale":"Niedrige LLM-Exposition: Die Installation ist physische Arbeit. Etwas höher als andere Handwerksberufe, da technische Dokumentation und Regelwerke textbasiert sind.","source_pay":"BFS LSE 2024 CH-ISCO 71","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4929","pay_previous":70000,"jobs_2023_base":20000,"lse_2024_monthly_median":6172,"lse_2024_annual_benchmark":80000,"lse_2024_group_code":"71","lse_2024_group_label":"71 Bau- und Ausbaufachkräfte sowie verwandte Berufe, ausgenommen Elektriker","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Sachbearbeiter/-in (Verwaltung)","slug":"sachbearbeiter-verwaltung","category":"verwaltung","pay":86000,"jobs":120700,"education":"EFZ KV / Verwaltungsausbildung","exposure":6,"beta":0.595,"isco":"4110","exposure_rationale":"Hohe LLM-Exposition: Standardkorrespondenz, Formularbearbeitung und Berichterstellung sind textbasierte Aufgaben, die stark von LLMs profitieren. Strukturierte Entscheide nach Regelwerk können ebenfalls unterstützt werden.","source_pay":"BFS LSE 2024 CH-ISCO 41","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4879","pay_previous":72000,"jobs_2023_base":120000,"lse_2024_monthly_median":6637,"lse_2024_annual_benchmark":86000,"lse_2024_group_code":"41","lse_2024_group_label":"41 Allgemeine Büro- und Sekretariatskräfte","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"HR-Fachmann/-frau","slug":"hr-fachmann","category":"verwaltung","pay":124000,"jobs":45300,"education":"HR-Fachausweis / Bachelor HRM","exposure":5,"beta":0.4887,"isco":"2423","exposure_rationale":"Mittlere LLM-Exposition: Stellenausschreibungen, Arbeitsverträge, Personalreglement und Korrespondenz können durch LLMs erstellt werden. Personalentwicklung, Konfliktlösung und persönliche Gespräche bleiben menschlich.","source_pay":"BFS LSE 2024 CH-ISCO 24","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4879","pay_previous":88000,"jobs_2023_base":45000,"lse_2024_monthly_median":9509,"lse_2024_annual_benchmark":124000,"lse_2024_group_code":"24","lse_2024_group_label":"24 Betriebswirte und vergleichbare Spezialisten","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Sekretär/-in","slug":"sekretaer-in","category":"verwaltung","pay":86000,"jobs":55300,"education":"EFZ KV / Handelsmittelschule","exposure":6,"beta":0.6442,"isco":"4120","exposure_rationale":"Hohe LLM-Exposition: E-Mail-Korrespondenz, Protokollerstellung, Terminkoordination und Dokumentenmanagement sind stark textbasiert und durch LLMs beschleunigbar. Executive Assistants auf C-Level bleiben relevant für persönliche Koordination.","source_pay":"BFS LSE 2024 CH-ISCO 41","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4879","pay_previous":65000,"jobs_2023_base":55000,"lse_2024_monthly_median":6637,"lse_2024_annual_benchmark":86000,"lse_2024_group_code":"41","lse_2024_group_label":"41 Allgemeine Büro- und Sekretariatskräfte","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Zollbeamte/r","slug":"zollbeamter","category":"verwaltung","pay":103000,"jobs":4800,"education":"Berufsausbildung Zoll / EFZ","exposure":4,"beta":0.4021,"isco":"3351","exposure_rationale":"Moderate LLM-Exposition: Dokumentenprüfung und Regelwerk-Anwendung können textbasiert unterstützt werden. Physische Kontrollen und Verhöre bleiben menschlich.","source_pay":"BFS LSE 2024 CH-ISCO 33","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4879","pay_previous":80000,"jobs_2023_base":4800,"lse_2024_monthly_median":7900,"lse_2024_annual_benchmark":103000,"lse_2024_group_code":"33","lse_2024_group_label":"33 Betriebswirtschaftliche und kaufmännische Fachkräfte und Verwaltungsfachkräfte","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"EFV Bundesbesoldung","source_jobs_previous":"Eidg. Zollverwaltung 2023"},
+  {"title":"Detailhandelsfachmann/-frau","slug":"detailhandelsfachmann","category":"verkauf-handel","pay":65000,"jobs":221300,"education":"EFZ Detailhandel","exposure":4,"beta":0.4366,"isco":"5221","exposure_rationale":"Moderate LLM-Exposition: Produktbeschreibungen und Kundenkorrespondenz können durch LLMs unterstützt werden. Der physische Verkauf, Regalarbeit und direkte Kundenberatung vor Ort sind nicht durch Sprachmodelle ersetzbar.","source_pay":"BFS LSE 2024 CH-ISCO 52","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4877","pay_previous":58000,"jobs_2023_base":220000,"lse_2024_monthly_median":4970,"lse_2024_annual_benchmark":65000,"lse_2024_group_code":"52","lse_2024_group_label":"52 Verkaufskräfte","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Einkäufer/-in","slug":"einkaeufer-in","category":"verkauf-handel","pay":103000,"jobs":28200,"education":"Bachelor BWL / Einkäufer mit FA","exposure":5,"beta":0.4894,"isco":"3323","exposure_rationale":"Mittlere LLM-Exposition: Lieferantenkorrespondenz, Vertragsanalyse und Marktrecherche profitieren von LLMs. Strategische Verhandlungen und Lieferantenbeziehungen bleiben menschlich.","source_pay":"BFS LSE 2024 CH-ISCO 33","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4877","pay_previous":95000,"jobs_2023_base":28000,"lse_2024_monthly_median":7900,"lse_2024_annual_benchmark":103000,"lse_2024_group_code":"33","lse_2024_group_label":"33 Betriebswirtschaftliche und kaufmännische Fachkräfte und Verwaltungsfachkräfte","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Filialleiter/-in (Detailhandel)","slug":"filialleiter","category":"verkauf-handel","pay":87000,"jobs":35200,"education":"EFZ Detailhandel + Berufserfahrung","exposure":5,"beta":0.4808,"isco":"1420","exposure_rationale":"Mittlere LLM-Exposition: Berichte, Personalplanung und Kommunikation können LLM-gestützt erfolgen. Personalführung, Kundenreklamationen und lokale Marktanpassungen bleiben menschlich.","source_pay":"BFS LSE 2024 CH-ISCO 14","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4877","pay_previous":72000,"jobs_2023_base":35000,"lse_2024_monthly_median":6723,"lse_2024_annual_benchmark":87000,"lse_2024_group_code":"14","lse_2024_group_label":"14 Führungskräfte in Hotels und Restaurants, im Handel und in der Erbringung sonstiger Dienstleistungen","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Key Account Manager/-in","slug":"key-account-manager","category":"marketing-sales","pay":124000,"jobs":18100,"education":"Bachelor / langjährige Erfahrung","exposure":5,"beta":0.5177,"isco":"2433","exposure_rationale":"Mittlere LLM-Exposition: Angebotstexte, Präsentationen und Kundenanalysen profitieren von LLMs. Die persönliche Vertrauensbeziehung und Verhandlungsführung im B2B-Bereich sind menschlich.","source_pay":"BFS LSE 2024 CH-ISCO 24","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4877","pay_previous":112000,"jobs_2023_base":18000,"lse_2024_monthly_median":9509,"lse_2024_annual_benchmark":124000,"lse_2024_group_code":"24","lse_2024_group_label":"24 Betriebswirte und vergleichbare Spezialisten","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023","mapping_note":"B2B-Vertrieb wird in v4 dem neuen Berufsfeld Marketing, Sales & Beratung zugeordnet."},
+  {"title":"Lastwagenfahrer/-in","slug":"lastwagenfahrer","category":"transport-logistik","pay":62000,"jobs":85500,"education":"Führerschein Kat. CE / Berufsausweis","exposure":3,"beta":0.2788,"isco":"8332","exposure_rationale":"Niedrige LLM-Exposition: Fahren ist eine physische Tätigkeit, die nicht durch Sprachmodelle beeinflusst wird. Frachtdokumentation kann minimal unterstützt werden. Wichtig: Das Eloundou-Mass erfasst keine Robotik oder autonomes Fahren - nur LLM-Exposition.","source_pay":"Spezialquelle beibehalten (GAV Transport); LSE 2024 CH-ISCO 83 Benchmark","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4888","pay_previous":62000,"jobs_2023_base":85000,"lse_2024_monthly_median":5951,"lse_2024_annual_benchmark":77000,"lse_2024_group_code":"83","lse_2024_group_label":"83 Fahrzeugführer und Bediener mobiler Anlagen","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"specialized_source_retained_lse_2024_benchmark_added","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"benchmark","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022 / GAV Transport","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Zugführer/-in (SBB)","slug":"zugfuehrer-sbb","category":"transport-logistik","pay":75000,"jobs":6500,"education":"Berufsprüfung Triebfahrzeugführer","exposure":3,"beta":0.2998,"isco":"8311","exposure_rationale":"Niedrige LLM-Exposition: Zugführung ist primär physisch und situativ. Fahrprotokollierung kann minimal von LLMs profitieren.","source_pay":"Spezialquelle beibehalten (SBB Gehaltstabelle); LSE 2024 CH-ISCO 83 Benchmark","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4888","pay_previous":75000,"jobs_2023_base":6500,"lse_2024_monthly_median":5951,"lse_2024_annual_benchmark":77000,"lse_2024_group_code":"83","lse_2024_group_label":"83 Fahrzeugführer und Bediener mobiler Anlagen","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"specialized_source_retained_lse_2024_benchmark_added","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"benchmark","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"SBB Gehaltstabelle","source_jobs_previous":"SBB 2023"},
+  {"title":"Pilot/-in","slug":"pilot-in","category":"transport-logistik","pay":185000,"jobs":3800,"education":"ATPL Lizenz / Ausbildung Airline","exposure":3,"beta":0.2955,"isco":"3153","exposure_rationale":"Niedrige LLM-Exposition: Fliegen erfordert räumliches Urteilsvermögen und situative Entscheide. Flugplanung und Briefings können durch LLMs unterstützt werden, machen aber nur einen kleinen Teil der Tätigkeit aus.","source_pay":"Spezialquelle beibehalten (Branchendaten Swiss/Edelweiss); LSE 2024 CH-ISCO 31 Benchmark","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4888","pay_previous":185000,"jobs_2023_base":3800,"lse_2024_monthly_median":7507,"lse_2024_annual_benchmark":98000,"lse_2024_group_code":"31","lse_2024_group_label":"31 Ingenieurtechnische und vergleichbare Fachkräfte","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"specialized_source_retained_lse_2024_benchmark_added","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"benchmark","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"Branchendaten Swiss/Edelweiss","source_jobs_previous":"Bazl/SAKE 2023"},
+  {"title":"Logistiker/-in","slug":"logistiker-in","category":"transport-logistik","pay":78000,"jobs":55300,"education":"EFZ Logistik","exposure":5,"beta":0.4964,"isco":"4321","exposure_rationale":"Mittlere LLM-Exposition: Bestandsdokumentation, Lieferscheine und Koordination können textbasiert durch LLMs unterstützt werden. Physische Lagerarbeit und Warenhandling sind nicht betroffen.","mapping_confidence":"mittel","mapping_note":"Dieser Wert ist besonders tätigkeitsabhängig: Disposition, Bestandsführung und Dokumentation ziehen den Score nach oben; Warenhandling, Kommissionierung und Staplerarbeit wären eher wie Lagerfacharbeit niedriger einzustufen.","source_pay":"BFS LSE 2024 CH-ISCO 43","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4888","pay_previous":68000,"jobs_2023_base":55000,"lse_2024_monthly_median":6035,"lse_2024_annual_benchmark":78000,"lse_2024_group_code":"43","lse_2024_group_label":"43 Bürokräfte im Finanz- und Rechnungswesen, in der Statistik und in der Materialwirtschaft","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Lagerfachmann/-frau","slug":"lagerfachmann","category":"transport-logistik","pay":72000,"jobs":42200,"education":"EFZ Logistik","exposure":2,"beta":0.2266,"isco":"9333","exposure_rationale":"Niedrige LLM-Exposition: Das Eloundou-Mass zeigt, dass Lagerarbeit primär physisch ist und kaum durch Sprachmodelle beeinflusst wird. Lagerautomation (Robotik) ist eine andere Technologie als LLMs.","source_pay":"BFS LSE 2024 CH-ISCO 93","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4888","pay_previous":58000,"jobs_2023_base":42000,"lse_2024_monthly_median":5541,"lse_2024_annual_benchmark":72000,"lse_2024_group_code":"93","lse_2024_group_label":"93 Hilfsarbeiter im Bergbau, im Bau, bei der Herstellung von Waren und im Transportwesen","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Koch / Köchin","slug":"koch-koechin","category":"gastronomie-tourismus","pay":62000,"jobs":58300,"education":"EFZ Koch","exposure":4,"beta":0.3865,"isco":"3434","exposure_rationale":"Moderate LLM-Exposition: Menüplanung, Rezeptentwicklung und Kalkulation können durch LLMs unterstützt werden. Das physische Kochen selbst ist nicht betroffen.","mapping_confidence":"mittel","mapping_note":"Der Score wirkt für Küchenarbeit eher hoch, erklärt sich aber über Planungs-, Rezept-, Kalkulations- und Dokumentationsanteile. In operativer Linienküche ohne Planungsverantwortung wäre die LLM-Exposition tiefer.","source_pay":"Spezialquelle beibehalten (L-GAV); LSE 2024 CH-ISCO 34 Benchmark","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4876","pay_previous":62000,"jobs_2023_base":58000,"lse_2024_monthly_median":7078,"lse_2024_annual_benchmark":92000,"lse_2024_group_code":"34","lse_2024_group_label":"34 Juristische, soziale, kulturelle und verwandte Fachkräfte","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"specialized_source_retained_lse_2024_benchmark_added","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"benchmark","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022 / L-GAV","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Restaurantfachmann/-frau","slug":"restaurantfachmann","category":"gastronomie-tourismus","pay":55000,"jobs":45300,"education":"EFZ Restauration","exposure":2,"beta":0.1567,"isco":"5131","exposure_rationale":"Niedrige LLM-Exposition: Service ist primär physisch und persönlich. Weinbeschreibungen und Menütexte können durch LLMs erstellt werden, bilden aber einen minimalen Anteil der Tätigkeit.","source_pay":"Spezialquelle beibehalten (L-GAV); LSE 2024 CH-ISCO 51 Benchmark","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4876","pay_previous":55000,"jobs_2023_base":45000,"lse_2024_monthly_median":4927,"lse_2024_annual_benchmark":64000,"lse_2024_group_code":"51","lse_2024_group_label":"51 Berufe im Bereich personenbezogener Dienstleistungen","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"specialized_source_retained_lse_2024_benchmark_added","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"benchmark","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022 / L-GAV","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Hotelfachmann/-frau","slug":"hotelfachmann","category":"gastronomie-tourismus","pay":60000,"jobs":35200,"education":"EFZ Hotelfachmann / HF Hotellerie","exposure":5,"beta":0.4699,"isco":"1411","exposure_rationale":"Mittlere LLM-Exposition: Gästekommunikation, Angebotserstellung und Eventplanung können durch LLMs unterstützt werden. Persönliche Gäste-Betreuung und physische Servicearbeit bleiben menschlich.","source_pay":"Spezialquelle beibehalten (L-GAV); LSE 2024 CH-ISCO 14 Benchmark","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4876","pay_previous":60000,"jobs_2023_base":35000,"lse_2024_monthly_median":6723,"lse_2024_annual_benchmark":87000,"lse_2024_group_code":"14","lse_2024_group_label":"14 Führungskräfte in Hotels und Restaurants, im Handel und in der Erbringung sonstiger Dienstleistungen","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"specialized_source_retained_lse_2024_benchmark_added","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"benchmark","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022 / L-GAV","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Reisebuero","slug":"reisebuero","category":"gastronomie-tourismus","pay":78000,"jobs":8000,"education":"EFZ Reisebuero / Tourismusausbildung","exposure":5,"beta":0.5189,"isco":"4221","exposure_rationale":"Mittlere LLM-Exposition: Reiseplanung, Angebotstexte und Kundenkorrespondenz profitieren von LLMs. Das Eloundou-Mass unterscheidet zwischen LLM-Exposition und allgemeiner Digitalisierung.","source_pay":"BFS LSE 2024 CH-ISCO 42","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4876","pay_previous":58000,"jobs_2023_base":8000,"lse_2024_monthly_median":5965,"lse_2024_annual_benchmark":78000,"lse_2024_group_code":"42","lse_2024_group_label":"42 Bürokräfte mit Kundenkontakt","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Landwirt/-in","slug":"landwirt-in","category":"landwirtschaft","pay":55000,"jobs":145800,"education":"EFZ Landwirt / Meisterprüfung","exposure":1,"beta":0.1397,"isco":"6111","exposure_rationale":"Sehr niedrige LLM-Exposition: Landwirtschaft ist primär physische Arbeit im Freien. Präzisionslandwirtschaft nutzt Sensoren und GPS, nicht Sprachmodelle.","source_pay":"Spezialquelle beibehalten (SBV); LSE 2024 CH-ISCO 61 Benchmark","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4948","pay_previous":55000,"jobs_2023_base":145000,"lse_2024_monthly_median":5622,"lse_2024_annual_benchmark":73000,"lse_2024_group_code":"61","lse_2024_group_label":"61 Fachkräfte in der Landwirtschaft","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"specialized_source_retained_lse_2024_benchmark_added","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"benchmark","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022 / SBV","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Forstwart/-in","slug":"forstwart-in","category":"landwirtschaft","pay":79000,"jobs":9100,"education":"EFZ Forstwart","exposure":2,"beta":0.1507,"isco":"6210","exposure_rationale":"Niedrige LLM-Exposition: Forstarbeit ist körperlich anspruchsvoll und in unstrukturierten Naturumgebungen. Textbasierte Aufgaben bilden nur einen minimalen Anteil.","source_pay":"BFS LSE 2024 CH-ISCO 62","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4948","pay_previous":66000,"jobs_2023_base":9000,"lse_2024_monthly_median":6109,"lse_2024_annual_benchmark":79000,"lse_2024_group_code":"62","lse_2024_group_label":"62 Fachkräfte in Forstwirtschaft, Fischerei und Jagd - Marktproduktion","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Winzer/-in","slug":"winzer-in","category":"landwirtschaft","pay":73000,"jobs":4200,"education":"EFZ Winzer / Bachelor Önologie","exposure":1,"beta":0.1404,"isco":"6112","exposure_rationale":"Sehr niedrige LLM-Exposition: Weinbau ist physische und sensorische Arbeit. LLMs können bei Weintexten und Marketing helfen, aber die Kerntätigkeit ist Handarbeit.","source_pay":"BFS LSE 2024 CH-ISCO 61","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4948","pay_previous":58000,"jobs_2023_base":4200,"lse_2024_monthly_median":5622,"lse_2024_annual_benchmark":73000,"lse_2024_group_code":"61","lse_2024_group_label":"61 Fachkräfte in der Landwirtschaft","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Gärtner/-in","slug":"gaertner-in","category":"landwirtschaft","pay":73000,"jobs":22100,"education":"EFZ Gärtner","exposure":1,"beta":0.1385,"isco":"6113","exposure_rationale":"Sehr niedrige LLM-Exposition: Gartenarbeit und Pflanzenpflege sind rein physisch. Gartenplanung und Kundenkommunikation können minimal unterstützt werden.","source_pay":"BFS LSE 2024 CH-ISCO 61","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4948","pay_previous":60000,"jobs_2023_base":22000,"lse_2024_monthly_median":5622,"lse_2024_annual_benchmark":73000,"lse_2024_group_code":"61","lse_2024_group_label":"61 Fachkräfte in der Landwirtschaft","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Tierarzt / Tierärztin","slug":"tierarzt","category":"landwirtschaft","pay":104000,"jobs":5500,"education":"Staatsexamen Veterinärmedizin","exposure":3,"beta":0.2703,"isco":"2250","exposure_rationale":"Niedrige LLM-Exposition: Veterinärmedizin erfordert physische Untersuchung und Behandlung. Fachliteraturrecherche und Befundberichte können durch LLMs unterstützt werden.","source_pay":"BFS LSE 2024 CH-ISCO 22","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4964","pay_previous":95000,"jobs_2023_base":5500,"lse_2024_monthly_median":8000,"lse_2024_annual_benchmark":104000,"lse_2024_group_code":"22","lse_2024_group_label":"22 Spezialisten in Gesundheitsberufen","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Grafiker/-in","slug":"grafiker-in","category":"kunst-medien","pay":113000,"jobs":18100,"education":"Eidg. Fähigkeitszeugnis Grafik / Bachelor","exposure":5,"beta":0.5125,"isco":"2166","exposure_rationale":"Mittlere LLM-Exposition: Konzepttexte, Kundenbriefings und Projektkommunikation profitieren von LLMs. Das Eloundou-Mass misst nur LLM-Textfähigkeiten, nicht Bildgenerierung (DALL-E, Midjourney). Die tatsächliche Disruption durch Bild-KI ist höher als dieser Score zeigt.","mapping_confidence":"scope","mapping_note":"Der Score ist methodisch korrekt fürs LLM-Mass, unterschätzt aber wahrscheinlich die reale KI-Betroffenheit, weil Bildgenerierung und visuelle Workflows nicht Teil des Eloundou-Scores sind.","source_pay":"BFS LSE 2024 CH-ISCO 21","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4897","pay_previous":72000,"jobs_2023_base":18000,"lse_2024_monthly_median":8730,"lse_2024_annual_benchmark":113000,"lse_2024_group_code":"21","lse_2024_group_label":"21 Naturwissenschaftler, Mathematiker und Ingenieure","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Journalist/-in","slug":"journalist-in","category":"kunst-medien","pay":119000,"jobs":12100,"education":"MAZ / Bachelor Journalismus","exposure":6,"beta":0.6471,"isco":"2642","exposure_rationale":"Hohe LLM-Exposition: Nachrichtenartikel, Recherche-Zusammenfassungen und Texterstellung sind Kernkompetenzen von LLMs. Investigativer Journalismus, Interviews und politische Analyse erfordern weiterhin menschliches Urteilsvermögen.","source_pay":"BFS LSE 2024 CH-ISCO 26","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4897","pay_previous":78000,"jobs_2023_base":12000,"lse_2024_monthly_median":9122,"lse_2024_annual_benchmark":119000,"lse_2024_group_code":"26","lse_2024_group_label":"26 Juristen, Sozialwissenschaftler und Kulturberufe","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"PR-Fachmann/-frau","slug":"pr-fachmann","category":"kunst-medien","pay":124000,"jobs":9100,"education":"Bachelor Kommunikation / PR-Fachausweis","exposure":6,"beta":0.5909,"isco":"2432","exposure_rationale":"Hohe LLM-Exposition: Pressemitteilungen, Social-Media-Content und Kommunikationsstrategien können durch LLMs generiert werden. Krisenmanagement und persönliche Medienbeziehungen bleiben menschlich.","source_pay":"BFS LSE 2024 CH-ISCO 24","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4897","pay_previous":88000,"jobs_2023_base":9000,"lse_2024_monthly_median":9509,"lse_2024_annual_benchmark":124000,"lse_2024_group_code":"24","lse_2024_group_label":"24 Betriebswirte und vergleichbare Spezialisten","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Fotograf/-in","slug":"fotograf-in","category":"kunst-medien","pay":92000,"jobs":6000,"education":"EFZ Fotograf / Bachelor","exposure":4,"beta":0.3854,"isco":"3431","exposure_rationale":"Moderate LLM-Exposition: Bildbeschreibungen, Portfolio-Texte und Kundenkorrespondenz können durch LLMs unterstützt werden. Die eigentliche Fotografie ist visuell-physisch. Wie bei Grafiker/-in: Bild-KI (nicht im Score erfasst) stellt eine zusätzliche Herausforderung dar.","source_pay":"BFS LSE 2024 CH-ISCO 34","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4897","pay_previous":65000,"jobs_2023_base":6000,"lse_2024_monthly_median":7078,"lse_2024_annual_benchmark":92000,"lse_2024_group_code":"34","lse_2024_group_label":"34 Juristische, soziale, kulturelle und verwandte Fachkräfte","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Cutter/-in (Video/Film)","slug":"cutter-in","category":"kunst-medien","pay":102000,"jobs":4500,"education":"Bachelor Film / EFZ Mediamatiker","exposure":5,"beta":0.4529,"isco":"3521","exposure_rationale":"Mittlere LLM-Exposition: Skriptanalyse, Untertitelung und Projektdokumentation profitieren von LLMs. Visuelles Storytelling und künstlerische Schnittentscheide bleiben menschlich.","source_pay":"BFS LSE 2024 CH-ISCO 35","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4897","pay_previous":72000,"jobs_2023_base":4500,"lse_2024_monthly_median":7859,"lse_2024_annual_benchmark":102000,"lse_2024_group_code":"35","lse_2024_group_label":"35 Informations- und Kommunikationstechniker","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Maschinenbauingenieur/-in","slug":"maschinenbauingenieur","category":"ingenieurwesen","pay":112000,"jobs":28200,"education":"Bachelor/Master Maschinenbau (ETH/EPFL)","exposure":5,"beta":0.4874,"isco":"2144","exposure_rationale":"Mittlere LLM-Exposition: Technische Berichte, Spezifikationen und Patentrecherche profitieren von LLMs. Die physikalische Auslegung und CAD-Arbeit sind nicht direkt durch Sprachmodelle betroffen.","source_pay":"Spezialquelle beibehalten (Swissem); LSE 2024 CH-ISCO 21 Benchmark","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4938","pay_previous":112000,"jobs_2023_base":28000,"lse_2024_monthly_median":8730,"lse_2024_annual_benchmark":113000,"lse_2024_group_code":"21","lse_2024_group_label":"21 Naturwissenschaftler, Mathematiker und Ingenieure","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"specialized_source_retained_lse_2024_benchmark_added","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"benchmark","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022 / Swissem","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Elektroingenieur/-in","slug":"elektroingenieur","category":"ingenieurwesen","pay":113000,"jobs":22100,"education":"Bachelor/Master Elektrotechnik","exposure":6,"beta":0.5625,"isco":"2151","exposure_rationale":"Mittlere bis hohe LLM-Exposition: Technische Dokumentation, Normenrecherche und Simulationsberichte können durch LLMs unterstützt werden. Schaltkreisdesign und Hardware-Tests sind nicht textbasiert.","source_pay":"BFS LSE 2024 CH-ISCO 21","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4938","pay_previous":115000,"jobs_2023_base":22000,"lse_2024_monthly_median":8730,"lse_2024_annual_benchmark":113000,"lse_2024_group_code":"21","lse_2024_group_label":"21 Naturwissenschaftler, Mathematiker und Ingenieure","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Bauingenieur/-in","slug":"bauingenieur-in","category":"ingenieurwesen","pay":113000,"jobs":20100,"education":"Bachelor/Master Bauingenieurwesen","exposure":5,"beta":0.4821,"isco":"2142","exposure_rationale":"Mittlere LLM-Exposition: Berichte, Ausschreibungen und Normenrecherche profitieren von LLMs. Statikberechnungen und Baustellenkoordination sind nicht durch Sprachmodelle ersetzbar.","source_pay":"BFS LSE 2024 CH-ISCO 21","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4938","pay_previous":105000,"jobs_2023_base":20000,"lse_2024_monthly_median":8730,"lse_2024_annual_benchmark":113000,"lse_2024_group_code":"21","lse_2024_group_label":"21 Naturwissenschaftler, Mathematiker und Ingenieure","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Chemieingenieur/-in","slug":"chemieingenieur","category":"ingenieurwesen","pay":113000,"jobs":12100,"education":"Master Chemieingenieurwesen (ETH)","exposure":5,"beta":0.4615,"isco":"2145","exposure_rationale":"Mittlere LLM-Exposition: Fachliteratur-Analyse, Patentrecherche und technische Berichte profitieren von LLMs. Laborarbeit und Prozessoptimierung sind physisch.","source_pay":"BFS LSE 2024 CH-ISCO 21","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4938","pay_previous":118000,"jobs_2023_base":12000,"lse_2024_monthly_median":8730,"lse_2024_annual_benchmark":113000,"lse_2024_group_code":"21","lse_2024_group_label":"21 Naturwissenschaftler, Mathematiker und Ingenieure","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Umweltingenieur/-in","slug":"umweltingenieur","category":"ingenieurwesen","pay":113000,"jobs":9100,"education":"Master Umweltingenieurwesen","exposure":6,"beta":0.5556,"isco":"2143","exposure_rationale":"Mittlere bis hohe LLM-Exposition: Umweltverträglichkeitsberichte, Regulierungsanalysen und Projektdokumentation sind stark textbasiert. Feldarbeit und Messungen bleiben physisch.","source_pay":"BFS LSE 2024 CH-ISCO 21","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4938","pay_previous":100000,"jobs_2023_base":9000,"lse_2024_monthly_median":8730,"lse_2024_annual_benchmark":113000,"lse_2024_group_code":"21","lse_2024_group_label":"21 Naturwissenschaftler, Mathematiker und Ingenieure","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Sozialarbeiter/-in","slug":"sozialarbeiter-in","category":"soziales","pay":119000,"jobs":55300,"education":"Bachelor Soziale Arbeit","exposure":3,"beta":0.2716,"isco":"2635","exposure_rationale":"Niedrige LLM-Exposition: Soziale Arbeit basiert auf menschlicher Beziehung und Vertrauen. Falldokumentation kann durch LLMs unterstützt werden, aber die Kerntätigkeit ist zwischenmenschlich.","source_pay":"BFS LSE 2024 CH-ISCO 26","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4968","pay_previous":75000,"jobs_2023_base":55000,"lse_2024_monthly_median":9122,"lse_2024_annual_benchmark":119000,"lse_2024_group_code":"26","lse_2024_group_label":"26 Juristen, Sozialwissenschaftler und Kulturberufe","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Psychologe/-in","slug":"psychologe-in","category":"soziales","pay":119000,"jobs":18100,"education":"Master Psychologie / PsyTh-Ausbildung","exposure":5,"beta":0.4716,"isco":"2634","exposure_rationale":"Mittlere LLM-Exposition: Diagnostische Berichte, Fachliteratur und Therapiedokumentation können durch LLMs unterstützt werden. Die therapeutische Beziehung und klinische Beurteilung sind zutiefst menschlich.","source_pay":"BFS LSE 2024 CH-ISCO 26","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4968","pay_previous":95000,"jobs_2023_base":18000,"lse_2024_monthly_median":9122,"lse_2024_annual_benchmark":119000,"lse_2024_group_code":"26","lse_2024_group_label":"26 Juristen, Sozialwissenschaftler und Kulturberufe","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Kinderbetreuung (Krippe/Hort)","slug":"kinderbetreuung","category":"soziales","pay":73000,"jobs":42200,"education":"EFZ FABE (Fachrichtung Kind)","exposure":1,"beta":0.1414,"isco":"5311","exposure_rationale":"Sehr niedrige LLM-Exposition: Kindliche Entwicklung, Bindungsbeziehungen und Fürsorge erfordern menschliche Wärme und physische Präsenz. Textbasierte Aufgaben sind minimal.","source_pay":"BFS LSE 2024 CH-ISCO 53","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4968","pay_previous":62000,"jobs_2023_base":42000,"lse_2024_monthly_median":5629,"lse_2024_annual_benchmark":73000,"lse_2024_group_code":"53","lse_2024_group_label":"53 Betreuungsberufe","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Schulischer Heilpädagoge/-in","slug":"heilpaedagoge","category":"soziales","pay":88000,"jobs":12100,"education":"Master Sonderpädagogik","exposure":3,"beta":0.3375,"isco":"2352","exposure_rationale":"Niedrige bis moderate LLM-Exposition: Förderpläne und Berichte können durch LLMs unterstützt werden. Die individuelle Förderbeziehung und therapeutische Arbeit mit Kindern sind menschlich.","source_pay":"Spezialquelle beibehalten (Kantone); LSE 2024 CH-ISCO 23 Benchmark","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4968","pay_previous":88000,"jobs_2023_base":12000,"lse_2024_monthly_median":9697,"lse_2024_annual_benchmark":126000,"lse_2024_group_code":"23","lse_2024_group_label":"23 Lehrkräfte","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"specialized_source_retained_lse_2024_benchmark_added","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"benchmark","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"Kantone (BFS 2022)","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Polizist/-in","slug":"polizist-in","category":"sicherheit","pay":85000,"jobs":18100,"education":"Ausbildung Polizei (kantonal)","exposure":3,"beta":0.31,"isco":"5412","exposure_rationale":"Niedrige LLM-Exposition: Polizeiarbeit erfordert physische Präsenz, Deeskalation und situative Entscheide. Rapporterstellung und Recherche können durch LLMs unterstützt werden.","source_pay":"Spezialquelle beibehalten (Kantonspolizeien 2023); LSE 2024 CH-ISCO 54 Benchmark","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4967","pay_previous":85000,"jobs_2023_base":18000,"lse_2024_monthly_median":6528,"lse_2024_annual_benchmark":85000,"lse_2024_group_code":"54","lse_2024_group_label":"54 Schutzkräfte und Sicherheitsbedienstete","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"specialized_source_retained_lse_2024_benchmark_added","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"benchmark","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"Kantonspolizeien 2023","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Feuerwehrmann/-frau","slug":"feuerwehrmann","category":"sicherheit","pay":75000,"jobs":7500,"education":"Berufsfeuerwehr-Ausbildung","exposure":3,"beta":0.2777,"isco":"5411","exposure_rationale":"Niedrige LLM-Exposition: Feuerwehreinsätze sind physisch fordernd und erfordern spontane Entscheide in Extremsituationen. Einsatzprotokolle und Ausbildungsmaterial können durch LLMs unterstützt werden.","source_pay":"Spezialquelle beibehalten (Berufsfeuerwehren CH 2023); LSE 2024 CH-ISCO 54 Benchmark","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4967","pay_previous":75000,"jobs_2023_base":7500,"lse_2024_monthly_median":6528,"lse_2024_annual_benchmark":85000,"lse_2024_group_code":"54","lse_2024_group_label":"54 Schutzkräfte und Sicherheitsbedienstete","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"specialized_source_retained_lse_2024_benchmark_added","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"benchmark","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"Berufsfeuerwehren CH 2023","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Sicherheitsbeauftragte/r","slug":"sicherheitsbeauftragter","category":"sicherheit","pay":85000,"jobs":22100,"education":"Berufsausweis Sicherheit","exposure":3,"beta":0.2881,"isco":"5414","exposure_rationale":"Niedrige LLM-Exposition: Physische Präsenz, Deeskalation und Interventionen sind die Kerntätigkeit. Sicherheitsberichte und Dokumentation können durch LLMs unterstützt werden.","source_pay":"BFS LSE 2024 CH-ISCO 54","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","url":"https://www.berufsberatung.ch/dyn/show/4967","pay_previous":68000,"jobs_2023_base":22000,"lse_2024_monthly_median":6528,"lse_2024_annual_benchmark":85000,"lse_2024_group_code":"54","lse_2024_group_label":"54 Schutzkräfte und Sicherheitsbedienstete","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000,"source_pay_previous":"BFS LSE 2022","source_jobs_previous":"BFS SAKE 2023"},
+  {"title":"Marketingfachmann/-frau","slug":"marketingfachmann-frau","category":"marketing-sales","pay":124000,"jobs":45300,"education":"Eidg. Fachausweis / eidg. Diplom Marketing","exposure":8,"beta":0.845,"isco":"2431","exposure_rationale":"Sehr hohe LLM-Exposition: Kampagnenkonzepte, Zielgruppenanalysen, Copy, Marktberichte, Newsletter, Briefings und Performance-Reports sind stark text- und datenbasiert. Markenurteil, Priorisierung, Budgetverantwortung und Abstimmung mit Stakeholdern bleiben menschlich.","url":"https://www.berufsberatung.ch/dyn/show/1900?id=3091","mapping_note":"V4-Ergaenzung aus Lueckenanalyse. ISCO 2431 Marketing and advertising professionals; Schweizer Label ueber eidg. FA/Diplom plausibilisiert.","mapping_confidence":"mittel","v4_gap_addition":true,"v4_gap_source":"Lueckenanalyse.rtf, v4","source_pay":"BFS LSE 2024 CH-ISCO 24","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","pay_previous":98000,"jobs_2023_base":45000,"source_pay_previous":"V4 Gap-Addendum","source_jobs_previous":"V4 Gap-Addendum","lse_2024_monthly_median":9509,"lse_2024_annual_benchmark":124000,"lse_2024_group_code":"24","lse_2024_group_label":"24 Betriebswirte und vergleichbare Spezialisten","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000},
+  {"title":"Übersetzer/-in & Dolmetscher/-in","slug":"uebersetzer-dolmetscher","category":"kunst-medien","pay":119000,"jobs":12100,"education":"Bachelor/Master Übersetzen / Dolmetschen","exposure":8,"beta":0.758,"isco":"2643","exposure_rationale":"Sehr hohe LLM-Exposition: Übersetzung, Revision, Terminologiearbeit, Zusammenfassung und mehrsprachige Varianten gehören zu den direkt erreichbaren Sprachaufgaben. Live-Dolmetschen, Fachhaftung, Kulturkontext und rechtlich/medizinisch sensible Einsätze begrenzen die Exposition.","url":"https://www.berufsberatung.ch/dyn/show/1900?id=2686","mapping_note":"V4-Ergaenzung aus Lueckenanalyse. ISCO 2643 Translators, interpreters and other linguists; in der mehrsprachigen Schweiz methodisch wichtige Luecke.","mapping_confidence":"mittel","v4_gap_addition":true,"v4_gap_source":"Lueckenanalyse.rtf, v4","source_pay":"BFS LSE 2024 CH-ISCO 26","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","pay_previous":119000,"jobs_2023_base":12000,"source_pay_previous":"V4 Gap-Addendum","source_jobs_previous":"V4 Gap-Addendum","lse_2024_monthly_median":9122,"lse_2024_annual_benchmark":119000,"lse_2024_group_code":"26","lse_2024_group_label":"26 Juristen, Sozialwissenschaftler und Kulturberufe","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000},
+  {"title":"Unternehmensberater/-in / Management Consultant","slug":"unternehmensberater-management-consultant","category":"marketing-sales","pay":124000,"jobs":25100,"education":"Bachelor/Master BWL / Consulting","exposure":7,"beta":0.68,"isco":"2421","exposure_rationale":"Hohe LLM-Exposition: Recherche, Benchmarks, Interview-Synthesen, Slides, Memos und Massnahmenpläne sind stark dokumenten- und textbasiert. Kundendynamik, politische Machbarkeit, Umsetzung und Verantwortung bleiben begrenzend.","url":"https://www.berufsberatung.ch/dyn/show/1900?id=3226","mapping_note":"V4-Ergaenzung aus Lueckenanalyse. ISCO 2421 Management and organization analysts; Schweizer Consulting-Tätigkeiten koennen je nach Senioritaet stark variieren.","mapping_confidence":"mittel","v4_gap_addition":true,"v4_gap_source":"Lueckenanalyse.rtf, v4","source_pay":"BFS LSE 2024 CH-ISCO 24","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","pay_previous":124000,"jobs_2023_base":25000,"source_pay_previous":"V4 Gap-Addendum","source_jobs_previous":"V4 Gap-Addendum","lse_2024_monthly_median":9509,"lse_2024_annual_benchmark":124000,"lse_2024_group_code":"24","lse_2024_group_label":"24 Betriebswirte und vergleichbare Spezialisten","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000},
+  {"title":"Controller/-in","slug":"controller-in","category":"finanzen-recht","pay":124000,"jobs":35200,"education":"Bachelor BWL / Controlling","exposure":6,"beta":0.6,"isco":"2421","exposure_rationale":"Hohe mittlere LLM-Exposition: Budgetkommentare, Abweichungsanalysen, Forecast-Narrative, Management-Reports und Ad-hoc-Auswertungen sind gut unterstützbar. Datenqualität, Steuerungsentscheide und betrieblicher Kontext begrenzen.","url":"https://www.berufsberatung.ch/dyn/show/1900?id=8100","mapping_note":"V4-Ergaenzung aus Lueckenanalyse. Separat von Buchhaltung, da Steuerungs-, Planungs- und Reportingaufgaben anders gewichtet sind.","mapping_confidence":"mittel","v4_gap_addition":true,"v4_gap_source":"Lueckenanalyse.rtf, v4","source_pay":"BFS LSE 2024 CH-ISCO 24","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","pay_previous":124000,"jobs_2023_base":35000,"source_pay_previous":"V4 Gap-Addendum","source_jobs_previous":"V4 Gap-Addendum","lse_2024_monthly_median":9509,"lse_2024_annual_benchmark":124000,"lse_2024_group_code":"24","lse_2024_group_label":"24 Betriebswirte und vergleichbare Spezialisten","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000},
+  {"title":"Wirtschaftsprüfer/-in (Auditor)","slug":"wirtschaftspruefer-auditor","category":"finanzen-recht","pay":124000,"jobs":12100,"education":"Dipl. Wirtschaftsprüfer/-in","exposure":6,"beta":0.5683,"isco":"2411","exposure_rationale":"Hohe mittlere LLM-Exposition: Prüfprogramme, Dossierzusammenfassungen, Stichprobenkommentare, Standardsrecherche und Berichtsentwürfe sind gut unterstützbar. Prüfungsurteil, Haftung, Unabhängigkeit und Regulierung begrenzen.","url":"https://www.berufsberatung.ch/dyn/show/1900?id=8417","mapping_note":"V4-Ergaenzung aus Lueckenanalyse. Separat von Steuerberatung und Buchhaltung, da Testierung und regulatorische Verantwortung den Cap stärker begrenzen.","mapping_confidence":"mittel","v4_gap_addition":true,"v4_gap_source":"Lueckenanalyse.rtf, v4","source_pay":"BFS LSE 2024 CH-ISCO 24","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","pay_previous":124000,"jobs_2023_base":12000,"source_pay_previous":"V4 Gap-Addendum","source_jobs_previous":"V4 Gap-Addendum","lse_2024_monthly_median":9509,"lse_2024_annual_benchmark":124000,"lse_2024_group_code":"24","lse_2024_group_label":"24 Betriebswirte und vergleichbare Spezialisten","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000},
+  {"title":"Notar/-in","slug":"notar-in","category":"finanzen-recht","pay":119000,"jobs":3500,"education":"Juristische Ausbildung / kantonale Zulassung","exposure":4,"beta":0.425,"isco":"2611","exposure_rationale":"Moderate LLM-Exposition: Vertragsentwürfe, Urkundenvorbereitung, Recherche und Mandantenkorrespondenz können unterstützt werden. Beurkundungspflicht, Identitätsprüfung, kantonale Regulierung, Haftung und Vertrauensfunktion begrenzen stark.","url":"https://www.berufsberatung.ch/dyn/show/1900?id=3307","mapping_note":"V4-Ergaenzung aus Lueckenanalyse. Schweizer Notariat ist kantonal reguliert und nur grob ueber ISCO 2611 juristische Berufe abbildbar.","mapping_confidence":"mittel","v4_gap_addition":true,"v4_gap_source":"Lueckenanalyse.rtf, v4","source_pay":"BFS LSE 2024 CH-ISCO 26","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","pay_previous":119000,"jobs_2023_base":3500,"source_pay_previous":"V4 Gap-Addendum","source_jobs_previous":"V4 Gap-Addendum","lse_2024_monthly_median":9122,"lse_2024_annual_benchmark":119000,"lse_2024_group_code":"26","lse_2024_group_label":"26 Juristen, Sozialwissenschaftler und Kulturberufe","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000},
+  {"title":"Aussendienstmitarbeiter/-in B2B / Verkaufsberater/-in","slug":"aussendienst-b2b-verkaufsberater","category":"marketing-sales","pay":103000,"jobs":45300,"education":"EFZ / FA Verkauf / Branchenwissen","exposure":5,"beta":0.48,"isco":"3322","exposure_rationale":"Mittlere LLM-Exposition: CRM-Pflege, Angebotsentwürfe, Follow-ups, Besuchsvorbereitung, Einwandbehandlung und Marktinformationen sind gut unterstützbar. Feldbesuche, Beziehungsaufbau, Verhandlung und Produkteinsatz vor Ort bleiben menschlich.","url":"https://www.berufsberatung.ch/dyn/show/1900?id=3127","mapping_note":"V4-Ergaenzung aus Lueckenanalyse. Ergänzt Key Account Management um breitere B2B-Aussendienst- und Verkaufsberaterrollen.","mapping_confidence":"mittel","v4_gap_addition":true,"v4_gap_source":"Lueckenanalyse.rtf, v4","source_pay":"BFS LSE 2024 CH-ISCO 33","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","pay_previous":103000,"jobs_2023_base":45000,"source_pay_previous":"V4 Gap-Addendum","source_jobs_previous":"V4 Gap-Addendum","lse_2024_monthly_median":7900,"lse_2024_annual_benchmark":103000,"lse_2024_group_code":"33","lse_2024_group_label":"33 Betriebswirtschaftliche und kaufmännische Fachkräfte und Verwaltungsfachkräfte","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000},
+  {"title":"Architekt/-in","slug":"architekt-in","category":"ingenieurwesen","pay":113000,"jobs":22100,"education":"Bachelor/Master Architektur","exposure":5,"beta":0.45,"isco":"2161","exposure_rationale":"Mittlere LLM-Exposition: Wettbewerbsbriefings, Baubeschriebe, Normenrecherche, Variantenkommunikation, Visualisierungsbriefings und Einreichungsunterlagen können unterstützt werden. Entwurf, Bauherrenarbeit, Verantwortung, Bewilligung und Baustellenkontext begrenzen.","url":"https://www.berufsberatung.ch/dyn/show/1900?id=3936","mapping_note":"V4-Ergaenzung aus Lueckenanalyse. Sichtbarer Schweizer Beruf, bisher trotz Ingenieur- und Bauberufen nicht separat abgebildet.","mapping_confidence":"mittel","v4_gap_addition":true,"v4_gap_source":"Lueckenanalyse.rtf, v4","source_pay":"BFS LSE 2024 CH-ISCO 21","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","pay_previous":113000,"jobs_2023_base":22000,"source_pay_previous":"V4 Gap-Addendum","source_jobs_previous":"V4 Gap-Addendum","lse_2024_monthly_median":8730,"lse_2024_annual_benchmark":113000,"lse_2024_group_code":"21","lse_2024_group_label":"21 Naturwissenschaftler, Mathematiker und Ingenieure","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000},
+  {"title":"Fachfrau/-mann Gesundheit (FaGe)","slug":"fachfrau-mann-gesundheit-fage","category":"gesundheit","pay":73000,"jobs":80500,"education":"EFZ Fachfrau/-mann Gesundheit","exposure":3,"beta":0.252,"isco":"5321","exposure_rationale":"Niedrige bis moderate LLM-Exposition: Pflegedokumentation, Übergaben, Checklisten und Informationsmaterial können unterstützt werden. Körperpflege, Beobachtung, Patientenkontakt, Teamarbeit und Verantwortung am Bett bleiben zentral.","url":"https://www.berufsberatung.ch/dyn/show/1900?id=3038","mapping_note":"V4-Ergaenzung aus Lueckenanalyse. Schweizer EFZ-Beruf mit grosser Beschäftigtenzahl; nicht identisch mit diplomierter Pflege.","mapping_confidence":"mittel","v4_gap_addition":true,"v4_gap_source":"Lueckenanalyse.rtf, v4","source_pay":"BFS LSE 2024 CH-ISCO 53","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","pay_previous":73000,"jobs_2023_base":80000,"source_pay_previous":"V4 Gap-Addendum","source_jobs_previous":"V4 Gap-Addendum","lse_2024_monthly_median":5629,"lse_2024_annual_benchmark":73000,"lse_2024_group_code":"53","lse_2024_group_label":"53 Betreuungsberufe","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000},
+  {"title":"Medizinische Praxisassistent/-in (MPA)","slug":"medizinische-praxisassistent-in-mpa","category":"gesundheit","pay":81000,"jobs":50300,"education":"EFZ Medizinische/-r Praxisassistent/-in","exposure":6,"beta":0.55,"isco":"3256","exposure_rationale":"Hohe mittlere LLM-Exposition: Terminierung, Telefonnotizen, Triage-Vorbereitung, Rechnungs- und Versicherungsfragen, Patienteninformationen und Dokumentation sind stark unterstützbar. Medizinische Verantwortung, Patientenkontakt und praktische Assistenz begrenzen.","url":"https://www.berufsberatung.ch/dyn/show/1900?id=2897","mapping_note":"V4-Ergaenzung aus Lueckenanalyse. Schweizer Praxisrolle mit hohem administrativem Anteil; Score wegen Patientenkontakt und klinischen Grenzen gedeckelt.","mapping_confidence":"mittel","v4_gap_addition":true,"v4_gap_source":"Lueckenanalyse.rtf, v4","source_pay":"BFS LSE 2024 CH-ISCO 32","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","pay_previous":81000,"jobs_2023_base":50000,"source_pay_previous":"V4 Gap-Addendum","source_jobs_previous":"V4 Gap-Addendum","lse_2024_monthly_median":6203,"lse_2024_annual_benchmark":81000,"lse_2024_group_code":"32","lse_2024_group_label":"32 Assistenzberufe im Gesundheitswesen","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000},
+  {"title":"Polymechaniker/-in","slug":"polymechaniker-in","category":"handwerk-bau","pay":83000,"jobs":45300,"education":"EFZ Polymechaniker/-in","exposure":2,"beta":0.18,"isco":"7223","exposure_rationale":"Niedrige LLM-Exposition: Fertigung, Montage, CNC-Rüsten, Messen und Instandhaltung sind stark physisch und maschinenbezogen. LLMs helfen bei Dokumentation, Arbeitsanweisungen, Normensuche und Fehlerberichten.","url":"https://www.berufsberatung.ch/dyn/show/1900?id=2948","mapping_note":"V4-Ergaenzung aus Lueckenanalyse. Schweizer Industrie- und Lehrberuf; LLM-Score bewusst niedrig, weil Robotik/CNC-Automation nicht Teil des LLM-Masses ist.","mapping_confidence":"mittel","v4_gap_addition":true,"v4_gap_source":"Lueckenanalyse.rtf, v4","source_pay":"BFS LSE 2024 CH-ISCO 72","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","pay_previous":81000,"jobs_2023_base":45000,"source_pay_previous":"V4 Gap-Addendum","source_jobs_previous":"V4 Gap-Addendum","lse_2024_monthly_median":6394,"lse_2024_annual_benchmark":83000,"lse_2024_group_code":"72","lse_2024_group_label":"72 Metallarbeiter, Mechaniker, Polymechaniker, Produktionsmechaniker und verwandte Berufe","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000},
+  {"title":"Coiffeur/Coiffeuse","slug":"coiffeur-coiffeuse","category":"personen-dienste","pay":64000,"jobs":25100,"education":"EFZ Coiffeur/-euse","exposure":2,"beta":0.15,"isco":"5141","exposure_rationale":"Niedrige LLM-Exposition: Beratung, Termintexte, Social Media und Produktkommunikation können unterstützt werden. Haarschnitt, Färben, Stilgefühl am Menschen und persönlicher Service bleiben physisch und sozial.","url":"https://www.berufsberatung.ch/dyn/show/1900?id=2863","mapping_note":"V4-Ergaenzung aus Lueckenanalyse. Sichtbare personenbezogene Dienstleistung mit niedriger LLM-Exposition.","mapping_confidence":"mittel","v4_gap_addition":true,"v4_gap_source":"Lueckenanalyse.rtf, v4","source_pay":"BFS LSE 2024 CH-ISCO 51","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","pay_previous":65000,"jobs_2023_base":25000,"source_pay_previous":"V4 Gap-Addendum","source_jobs_previous":"V4 Gap-Addendum","lse_2024_monthly_median":4927,"lse_2024_annual_benchmark":64000,"lse_2024_group_code":"51","lse_2024_group_label":"51 Berufe im Bereich personenbezogener Dienstleistungen","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000},
+  {"title":"Reinigungspersonal / Reinigungsfachfrau","slug":"reinigungspersonal-reinigungsfachfrau","category":"personen-dienste","pay":59000,"jobs":120700,"education":"EBA/EFZ Reinigung / Praxis","exposure":1,"beta":0.05,"isco":"9112","exposure_rationale":"Sehr niedrige LLM-Exposition: Die Kerntätigkeit ist körperliche Arbeit vor Ort. LLMs können Checklisten, Einsatzplanung, Rapportierung oder Kundenkommunikation unterstützen, verändern aber den Hauptanteil der Arbeit kaum.","url":"https://www.berufsberatung.ch/dyn/show/1900?id=3046","mapping_note":"V4-Ergaenzung aus Lueckenanalyse. Grosse Beschäftigtengruppe mit niedriger LLM-Exposition; wichtig fuer Arbeitsmarktgewichtung.","mapping_confidence":"mittel","v4_gap_addition":true,"v4_gap_source":"Lueckenanalyse.rtf, v4","source_pay":"BFS LSE 2024 CH-ISCO 91","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","pay_previous":57000,"jobs_2023_base":120000,"source_pay_previous":"V4 Gap-Addendum","source_jobs_previous":"V4 Gap-Addendum","lse_2024_monthly_median":4549,"lse_2024_annual_benchmark":59000,"lse_2024_group_code":"91","lse_2024_group_label":"91 Reinigungspersonal und Hilfskräfte","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000},
+  {"title":"Hebamme","slug":"hebamme","category":"gesundheit","pay":104000,"jobs":4500,"education":"Bachelor Hebamme","exposure":3,"beta":0.257,"isco":"2222","exposure_rationale":"Niedrige bis moderate LLM-Exposition: Dokumentation, Aufklärungsmaterial, Literatur und administrative Kommunikation können unterstützt werden. Geburtshilfe, klinische Verantwortung, Notfallsituationen, Körperarbeit und Beziehung begrenzen stark.","url":"https://www.berufsberatung.ch/dyn/show/1900?id=3024","mapping_note":"V4-Ergaenzung aus Lueckenanalyse. Separat von Pflege, da Aufgabenprofil und Verantwortung eigenständig sind.","mapping_confidence":"mittel","v4_gap_addition":true,"v4_gap_source":"Lueckenanalyse.rtf, v4","source_pay":"BFS LSE 2024 CH-ISCO 22","source_jobs":"BFS SAKE 2024 total-skaliert (2023 Berufsmix)","pay_previous":106000,"jobs_2023_base":4500,"source_pay_previous":"V4 Gap-Addendum","source_jobs_previous":"V4 Gap-Addendum","lse_2024_monthly_median":8000,"lse_2024_annual_benchmark":104000,"lse_2024_group_code":"22","lse_2024_group_label":"22 Spezialisten in Gesundheitsberufen","lse_2024_source_url":"https://www.pxweb-admin-a.bfs.admin.ch/pxweb/de/px-x-0304010000_205/-/px-x-0304010000_205.px/","pay_refresh_method":"lse_2024_ch_isco_group_median","pay_mapping_level":"CH-ISCO-19 Berufsgruppe, 2-Steller","pay_mapping_confidence":"mittel","jobs_refresh_method":"SAKE-2023-Berufsmix proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert","jobs_refresh_factor":1.005776,"sake_2023_total_employed":4848000,"sake_2024_total_employed":4876000}
+];
+
+let filteredData = [...DATA];
+let currentView = 'treemap';
+let selectedDetail = null;
+
+function applyFilters() {
+  const search = document.getElementById('search').value.toLowerCase();
+  const cat = document.getElementById('catFilter').value;
+  const mapping = document.getElementById('mappingFilter').value;
+  const sort = document.getElementById('sortBy').value;
+
+  filteredData = DATA.filter(d => {
+    if (cat && d.category !== cat) return false;
+    if (search && !d.title.toLowerCase().includes(search)) return false;
+    if (mapping === 'review' && mappingConfidence(d).key === 'hoch') return false;
+    if (mapping === 'high' && mappingConfidence(d).key !== 'hoch') return false;
+    return true;
+  });
+
+  const [field, dir] = sort.split('-');
+  filteredData.sort((a, b) => {
+    if (field === 'delta') {
+      const av = todayComponents(a).scoreDelta;
+      const bv = todayComponents(b).scoreDelta;
+      return bv - av || activeScore(b) - activeScore(a) || b.jobs - a.jobs;
+    }
+    const av = field === 'exposure' ? activeScore(a) : field === 'pay' ? a.pay : a.jobs;
+    const bv = field === 'exposure' ? activeScore(b) : field === 'pay' ? b.pay : b.jobs;
+    return dir === 'desc' ? bv - av : av - bv;
+  });
+
+  updateHighlights();
+  if (currentView === 'treemap') renderTreemap();
+  else renderList();
+}
+
+function setView(v) {
+  currentView = v;
+  document.getElementById('treemap-container').style.display = v === 'treemap' ? 'block' : 'none';
+  document.getElementById('list-view').style.display = v === 'list' ? 'block' : 'none';
+  document.getElementById('btn-treemap').classList.toggle('active', v === 'treemap');
+  document.getElementById('btn-list').classList.toggle('active', v === 'list');
+  if (v === 'treemap') renderTreemap();
+  else renderList();
+}
+
+function showDetail(d) {
+  selectedDetail = d;
+  const panel = document.getElementById('detail-panel');
+  const content = document.getElementById('detail-content');
+  const score = activeScore(d);
+  const beta = activeBeta(d);
+  const today = todayComponents(d);
+  const color = scoreColor(score);
+  const bg = scoreBg(score);
+  const riskLabel = score >= 8 ? 'Sehr hohe Exposition' : score >= 5 ? 'Mittlere Exposition' : 'Niedrige Exposition';
+  const exactScore = beta * 10;
+  const confidence = mappingConfidence(d);
+  const heuristicConfidence = todayConfidence(d);
+  const todayDeltaLabel = today.scoreDelta > 0 ? `+${today.scoreDelta}` : today.scoreDelta.toString();
+  const adoptionDeltaLabel = today.adoptionScoreDelta > 0 ? `+${today.adoptionScoreDelta}` : today.adoptionScoreDelta.toString();
+  const todayParts = today.parts
+    .map(part => `${part.label} ${fmtSigned(part.value)}`)
+    .join(' · ');
+  const todayExplanation = activeFramework === "today"
+    ? `<div class="dp-note"><strong>2026-Heuristik:</strong> ${today.note}. Technische Modifikatoren: ${todayParts}. Adoption wird nicht in den Hauptscore gemischt, sondern separat als ${fmtSigned(today.adoptionDelta)} Beta-Punkte gezeigt. ${today.capApplied ? `Der technische Rohwert ${today.rawBeta.toFixed(2)} wird durch die berufliche Obergrenze bei ${today.cap}/10 begrenzt.` : `Der technische Rohwert ${today.rawBeta.toFixed(2)} bleibt unter der beruflichen Obergrenze von ${today.cap}/10.`}</div>
+       <div class="dp-note"><strong>Unsicherheit:</strong> ${heuristicConfidence.label}. Gründe: ${heuristicConfidence.reasons.join(", ")}.</div>`
+    : "";
+  const payRefreshNote = d.lse_2024_monthly_median
+    ? `<div class="dp-note"><strong>Lohnmapping 2024:</strong> CH-ISCO ${d.lse_2024_group_code} (${d.lse_2024_group_label}) aus BFS LSE 2024. Median: CHF ${d.lse_2024_monthly_median.toLocaleString("de-CH")} brutto pro Monat; Jahresbenchmark: ${fmtPay(d.lse_2024_annual_benchmark)}. ${d.pay_refresh_method === "specialized_source_retained_lse_2024_benchmark_added" ? "Für den angezeigten Dashboard-Lohn wurde die bisherige Spezial-, Kantons-, Vertrags- oder Arbeitgeberquelle beibehalten, weil der 2-Steller-Gruppenlohn zu grob wäre." : "Der angezeigte Dashboard-Lohn nutzt diesen LSE-2024-Gruppenbenchmark."}</div>`
+    : "";
+  const jobsRefreshNote = d.jobs_2023_base
+    ? `<div class="dp-note"><strong>Beschäftigte 2024:</strong> Ausgangspunkt ist die bisherige SAKE-2023-Berufszeile oder ein v4-Ergänzungswert (~${fmtJobs(d.jobs_2023_base)}). Sie wurde mit dem offiziellen SAKE-Gesamtwachstum von 4.848 Mio. auf 4.876 Mio. Erwerbstätige skaliert (Faktor ${d.jobs_refresh_factor}). Das ist eine transparente Kalibrierung, keine neue Dashboard-SAKE-Mikrotabelle.</div>`
+    : "";
+
+  content.innerHTML = `
+    <h2>${d.title}</h2>
+    <div class="dp-cat">${CATS[d.category] || d.category}</div>
+    <div class="dp-badges">
+      <span class="confidence-badge ${confidence.className}">${confidence.label}</span>
+      <span class="confidence-badge confidence-scope">Exposition, nicht Jobverlust</span>
+      ${activeFramework === "today" ? `<span class="confidence-badge confidence-today">Technisch 2026</span><span class="confidence-badge ${heuristicConfidence.className}">${heuristicConfidence.label}</span>` : ''}
+    </div>
+    <div class="dp-score-badge" style="background:${bg};color:${color}">
+      ${score}/10
+      <span class="dp-score-label">${riskLabel} · ${activeFrameworkLabel()}</span>
+    </div>
+    <div class="score-comparison">
+      <div class="score-mini">
+        <div class="score-mini-label">Science 2024</div>
+        <div class="score-mini-value">${d.exposure}<span>/10</span></div>
+        <div style="font-size:0.72rem;color:#7c7c9a;margin-top:0.25rem">β ${d.beta.toFixed(2)}</div>
+      </div>
+      <div class="score-mini">
+        <div class="score-mini-label">Technisch 2026</div>
+        <div class="score-mini-value">${today.score}<span>/10 ${today.scoreDelta ? `(${todayDeltaLabel})` : ''}</span></div>
+        <div class="score-mini-note">technisch · β ${today.beta.toFixed(2)}</div>
+      </div>
+      <div class="score-mini">
+        <div class="score-mini-label">+ Adoption</div>
+        <div class="score-mini-value">${today.adoptionScore}<span>/10 ${today.adoptionScoreDelta ? `(${adoptionDeltaLabel})` : ''}</span></div>
+        <div class="score-mini-note">separat · β ${today.adoptionBeta.toFixed(2)}</div>
+      </div>
+    </div>
+    <div class="dp-beta">
+      ${activeFramework === "today"
+        ? `Technische 2026-Beta: <strong>${beta.toFixed(2)}</strong> (Original ${d.beta.toFixed(2)} + technische Modifikatoren, ohne Adoption)<br>
+          <span style="font-size:0.75rem">Technischer Score: ${exactScore.toFixed(1)} &rarr; gerundet ${score}/10 · adoptionsgewichtet ${today.adoptionScore}/10 · Science-Basis ${d.exposure}/10</span>`
+        : `Eloundou Beta-Score: <strong>${d.beta.toFixed(2)}</strong> (Skala 0.0-1.0)<br>
+          <span style="font-size:0.75rem">Dashboard-Score: ${exactScore.toFixed(1)} &rarr; gerundet ${score}/10</span>`}<br>
+      <span style="font-size:0.75rem">ISCO-08: ${d.isco} | Quelle: Eloundou et al. (2024), <em>Science</em></span>
+    </div>
+    <div class="dp-grid">
+      <div class="dp-stat">
+        <div class="dp-stat-label">Medianlohn</div>
+        <div class="dp-stat-value">${fmtPay(d.pay)}</div>
+        <div style="font-size:0.7rem;color:#5a5a7a;margin-top:2px">${d.source_pay}</div>
+      </div>
+      <div class="dp-stat">
+        <div class="dp-stat-label">Beschäftigte CH</div>
+        <div class="dp-stat-value">~${fmtJobs(d.jobs)}</div>
+        <div style="font-size:0.7rem;color:#5a5a7a;margin-top:2px">${d.source_jobs}</div>
+      </div>
+      <div class="dp-stat">
+        <div class="dp-stat-label">Ausbildung</div>
+        <div class="dp-stat-value" style="font-size:0.85rem">${d.education}</div>
+      </div>
+      <div class="dp-stat">
+        <div class="dp-stat-label">Arbeitsmarkt-Ausblick</div>
+        <div class="dp-stat-value" style="font-size:0.8rem;color:#9090b0">nicht neu bewertet</div>
+        <div style="font-size:0.7rem;color:#5a5a7a;margin-top:2px">kein Bestandteil des Scores</div>
+      </div>
+    </div>
+    <p style="font-size:0.8rem;color:#7c7c9a;margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.06em">${activeFrameworkLabel()} - Einordnung</p>
+    <p class="dp-rationale">${d.exposure_rationale}</p>
+    ${payRefreshNote}
+    ${jobsRefreshNote}
+    ${todayExplanation}
+    ${d.mapping_note ? `<div class="dp-note"><strong>Plausibilisierung:</strong> ${d.mapping_note}</div>` : ''}
+    ${d.url ? `<a class="dp-link" href="${d.url}" target="_blank" rel="noopener noreferrer">-> Berufsprofil auf berufsberatung.ch</a>` : ''}
+    <div class="dp-sources">
+      Daten: ${d.source_pay} (Lohn) - ${d.source_jobs} (Beschäftigte) - LLM-Exposition: Eloundou et al. (2024), Science 384, 1306-1308. Arbeitsmarkt-Outlook wird nicht mehr als Evidenz angezeigt, bis eine Schweizer Quelle und Methodik sauber dokumentiert ist.
+    </div>
+  `;
+  panel.style.display = 'block';
+}
+
+function closePanel() {
+  selectedDetail = null;
+  document.getElementById('detail-panel').style.display = 'none';
+}
+
+// Treemap
+function renderTreemap() {
+  const container = document.getElementById('treemap-container');
+  const containerStyle = getComputedStyle(container);
+  const horizontalPadding = parseFloat(containerStyle.paddingLeft) + parseFloat(containerStyle.paddingRight);
+  const W = Math.max(280, container.clientWidth - horizontalPadding);
+  const H = Math.max(500, Math.min(W * 0.65, 700));
+
+  const svg = d3.select('#treemap').attr('width', W).attr('height', H);
+  svg.selectAll('*').remove();
+
+  const root = d3.hierarchy({ children: filteredData })
+    .sum(d => d.jobs || 1)
+    .sort((a, b) => b.value - a.value);
+
+  d3.treemap().size([W, H]).padding(2).round(true)(root);
+
+  const tooltip = document.getElementById('tooltip');
+
+  const cell = svg.selectAll('g')
+    .data(root.leaves())
+    .join('g')
+    .attr('transform', d => `translate(${d.x0},${d.y0})`)
+    .attr('class', 'cell')
+    .on('click', (e, d) => showDetail(d.data))
+    .on('mousemove', (e, d) => {
+      tooltip.style.display = 'block';
+      tooltip.style.left = (e.clientX + 14) + 'px';
+      tooltip.style.top = (e.clientY - 10) + 'px';
+      const score = activeScore(d.data);
+      const beta = activeBeta(d.data);
+      const today = todayComponents(d.data);
+      const col = scoreColor(score);
+      tooltip.innerHTML = `
+        <div class="tt-title">${d.data.title}</div>
+        <span class="tt-score" style="background:${scoreBg(score)};color:${col}">${activeScoreTitle()} ${score}/10</span>
+        <div style="font-size:0.72rem;color:#a78bfa;margin-bottom:0.3rem">Beta: ${beta.toFixed(2)}${activeFramework === "today" ? ` · Science ${d.data.exposure}/10 -> technisch ${today.score}/10 · Adoption ${today.adoptionScore}/10` : ''}</div>
+        <div class="tt-row"><span>Lohn</span><span class="tt-val">${fmtPay(d.data.pay)}/Jahr</span></div>
+        <div class="tt-row"><span>Beschäftigte</span><span class="tt-val">~${fmtJobs(d.data.jobs)}</span></div>
+        <div class="tt-row"><span>Ausbildung</span><span class="tt-val">${d.data.education}</span></div>
+        <div style="font-size:0.72rem;color:#5a5a7a;margin-top:0.4rem">Klicken für Details</div>
+      `;
+    })
+    .on('mouseleave', () => { tooltip.style.display = 'none'; });
+
+  cell.append('rect')
+    .attr('width', d => Math.max(0, d.x1 - d.x0))
+    .attr('height', d => Math.max(0, d.y1 - d.y0))
+    .attr('fill', d => scoreColor(activeScore(d.data)))
+    .attr('fill-opacity', 0.25)
+    .attr('rx', 4)
+    .attr('stroke', d => scoreColor(activeScore(d.data)))
+    .attr('stroke-opacity', 0.4)
+    .attr('stroke-width', 1);
+
+  cell.each(function(d) {
+    const w = d.x1 - d.x0;
+    const h = d.y1 - d.y0;
+    const g = d3.select(this);
+    if (w > 60 && h > 40) {
+      g.append('text')
+        .attr('class', 'cell-label')
+        .attr('x', 6).attr('y', 16)
+        .attr('width', w - 12)
+        .text(d.data.title.length > 22 && w < 120 ? d.data.title.substring(0, 18) + '\u2026' : d.data.title);
+    }
+    if (w > 50 && h > 55) {
+      g.append('text')
+        .attr('class', 'cell-score')
+        .attr('x', 6).attr('y', 34)
+        .attr('fill', scoreColor(activeScore(d.data)))
+        .text(activeScore(d.data) + '/10');
+    }
+  });
+}
+
+// List view
+function renderList() {
+  const container = document.getElementById('list-view');
+  container.innerHTML = filteredData.map(d => {
+    const confidence = mappingConfidence(d);
+    const score = activeScore(d);
+    const beta = activeBeta(d);
+    const today = todayComponents(d);
+    const confidenceBadge = confidence.key === 'hoch'
+      ? ''
+      : `<span class="confidence-badge ${confidence.className} list-confidence">${confidence.label}</span>`;
+    const deltaBadge = activeFramework === "today" && today.scoreDelta
+      ? `<span class="confidence-badge confidence-today list-confidence">${today.scoreDelta > 0 ? '+' : ''}${today.scoreDelta} vs. 2024</span>`
+      : '';
+    const subline = activeFramework === "today"
+      ? `${CATS[d.category] || d.category} | Technische Beta: ${beta.toFixed(2)} | Adoption: ${today.adoptionScore}/10 | Science: ${d.exposure}/10`
+      : `${CATS[d.category] || d.category} | Beta: ${d.beta.toFixed(2)}`;
+
+    return `
+      <div class="list-item" onclick='showDetail(${JSON.stringify(d).replace(/'/g, "&#39;")})'>
+        <div class="list-score" style="background:${scoreBg(score)};color:${scoreColor(score)}">${score}</div>
+        <div class="list-main">
+          <div class="list-title">${d.title}${confidenceBadge}${deltaBadge}</div>
+          <div class="list-cat">${subline}</div>
+        </div>
+        <div class="list-pay">${fmtPay(d.pay)}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Init
+updateHighlights();
+applyFilters();
+window.addEventListener('resize', () => { if (currentView === 'treemap') renderTreemap(); });
+</script>
+</body>
+</html>

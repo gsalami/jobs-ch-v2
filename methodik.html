@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Methodik - KI-Exposition Schweiz</title>
+  <meta name="description" content="Methodik und Prüfpfad des KI-Expositionsdashboards: Eloundou-Beta, SOC/ISCO-Mapping, Schweizer Berufszuordnung, BFS-2024-Refresh und 2026-Heuristik.">
+  <link rel="icon" href="assets/brand/einstain-icon.png" type="image/png">
+  <link rel="stylesheet" href="assets/app.css">
+  
+</head>
+<body>
+
+<header class="page-header">
+  <nav class="site-nav" aria-label="Hauptnavigation">
+    <a class="site-logo" href="index.html" aria-label="einstAIn">
+      <img src="assets/brand/einstain-logo-white.svg" alt="einstAIn">
+    </a>
+    <div class="nav-links" aria-label="Seitennavigation">
+      <a href="index.html">Intro</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="methodik.html" class="active" aria-current="page">Methodik</a>
+      <a href="quellen.html">Quellen</a>
+    </div>
+  </nav>
+  <div class="page-title-block" id="top">
+    <div class="eyebrow">Methodik & Prüfpfad</div>
+    <h1>Methodik</h1>
+    <p class="subtitle">Diese Seite erklärt, wie aus der Science-2024-Basis ein Schweizer Dashboard-Score entsteht und wie die Heute-2026-Sicht darauf als getrenntes Szenario aufsetzt.</p>
+    <div class="hero-actions">
+      <a class="cta-btn" href="dashboard.html">Dashboard öffnen</a>
+      <a class="cta-btn" href="quellen.html">Quellen prüfen</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="content-section">
+    <h2>Über diese Daten</h2>
+    <p class="section-lead">Der Prüfpfad trennt die peer-reviewte Science-2024-Basis von der heuristischen Heute-2026-Erweiterung. Die Originalwerte bleiben erhalten; 2026-Modifikatoren, Caps, Adoption und Unsicherheit werden separat dokumentiert.</p>
+    <figure class="method-image-card">
+        <img src="assets/score-method-infographic.png" alt="Infografik: So entsteht der KI-Expositionsscore von Eloundou-Beta-Score über SOC-Bereinigung, ISCO-08-Mapping und BFS-Daten zum Dashboard-Score">
+        <figcaption class="method-image-caption">
+          Visueller Überblick über die Science-2024-Basis: Eloundou-Beta-Score, SOC/ISCO-Mapping, Schweizer Berufszuordnung mit BFS-basierten Lohnbenchmarks und Beschäftigtenschätzungen sowie Rundung auf den Dashboard-Score. Die Heute-2026-Sicht ergänzt diesen Basiswert anschliessend um technische Modifikatoren, Caps, separate Adoption und Sensitivität; die Schweizer Lohnbenchmarks und Beschäftigtenschätzungen werden über den BFS-2024-Refresh separat dokumentiert.
+        </figcaption>
+      </figure>
+    
+      <div class="method-visual" aria-label="Methodik-Illustration: Von Eloundou-Daten über Mapping, Schweizer Daten und 2026-Heuristik zum Dashboard-Score">
+        <h3>Prüfpfad: Science-2024-Basis</h3>
+        <div class="pipeline">
+          <div class="pipeline-step">
+            <div class="pipeline-num">1</div>
+            <div class="pipeline-title">Eloundou-Score</div>
+            <div class="pipeline-text">Aus `occ_level.csv`: O*NET-SOC Berufscode, Titel und `dv_rating_beta` als LLM-Exposition.</div>
+            <span class="pipeline-formula">β = E1 + 0.5 x E2</span>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-num">2</div>
+            <div class="pipeline-title">SOC vereinheitlichen</div>
+            <div class="pipeline-text">O*NET-SOC ist feiner als SOC-2010. Der Suffix wird entfernt; mehrere Einträge werden gemittelt.</div>
+            <span class="pipeline-formula">15-1252.00 -> 15-1252</span>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-num">3</div>
+            <div class="pipeline-title">ISCO mappen</div>
+            <div class="pipeline-text">Über den BLS-Crosswalk wird SOC-2010 auf ISCO-08 übersetzt; Mehrfachtreffer werden gemittelt.</div>
+            <span class="pipeline-formula">SOC -> ISCO-08</span>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-num">4</div>
+            <div class="pipeline-title">CH-Beruf zuordnen</div>
+            <div class="pipeline-text">ISCO-08 wird auf die Schweizer Berufsbezeichnung im Dashboard gelegt; LSE 2024 liefert Lohnbenchmarks nach CH-ISCO-Berufsgruppen, das SAKE-2024-Gesamtwachstum kalibriert die bestehenden Beschäftigtenschätzungen.</div>
+            <span class="pipeline-formula">ISCO + LSE/SAKE -> Beruf</span>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-num">5</div>
+            <div class="pipeline-title">Dashboard-Score</div>
+            <div class="pipeline-text">Der Beta-Wert bleibt in den Details sichtbar; für die Treemap wird auf 0-10 gerundet.</div>
+            <span class="pipeline-formula">Score = round(β x 10)</span>
+          </div>
+        </div>
+    
+        <div class="method-example">
+          <div class="example-card">
+            <h4>Beispiel: Softwareentwickler/-in</h4>
+            <div class="calc-row">
+              <span class="calc-chip">Software Developers β 0.87</span>
+              <span>+</span>
+              <span class="calc-chip">Computer Programmers β 0.95</span>
+              <span>-> Mittelwert</span>
+              <span class="calc-chip">β 0.9092</span>
+              <span>-></span>
+              <span class="calc-chip">round(9.092)</span>
+              <span>=</span>
+              <span class="calc-chip">9/10</span>
+            </div>
+            <div class="source-links">
+              <a class="source-pill" href="https://github.com/openai/GPTs-are-GPTs/blob/main/data/occ_level.csv" target="_blank" rel="noopener noreferrer">OpenAI `occ_level.csv`</a>
+              <a class="source-pill" href="Files%20for%20CC/eloundou_mapping_results.json">Lokales Mapping-JSON</a>
+              <a class="source-pill" href="scripts/validate-dashboard.js">Validierungsscript</a>
+            </div>
+          </div>
+          <div class="audit-card">
+            <h4>So kann man es prüfen</h4>
+            <ul>
+              <li>Beta-Wert im Detailpanel mit `Files for CC/eloundou_mapping_results.json` vergleichen.</li>
+              <li>Score kontrollieren: `round(beta x 10)` muss dem angezeigten Wert entsprechen.</li>
+              <li>Bei Berufen mit Badge "Plausibilisierung" die konkrete Tätigkeitsmischung prüfen.</li>
+            </ul>
+          </div>
+        </div>
+    
+        <div class="today-audit-row" aria-label="Zusatzprüfpfad für die Heute-2026-Sicht">
+          <div class="today-audit-step">
+            <b>Heute 2026 startet beim Original</b>
+            <span>beta_2024 bleibt unverändert. Die neue Sicht ersetzt die Science-Basis nicht, sondern rechnet ein transparentes Szenario darauf.</span>
+          </div>
+          <div class="today-audit-step">
+            <b>Technische Modifikatoren</b>
+            <span>Long Context, Agenten/Tools, Multimodalität und wenige Berufs-Overrides werden nur addiert, wenn keine Doppelzählung plausibel ist.</span>
+          </div>
+          <div class="today-audit-step">
+            <b>Caps und Schweizer Limiten</b>
+            <span>Regulierung, Haftung, physische Präsenz, Beziehungsarbeit und Schweizer Tätigkeitsmischung begrenzen den technischen Score.</span>
+          </div>
+          <div class="today-audit-step">
+            <b>Adoption separat prüfen</b>
+            <span>Die Hauptansicht zeigt technische Exposition. Adoption, Sensitivität, Confidence und Mini-Reannotation liegen als eigene Prüfdaten daneben.</span>
+          </div>
+        </div>
+      </div>
+    <div class="disclaimer">
+        <strong>Wichtiger Hinweis:</strong> Das Eloundou-Mass erfasst spezifisch die <strong>LLM-Exposition</strong> - also inwieweit Sprachmodelle berufliche Aufgaben beschleunigen, vorbereiten, prüfen, dokumentieren oder teilweise ausführen können. Es misst <em>nicht</em> allgemeine Automatisierung durch Robotik, autonomes Fahren oder physische KI-Systeme. Deshalb haben z.B. Lastwagenfahrer/-innen oder Lagerfachleute niedrige Scores, obwohl sie durch andere Technologien potenziell betroffen sind. Ein hoher Score bedeutet vor allem: hoher möglicher Produktivitätshebel durch LLMs, nicht automatisch Ersetzbarkeit oder Jobverlust. Die Berufs-, Beschäftigungs- und Lohndaten bleiben Näherungswerte: Löhne sind LSE-2024-Gruppenbenchmarks oder Spezialquellen, Beschäftigte sind SAKE-2024-total-kalibrierte Berufszeilen.
+      </div>
+    <div class="source-card" style="margin-top:1.25rem;border-color:rgba(245,158,11,0.28);">
+        <h3 style="color:#f59e0b;">So sollte man die Scores lesen</h3>
+        <ul style="margin:0.5rem 0 0 1.2rem;color:#b0b0cc;line-height:1.8;font-size:0.85rem;">
+          <li><strong>Mapping ist eine Annäherung:</strong> Schweizer Berufsbezeichnungen decken nicht immer exakt einen O*NET- oder ISCO-Beruf ab. Je nach konkretem Tätigkeitsprofil kann die Exposition höher oder tiefer liegen.</li>
+          <li><strong>Schweizer Tätigkeitsmischung kann abweichen:</strong> Gerade in IT, Finanzwesen, Gesundheit und regulierten Bereichen können Schweizer Rollen mehr Architektur, Review, Haftung, Interaktion oder höherqualifizierte Aufgaben enthalten als die US-O*NET-Basis.</li>
+          <li><strong>Die 0-10-Skala ist gerundet:</strong> Der präzisere β-Wert wird in den Details angezeigt. Rundungen nahe einer Kategoriengrenze sollten nicht überinterpretiert werden.</li>
+          <li><strong>"Sehr hoch" ist bewusst streng:</strong> Nur Score 8-10 wird rot markiert. Berufe mit 6 oder 7 sind trotzdem deutlich LLM-exponiert und verdienen Aufmerksamkeit.</li>
+          <li><strong>Heikle Zuordnungen sind kommentiert:</strong> Bei Berufen wie Logistik, Recht oder Koch/Köchin hängt der Score stark davon ab, ob administrative, analytische oder physische Aufgaben dominieren.</li>
+          <li><strong>Outlook ist nicht Teil des Scores:</strong> Frühere Wachstumsannahmen werden im Detailpanel nicht mehr als Evidenz angezeigt, solange keine Schweizer Quelle und Methodik sauber dokumentiert ist.</li>
+        </ul>
+      </div>
+    <!-- Methodik-Erklärung -->
+      <div style="margin-top:2rem;">
+        <h2 style="font-size:1.1rem;color:#9090b0;margin-bottom:1.25rem;display:flex;align-items:center;gap:0.5rem;">Wie wird der Score berechnet?</h2>
+    
+        <div class="source-card" style="margin-bottom:1.25rem;">
+          <h3>Das Eloundou-Verfahren in 4 Schritten</h3>
+          <p style="margin-bottom:0.8rem;">
+            Eloundou et al. haben für ihren <em>Science</em>-Artikel (2024) <strong>jeden der 923 US-Berufe</strong> aus der O*NET-Datenbank in seine Einzelaufgaben zerlegt.
+            Für jede Aufgabe wurde dann bewertet, ob ein LLM die Erledigungszeit um mindestens 50% reduzieren kann:
+          </p>
+          <div style="background:#0c0c14;border-radius:8px;padding:1rem;margin-bottom:0.8rem;font-family:monospace;font-size:0.85rem;color:#a78bfa;line-height:1.8;">
+            <strong style="color:#e8e8f0;">E1</strong> = Anteil der Aufgaben, die ein LLM <em>direkt</em> erledigen kann<br>
+            <strong style="color:#e8e8f0;">E2</strong> = Anteil der Aufgaben, die ein LLM <em>mit zusätzlichen Tools</em> erledigen kann<br>
+            <br>
+            <strong style="color:#f59e0b;font-size:1rem;">β = E1 + 0.5 × E2</strong><br>
+            <span style="color:#7c7c9a;font-size:0.78rem;">(Skala: 0.0 = keine Exposition, 1.0 = maximale Exposition)</span>
+          </div>
+          <p style="margin-bottom:0.8rem;">
+            Der Faktor <strong>0.5 bei E2</strong> berücksichtigt, dass Tool-unterstützte Automatisierung weniger unmittelbar ist als direkte LLM-Nutzung.
+            Beide Bewertungen (E1 und E2) wurden sowohl von <strong>menschlichen Experten</strong> als auch von <strong>GPT-4</strong> durchgeführt.
+            Dieses Dashboard verwendet die GPT-4-Bewertung (<code>dv_rating_beta</code>), da sie konsistenter ist und von der KOF-Studie der ETH Zürich als Referenzmass verwendet wird.
+          </p>
+          <p>
+            Für die Schweizer Version haben wir die US-Berufscodes (O*NET-SOC) über den offiziellen BLS-Crosswalk auf den internationalen Standard ISCO-08 gemappt
+            und dann den 86 Schweizer Berufen im Dashboard zugeordnet. Der β-Score (0.0-1.0) wurde mit × 10 auf die Dashboard-Skala (0-10) transformiert.
+          </p>
+        </div>
+    
+        <div class="source-card" style="margin-bottom:1.25rem;border-color:rgba(167,139,250,0.3);">
+          <h3 style="color:#a78bfa;">Warum hat nur Softwareentwicklung einen Score von 9/10?</h3>
+          <p style="margin-bottom:0.8rem;">
+            Softwareentwickler/-innen haben mit einem <strong>β-Score von 0.91</strong> die höchste LLM-Exposition aller 86 Berufe in diesem Dashboard.
+            Das liegt daran, dass fast alle Teilaufgaben der Softwareentwicklung textbasiert sind und direkt von LLMs profitieren:
+          </p>
+          <ul style="margin:0 0 0.8rem 1.2rem;color:#b0b0cc;line-height:1.8;font-size:0.85rem;">
+            <li><strong>Code schreiben</strong> - LLMs generieren funktionierenden Code in allen gängigen Sprachen</li>
+            <li><strong>Debugging</strong> - Fehlermeldungen analysieren und Fixes vorschlagen</li>
+            <li><strong>Code Review</strong> - Qualität, Sicherheitslücken und Best Practices prüfen</li>
+            <li><strong>Dokumentation</strong> - Docstrings, READMEs, technische Spezifikationen</li>
+            <li><strong>Tests</strong> - Unit-Tests und Testfälle generieren</li>
+            <li><strong>Refactoring</strong> - Code umstrukturieren und optimieren</li>
+          </ul>
+          <p style="margin-bottom:0.8rem;">
+            Eloundou et al. aggregieren die Scores von <strong>"Software Developers" (β=0.87)</strong> und <strong>"Computer Programmers" (β=0.95)</strong>,
+            was den kombinierten Score von 0.91 ergibt.
+          </p>
+          <p>
+            <strong>Wichtig:</strong> Ein hoher Expositions-Score bedeutet nicht "der Beruf verschwindet".
+            Er bedeutet: <em>LLMs können die Produktivität in diesem Beruf massiv steigern.</em>
+            Softwareentwickler/-innen, die LLMs effektiv einsetzen, sind heute produktiver denn je - die Nachfrage nach Software steigt weiter.
+            Der Score misst Exposition, nicht Ersetzbarkeit.
+          </p>
+        </div>
+    
+        <div class="source-card" style="margin-bottom:1.25rem;">
+          <h3>Was der Score nicht misst</h3>
+          <p>
+            Das Eloundou-Mass erfasst <strong>ausschliesslich LLM-Exposition</strong> - also ob Sprachmodelle wie GPT-4 oder Claude die Aufgaben beschleunigen können.
+            Es misst <em>nicht</em>:
+          </p>
+          <ul style="margin:0.5rem 0 0 1.2rem;color:#b0b0cc;line-height:1.8;font-size:0.85rem;">
+            <li><strong>Robotik & physische Automation</strong> - Deshalb haben Lagerfachleute (2/10) und Lastwagenfahrer/-innen (3/10) niedrige Scores, obwohl sie durch andere Technologien betroffen sein könnten</li>
+            <li><strong>Bild-KI</strong> (DALL-E, Midjourney) - Deshalb haben Grafiker/-innen nur 5/10, obwohl Bild-KI den Beruf stark verändert</li>
+            <li><strong>Autonomes Fahren</strong> - Nicht im Scope von Sprachmodellen</li>
+            <li><strong>Regulierung, gesellschaftliche Akzeptanz, Adoptionsgeschwindigkeit</strong></li>
+          </ul>
+        </div>
+    
+        </div>
+  </section>
+</main>
+
+<section class="contact-band" aria-label="Kontakt">
+  <div class="contact-card">
+    <div class="contact-logo">
+      <a href="https://angestellte.ch/" target="_blank" rel="noopener noreferrer" aria-label="Angestellte Schweiz">
+        <img class="logo-angestellte" src="assets/brand/angestellte-schweiz-logo-white.svg" alt="Angestellte Schweiz">
+      </a>
+    </div>
+    <div class="contact-line"><a href="mailto:alexander.belaz@angestellte.ch">alexander.belaz@angestellte.ch</a></div>
+    <div class="contact-line">Martin-Disteli-Strasse 9<br>Postfach 234 4601 Olten</div>
+  </div>
+  <div class="contact-card">
+    <div class="contact-logo">
+      <a href="https://www.kuble.com/en" target="_blank" rel="noopener noreferrer" aria-label="Kuble - House of Intelligence">
+        <img class="logo-kuble" src="assets/brand/kuble-house-logo-white.svg" alt="Kuble - House of Intelligence">
+      </a>
+    </div>
+    <div class="contact-line"><a href="mailto:roger.oberholzer@kuble.com">roger.oberholzer@kuble.com</a></div>
+    <div class="contact-line">Räffelstrasse 26<br>8045 Zürich</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <a class="site-logo site-logo--footer" href="#top" aria-label="einstAIn">
+      <img src="assets/brand/einstain-logo-white.svg" alt="einstAIn">
+    </a>
+    <div class="footer-center">© 2026. All rights reserved.</div>
+    <div class="footer-initiators">
+      <span>Initiatoren</span>
+      <a class="footer-brand footer-brand--angestellte" href="https://angestellte.ch/" target="_blank" rel="noopener noreferrer" aria-label="Angestellte Schweiz">
+        <img src="assets/brand/angestellte-schweiz-logo-white.svg" alt="Angestellte Schweiz">
+      </a>
+      <a class="footer-brand footer-brand--kuble" href="https://www.kuble.com/en" target="_blank" rel="noopener noreferrer" aria-label="Kuble - House of Intelligence">
+        <img src="assets/brand/kuble-house-logo-white.svg" alt="Kuble - House of Intelligence">
+      </a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
