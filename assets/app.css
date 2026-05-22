@@ -288,7 +288,7 @@
     .subpage-bar {
       position: relative;
       z-index: 40;
-      padding: 1.15rem clamp(1.25rem, 5vw, 4.5rem);
+      padding: 2.25rem clamp(1.25rem, 5vw, 4.5rem) 1.15rem;
       background: rgba(0, 0, 0, 0.94);
       border-bottom: 1px solid #07162f;
       backdrop-filter: blur(14px);
@@ -1898,6 +1898,10 @@
 }
 
 @media (max-width: 640px) {
+  .subpage-bar {
+    padding: 1.2rem 1rem 1rem;
+  }
+
   .site-nav {
     align-items: flex-start;
     flex-direction: column;
