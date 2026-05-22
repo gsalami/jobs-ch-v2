@@ -43,6 +43,11 @@
       <strong>Heute 2026</strong>
       <span>Technische Heuristik mit Caps, Sensitivität und separater Adoption</span>
     </button>
+    <button class="framework-btn" id="btn-framework-compare" type="button" onclick="setFramework('compare')">
+      <span class="framework-label">Direktvergleich</span>
+      <strong>Split Screen</strong>
+      <span>Mit der Maus Heute 2026 über der Science-2024-Basis aufdecken</span>
+    </button>
   </div>
 </div>
 
@@ -321,6 +326,10 @@ const FRAMEWORK_COPY = {
   today: {
     title: "Aktive Ansicht: Heute 2026",
     desc: "Szenariobasierte 2026-Heuristik auf derselben Berufsbasis. Sie zeigt technische Exposition im Basisszenario; Adoption, Sensitivität und Unsicherheit bleiben getrennt dokumentiert."
+  },
+  compare: {
+    title: "Aktive Ansicht: Split Screen",
+    desc: "Direkter Vorher/Nachher-Vergleich: Science 2024 liegt als Basis darunter, Heute 2026 wird mit der Maus darüber aufgedeckt."
   }
 };
 
@@ -390,6 +399,7 @@ const TODAY_CONFIDENCE = {
 };
 
 let activeFramework = "science";
+let splitReveal = 52;
 
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
@@ -456,30 +466,41 @@ function todayConfidence(d) {
 }
 
 function activeScore(d) {
-  return activeFramework === "today" ? todayComponents(d).score : d.exposure;
+  return activeFramework === "today" || activeFramework === "compare" ? todayComponents(d).score : d.exposure;
 }
 
 function activeBeta(d) {
-  return activeFramework === "today" ? todayComponents(d).beta : d.beta;
+  return activeFramework === "today" || activeFramework === "compare" ? todayComponents(d).beta : d.beta;
 }
 
 function activeFrameworkLabel() {
-  return activeFramework === "today" ? "Technisch 2026" : "Science 2024";
+  if (activeFramework === "today") return "Technisch 2026";
+  if (activeFramework === "compare") return "Split Screen";
+  return "Science 2024";
 }
 
 function activeScoreTitle() {
-  return activeFramework === "today" ? "Technisch" : "LLM";
+  if (activeFramework === "today") return "Technisch";
+  if (activeFramework === "compare") return "Heute";
+  return "LLM";
 }
 
 function setFramework(name) {
-  activeFramework = name === "today" ? "today" : "science";
+  activeFramework = name === "today" ? "today" : name === "compare" ? "compare" : "science";
   document.getElementById("btn-framework-science").classList.toggle("active", activeFramework === "science");
   document.getElementById("btn-framework-today").classList.toggle("active", activeFramework === "today");
-  document.getElementById("framework-kicker").textContent = activeFramework === "today" ? "Aktiv: Heute 2026" : "Aktiv: Science 2024";
+  document.getElementById("btn-framework-compare").classList.toggle("active", activeFramework === "compare");
+  document.getElementById("framework-kicker").textContent = activeFramework === "today" ? "Aktiv: Heute 2026" : activeFramework === "compare" ? "Aktiv: Split Screen" : "Aktiv: Science 2024";
   document.getElementById("framework-title").textContent = FRAMEWORK_COPY[activeFramework].title;
   document.getElementById("framework-desc").textContent = FRAMEWORK_COPY[activeFramework].desc;
-  document.getElementById("legend-label").textContent = `${activeFrameworkLabel()} Score:`;
+  document.getElementById("legend-label").textContent = activeFramework === "compare" ? "Split Screen:" : `${activeFrameworkLabel()} Score:`;
   document.getElementById("today-method-panel").hidden = activeFramework !== "today";
+  document.getElementById("btn-list").disabled = activeFramework === "compare";
+  if (activeFramework === "compare") currentView = "treemap";
+  document.getElementById('treemap-container').style.display = currentView === 'treemap' ? 'block' : 'none';
+  document.getElementById('list-view').style.display = currentView === 'list' ? 'block' : 'none';
+  document.getElementById('btn-treemap').classList.toggle('active', currentView === 'treemap');
+  document.getElementById('btn-list').classList.toggle('active', currentView === 'list');
   applyFilters();
   if (selectedDetail) showDetail(selectedDetail);
 }
@@ -628,6 +649,7 @@ function applyFilters() {
 }
 
 function setView(v) {
+  if (activeFramework === "compare" && v === "list") return;
   currentView = v;
   document.getElementById('treemap-container').style.display = v === 'treemap' ? 'block' : 'none';
   document.getElementById('list-view').style.display = v === 'list' ? 'block' : 'none';
@@ -655,7 +677,7 @@ function showDetail(d) {
   const todayParts = today.parts
     .map(part => `${part.label} ${fmtSigned(part.value)}`)
     .join(' · ');
-  const todayExplanation = activeFramework === "today"
+  const todayExplanation = activeFramework === "today" || activeFramework === "compare"
     ? `<div class="dp-note"><strong>2026-Heuristik:</strong> ${today.note}. Technische Modifikatoren: ${todayParts}. Adoption wird nicht in den Hauptscore gemischt, sondern separat als ${fmtSigned(today.adoptionDelta)} Beta-Punkte gezeigt. ${today.capApplied ? `Der technische Rohwert ${today.rawBeta.toFixed(2)} wird durch die berufliche Obergrenze bei ${today.cap}/10 begrenzt.` : `Der technische Rohwert ${today.rawBeta.toFixed(2)} bleibt unter der beruflichen Obergrenze von ${today.cap}/10.`}</div>
        <div class="dp-note"><strong>Unsicherheit:</strong> ${heuristicConfidence.label}. Gründe: ${heuristicConfidence.reasons.join(", ")}.</div>`
     : "";
@@ -672,7 +694,7 @@ function showDetail(d) {
     <div class="dp-badges">
       <span class="confidence-badge ${confidence.className}">${confidence.label}</span>
       <span class="confidence-badge confidence-scope">Exposition, nicht Jobverlust</span>
-      ${activeFramework === "today" ? `<span class="confidence-badge confidence-today">Technisch 2026</span><span class="confidence-badge ${heuristicConfidence.className}">${heuristicConfidence.label}</span>` : ''}
+      ${activeFramework === "today" || activeFramework === "compare" ? `<span class="confidence-badge confidence-today">Technisch 2026</span><span class="confidence-badge ${heuristicConfidence.className}">${heuristicConfidence.label}</span>` : ''}
     </div>
     <div class="dp-score-badge" style="background:${bg};color:${color}">
       ${score}/10
@@ -696,7 +718,7 @@ function showDetail(d) {
       </div>
     </div>
     <div class="dp-beta">
-      ${activeFramework === "today"
+      ${activeFramework === "today" || activeFramework === "compare"
         ? `Technische 2026-Beta: <strong>${beta.toFixed(2)}</strong> (Original ${d.beta.toFixed(2)} + technische Modifikatoren, ohne Adoption)<br>
           <span style="font-size:0.75rem">Technischer Score: ${exactScore.toFixed(1)} &rarr; gerundet ${score}/10 · adoptionsgewichtet ${today.adoptionScore}/10 · Science-Basis ${d.exposure}/10</span>`
         : `Eloundou Beta-Score: <strong>${d.beta.toFixed(2)}</strong> (Skala 0.0-1.0)<br>
@@ -744,57 +766,75 @@ function closePanel() {
 }
 
 // Treemap
-function renderTreemap() {
-  const container = document.getElementById('treemap-container');
-  const containerStyle = getComputedStyle(container);
-  const horizontalPadding = parseFloat(containerStyle.paddingLeft) + parseFloat(containerStyle.paddingRight);
-  const W = Math.max(280, container.clientWidth - horizontalPadding);
-  const H = Math.max(500, Math.min(W * 0.65, 700));
+function scoreForMode(d, mode) {
+  return mode === "today" ? todayComponents(d).score : d.exposure;
+}
 
-  const svg = d3.select('#treemap').attr('width', W).attr('height', H);
-  svg.selectAll('*').remove();
+function betaForMode(d, mode) {
+  return mode === "today" ? todayComponents(d).beta : d.beta;
+}
 
+function showTreemapTooltip(e, d, mode) {
+  const tooltip = document.getElementById('tooltip');
+  tooltip.style.display = 'block';
+  tooltip.style.left = (e.clientX + 14) + 'px';
+  tooltip.style.top = (e.clientY - 10) + 'px';
+  const today = todayComponents(d);
+
+  if (mode === "compare") {
+    const delta = today.scoreDelta > 0 ? `+${today.scoreDelta}` : today.scoreDelta;
+    tooltip.innerHTML = `
+      <div class="tt-title">${d.title}</div>
+      <span class="tt-score" style="background:${scoreBg(today.score)};color:${scoreColor(today.score)}">Heute ${today.score}/10</span>
+      <span class="tt-score" style="background:${scoreBg(d.exposure)};color:${scoreColor(d.exposure)};margin-left:0.35rem">Science ${d.exposure}/10</span>
+      <div style="font-size:0.72rem;color:#a78bfa;margin-bottom:0.3rem">Delta: ${delta} · β ${d.beta.toFixed(2)} -> ${today.beta.toFixed(2)} · Adoption ${today.adoptionScore}/10</div>
+      <div class="tt-row"><span>Lohn</span><span class="tt-val">${fmtPay(d.pay)}/Jahr</span></div>
+      <div class="tt-row"><span>Beschäftigte</span><span class="tt-val">~${fmtJobs(d.jobs)}</span></div>
+      <div style="font-size:0.72rem;color:#5a5a7a;margin-top:0.4rem">Klicken für Details</div>
+    `;
+    return;
+  }
+
+  const score = scoreForMode(d, mode);
+  const beta = betaForMode(d, mode);
+  const col = scoreColor(score);
+  tooltip.innerHTML = `
+    <div class="tt-title">${d.title}</div>
+    <span class="tt-score" style="background:${scoreBg(score)};color:${col}">${mode === "today" ? "Technisch" : "LLM"} ${score}/10</span>
+    <div style="font-size:0.72rem;color:#a78bfa;margin-bottom:0.3rem">Beta: ${beta.toFixed(2)}${mode === "today" ? ` · Science ${d.exposure}/10 -> technisch ${today.score}/10 · Adoption ${today.adoptionScore}/10` : ''}</div>
+    <div class="tt-row"><span>Lohn</span><span class="tt-val">${fmtPay(d.pay)}/Jahr</span></div>
+    <div class="tt-row"><span>Beschäftigte</span><span class="tt-val">~${fmtJobs(d.jobs)}</span></div>
+    <div class="tt-row"><span>Ausbildung</span><span class="tt-val">${d.education}</span></div>
+    <div style="font-size:0.72rem;color:#5a5a7a;margin-top:0.4rem">Klicken für Details</div>
+  `;
+}
+
+function createTreemapLayout(W, H) {
   const root = d3.hierarchy({ children: filteredData })
     .sum(d => d.jobs || 1)
     .sort((a, b) => b.value - a.value);
 
   d3.treemap().size([W, H]).padding(2).round(true)(root);
+  return root.leaves();
+}
 
-  const tooltip = document.getElementById('tooltip');
-
+function drawTreemapCells(svg, leaves, scoreMode, tooltipMode = scoreMode) {
   const cell = svg.selectAll('g')
-    .data(root.leaves())
+    .data(leaves)
     .join('g')
     .attr('transform', d => `translate(${d.x0},${d.y0})`)
     .attr('class', 'cell')
     .on('click', (e, d) => showDetail(d.data))
-    .on('mousemove', (e, d) => {
-      tooltip.style.display = 'block';
-      tooltip.style.left = (e.clientX + 14) + 'px';
-      tooltip.style.top = (e.clientY - 10) + 'px';
-      const score = activeScore(d.data);
-      const beta = activeBeta(d.data);
-      const today = todayComponents(d.data);
-      const col = scoreColor(score);
-      tooltip.innerHTML = `
-        <div class="tt-title">${d.data.title}</div>
-        <span class="tt-score" style="background:${scoreBg(score)};color:${col}">${activeScoreTitle()} ${score}/10</span>
-        <div style="font-size:0.72rem;color:#a78bfa;margin-bottom:0.3rem">Beta: ${beta.toFixed(2)}${activeFramework === "today" ? ` · Science ${d.data.exposure}/10 -> technisch ${today.score}/10 · Adoption ${today.adoptionScore}/10` : ''}</div>
-        <div class="tt-row"><span>Lohn</span><span class="tt-val">${fmtPay(d.data.pay)}/Jahr</span></div>
-        <div class="tt-row"><span>Beschäftigte</span><span class="tt-val">~${fmtJobs(d.data.jobs)}</span></div>
-        <div class="tt-row"><span>Ausbildung</span><span class="tt-val">${d.data.education}</span></div>
-        <div style="font-size:0.72rem;color:#5a5a7a;margin-top:0.4rem">Klicken für Details</div>
-      `;
-    })
-    .on('mouseleave', () => { tooltip.style.display = 'none'; });
+    .on('mousemove', (e, d) => showTreemapTooltip(e, d.data, tooltipMode))
+    .on('mouseleave', () => { document.getElementById('tooltip').style.display = 'none'; });
 
   cell.append('rect')
     .attr('width', d => Math.max(0, d.x1 - d.x0))
     .attr('height', d => Math.max(0, d.y1 - d.y0))
-    .attr('fill', d => scoreColor(activeScore(d.data)))
+    .attr('fill', d => scoreColor(scoreForMode(d.data, scoreMode)))
     .attr('fill-opacity', 0.25)
     .attr('rx', 4)
-    .attr('stroke', d => scoreColor(activeScore(d.data)))
+    .attr('stroke', d => scoreColor(scoreForMode(d.data, scoreMode)))
     .attr('stroke-opacity', 0.4)
     .attr('stroke-width', 1);
 
@@ -802,6 +842,7 @@ function renderTreemap() {
     const w = d.x1 - d.x0;
     const h = d.y1 - d.y0;
     const g = d3.select(this);
+    const score = scoreForMode(d.data, scoreMode);
     if (w > 60 && h > 40) {
       g.append('text')
         .attr('class', 'cell-label')
@@ -813,10 +854,91 @@ function renderTreemap() {
       g.append('text')
         .attr('class', 'cell-score')
         .attr('x', 6).attr('y', 34)
-        .attr('fill', scoreColor(activeScore(d.data)))
-        .text(activeScore(d.data) + '/10');
+        .attr('fill', scoreColor(score))
+        .text(score + '/10');
     }
   });
+}
+
+function updateSplitReveal(percent) {
+  splitReveal = clamp(percent, 3, 97);
+  const overlay = document.getElementById('split-overlay');
+  const handle = document.getElementById('split-handle');
+  if (!overlay || !handle) return;
+  overlay.style.width = splitReveal + '%';
+  handle.style.left = splitReveal + '%';
+  handle.setAttribute('aria-valuenow', Math.round(splitReveal));
+}
+
+function renderSplitCompare(W, H) {
+  const container = document.getElementById('treemap-container');
+  container.innerHTML = `
+    <div class="split-compare">
+      <div class="split-head">
+        <span class="split-tag split-tag--today">Heute 2026 aufgedeckt</span>
+        <span class="split-tag split-tag--science">Science 2024 Basis</span>
+      </div>
+      <div class="split-stage" id="split-stage" style="width:${W}px;height:${H}px">
+        <svg id="split-science" width="${W}" height="${H}" aria-label="Science 2024 Treemap"></svg>
+        <div class="split-overlay" id="split-overlay">
+          <svg id="split-today" width="${W}" height="${H}" aria-label="Heute 2026 Treemap"></svg>
+        </div>
+        <div class="split-handle" id="split-handle" role="slider" tabindex="0" aria-label="Aufdeckung zwischen Science 2024 und Heute 2026" aria-valuemin="3" aria-valuemax="97" aria-valuenow="${Math.round(splitReveal)}"><span aria-hidden="true"></span></div>
+      </div>
+      <p class="split-caption">Maus bewegen oder den Handle ziehen: links wird die Heute-2026-Sicht sichtbar, rechts bleibt die Science-2024-Basis. Die Flächen bleiben gleich, nur Score-Farbe und Score-Zahl wechseln.</p>
+    </div>
+  `;
+
+  const leaves = createTreemapLayout(W, H);
+  drawTreemapCells(d3.select('#split-science'), leaves, 'science', 'compare');
+  drawTreemapCells(d3.select('#split-today'), leaves, 'today', 'compare');
+  updateSplitReveal(splitReveal);
+
+  const stage = document.getElementById('split-stage');
+  const handle = document.getElementById('split-handle');
+  let dragging = false;
+  const updateFromEvent = (event) => {
+    const rect = stage.getBoundingClientRect();
+    updateSplitReveal(((event.clientX - rect.left) / rect.width) * 100);
+  };
+
+  stage.addEventListener('pointerdown', (event) => {
+    dragging = true;
+    stage.setPointerCapture(event.pointerId);
+    updateFromEvent(event);
+  });
+  stage.addEventListener('pointermove', (event) => {
+    if (dragging || event.pointerType === 'mouse') updateFromEvent(event);
+  });
+  stage.addEventListener('pointerup', (event) => {
+    dragging = false;
+    if (stage.hasPointerCapture(event.pointerId)) stage.releasePointerCapture(event.pointerId);
+  });
+  stage.addEventListener('pointercancel', () => { dragging = false; });
+  handle.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') updateSplitReveal(splitReveal - 4);
+    if (event.key === 'ArrowRight') updateSplitReveal(splitReveal + 4);
+  });
+}
+
+function renderTreemap() {
+  const container = document.getElementById('treemap-container');
+  const containerStyle = getComputedStyle(container);
+  const horizontalPadding = parseFloat(containerStyle.paddingLeft) + parseFloat(containerStyle.paddingRight);
+  const W = Math.max(280, container.clientWidth - horizontalPadding);
+  const H = Math.max(500, Math.min(W * 0.65, 700));
+
+  if (activeFramework === "compare") {
+    renderSplitCompare(W, H);
+    return;
+  }
+
+  container.innerHTML = '<svg id="treemap"></svg>';
+
+  const svg = d3.select('#treemap').attr('width', W).attr('height', H);
+  svg.selectAll('*').remove();
+
+  drawTreemapCells(svg, createTreemapLayout(W, H), activeFramework === "today" ? "today" : "science");
 }
 
 // List view

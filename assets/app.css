@@ -401,12 +401,13 @@
 
     .framework-buttons {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 0.5rem;
       min-width: 300px;
     }
 
     .framework-toggle--primary .framework-buttons {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 0.85rem;
       min-width: 0;
     }
@@ -485,6 +486,14 @@
       color: #f59e0b;
     }
 
+    #btn-framework-compare {
+      border-color: rgba(167,139,250,0.34);
+    }
+
+    #btn-framework-compare .framework-label {
+      color: #c4b5fd;
+    }
+
     .framework-btn:hover {
       border-color: rgba(47,99,255,0.7);
     }
@@ -500,6 +509,131 @@
       background: rgba(255,91,0,0.14);
       border-color: #ff5b00;
       box-shadow: inset 0 0 0 1px rgba(255,91,0,0.18);
+    }
+
+    #btn-framework-compare.active {
+      background: rgba(167,139,250,0.16);
+      border-color: #a78bfa;
+      box-shadow: inset 0 0 0 1px rgba(167,139,250,0.2);
+    }
+
+    .split-compare {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .split-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.65rem;
+      color: #bfc6dd;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .split-tag {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #243150;
+      border-radius: 999px;
+      background: #05070d;
+      padding: 0.38rem 0.65rem;
+    }
+
+    .split-tag--today {
+      color: #f59e0b;
+      border-color: rgba(245,158,11,0.34);
+    }
+
+    .split-tag--science {
+      color: #8ba4ff;
+      border-color: rgba(47,99,255,0.38);
+    }
+
+    .split-stage {
+      position: relative;
+      max-width: 100%;
+      overflow: hidden;
+      background: #03060c;
+      border: 1px solid #101b34;
+      border-radius: 4px;
+      cursor: ew-resize;
+      touch-action: none;
+    }
+
+    .split-stage svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+    }
+
+    .split-overlay {
+      position: absolute;
+      inset: 0 auto 0 0;
+      overflow: hidden;
+      width: 52%;
+      border-right: 1px solid rgba(255,255,255,0.3);
+      box-shadow: 10px 0 30px rgba(0,0,0,0.24);
+    }
+
+    .split-handle {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 52%;
+      width: 0;
+      outline: none;
+      z-index: 4;
+    }
+
+    .split-handle::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -1px;
+      width: 2px;
+      background: #fff;
+      box-shadow: 0 0 20px rgba(255,255,255,0.58);
+    }
+
+    .split-handle span {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translate(-50%, -50%);
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 2px solid #fff;
+      background: #05070d;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .split-handle span::before {
+      content: "< >";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+    }
+
+    .split-caption {
+      margin-top: 0.7rem;
+      color: #8f98b8;
+      font-size: 0.78rem;
+      line-height: 1.45;
+      font-weight: 650;
     }
 
     .today-method-panel {
@@ -1038,6 +1172,11 @@
       background: #2a2a4a;
       border-color: #2f63ff;
       color: #fff;
+    }
+
+    .view-btn:disabled {
+      opacity: 0.38;
+      cursor: not-allowed;
     }
 
     /* Highlights */
@@ -1713,6 +1852,16 @@
       .framework-buttons {
         min-width: 0;
         grid-template-columns: 1fr;
+      }
+      .framework-toggle--primary .framework-buttons {
+        grid-template-columns: 1fr;
+      }
+      .framework-toggle--primary .framework-btn {
+        min-height: 116px;
+      }
+      .split-head {
+        align-items: flex-start;
+        flex-direction: column;
       }
       .today-method-panel {
         padding-left: 1rem;
