@@ -29,8 +29,8 @@
 <div class="framework-toggle framework-toggle--primary" aria-label="Science-2024 und Heute-2026 vergleichen">
   <div class="framework-summary">
     <div class="framework-kicker" id="framework-kicker">Vergleichsansicht</div>
-    <h3 id="framework-title">Auswahl zwischen der peer-reviewten Science-2024-Basis und der Heute-2026-Heuristik.</h3>
-    <p id="framework-desc">Treemap, Kennzahlen und Detailpanel passen sich automatisch an.</p>
+    <h3 id="framework-title">Science-2024-Basis und Heute-2026-Heuristik im direkten Vergleich</h3>
+    <p id="framework-desc">Auswahl zwischen der peer-reviewten Science-2024-Basis und der Heute-2026-Heuristik. Treemap, Kennzahlen und Detailpanel passen sich automatisch an.</p>
   </div>
   <div class="framework-buttons">
     <button class="framework-btn active" id="btn-framework-science" type="button" onclick="setFramework('science')">
@@ -41,12 +41,12 @@
     <button class="framework-btn" id="btn-framework-today" type="button" onclick="setFramework('today')">
       <span class="framework-label">Aktualisierte Sicht</span>
       <strong>Heute 2026</strong>
-      <span>Technische Heuristik mit Caps, Sensitivität und separater Adoption</span>
+      <span>Aktualisiertes Szenario mit angepassten Obergrenzen, Sensitivitätsanalyse und Adoptionsfaktor</span>
     </button>
     <button class="framework-btn" id="btn-framework-compare" type="button" onclick="setFramework('compare')">
       <span class="framework-label">Direktvergleich</span>
       <strong>Split Screen</strong>
-      <span>Beide Datensätze übereinander gelegt, per Maus vergleichbar.</span>
+      <span>Beide Datensätze überlagert – Mausbewegung macht den Unterschied sichtbar</span>
     </button>
   </div>
 </div>
@@ -58,7 +58,7 @@
         <div class="framework-kicker">So wurde die neue Ansicht berechnet</div>
         <h3>Szenariobasierte 2026-Heuristik, keine neue Science-Replikation</h3>
         <p>
-          Die 2026-Sicht startet bei den originalen Eloundou-Beta-Werten und prüft nur, wo heutige KI-Fähigkeiten frühere E2-Aufgaben näher an E1 rücken oder einzelne E0-Aufgaben zu E2 machen. Das Hauptszenario ist plausibel, aber nicht als defensiv zu lesen; die konservative Variante liegt in der Sensitivität mit halbierten Modifikatoren. Adoption wird nicht in den Hauptscore gemischt, sondern separat ausgewiesen. Die Schweizer Lohndaten wurden mit LSE 2024 nach CH-ISCO-Berufsgruppen aktualisiert; Beschäftigte wurden mangels Dashboard-SAKE-Mikrotabelle proportional mit dem SAKE-Gesamtwachstum 2023-2024 kalibriert. v4 ergänzt 14 bisher fehlende Marketing-, Sales-, Beratungs-, Gesundheits- und Dienstleistungsrollen.
+          Die 2026-Sicht startet bei den originalen Eloundou-Beta-Werten und prüft nur, wo heutige KI-Fähigkeiten frühere E2-Aufgaben näher an E1 rücken oder einzelne E0-Aufgaben zu E2 machen. Das Hauptszenario ist plausibel, aber nicht als defensiv zu lesen; die konservative Variante liegt in der Sensitivität mit halbierten Modifikatoren. Adoption wird nicht in den Hauptscore gemischt, sondern separat ausgewiesen. Die Schweizer Lohndaten wurden mit LSE 2024 nach CH-ISCO-Berufsgruppen aktualisiert; Beschäftigte wurden mangels Dashboard-SAKE-Mikrotabelle proportional mit dem SAKE-Gesamtwachstum 2023-2024 kalibriert.
         </p>
       </div>
       <div class="today-method-stats" aria-label="Heute-2026-Kernergebnisse">
@@ -74,7 +74,7 @@
       </div>
       <div class="today-method-step">
         <b>2. Reannotation</b>
-        <p>Pro Berufsfeld wurden 8 Aufgaben geprüft: E0 bleibt E0, E0 wird E2, E2 wird E1, E1 bleibt E1 oder E2 bleibt E2.</p>
+        <p>Pro Berufsfeld wurden 8 repräsentative Aufgaben neu bewertet – auf Basis heutiger LLM-Fähigkeiten, ohne die Originalbewertung zu überschreiben.</p>
       </div>
       <div class="today-method-step">
         <b>3. Technik</b>
@@ -89,6 +89,7 @@
         <p>Jeder Beruf erhält Confidence, Unsicherheitsgründe und eine Szenario-Spannweite aus halbierten, strengen und aggressiveren Annahmen.</p>
       </div>
     </div>
+    <p class="today-formula-intro">Rechenweg im Basisszenario (vollständig nachvollziehbar):</p>
     <div class="today-formula">
       technical_beta_2026 = min(cap / 10, beta_2024 + long_context + agentic_tools + multimodal + role_override)<br>
       technical_score_2026 = round(technical_beta_2026 x 10)<br>
@@ -104,7 +105,7 @@
   </div>
 </section>
 
-<div class="highlights-bar">
+<div class="highlights-bar" id="highlights-bar">
   <div class="hl-card hl-red">
     <div class="hl-num" id="metric-high">-</div>
     <div class="hl-label">Berufe mit sehr hoher LLM-Exposition<br><span>(Score 8-10)</span></div>
@@ -123,7 +124,7 @@
   </div>
   <div class="hl-card hl-neutral">
     <div class="hl-num" id="metric-pay">-</div>
-    <div class="hl-label">Lohnspanne<br><span>LSE 2024 / Spezialquellen</span></div>
+    <div class="hl-label">Lohnspanne<br><span>(LSE 2024)</span></div>
   </div>
   <div class="hl-card hl-insight">
     <div class="hl-insight-text" id="metric-top">Am stärksten exponiert: <strong>Softwareentwickler/-in, Sysadmin, Data Scientist, KI-Ingenieur/-in</strong></div>
@@ -315,8 +316,8 @@ const FRAMEWORK_COPY = {
     desc: "Peer-reviewter Originalwert von Eloundou et al.: Beta x 10, gerundet. Das ist die unveränderte wissenschaftliche Basis."
   },
   today: {
-    title: "Aktive Ansicht: Heute 2026",
-    desc: "Szenariobasierte 2026-Heuristik auf derselben Berufsbasis. Sie zeigt technische Exposition im Basisszenario; Adoption, Sensitivität und Unsicherheit bleiben getrennt dokumentiert."
+    title: "Heute 2026",
+    desc: "Szenariobasierte Heuristik auf derselben Berufsbasis wie Science 2024. Dargestellt wird technische Exposition im Basisszenario; Adoption, Sensitivität und Unsicherheit sind separat ausgewiesen."
   },
   compare: {
     title: "Aktive Ansicht: Split Screen",
@@ -486,6 +487,7 @@ function setFramework(name) {
   document.getElementById("framework-desc").textContent = FRAMEWORK_COPY[activeFramework].desc;
   document.getElementById("legend-label").textContent = activeFramework === "compare" ? "Split Screen:" : `${activeFrameworkLabel()} Score:`;
   document.getElementById("today-method-panel").hidden = activeFramework !== "today";
+  document.getElementById("highlights-bar").style.display = activeFramework === "compare" ? "none" : "";
   document.getElementById("btn-list").disabled = activeFramework === "compare";
   if (activeFramework === "compare") currentView = "treemap";
   document.getElementById('treemap-container').style.display = currentView === 'treemap' ? 'block' : 'none';

@@ -29,7 +29,7 @@
   <section class="content-section">
     <h1 class="content-title">Quellen</h1>
     <h2>Quellen und Prüfdaten</h2>
-    <p class="section-lead">Die Links führen entweder zu Primärquellen oder zu lokalen Artefakten, mit denen Mapping, BFS-Refresh, 2026-Szenarien und Validierung nachvollzogen werden können.</p>
+    <p class="section-lead">Sämtliche Primärquellen, Rohdaten und lokale Prüfartefakte sind hier verlinkt. Mapping, Lohn- und Beschäftigungsdaten, 2026-Szenarien und Validierungsscripts sind einzeln nachvollziehbar.</p>
     <div class="source-index" id="sources" aria-label="Alle Quellen und lokale Prüfdaten">
         <div class="source-index-card">
           <h3>Peer-reviewed Paper</h3>
@@ -78,7 +78,8 @@
         </div>
         <div class="source-index-card">
           <h3>Heute-Framework</h3>
-          <p>Szenariobasierte 2026-Heuristik bis 21. Mai 2026: technische Exposition getrennt von Adoption, mit Sensitivität, Unsicherheit, Mapping und Mini-Reannotation. Das Hauptszenario ist ein plausibles Basisszenario, kein defensives Minimum.</p>
+          <p>Szenariobasierte Heuristik mit Datenstand Mai 2026: technische Exposition getrennt von Adoption, mit Sensitivität, Unsicherheit, Mapping und Mini-Reannotation. Das Hauptszenario ist ein plausibles Basisszenario, kein defensives Minimum.</p>
+          <p>Die 2026-Sicht ist keine neue wissenschaftliche Replikation, sondern eine transparente Dashboard-Heuristik auf Basis der Science-2024-Werte. Adoption wird separat dokumentiert.</p>
           <a href="docs/ai-exposure-framework-2026.html" target="_blank" rel="noopener noreferrer">Methodenpapier 2026</a>
           <a href="data/today-scores-2026.json" target="_blank" rel="noopener noreferrer">Generierte Scores JSON</a>
           <a href="data/today-scores-2026.csv" target="_blank" rel="noopener noreferrer">Generierte Scores CSV</a>
@@ -95,30 +96,9 @@
         </div>
       </div>
     
+      <p style="margin:1.5rem 0;font-style:italic;color:#b0b0cc;border-left:3px solid rgba(255,255,255,0.18);padding:0.4rem 0 0.4rem 0.85rem;">Zur Berechnung des Beta-Scores siehe <a href="methodik.html">Methodik</a>.</p>
+
       <div class="source-grid">
-        <div class="source-card">
-          <h3>LLM-Exposition (Beta-Score)</h3>
-          <p>Eloundou, T. et al. (2024). "GPTs are GPTs: Labor market impact potential of LLMs." <em>Science</em>, 384, 1306-1308.<br><br>
-          Das Beta-Mass bewertet pro Beruf, inwieweit LLMs die Erledigungszeit von Aufgaben um mindestens 50% reduzieren können. Formel: Beta = E1 + 0.5 x E2. Mapping von O*NET-SOC auf ISCO-08 via BLS-Crosswalk.</p>
-          <a href="https://www.science.org/doi/10.1126/science.adj0998" target="_blank" rel="noopener noreferrer">-> Science (2024)</a>
-          <a href="https://github.com/openai/GPTs-are-GPTs" target="_blank" rel="noopener noreferrer">-> Datensatz (GitHub)</a>
-        </div>
-        <div class="source-card">
-          <h3>Zweite Sicht: Heute 2026</h3>
-          <p>Der Original-Score bleibt die Basis. Die 2026-Sicht ist keine neue wissenschaftliche Replikation, sondern eine transparente Dashboard-Heuristik. Die Hauptansicht zeigt technische Exposition im Basisszenario; Adoption wird separat dokumentiert.</p>
-          <p style="margin-top:0.65rem"><strong>Technisch:</strong> Beta = min(Cap, Original-Beta + Long-Context + Agentik + Multimodalität + Berufs-Override).<br><strong>Adoptionsgewichtet:</strong> Beta = min(Cap, technische Beta + Adoption).</p>
-          <a href="docs/ai-exposure-framework-2026.html" target="_blank" rel="noopener noreferrer">-> Methodenpapier 2026</a>
-          <a href="data/today-scores-2026.json" target="_blank" rel="noopener noreferrer">-> Neue Zahlen JSON</a>
-          <a href="data/scenario-summary-2026.json" target="_blank" rel="noopener noreferrer">-> Sensitivität</a>
-          <a href="data/reannotation-sample-2026.csv" target="_blank" rel="noopener noreferrer">-> Mini-Reannotation</a>
-          <a href="data/mapping-2026.csv" target="_blank" rel="noopener noreferrer">-> Mapping-Tabelle</a>
-          <a href="https://openai.com/index/introducing-gpt-5-5/" target="_blank" rel="noopener noreferrer">-> OpenAI GPT-5.5</a>
-          <a href="https://openai.com/index/introducing-gpt-5-4/" target="_blank" rel="noopener noreferrer">-> OpenAI GPT-5.4</a>
-          <a href="https://openai.com/index/gpt-4-1/" target="_blank" rel="noopener noreferrer">-> OpenAI GPT-4.1</a>
-          <a href="https://openai.com/index/hello-gpt-4o/" target="_blank" rel="noopener noreferrer">-> OpenAI GPT-4o</a>
-          <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool" target="_blank" rel="noopener noreferrer">-> Anthropic Computer Use</a>
-          <a href="https://blog.google/products-and-platforms/products/gemini/google-gemini-update-may-2024/" target="_blank" rel="noopener noreferrer">-> Google Gemini Long Context</a>
-        </div>
         <div class="source-card">
           <h3>Beschäftigte</h3>
           <p>Bundesamt für Statistik (BFS)<br>Dashboard-Berufszeilen: bestehender SAKE-2023-Berufsmix plus v4-Ergänzungswerte, proportional mit SAKE-Gesamtwachstum 2023-2024 skaliert (4.848 Mio. -> 4.876 Mio. Erwerbstätige). Keine neue Dashboard-SAKE-Mikrotabelle.</p>

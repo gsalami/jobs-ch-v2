@@ -29,7 +29,7 @@
   <section class="content-section">
     <h1 class="content-title">Methodik</h1>
     <h2>Über diese Daten</h2>
-    <p class="section-lead">Der Prüfpfad trennt die peer-reviewte Science-2024-Basis von der heuristischen Heute-2026-Erweiterung. Die Originalwerte bleiben erhalten; 2026-Modifikatoren, Caps, Adoption und Unsicherheit werden separat dokumentiert.</p>
+    <p class="section-lead">Der Prüfpfad hält die peer-reviewte Science-2024-Basis und die heuristische Heute-2026-Erweiterung strikt getrennt. Originalwerte bleiben unverändert; Modifikatoren, Caps, Adoption und Unsicherheit der 2026-Sicht werden separat ausgewiesen.</p>
     <figure class="method-image-card">
         <img src="assets/score-method-infographic.png" alt="Infografik: So entsteht der KI-Expositionsscore von Eloundou-Beta-Score über SOC-Bereinigung, ISCO-08-Mapping und BFS-Daten zum Dashboard-Score">
         <figcaption class="method-image-caption">
@@ -93,7 +93,7 @@
             </div>
           </div>
           <div class="audit-card">
-            <h4>So kann man es prüfen</h4>
+            <h4>Prüfanleitung</h4>
             <ul>
               <li>Beta-Wert im Detailpanel mit `Files for CC/eloundou_mapping_results.json` vergleichen.</li>
               <li>Score kontrollieren: `round(beta x 10)` muss dem angezeigten Wert entsprechen.</li>
@@ -104,7 +104,7 @@
     
         <div class="today-audit-row" aria-label="Zusatzprüfpfad für die Heute-2026-Sicht">
           <div class="today-audit-step">
-            <b>Heute 2026 startet beim Original</b>
+            <b>Kontinuität zur Science-2024-Basis</b>
             <span>beta_2024 bleibt unverändert. Die neue Sicht ersetzt die Science-Basis nicht, sondern rechnet ein transparentes Szenario darauf.</span>
           </div>
           <div class="today-audit-step">
@@ -112,20 +112,21 @@
             <span>Long Context, Agenten/Tools, Multimodalität und wenige Berufs-Overrides werden nur addiert, wenn keine Doppelzählung plausibel ist.</span>
           </div>
           <div class="today-audit-step">
-            <b>Caps und Schweizer Limiten</b>
+            <b>Schweizer Begrenzungsfaktoren</b>
             <span>Regulierung, Haftung, physische Präsenz, Beziehungsarbeit und Schweizer Tätigkeitsmischung begrenzen den technischen Score.</span>
           </div>
           <div class="today-audit-step">
-            <b>Adoption separat prüfen</b>
+            <b>Adoption und technische Exposition getrennt</b>
             <span>Die Hauptansicht zeigt technische Exposition. Adoption, Sensitivität, Confidence und Mini-Reannotation liegen als eigene Prüfdaten daneben.</span>
           </div>
         </div>
       </div>
     <div class="disclaimer">
-        <strong>Wichtiger Hinweis:</strong> Das Eloundou-Mass erfasst spezifisch die <strong>LLM-Exposition</strong> - also inwieweit Sprachmodelle berufliche Aufgaben beschleunigen, vorbereiten, prüfen, dokumentieren oder teilweise ausführen können. Es misst <em>nicht</em> allgemeine Automatisierung durch Robotik, autonomes Fahren oder physische KI-Systeme. Deshalb haben z.B. Lastwagenfahrer/-innen oder Lagerfachleute niedrige Scores, obwohl sie durch andere Technologien potenziell betroffen sind. Ein hoher Score bedeutet vor allem: hoher möglicher Produktivitätshebel durch LLMs, nicht automatisch Ersetzbarkeit oder Jobverlust. Die Berufs-, Beschäftigungs- und Lohndaten bleiben Näherungswerte: Löhne sind LSE-2024-Gruppenbenchmarks oder Spezialquellen, Beschäftigte sind SAKE-2024-total-kalibrierte Berufszeilen.
+        <p><strong>Was der Score misst:</strong> Das Eloundou-Mass quantifiziert, inwieweit Sprachmodelle (LLMs) berufliche Aufgaben beschleunigen, vorbereiten, dokumentieren oder teilweise übernehmen können. Grundlage ist die aufgabenbezogene Expositionswahrscheinlichkeit, nicht ein Jobverlustrisiko.</p>
+        <p><strong>Was der Score nicht misst:</strong> Physische Automatisierung (Robotik, autonomes Fahren), bildbasierte KI-Systeme sowie Regulierung, gesellschaftliche Akzeptanz und Adoptionsgeschwindigkeit sind nicht Teil des Masses. Berufe wie Lastwagenfahrer/-in oder Grafiker/-in können durch andere Technologien stärker betroffen sein, als der Score suggeriert.</p>
       </div>
     <div class="source-card" style="margin-top:1.25rem;border-color:rgba(245,158,11,0.28);">
-        <h3 style="color:#f59e0b;">So sollte man die Scores lesen</h3>
+        <h3 style="color:#f59e0b;">Hinweise zur Interpretation</h3>
         <ul style="margin:0.5rem 0 0 1.2rem;color:#b0b0cc;line-height:1.8;font-size:0.85rem;">
           <li><strong>Mapping ist eine Annäherung:</strong> Schweizer Berufsbezeichnungen decken nicht immer exakt einen O*NET- oder ISCO-Beruf ab. Je nach konkretem Tätigkeitsprofil kann die Exposition höher oder tiefer liegen.</li>
           <li><strong>Schweizer Tätigkeitsmischung kann abweichen:</strong> Gerade in IT, Finanzwesen, Gesundheit und regulierten Bereichen können Schweizer Rollen mehr Architektur, Review, Haftung, Interaktion oder höherqualifizierte Aufgaben enthalten als die US-O*NET-Basis.</li>
