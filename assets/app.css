@@ -1536,12 +1536,12 @@
       margin: 4.5rem auto 0;
       padding: 3.2rem 2rem;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 0;
       border-top: 1px solid #fff;
       border-bottom: 1px solid #07162f;
       background:
-        linear-gradient(90deg, rgba(47,99,255,0.08), transparent 36%, rgba(255,91,0,0.06));
+        linear-gradient(90deg, rgba(47,99,255,0.08), transparent 50%, rgba(255,91,0,0.06));
     }
 
     .contact-card {
@@ -1575,6 +1575,10 @@
 
     .contact-logo .logo-kuble {
       width: min(212px, 72vw);
+    }
+
+    .contact-logo .logo-bak {
+      width: min(200px, 72vw);
     }
 
     .contact-line {
@@ -1931,6 +1935,9 @@
       }
       .contact-logo .logo-kuble {
         width: min(190px, 72vw);
+      }
+      .contact-logo .logo-bak {
+        width: min(180px, 72vw);
       }
       .footer-center, .footer-initiators {
         text-align: left;

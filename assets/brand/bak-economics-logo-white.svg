@@ -1,0 +1,11 @@
+<svg width="220" height="76" viewBox="0 0 220 76" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <title>BAK economic intelligence</title>
+  <!-- B -->
+  <text x="0" y="56" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="900" font-size="64" letter-spacing="-2" fill="#ffffff">B</text>
+  <!-- Stylised A: solid triangle, no crossbar -->
+  <polygon points="48,56 76,8 104,56" fill="#ffffff" />
+  <!-- K -->
+  <text x="108" y="56" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="900" font-size="64" letter-spacing="-2" fill="#ffffff">K</text>
+  <!-- Tagline -->
+  <text x="0" y="72" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="400" font-size="11" letter-spacing="0.4" fill="#ffffff">economic intelligence</text>
+</svg>

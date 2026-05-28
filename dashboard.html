@@ -51,60 +51,6 @@
   </div>
 </div>
 
-<section class="today-method-panel" id="today-method-panel" hidden aria-label="Methodik der Heute-2026-Ansicht">
-  <div class="today-method-inner">
-    <div class="today-method-head">
-      <div>
-        <div class="framework-kicker">So wurde die neue Ansicht berechnet</div>
-        <h3>Szenariobasierte 2026-Heuristik, keine neue Science-Replikation</h3>
-        <p>
-          Die 2026-Sicht startet bei den originalen Eloundou-Beta-Werten und prüft nur, wo heutige KI-Fähigkeiten frühere E2-Aufgaben näher an E1 rücken oder einzelne E0-Aufgaben zu E2 machen. Das Hauptszenario ist plausibel, aber nicht als defensiv zu lesen; die konservative Variante liegt in der Sensitivität mit halbierten Modifikatoren. Adoption wird nicht in den Hauptscore gemischt, sondern separat ausgewiesen. Die Schweizer Lohndaten wurden mit LSE 2024 nach CH-ISCO-Berufsgruppen aktualisiert; Beschäftigte wurden mangels Dashboard-SAKE-Mikrotabelle proportional mit dem SAKE-Gesamtwachstum 2023-2024 kalibriert.
-        </p>
-      </div>
-      <div class="today-method-stats" aria-label="Heute-2026-Kernergebnisse">
-        <div class="today-method-stat"><strong>128</strong><span>repräsentative Aufgaben reannotiert</span></div>
-        <div class="today-method-stat"><strong>8</strong><span>Sensitivitätsszenarien</span></div>
-        <div class="today-method-stat"><strong>27</strong><span>Berufe Score 8-10 technisch</span></div>
-      </div>
-    </div>
-    <div class="today-method-grid">
-      <div class="today-method-step">
-        <b>1. Basis</b>
-        <p>Science 2024 bleibt unverändert: beta_2024 aus Eloundou et al., übertragen auf Schweizer Berufe via SOC/ISCO-Mapping.</p>
-      </div>
-      <div class="today-method-step">
-        <b>2. Reannotation</b>
-        <p>Pro Berufsfeld wurden 8 repräsentative Aufgaben neu bewertet – auf Basis heutiger LLM-Fähigkeiten, ohne die Originalbewertung zu überschreiben.</p>
-      </div>
-      <div class="today-method-step">
-        <b>3. Technik</b>
-        <p>Long Context, Agenten/Tools, Multimodalität und wenige Berufs-Overrides werden nur addiert, wenn sie Doppelzählung vermeiden.</p>
-      </div>
-      <div class="today-method-step">
-        <b>4. Caps</b>
-        <p>Caps begrenzen Werte bei physischer Arbeit, Regulierung, Haftung, Patientenkontakt, Sicherheitsverantwortung oder Beziehungsarbeit.</p>
-      </div>
-      <div class="today-method-step">
-        <b>5. Unsicherheit</b>
-        <p>Jeder Beruf erhält Confidence, Unsicherheitsgründe und eine Szenario-Spannweite aus halbierten, strengen und aggressiveren Annahmen.</p>
-      </div>
-    </div>
-    <p class="today-formula-intro">Rechenweg im Basisszenario (vollständig nachvollziehbar):</p>
-    <div class="today-formula">
-      technical_beta_2026 = min(cap / 10, beta_2024 + long_context + agentic_tools + multimodal + role_override)<br>
-      technical_score_2026 = round(technical_beta_2026 x 10)<br>
-      adoption_adjusted_beta_2026 = min(cap / 10, technical_beta_2026 + adoption)
-    </div>
-    <div class="today-method-links">
-      <a href="docs/ai-exposure-framework-2026" target="_blank" rel="noopener noreferrer">Methodenpapier</a>
-      <a href="data/today-scores-2026.json" target="_blank" rel="noopener noreferrer">Scores JSON</a>
-      <a href="data/scenario-summary-2026.csv" target="_blank" rel="noopener noreferrer">Sensitivität CSV</a>
-      <a href="data/reannotation-sample-2026.csv" target="_blank" rel="noopener noreferrer">Mini-Reannotation</a>
-      <a href="data/mapping-2026.csv" target="_blank" rel="noopener noreferrer">Mapping</a>
-    </div>
-  </div>
-</section>
-
 <div class="highlights-bar" id="highlights-bar">
   <div class="hl-card hl-red">
     <div class="hl-num" id="metric-high">-</div>
@@ -188,6 +134,60 @@
 
 <div id="list-view"></div>
 
+<section class="today-method-panel" id="today-method-panel" hidden aria-label="Methodik der Heute-2026-Ansicht">
+  <div class="today-method-inner">
+    <div class="today-method-head">
+      <div>
+        <div class="framework-kicker">So wurde die neue Ansicht berechnet</div>
+        <h3>Szenariobasierte 2026-Heuristik, keine neue Science-Replikation</h3>
+        <p>
+          Die 2026-Sicht startet bei den originalen Eloundou-Beta-Werten und prüft nur, wo heutige KI-Fähigkeiten frühere E2-Aufgaben näher an E1 rücken oder einzelne E0-Aufgaben zu E2 machen. Das Hauptszenario ist plausibel, aber nicht als defensiv zu lesen; die konservative Variante liegt in der Sensitivität mit halbierten Modifikatoren. Adoption wird nicht in den Hauptscore gemischt, sondern separat ausgewiesen. Die Schweizer Lohndaten wurden mit LSE 2024 nach CH-ISCO-Berufsgruppen aktualisiert; Beschäftigte wurden mangels Dashboard-SAKE-Mikrotabelle proportional mit dem SAKE-Gesamtwachstum 2023-2024 kalibriert.
+        </p>
+      </div>
+      <div class="today-method-stats" aria-label="Heute-2026-Kernergebnisse">
+        <div class="today-method-stat"><strong>128</strong><span>repräsentative Aufgaben reannotiert</span></div>
+        <div class="today-method-stat"><strong>8</strong><span>Sensitivitätsszenarien</span></div>
+        <div class="today-method-stat"><strong>27</strong><span>Berufe Score 8-10 technisch</span></div>
+      </div>
+    </div>
+    <div class="today-method-grid">
+      <div class="today-method-step">
+        <b>1. Basis</b>
+        <p>Science 2024 bleibt unverändert: beta_2024 aus Eloundou et al., übertragen auf Schweizer Berufe via SOC/ISCO-Mapping.</p>
+      </div>
+      <div class="today-method-step">
+        <b>2. Reannotation</b>
+        <p>Pro Berufsfeld wurden 8 repräsentative Aufgaben neu bewertet – auf Basis heutiger LLM-Fähigkeiten, ohne die Originalbewertung zu überschreiben.</p>
+      </div>
+      <div class="today-method-step">
+        <b>3. Technik</b>
+        <p>Long Context, Agenten/Tools, Multimodalität und wenige Berufs-Overrides werden nur addiert, wenn sie Doppelzählung vermeiden.</p>
+      </div>
+      <div class="today-method-step">
+        <b>4. Caps</b>
+        <p>Caps begrenzen Werte bei physischer Arbeit, Regulierung, Haftung, Patientenkontakt, Sicherheitsverantwortung oder Beziehungsarbeit.</p>
+      </div>
+      <div class="today-method-step">
+        <b>5. Unsicherheit</b>
+        <p>Jeder Beruf erhält Confidence, Unsicherheitsgründe und eine Szenario-Spannweite aus halbierten, strengen und aggressiveren Annahmen.</p>
+      </div>
+    </div>
+    <p class="today-formula-intro">Rechenweg im Basisszenario (vollständig nachvollziehbar):</p>
+    <div class="today-formula">
+      technical_beta_2026 = min(cap / 10, beta_2024 + long_context + agentic_tools + multimodal + role_override)<br>
+      technical_score_2026 = round(technical_beta_2026 x 10)<br>
+      adoption_adjusted_beta_2026 = min(cap / 10, technical_beta_2026 + adoption)
+    </div>
+    <div class="today-method-links">
+      <a href="docs/ai-exposure-framework-2026" target="_blank" rel="noopener noreferrer">Methodenpapier</a>
+      <a href="data/today-scores-2026.json" target="_blank" rel="noopener noreferrer">Scores JSON</a>
+      <a href="data/scenario-summary-2026.csv" target="_blank" rel="noopener noreferrer">Sensitivität CSV</a>
+      <a href="data/reannotation-sample-2026.csv" target="_blank" rel="noopener noreferrer">Mini-Reannotation</a>
+      <a href="data/mapping-2026.csv" target="_blank" rel="noopener noreferrer">Mapping</a>
+    </div>
+  </div>
+</section>
+
 <!-- Tooltip -->
 <div id="tooltip"></div>
 
@@ -216,6 +216,15 @@
     </div>
     <div class="contact-line"><a href="mailto:roger.oberholzer@kuble.com">roger.oberholzer@kuble.com</a></div>
     <div class="contact-line">Räffelstrasse 26<br>8045 Zürich</div>
+  </div>
+  <div class="contact-card">
+    <div class="contact-logo">
+      <a href="https://www.bak-economics.com/" target="_blank" rel="noopener noreferrer" aria-label="BAK Economics">
+        <img class="logo-bak" src="assets/brand/bak-economics-logo-white.svg" alt="BAK Economics">
+      </a>
+    </div>
+    <div class="contact-line"><a href="mailto:matthias.pfister@bak-economics.com">matthias.pfister@bak-economics.com</a></div>
+    <div class="contact-line">Elisabethenanlage 7<br>CH-4051 Basel</div>
   </div>
 </section>
 
@@ -836,21 +845,51 @@ function drawTreemapCells(svg, leaves, scoreMode, tooltipMode = scoreMode) {
     const h = d.y1 - d.y0;
     const g = d3.select(this);
     const score = scoreForMode(d.data, scoreMode);
-    if (w > 60 && h > 40) {
-      g.append('text')
+    const padX = 6;
+    const maxTextWidth = w - padX * 2;
+    if (w > 60 && h > 36 && maxTextWidth > 24) {
+      const label = g.append('text')
         .attr('class', 'cell-label')
-        .attr('x', 6).attr('y', 16)
-        .attr('width', w - 12)
-        .text(d.data.title.length > 22 && w < 120 ? d.data.title.substring(0, 18) + '\u2026' : d.data.title);
+        .attr('x', padX).attr('y', 16)
+        .text(d.data.title);
+      fitSvgText(label.node(), d.data.title, maxTextWidth);
     }
     if (w > 50 && h > 55) {
       g.append('text')
         .attr('class', 'cell-score')
-        .attr('x', 6).attr('y', 34)
+        .attr('x', padX).attr('y', 34)
         .attr('fill', scoreColor(score))
         .text(score + '/10');
     }
   });
+}
+
+// Truncate an SVG text node with ellipsis until it fits maxWidth.
+// Returns true if some text remains, false if the node was removed.
+function fitSvgText(node, fullText, maxWidth) {
+  if (!node || maxWidth <= 0) return false;
+  if (node.getComputedTextLength() <= maxWidth) return true;
+  const ellipsis = '\u2026';
+  let lo = 0;
+  let hi = fullText.length;
+  let best = '';
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    const candidate = fullText.slice(0, mid).trimEnd() + ellipsis;
+    node.textContent = candidate;
+    if (node.getComputedTextLength() <= maxWidth) {
+      best = candidate;
+      lo = mid + 1;
+    } else {
+      hi = mid - 1;
+    }
+  }
+  if (!best) {
+    node.remove();
+    return false;
+  }
+  node.textContent = best;
+  return true;
 }
 
 function updateSplitReveal(percent) {
